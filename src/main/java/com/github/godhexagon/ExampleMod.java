@@ -1,4 +1,4 @@
-package com.example.examplemod;
+package com.github.godhexagon;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
