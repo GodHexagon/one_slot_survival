@@ -54,3 +54,37 @@ The mod currently includes example blocks, items, and creative tabs that should 
 1. メインロールに紐づくEXPとレベルアップがあり、これによりロールスロットをカスタムできるようにする。
 1. メインロールの種類を増やす。
 1. サブロールを追加する。
+
+## Newest Updates
+
+「1. プレイヤーのホットバーは１スロットだけ（これをメインハンドと定義する）になり、それ以外のインベントリとホットバー計３５スロットを使用禁止する。」の部分的実装
+
+✅ 実装済み機能
+
+1. プレイヤー状態管理 (OneSlotManager.java)
+   - シンプルなHashSet-basedでプレイヤーのUUIDを管理
+   - Capabilityシステムを避けて最もシンプルな実装
+2. 管理者コマンド (OneSlotCommand.java)
+   - /oneslot <players> enable/disable/toggle/status
+   - /oneslot status (自分の状態確認)
+   - OP権限(レベル2)が必要
+3. ホットバー強制 (OneSlotEvents.java)
+   - プレイヤーTickイベントでスロット0に強制
+   - inventory.pickSlot(0) を使用
+4. 適切なパッケージ構造
+   - com.github.godhexagon.oneslotsurvival
+
+🧪 次のテスト
+
+実際にMinecraftで動作をテストして、以下を確認できます：
+
+1. コマンドが正常に動作するか
+2. ホットバー強制が機能するか
+3. プレイヤー状態が正しく管理されるか
+
+📝 今後の拡張予定
+
+- アイテム拾得制限
+- インベントリアクセス制限
+- ロールスロット機能
+- データ永続化
