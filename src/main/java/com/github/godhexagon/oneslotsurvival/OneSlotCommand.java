@@ -36,76 +36,91 @@ public class OneSlotCommand {
     }
 
     private static int setOneSlotMode(CommandContext<CommandSourceStack> context, boolean enabled) throws CommandSyntaxException {
-        Collection<ServerPlayer> players = EntityArgument.getPlayers(context, "players");
-        String action = enabled ? "enabled" : "disabled";
+        try {
+            Collection<ServerPlayer> players = EntityArgument.getPlayers(context, "players");
+            String action = enabled ? "enabled" : "disabled";
 
-        for (ServerPlayer player : players) {
-            OneSlotManager.setEnabled(player, enabled);
-            context.getSource().sendSuccess(
-                () -> Component.literal("One Slot Survival " + action + " for " + player.getName().getString()),
-                true
-            );
+            for (ServerPlayer player : players) {
+                OneSlotManager.setEnabled(player, enabled);
+                context.getSource().sendSuccess(
+                    () -> Component.literal("One Slot Survival " + action + " for " + player.getName().getString()),
+                    true
+                );
 
-            // Notify the target player
-            player.sendSystemMessage(
-                Component.literal("One Slot Survival has been " + action + " for you by " +
-                    context.getSource().getDisplayName().getString())
-            );
+                // Notify the target player
+                player.sendSystemMessage(
+                    Component.literal("One Slot Survival has been " + action + " for you by " +
+                        context.getSource().getDisplayName().getString())
+                );
+            }
+
+            return players.size();
+        } catch (Exception e) {
+            context.getSource().sendFailure(Component.literal("Error: " + e.getMessage()));
+            return 0;
         }
-
-        return players.size();
     }
 
     private static int toggleOneSlotMode(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
-        Collection<ServerPlayer> players = EntityArgument.getPlayers(context, "players");
+        try {
+            Collection<ServerPlayer> players = EntityArgument.getPlayers(context, "players");
 
-        for (ServerPlayer player : players) {
-            boolean newState = OneSlotManager.toggle(player);
-            String action = newState ? "enabled" : "disabled";
+            for (ServerPlayer player : players) {
+                boolean newState = OneSlotManager.toggle(player);
+                String action = newState ? "enabled" : "disabled";
 
-            context.getSource().sendSuccess(
-                () -> Component.literal("One Slot Survival " + action + " for " + player.getName().getString()),
-                true
-            );
+                context.getSource().sendSuccess(
+                    () -> Component.literal("One Slot Survival " + action + " for " + player.getName().getString()),
+                    true
+                );
 
-            // Notify the target player
-            player.sendSystemMessage(
-                Component.literal("One Slot Survival has been " + action + " for you by " +
-                    context.getSource().getDisplayName().getString())
-            );
+                // Notify the target player
+                player.sendSystemMessage(
+                    Component.literal("One Slot Survival has been " + action + " for you by " +
+                        context.getSource().getDisplayName().getString())
+                );
+            }
+
+            return players.size();
+        } catch (Exception e) {
+            context.getSource().sendFailure(Component.literal("Error: " + e.getMessage()));
+            return 0;
         }
-
-        return players.size();
     }
 
     private static int getOneSlotStatus(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
-        Collection<ServerPlayer> players = EntityArgument.getPlayers(context, "players");
+        try {
+            Collection<ServerPlayer> players = EntityArgument.getPlayers(context, "players");
 
-        for (ServerPlayer player : players) {
-            boolean enabled = OneSlotManager.isEnabled(player);
-            String status = enabled ? "enabled" : "disabled";
-            context.getSource().sendSuccess(
-                () -> Component.literal("One Slot Survival is " + status + " for " + player.getName().getString()),
-                false
-            );
+            for (ServerPlayer player : players) {
+                boolean enabled = OneSlotManager.isEnabled(player);
+                String status = enabled ? "enabled" : "disabled";
+                context.getSource().sendSuccess(
+                    () -> Component.literal("One Slot Survival is " + status + " for " + player.getName().getString()),
+                    false
+                );
+            }
+
+            return players.size();
+        } catch (Exception e) {
+            context.getSource().sendFailure(Component.literal("Error: " + e.getMessage()));
+            return 0;
         }
-
-        return players.size();
     }
 
     private static int getOwnStatus(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
-        if (!(context.getSource().getEntity() instanceof ServerPlayer player)) {
+        try {
+            ServerPlayer player = context.getSource().getPlayerOrException();
+            boolean enabled = OneSlotManager.isEnabled(player);
+            String status = enabled ? "enabled" : "disabled";
+            context.getSource().sendSuccess(
+                () -> Component.literal("One Slot Survival is " + status + " for you"),
+                false
+            );
+            return 1;
+        } catch (CommandSyntaxException e) {
             context.getSource().sendFailure(Component.literal("This command can only be used by players"));
             return 0;
         }
-
-        boolean enabled = OneSlotManager.isEnabled(player);
-        String status = enabled ? "enabled" : "disabled";
-        context.getSource().sendSuccess(
-            () -> Component.literal("One Slot Survival is " + status + " for you"),
-            false
-        );
-
-        return 1;
     }
 }
