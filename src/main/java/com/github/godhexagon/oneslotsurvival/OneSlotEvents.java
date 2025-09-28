@@ -8,12 +8,19 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 /**
  * Event handler for One Slot Survival mod.
  * Handles command registration and other game events.
  */
 @Mod.EventBusSubscriber(modid = OneSlotSurvivalMod.MODID)
 public class OneSlotEvents {
+
+    // Track which players had restrictions processed in the previous tick
+    private static final Map<UUID, Boolean> previousTickRestrictions = new HashMap<>();
 
     @SubscribeEvent
     public static void onRegisterCommands(RegisterCommandsEvent event) {
@@ -27,8 +34,22 @@ public class OneSlotEvents {
             return;
         }
 
+        // 対象プレイヤーでなくなった時だけ、バリアアイテムをインベントリから削除する
         Player player = event.player;
-        if (!OneSlotManager.isEnabled(player)) {
+        UUID playerId = player.getUUID();
+        boolean currentlyEnabled = OneSlotManager.isEnabled(player);
+        Boolean wasEnabledLastTick = previousTickRestrictions.get(playerId);
+
+        // Check if restrictions stopped being processed (transition from enabled to disabled)
+        if (wasEnabledLastTick != null && wasEnabledLastTick && !currentlyEnabled) {
+            // Clear barrier items when restrictions stop
+            clearBarrierItems(player);
+        }
+
+        // Update tracking for this tick
+        previousTickRestrictions.put(playerId, currentlyEnabled);
+
+        if (!currentlyEnabled) {
             return;
         }
 
@@ -112,5 +133,22 @@ public class OneSlotEvents {
         }
 
         return false; // Cannot move to main hand
+    }
+
+    /**
+     * Clear all barrier items from prohibited slots (1-35) when restrictions are disabled
+     */
+    private static void clearBarrierItems(Player player) {
+        Inventory inventory = player.getInventory();
+
+        // Clear barrier items from slots 1-35 (prohibited slots)
+        for (int slot = 1; slot < 36; slot++) {
+            ItemStack item = inventory.getItem(slot);
+
+            // If slot contains a barrier item, remove it
+            if (BarrierItem.isBarrierItem(item)) {
+                inventory.setItem(slot, ItemStack.EMPTY);
+            }
+        }
     }
 }
