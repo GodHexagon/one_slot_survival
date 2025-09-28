@@ -2,7 +2,9 @@ package com.github.godhexagon.oneslotsurvival;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.GameType;
 
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -18,7 +20,8 @@ public class OneSlotManager {
      * Check if One Slot mode is enabled for the given player.
      */
     public static boolean isEnabled(Player player) {
-        return enabledPlayers.contains(player.getUUID());
+        Set<GameType> effectiveGamemode = EnumSet.of(GameType.SURVIVAL, GameType.ADVENTURE);
+        return enabledPlayers.contains(player.getUUID()) && effectiveGamemode.contains(player.gameMode());
     }
 
     /**
@@ -34,7 +37,6 @@ public class OneSlotManager {
 
             // Process existing inventory when first enabling
             if (!wasEnabled) {
-                processExistingInventory(player);
                 player.displayClientMessage(
                     Component.literal("§6[One Slot] Mode enabled. Only main hand slot can be used."),
                     false
@@ -50,15 +52,6 @@ public class OneSlotManager {
                 );
             }
         }
-    }
-
-    /**
-     * Process existing inventory items when One Slot mode is enabled.
-     * Delegates to OneSlotEvents for the actual processing logic.
-     */
-    private static void processExistingInventory(Player player) {
-        // Call the same method used in tick events for consistency
-        OneSlotEvents.processInventoryRestrictions(player);
     }
 
     /**
