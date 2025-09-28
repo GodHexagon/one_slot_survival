@@ -4,9 +4,17 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerContainerEvent;
+import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -50,6 +58,7 @@ public class OneSlotEvents {
     /**
      * Clear items from prohibited slots (hotbar slots 1-8 and inventory slots 9-35)
      * Items are moved to main hand if possible, otherwise dropped on ground
+     * Then place barrier items in prohibited slots
      */
     private static void clearProhibitedSlots(Player player) {
         Inventory inventory = player.getInventory();
@@ -57,15 +66,27 @@ public class OneSlotEvents {
         // Check slots 1-35 (prohibited slots)
         for (int slot = 1; slot < 36; slot++) {
             ItemStack item = inventory.getItem(slot);
-            if (!item.isEmpty()) {
-                // Try to move item to main hand (slot 0)
-                if (moveItemToMainHand(player, item, slot)) {
-                    inventory.setItem(slot, ItemStack.EMPTY);
-                } else {
-                    // Drop item on ground using vanilla API
-                    player.drop(item, false);
-                    inventory.setItem(slot, ItemStack.EMPTY);
-                }
+
+            // If slot contains a barrier item, leave it alone
+            if (BarrierItem.isBarrierItem(item)) {
+                continue;
+            }
+
+            if (item.isEmpty()) {
+                // Slot is empty, place barrier
+                inventory.setItem(slot, BarrierItem.createBarrierStack());
+                continue;
+            }
+
+            // Try to move item to main hand (slot 0)
+            if (moveItemToMainHand(player, item, slot)) {
+                // Successfully moved, place barrier
+                inventory.setItem(slot, BarrierItem.createBarrierStack());
+            } else {
+                // Drop item on ground using vanilla API
+                player.drop(item, false);
+                // Place barrier after dropping
+                inventory.setItem(slot, BarrierItem.createBarrierStack());
             }
         }
     }
@@ -101,11 +122,5 @@ public class OneSlotEvents {
         }
 
         return false; // Cannot move to main hand
-    }
-
-    @SubscribeEvent
-    public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
-        // Currently no cleanup needed for player logout
-        // This is kept for future expansion
     }
 }
