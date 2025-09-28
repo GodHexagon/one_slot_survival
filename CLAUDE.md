@@ -32,6 +32,12 @@ The mod currently includes example blocks, items, and creative tabs that should 
 - `./gradlew test` - Run unit tests
 - `./gradlew check` - Run all verification tasks
 
+## Claudeエージェントの方針
+
+適切なバージョンの正確な情報を得るため、エージェントは困ったらすぐにWeb検索・閲覧を行います。
+
+躓いたり、迷ったりしたことがあれば、タスクを中断して、ユーザーに確認します。
+
 ## 計画
 
 1. 完了✅|プレイヤーごとに機能の有効性を変更できるようにする。
