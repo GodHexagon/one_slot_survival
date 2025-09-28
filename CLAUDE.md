@@ -38,7 +38,9 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 躓いたり、迷ったりしたことがあれば、タスクを中断して、ユーザーに確認します。
 
-## 計画
+## タスクリスト
+
+### 機能
 
 1. 完了✅|プレイヤーごとに機能の有効性を変更できるようにする。
     * 管理者権限を持つ者だけが実行できる、管理者アクションの一つとする。
@@ -67,6 +69,10 @@ The mod currently includes example blocks, items, and creative tabs that should 
 1. それ以外の管理者アクションを追加。
 1. メインロールの種類を増やす。
 1. サブロールを追加する。
+
+### 問題
+
+- ワールドを再開するとプレイヤー有効性が無効に変更される。
 
 ## Newest Updates
 
