@@ -59,29 +59,84 @@ public static void onClientTick(TickEvent.ClientTickEvent event) {
 - 数字キー1-9でスロット変更されない
 - スロット0以外選択できない
 
-### フェーズ3.3: インベントリスロット視覚変更
-**目標**: 禁止スロットを視覚的に区別（暗くする/アイコン表示）
+### フェーズ3.3: インベントリスロット視覚変更 (改訂版)
+**目標**: バリアアイテムを暗い半透明テクスチャにして禁止スロットを視覚的に区別
 
+**実装アプローチ**: Mixinの代わりにバリアアイテム自体の見た目を変更
+
+#### ステップ3.3.1: バリアアイテムテクスチャ作成
+**作業内容**:
+```
+src/main/resources/assets/oneslotsurvival/textures/item/slot_barrier.png
+```
+- 16x16の暗い半透明テクスチャを作成
+- アルファチャンネルを使用して透明度を調整（推奨: 30-50%）
+- 暗いグレー色で禁止感を演出
+
+#### ステップ3.3.2: アイテムモデル定義
+**作業内容**:
+```json
+// src/main/resources/assets/oneslotsurvival/models/item/slot_barrier.json
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "oneslotsurvival:item/slot_barrier"
+  }
+}
+```
+
+#### ステップ3.3.3: ツールチップ非表示化
 **実装内容**:
 ```java
-// InventoryScreenMixin.java (Mixin使用)
-@Mixin(InventoryScreen.class)
-public class InventoryScreenMixin {
-    @Inject(method = "renderSlot", at = @At("HEAD"))
-    private void onRenderSlot(GuiGraphics graphics, Slot slot, CallbackInfo ci) {
-        if (OneSlotClientManager.isLocalPlayerRestricted() && isRestrictedSlot(slot)) {
-            // スロットを暗くレンダリング
-        }
+// SlotBarrierItem.java に追加
+@Override
+public void appendHoverText(ItemStack stack, TooltipContext context,
+                          List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+    // ツールチップを完全に非表示にする（何も追加しない）
+    tooltipComponents.clear();
+}
+```
+
+**代替案（ツールチップ非表示が困難な場合）**:
+```java
+// クライアントイベントでツールチップをキャンセル
+@SubscribeEvent
+public static void onItemTooltip(ItemTooltipEvent event) {
+    if (BarrierItem.isBarrierItem(event.getItemStack())) {
+        event.getToolTip().clear();
     }
 }
 ```
 
-**実装難易度**: ★★★
-**リスク**: 高（Mixinの複雑さ、レンダリング競合）
+#### ステップ3.3.4: 言語ファイル設定
+**作業内容**:
+```json
+// src/main/resources/assets/oneslotsurvival/lang/en_us.json
+{
+  "item.oneslotsurvival.slot_barrier": ""
+}
+
+// src/main/resources/assets/oneslotsurvival/lang/ja_jp.json
+{
+  "item.oneslotsurvival.slot_barrier": ""
+}
+```
+- アイテム名を空文字にして表示を最小化
+
+**実装難易度**: ★★☆
+**リスク**: 低（リソースファイル中心、Mixin不使用）
 **テスト項目**:
-- 禁止スロットが視覚的に区別される
-- アイテムは見える状態を維持
-- 他のMODとの互換性
+- バリアアイテムが暗い半透明で表示される
+- ツールチップが表示されない（または最小化される）
+- インベントリで禁止スロットが視覚的に区別される
+- 他のアイテムの表示に影響しない
+
+**実装順序**:
+1. テクスチャファイル作成
+2. アイテムモデル定義
+3. 言語ファイル設定
+4. ツールチップ非表示化実装
+5. 統合テスト
 
 ### フェーズ3.4: スロットクリック無効化
 **目標**: 禁止スロットへのクリック操作を無効化
