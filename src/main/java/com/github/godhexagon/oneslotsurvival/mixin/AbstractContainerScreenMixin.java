@@ -2,9 +2,7 @@ package com.github.godhexagon.oneslotsurvival.mixin;
 
 import com.github.godhexagon.oneslotsurvival.BarrierItem;
 import com.github.godhexagon.oneslotsurvival.OneSlotClientManager;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
@@ -46,15 +44,6 @@ public class AbstractContainerScreenMixin {
 
         // Check if this is a prohibited slot (1-35)
         if (BarrierItem.shouldHaveBarrier(slot.getSlotIndex())) {
-            // Show feedback message to the player
-            Minecraft mc = Minecraft.getInstance();
-            if (mc.player != null) {
-                mc.player.displayClientMessage(
-                    Component.literal("§c[One Slot] This slot is disabled"),
-                    true
-                );
-            }
-
             // Cancel the slot click by cancelling the callback
             ci.cancel();
         }
