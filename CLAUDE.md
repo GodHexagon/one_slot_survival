@@ -396,3 +396,106 @@ private void onSlotClicked(..., CallbackInfo ci) {
    - 成功したワークフローを体系化
 
 これらのテクニックにより、**未知のAPI調査→実装→動作確認**のサイクルを効率化できた。
+
+**🔬 Forgeソースコード解析テクニック**
+
+1. **Forgeイベント体系の理解**
+```java
+// 今回の発見：ScreenEvent系の制約
+ScreenEvent.MouseButtonPressed.Pre event;
+// event.setCanceled(true); // ❌ 利用できない場合がある
+```
+
+2. **Forge GitHub解析アプローチ**
+   - **MinecraftForge/MinecraftForge** リポジトリの活用
+   - **Issues検索**: 同様の問題を抱えた開発者の解決策
+   - **Commit履歴**: APIの変更点や推奨実装方法
+   - **PR（Pull Request）**: 新機能や修正の実装例
+
+3. **Forgeフォーラム活用法**
+```
+検索パターン例:
+- "[SOLVED][1.21.8] How to cancel InputEvent.MouseScrollingEvent?"
+- "AbstractContainerScreen mouseClicked override"
+- "Mixin vs Forge Event performance comparison"
+```
+
+4. **Forge API階層の理解**
+```
+バニラMinecraft → Forge拡張 → ModAPI の層構造
+├─ Vanilla: AbstractContainerScreen#slotClicked
+├─ Forge: ScreenEvent.MouseButtonPressed.Pre
+└─ Mod: カスタムMixin実装
+```
+
+5. **Forgeバージョン間差異の調査**
+   - **1.19.x → 1.21.x**: APIの破壊的変更
+   - **NeoForge分岐**: 2024年以降の選択肢
+   - **マッピング変更**: MCP → 公式Mojang Mappings
+
+**📈 Forge開発の進化理解**
+
+1. **イベントシステムの変遷**
+```java
+// 古い方式 (Forge 1.12.x)
+@SubscribeEvent
+public void onGuiOpen(GuiOpenEvent event) { ... }
+
+// 現代的方式 (Forge 1.21.x)
+@SubscribeEvent
+public void onScreenOpen(ScreenEvent.Opening event) { ... }
+```
+
+2. **Mixin統合の背景**
+   - Forgeイベントでカバーできない領域の存在
+   - パフォーマンス重視の実装需要
+   - Fabric MODとの互換性向上
+
+3. **公式サポート状況の把握**
+   - **推奨手法**: 公式Forgeイベント優先
+   - **許容手法**: Mixin（最小限使用）
+   - **非推奨**: ASM直接操作、リフレクション乱用
+
+**🎯 適切な実装判断基準**
+
+```
+判断フロー（実践的優先順位）:
+1. 【最優先】既存MODの実装を参照
+   - CurseForge/Modrinthで類似機能のMOD検索
+   - GitHubでオープンソースMODのコード確認
+   - 成功事例の手法をベースに採用
+
+2. 公式Forgeイベントで実現可能？ → YES: Forgeイベント使用
+3. 既存イベントで十分な制御？ → NO: カスタムイベント検討
+4. パフォーマンス要求厳しい？ → YES: Mixin検討
+5. 他MOD互換性重要？ → YES: 標準的手法選択
+6. 最終手段 → Mixin + 十分なテスト + ドキュメント化
+```
+
+**🔍 既存MOD実装参照の具体的手法**
+
+1. **類似機能MOD検索**
+```
+検索例：
+- "inventory management" "hotbar disable" - インベントリ制御MOD
+- "Mouse Tweaks" "Inventory Tweaks" - 既存の有名MOD
+- "NoWheel" "Disable Hotbar Scrolling" - 今回参考にしたMOD
+```
+
+2. **GitHub実装調査**
+```java
+// 実際の参考例: NoWheelMod的な実装
+@SubscribeEvent
+public static void onMouseScroll(InputEvent.MouseScrollingEvent event) {
+    if (shouldDisableScroll()) {
+        // 実装者がどの方法を選んだかを確認
+    }
+}
+```
+
+3. **実装パターンの分類**
+   - **Forge標準**: 公式イベント使用（安定・互換性◎）
+   - **Mixin重用**: 高度な制御（強力・リスク中）
+   - **ハイブリッド**: ForgeEvent + Mixin（柔軟・複雑）
+
+この体系的アプローチにより、**Forge生態系全体を理解した上での最適な実装選択**が可能になる。
