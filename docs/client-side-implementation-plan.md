@@ -59,12 +59,29 @@ public static void onClientTick(TickEvent.ClientTickEvent event) {
 - 数字キー1-9でスロット変更されない
 - スロット0以外選択できない
 
-### フェーズ3.3: インベントリスロット視覚変更 (改訂版)
+### フェーズ3.3: スロットクリック無効化
+**目標**: 禁止スロットへのクリック操作を無効化
+
+**実装内容**:
+```java
+@SubscribeEvent
+public static void onGuiScreenEvent(ScreenEvent.MouseButtonPressed event) {
+    if (event.getScreen() instanceof InventoryScreen &&
+        OneSlotClientManager.isLocalPlayerRestricted()) {
+        // 禁止スロットクリックをキャンセル
+    }
+}
+```
+
+**実装難易度**: ★★☆
+**リスク**: 中（UI操作の競合）
+
+### フェーズ3.4: インベントリスロット視覚変更 (改訂版)
 **目標**: バリアアイテムを暗い半透明テクスチャにして禁止スロットを視覚的に区別
 
 **実装アプローチ**: Mixinの代わりにバリアアイテム自体の見た目を変更
 
-#### ステップ3.3.1: バリアアイテムテクスチャ作成
+#### ステップ3.4.1: バリアアイテムテクスチャ作成
 **作業内容**:
 ```
 src/main/resources/assets/oneslotsurvival/textures/item/slot_barrier.png
@@ -73,7 +90,7 @@ src/main/resources/assets/oneslotsurvival/textures/item/slot_barrier.png
 - アルファチャンネルを使用して透明度を調整（推奨: 30-50%）
 - 暗いグレー色で禁止感を演出
 
-#### ステップ3.3.2: アイテムモデル定義
+#### ステップ3.4.2: アイテムモデル定義
 **作業内容**:
 ```json
 // src/main/resources/assets/oneslotsurvival/models/item/slot_barrier.json
@@ -85,7 +102,7 @@ src/main/resources/assets/oneslotsurvival/textures/item/slot_barrier.png
 }
 ```
 
-#### ステップ3.3.3: ツールチップ非表示化
+#### ステップ3.4.3: ツールチップ非表示化
 **実装内容**:
 ```java
 // SlotBarrierItem.java に追加
@@ -108,7 +125,7 @@ public static void onItemTooltip(ItemTooltipEvent event) {
 }
 ```
 
-#### ステップ3.3.4: 言語ファイル設定
+#### ステップ3.4.4: 言語ファイル設定
 **作業内容**:
 ```json
 // src/main/resources/assets/oneslotsurvival/lang/en_us.json
@@ -138,23 +155,6 @@ public static void onItemTooltip(ItemTooltipEvent event) {
 4. ツールチップ非表示化実装
 5. 統合テスト
 
-### フェーズ3.4: スロットクリック無効化
-**目標**: 禁止スロットへのクリック操作を無効化
-
-**実装内容**:
-```java
-@SubscribeEvent
-public static void onGuiScreenEvent(ScreenEvent.MouseButtonPressed event) {
-    if (event.getScreen() instanceof InventoryScreen &&
-        OneSlotClientManager.isLocalPlayerRestricted()) {
-        // 禁止スロットクリックをキャンセル
-    }
-}
-```
-
-**実装難易度**: ★★☆
-**リスク**: 中（UI操作の競合）
-
 ## 技術的考慮事項
 
 ### バリアアイテム制限
@@ -171,7 +171,6 @@ public static void onGuiScreenEvent(ScreenEvent.MouseButtonPressed event) {
 - **@OnlyIn(Dist.CLIENT)**: クライアント専用コード
 - **ClientTickEvent**: 定期処理
 - **ScreenEvent**: GUI操作制御
-- **Mixin**: 最小限の使用（フェーズ3.3のみ）
 
 ## 実装優先度
 
@@ -179,7 +178,7 @@ public static void onGuiScreenEvent(ScreenEvent.MouseButtonPressed event) {
 - 基本的なUI制限機能
 - プレイヤー体験の改善
 
-**任意（フェーズ3.3-3.4）**:
+**任意（フェーズ3.4-3.4）**:
 - 視覚的な改善
 - より洗練されたUX
 
