@@ -10,38 +10,11 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 # 進捗
 
-直前の成果！: ステップ3.4.2: アイテムモデル定義 of フェーズ3.4: インベントリスロット視覚変更 (改訂版) of フェーズ3: クライアントサイドの変更 of プレイヤーのホットバーは１スロットだけ（これをメインハンドと定義する）になり、それ以外のインベントリとホットバー計３５スロットを使用禁止する。
+直前の成果！: ステップ3.4.3: ツールチップ非表示化 of フェーズ3.4: インベントリスロット視覚変更 (改訂版) of フェーズ3: クライアントサイドの変更 of プレイヤーのホットバーは１スロットだけ（これをメインハンドと定義する）になり、それ以外のインベントリとホットバー計３５スロットを使用禁止する。
 
-実行中: ステップ3.4.3: ツールチップ非表示化 of フェーズ3.4: インベントリスロット視覚変更 (改訂版) of フェーズ3: クライアントサイドの変更 of プレイヤーのホットバーは１スロットだけ（これをメインハンドと定義する）になり、それ以外のインベントリとホットバー計３５スロットを使用禁止する。
+実行中: フェーズ4: アイテムドロップ操作が同期の問題があるのを修正 of プレイヤーのホットバーは１スロットだけ（これをメインハンドと定義する）になり、それ以外のインベントリとホットバー計３５スロットを使用禁止する。
 
 すべての進捗: [タスクリスト](/docs/task_list.md)
-
----実行中タスクの詳細のコピー---
-
-#### ステップ3.4.3: ツールチップ非表示化
-**実装内容**:
-```java
-// SlotBarrierItem.java に追加
-@Override
-public void appendHoverText(ItemStack stack, TooltipContext context,
-                          List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-    // ツールチップを完全に非表示にする（何も追加しない）
-    tooltipComponents.clear();
-}
-```
-
-**代替案（ツールチップ非表示が困難な場合）**:
-```java
-// クライアントイベントでツールチップをキャンセル
-@SubscribeEvent
-public static void onItemTooltip(ItemTooltipEvent event) {
-    if (BarrierItem.isBarrierItem(event.getItemStack())) {
-        event.getToolTip().clear();
-    }
-}
-```
-
----
 
 # 開発コマンド
 
