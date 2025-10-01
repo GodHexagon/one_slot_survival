@@ -6,6 +6,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -76,6 +77,17 @@ public class OneSlotClientEvents {
             } catch (Exception e) {
                 // Reflection failed, silently ignore
             }
+        }
+    }
+
+    /**
+     * Hide tooltips for barrier items.
+     * Phase 3.4.3: Prevent barrier item tooltips from being displayed.
+     */
+    @SubscribeEvent
+    public static void onItemTooltip(ItemTooltipEvent event) {
+        if (BarrierItem.isBarrierItem(event.getItemStack())) {
+            event.getToolTip().clear();
         }
     }
 
