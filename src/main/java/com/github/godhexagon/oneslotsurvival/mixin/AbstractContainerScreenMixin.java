@@ -2,7 +2,9 @@ package com.github.godhexagon.oneslotsurvival.mixin;
 
 import com.github.godhexagon.oneslotsurvival.BarrierItem;
 import com.github.godhexagon.oneslotsurvival.OneSlotClientManager;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
@@ -42,7 +44,18 @@ public class AbstractContainerScreenMixin {
             return;
         }
 
-        // Check if this is a prohibited slot (1-35)
+        // Only restrict player inventory slots, not container slots
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null) {
+            return;
+        }
+
+        // Check if this slot belongs to the player's inventory
+        if (!(slot.container instanceof Inventory)) {
+            return; // Allow clicks on container slots (chest, furnace, etc.)
+        }
+
+        // Check if this is a prohibited player inventory slot (1-35)
         if (BarrierItem.shouldHaveBarrier(slot.getSlotIndex())) {
             // Cancel the slot click by cancelling the callback
             ci.cancel();
