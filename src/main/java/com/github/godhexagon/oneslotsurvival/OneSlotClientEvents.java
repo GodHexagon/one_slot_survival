@@ -16,36 +16,15 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = OneSlotSurvivalMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class OneSlotClientEvents {
 
-    private static boolean lastRestrictionState = false;
-    private static int debugMessageCooldown = 0;
-
     /**
-     * Handle client tick events for restriction state detection.
-     * Phase 3.1: Basic state detection only (no hotbar control yet).
+     * Handle client tick events for hotbar control.
+     * Phase 3.2: Enforce main hand selection.
      */
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.level == null) {
             return;
-        }
-
-        // Check current restriction state
-        boolean currentlyRestricted = OneSlotClientManager.isLocalPlayerRestricted();
-
-        // Debug message cooldown
-        if (debugMessageCooldown > 0) {
-            debugMessageCooldown--;
-        }
-
-        // Log state changes for debugging (Phase 3.1 only)
-        if (currentlyRestricted != lastRestrictionState) {
-            String status = OneSlotClientManager.getDebugStatus();
-            mc.player.displayClientMessage(
-                Component.literal("§7[Client Debug] " + status),
-                true
-            );
-            lastRestrictionState = currentlyRestricted;
         }
 
         // Phase 3.2: Enforce main hand selection

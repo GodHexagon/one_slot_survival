@@ -59,15 +59,4 @@ public class OneSlotClientManager {
         }
         return stack.getItem() == ModItems.SLOT_BARRIER.get();
     }
-
-    /**
-     * Get the restriction status for debugging purposes.
-     */
-    public static String getDebugStatus() {
-        if (isLocalPlayerRestricted()) {
-            return "RESTRICTED (barrier items detected)";
-        } else {
-            return "UNRESTRICTED (no barrier items)";
-        }
-    }
 }
