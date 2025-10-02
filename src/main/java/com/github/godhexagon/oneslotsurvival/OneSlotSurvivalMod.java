@@ -1,5 +1,6 @@
 package com.github.godhexagon.oneslotsurvival;
 
+import com.github.godhexagon.oneslotsurvival.item.ModItems;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;

@@ -5,7 +5,7 @@
   "refmap": "oneslotsurvival.refmap.json",
   "minVersion": "0.8",
   "client": [
-    "AbstractContainerScreenMixin"
+    "client.inventory.AbstractContainerScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

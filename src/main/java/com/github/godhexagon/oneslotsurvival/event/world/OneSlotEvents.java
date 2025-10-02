@@ -1,5 +1,9 @@
-package com.github.godhexagon.oneslotsurvival;
+package com.github.godhexagon.oneslotsurvival.event.world;
 
+import com.github.godhexagon.oneslotsurvival.core.slot.BarrierItem;
+import com.github.godhexagon.oneslotsurvival.command.OneSlotCommand;
+import com.github.godhexagon.oneslotsurvival.core.player.OneSlotManager;
+import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

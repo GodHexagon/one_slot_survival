@@ -1,11 +1,10 @@
-package com.github.godhexagon.oneslotsurvival.mixin;
+package com.github.godhexagon.oneslotsurvival.mixin.client.inventory;
 
-import com.github.godhexagon.oneslotsurvival.BarrierItem;
-import com.github.godhexagon.oneslotsurvival.OneSlotClientManager;
+import com.github.godhexagon.oneslotsurvival.core.slot.BarrierItem;
+import com.github.godhexagon.oneslotsurvival.core.player.OneSlotClientManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import org.spongepowered.asm.mixin.Mixin;

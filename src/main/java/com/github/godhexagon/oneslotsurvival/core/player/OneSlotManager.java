@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival;
+package com.github.godhexagon.oneslotsurvival.core.player;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.chat.Component;

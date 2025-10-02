@@ -1,10 +1,10 @@
-package com.github.godhexagon.oneslotsurvival;
+package com.github.godhexagon.oneslotsurvival.event.client;
 
+import com.github.godhexagon.oneslotsurvival.core.slot.BarrierItem;
+import com.github.godhexagon.oneslotsurvival.core.player.OneSlotClientManager;
+import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
