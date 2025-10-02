@@ -1,7 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.mixin.client.inventory;
 
-import com.github.godhexagon.oneslotsurvival.core.slot.BarrierItem;
-import com.github.godhexagon.oneslotsurvival.core.player.OneSlotClientManager;
+import com.github.godhexagon.oneslotsurvival.event.client.ContainerScreenEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.entity.player.Inventory;
@@ -33,8 +32,9 @@ public class AbstractContainerScreenMixin {
      */
     @Inject(method = "slotClicked", at = @At("HEAD"), cancellable = true)
     private void onSlotClicked(Slot slot, int slotId, int mouseButton, ClickType type, CallbackInfo ci) {
-        // Only intercept if the player is restricted
-        if (!OneSlotClientManager.isLocalPlayerRestricted()) {
+        // Only restrict player inventory slots, not container slots
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null) {
             return;
         }
 
@@ -43,21 +43,11 @@ public class AbstractContainerScreenMixin {
             return;
         }
 
-        // Only restrict player inventory slots, not container slots
-        Minecraft mc = Minecraft.getInstance();
-        if (mc.player == null) {
-            return;
-        }
-
         // Check if this slot belongs to the player's inventory
         if (!(slot.container instanceof Inventory)) {
             return; // Allow clicks on container slots (chest, furnace, etc.)
         }
 
-        // Check if this is a prohibited player inventory slot (1-35)
-        if (BarrierItem.shouldHaveBarrier(slot.getSlotIndex())) {
-            // Cancel the slot click by cancelling the callback
-            ci.cancel();
-        }
+        ContainerScreenEvent.onPlayerInventorySlotClicked(slot, ci);
     }
 }
