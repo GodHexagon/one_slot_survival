@@ -12,7 +12,7 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 直前の成果！: Gradle Daemon有効化とJVMメモリ最適化によりrunClient起動時間を短縮した。
 
-実行中: なし
+実行中: event.world　のリファクタリング
 
 すべての進捗: [タスクリスト](/docs/task_list.md)
 
