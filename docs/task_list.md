@@ -13,8 +13,8 @@
     * JVMメモリ最適化（Gradle及びrunClientプロセス）
     * 詳細：[ビルド速度上昇施策](/docs/build-speed-up.md)
 1. パッケージツリーを構成
-   1. パッケージツリーを構成
-   2. AbstractContainerScreenMixin　のリファクタリング
+   1. 完了✅|パッケージツリーを構成
+   2. 完了✅|AbstractContainerScreenMixin　のリファクタリング
    3. event.world　のリファクタリング
    4. event.client　のリファクタリング
    5. command　のリファクタリング
