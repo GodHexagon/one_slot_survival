@@ -8,7 +8,10 @@
     * メインハンドがいっぱいになった場合、バニラでインベントリがいっぱいになっときみたいに、新たにアイテムを拾うことができなくなる。
     * メインハンド以外のスロットを保持（ホットバー選択）できない
     * テスト：[バリアアイテム不正移動防止テスト](/docs/barrier-item-movement-prevention-test.md)
-1. デバッグ実行高速化施策を実施する
+1. 完了✅|デバッグ実行高速化施策を実施する
+    * Gradle Daemon有効化
+    * JVMメモリ最適化（Gradle及びrunClientプロセス）
+    * 詳細：[ビルド速度上昇施策](/docs/build-speed-up.md)
 1. パッケージツリーを構成
    1. パッケージツリーを構成
    2. AbstractContainerScreenMixin　のリファクタリング
