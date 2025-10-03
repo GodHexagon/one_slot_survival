@@ -10,9 +10,9 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 # 進捗
 
-直前の成果！: プレイヤーのホットバーは１スロットだけ（これをメインハンドと定義する）になり、それ以外のインベントリとホットバー計３５スロットを使用禁止する。
+直前の成果！: Gradle Daemon有効化とJVMメモリ最適化によりrunClient起動時間を短縮した。
 
-実行中: デバッグ実行高速化施策を実施する
+実行中: なし
 
 すべての進捗: [タスクリスト](/docs/task_list.md)
 
