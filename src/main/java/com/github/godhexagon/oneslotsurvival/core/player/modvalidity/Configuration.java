@@ -68,7 +68,12 @@ public class Configuration {
             }
         }
 
-        saveData();
+        if (!saveData()) {
+            player.displayClientMessage(
+                    Component.literal("§c[One Slot] Failed to save world settings."),
+                    false
+            );
+        }
     }
 
     /**
@@ -87,15 +92,6 @@ public class Configuration {
     public static int getEnabledPlayerCount() {
         ensureDataLoaded();
         return enabledPlayers.size();
-    }
-
-    /**
-     * Clear all enabled players (for testing or reset purposes).
-     */
-    public static void clearAll() {
-        ensureDataLoaded();
-        enabledPlayers.clear();
-        saveData();
     }
 
     /**
@@ -141,7 +137,7 @@ public class Configuration {
     /**
      * Save enabled players data to properties file.
      */
-    private static void saveData() {
+    private static boolean saveData() {
         File dataFile = getDataFile();
 
         // Ensure parent directory exists
@@ -157,8 +153,9 @@ public class Configuration {
 
         try (FileOutputStream fos = new FileOutputStream(dataFile)) {
             props.store(fos, "One Slot Survival - Enabled Players");
+            return true;
         } catch (IOException e) {
-            // Failed to save
+            return false;
         }
     }
 
