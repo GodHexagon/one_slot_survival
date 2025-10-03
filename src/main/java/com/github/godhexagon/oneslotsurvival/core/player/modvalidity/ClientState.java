@@ -1,6 +1,6 @@
-package com.github.godhexagon.oneslotsurvival.core.player;
+package com.github.godhexagon.oneslotsurvival.core.player.modvalidity;
 
-import com.github.godhexagon.oneslotsurvival.item.ModItems;
+import com.github.godhexagon.oneslotsurvival.object.item.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * Uses barrier item detection to infer server-side restriction state.
  */
 @OnlyIn(Dist.CLIENT)
-public class OneSlotClientManager {
+public class ClientState {
 
     /**
      * Check if the local player is currently restricted by One Slot mode.

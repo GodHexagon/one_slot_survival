@@ -1,6 +1,6 @@
-package com.github.godhexagon.oneslotsurvival.core.slot;
+package com.github.godhexagon.oneslotsurvival.core.player.slot;
 
-import com.github.godhexagon.oneslotsurvival.item.ModItems;
+import com.github.godhexagon.oneslotsurvival.object.item.ModItems;
 import net.minecraft.world.item.ItemStack;
 
 /**

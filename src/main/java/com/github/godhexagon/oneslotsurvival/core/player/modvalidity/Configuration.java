@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.core.player;
+package com.github.godhexagon.oneslotsurvival.core.player.modvalidity;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.chat.Component;
@@ -18,7 +18,7 @@ import java.util.UUID;
  * Manager for tracking which players have One Slot mode enabled.
  * Uses simple properties file persistence for world-wide data.
  */
-public class OneSlotManager {
+public class Configuration {
     private static final String FILE_NAME = "oneslot_enabled_players.properties";
 
     private static final Set<UUID> enabledPlayers = new HashSet<>();

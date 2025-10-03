@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.item;
+package com.github.godhexagon.oneslotsurvival.object.item;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
 import net.minecraft.core.registries.Registries;

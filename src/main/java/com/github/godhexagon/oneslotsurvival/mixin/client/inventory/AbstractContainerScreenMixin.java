@@ -1,6 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.mixin.client.inventory;
 
-import com.github.godhexagon.oneslotsurvival.event.client.ContainerScreenEvent;
+import com.github.godhexagon.oneslotsurvival.event.ContainerScreenEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.entity.player.Inventory;

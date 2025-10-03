@@ -1,8 +1,8 @@
-package com.github.godhexagon.oneslotsurvival.event.world;
+package com.github.godhexagon.oneslotsurvival.event;
 
-import com.github.godhexagon.oneslotsurvival.core.slot.BarrierItem;
-import com.github.godhexagon.oneslotsurvival.command.OneSlotCommand;
-import com.github.godhexagon.oneslotsurvival.core.player.OneSlotManager;
+import com.github.godhexagon.oneslotsurvival.core.player.slot.BarrierItem;
+import com.github.godhexagon.oneslotsurvival.command.admin.action.PlayerValidity;
+import com.github.godhexagon.oneslotsurvival.core.player.modvalidity.Configuration;
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -21,14 +21,14 @@ import java.util.UUID;
  * Handles command registration and other game events.
  */
 @Mod.EventBusSubscriber(modid = OneSlotSurvivalMod.MODID)
-public class OneSlotEvents {
+public class ForgeWorldEvents {
 
     // Track which players had restrictions processed in the previous tick
     private static final Map<UUID, Boolean> previousTickRestrictions = new HashMap<>();
 
     @SubscribeEvent
     public static void onRegisterCommands(RegisterCommandsEvent event) {
-        OneSlotCommand.register(event.getDispatcher());
+        PlayerValidity.register(event.getDispatcher());
     }
 
     @SubscribeEvent
@@ -41,7 +41,7 @@ public class OneSlotEvents {
         // 対象プレイヤーでなくなった時だけ、バリアアイテムをインベントリから削除する
         Player player = event.player;
         UUID playerId = player.getUUID();
-        boolean currentlyEnabled = OneSlotManager.isEnabled(player);
+        boolean currentlyEnabled = Configuration.isEnabled(player);
         Boolean wasEnabledLastTick = previousTickRestrictions.get(playerId);
 
         // Check if restrictions stopped being processed (transition from enabled to disabled)

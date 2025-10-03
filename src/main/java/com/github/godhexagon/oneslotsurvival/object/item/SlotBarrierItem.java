@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.item;
+package com.github.godhexagon.oneslotsurvival.object.item;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;

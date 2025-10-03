@@ -1,7 +1,7 @@
-package com.github.godhexagon.oneslotsurvival.event.client;
+package com.github.godhexagon.oneslotsurvival.event;
 
-import com.github.godhexagon.oneslotsurvival.core.slot.BarrierItem;
-import com.github.godhexagon.oneslotsurvival.core.player.OneSlotClientManager;
+import com.github.godhexagon.oneslotsurvival.core.player.slot.BarrierItem;
+import com.github.godhexagon.oneslotsurvival.core.player.modvalidity.ClientState;
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.Mod;
  * Client-side event handlers for One Slot Survival mod.
  */
 @Mod.EventBusSubscriber(modid = OneSlotSurvivalMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
-public class OneSlotClientEvents {
+public class ForgeClientEvents {
 
     /**
      * Handle client tick events for hotbar control.
@@ -42,7 +42,7 @@ public class OneSlotClientEvents {
         }
 
         // Only enforce selection if the local player is restricted
-        if (OneSlotClientManager.isLocalPlayerRestricted()) {
+        if (ClientState.isLocalPlayerRestricted()) {
             // Use reflection to access private selected field if available
             try {
                 var inventory = mc.player.getInventory();
