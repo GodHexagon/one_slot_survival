@@ -12,7 +12,7 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 直前の成果！: 警告を確認して対応
 
-実行中: なし
+実行中: プレイヤーはロールスロットを利用できるようにする
 
 すべての進捗: [タスクリスト](/docs/task_list.md)
 
