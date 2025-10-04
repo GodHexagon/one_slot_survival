@@ -1,6 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.event;
 
-import com.github.godhexagon.oneslotsurvival.core.player.modvalidity.ClientState;
+import com.github.godhexagon.oneslotsurvival.core.player.modvalidity.ClientModValidity;
 import com.github.godhexagon.oneslotsurvival.core.player.slot.BarrierItem;
 import net.minecraft.world.inventory.Slot;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ContainerScreenEvent {
     public static void onPlayerInventorySlotClicked(Slot slot, CallbackInfo ci) {
         // Only intercept if the player is restricted
-        if (!ClientState.isLocalPlayerRestricted()) {
+        if (!ClientModValidity.isLocalPlayerRestricted()) {
             return;
         }
 

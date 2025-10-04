@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * Uses barrier item detection to infer server-side restriction state.
  */
 @OnlyIn(Dist.CLIENT)
-public class ClientState {
+public class ClientModValidity {
 
     /**
      * Check if the local player is currently restricted by One Slot mode.

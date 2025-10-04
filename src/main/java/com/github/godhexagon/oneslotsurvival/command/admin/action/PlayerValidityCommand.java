@@ -1,6 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.command.admin.action;
 
-import com.github.godhexagon.oneslotsurvival.core.player.modvalidity.Configuration;
+import com.github.godhexagon.oneslotsurvival.core.player.modvalidity.ModValidityConfiguration;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -16,7 +16,7 @@ import java.util.Collection;
  * Command handling for One Slot Survival mod.
  * Provides /oneslot command with enable/disable/toggle/status subcommands.
  */
-public class PlayerValidity {
+public class PlayerValidityCommand {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
@@ -42,7 +42,7 @@ public class PlayerValidity {
             String action = enabled ? "enabled" : "disabled";
 
             for (ServerPlayer player : players) {
-                Configuration.setValidity(player, enabled);
+                ModValidityConfiguration.setValidity(player, enabled);
                 context.getSource().sendSuccess(
                     () -> Component.literal("One Slot Survival " + action + " for " + player.getName().getString()),
                     true
@@ -67,7 +67,7 @@ public class PlayerValidity {
             Collection<ServerPlayer> players = EntityArgument.getPlayers(context, "players");
 
             for (ServerPlayer player : players) {
-                boolean newState = Configuration.toggle(player);
+                boolean newState = ModValidityConfiguration.toggle(player);
                 String action = newState ? "enabled" : "disabled";
 
                 context.getSource().sendSuccess(
@@ -94,7 +94,7 @@ public class PlayerValidity {
             Collection<ServerPlayer> players = EntityArgument.getPlayers(context, "players");
 
             for (ServerPlayer player : players) {
-                boolean enabled = Configuration.getValidity(player);
+                boolean enabled = ModValidityConfiguration.getValidity(player);
                 String status = enabled ? "enabled" : "disabled";
                 context.getSource().sendSuccess(
                     () -> Component.literal("One Slot Survival is " + status + " for " + player.getName().getString()),
@@ -112,7 +112,7 @@ public class PlayerValidity {
     private static int getOwnStatus(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         try {
             ServerPlayer player = context.getSource().getPlayerOrException();
-            boolean enabled = Configuration.getValidity(player);
+            boolean enabled = ModValidityConfiguration.getValidity(player);
             String status = enabled ? "enabled" : "disabled";
             context.getSource().sendSuccess(
                 () -> Component.literal("One Slot Survival is " + status + " for you"),

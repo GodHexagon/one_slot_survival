@@ -1,7 +1,7 @@
 package com.github.godhexagon.oneslotsurvival.event;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
-import com.github.godhexagon.oneslotsurvival.core.player.modvalidity.WorldState;
+import com.github.godhexagon.oneslotsurvival.core.player.modvalidity.WorldModValidity;
 import com.github.godhexagon.oneslotsurvival.core.player.slot.InventoryProcess;
 
 import net.minecraft.world.entity.player.Player;
@@ -22,7 +22,7 @@ public class ForgeWorldEvents {
         Player player = event.player;
 
         // 対象プレイヤー以外を除外
-        if (!WorldState.isEffective(player)) {
+        if (!WorldModValidity.isEffective(player)) {
             return;
         }
 
@@ -33,8 +33,8 @@ public class ForgeWorldEvents {
     @SubscribeEvent
     public static void onPlayerChangeGameMode(PlayerEvent.PlayerChangeGameModeEvent event) {
         Player player = event.getEntity();
-        boolean newEffective = WorldState.isEffective(player, event.getNewGameMode());
-        boolean previousEffective = WorldState.isEffective(player, event.getCurrentGameMode());
+        boolean newEffective = WorldModValidity.isEffective(player, event.getNewGameMode());
+        boolean previousEffective = WorldModValidity.isEffective(player, event.getCurrentGameMode());
 
         if(newEffective && !previousEffective) {
             InventoryProcess.processInventoryRestrictions(player);

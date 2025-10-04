@@ -1,7 +1,7 @@
 package com.github.godhexagon.oneslotsurvival.command;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
-import com.github.godhexagon.oneslotsurvival.command.admin.action.PlayerValidity;
+import com.github.godhexagon.oneslotsurvival.command.admin.action.PlayerValidityCommand;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -11,7 +11,7 @@ public class CommandEvent {
 
     @SubscribeEvent
     public static void onRegisterCommands(RegisterCommandsEvent event) {
-        PlayerValidity.register(event.getDispatcher());
+        PlayerValidityCommand.register(event.getDispatcher());
     }
 
 }

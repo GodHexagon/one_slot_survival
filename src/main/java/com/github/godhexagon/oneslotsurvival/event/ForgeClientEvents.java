@@ -1,7 +1,7 @@
 package com.github.godhexagon.oneslotsurvival.event;
 
 import com.github.godhexagon.oneslotsurvival.core.player.slot.BarrierItem;
-import com.github.godhexagon.oneslotsurvival.core.player.modvalidity.ClientState;
+import com.github.godhexagon.oneslotsurvival.core.player.modvalidity.ClientModValidity;
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
@@ -42,7 +42,7 @@ public class ForgeClientEvents {
         }
 
         // Only enforce selection if the local player is restricted
-        if (ClientState.isLocalPlayerRestricted()) {
+        if (ClientModValidity.isLocalPlayerRestricted()) {
             // Use reflection to access private selected field if available
             try {
                 var inventory = mc.player.getInventory();

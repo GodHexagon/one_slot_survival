@@ -17,7 +17,7 @@ import java.util.UUID;
  * Manager for tracking which players have One Slot mode enabled.
  * Uses simple properties file persistence for world-wide data.
  */
-public class Configuration {
+public class ModValidityConfiguration {
     private static final String FILE_NAME = "oneslot_enabled_players.properties";
 
     private static final Set<UUID> enabledPlayers = new HashSet<>();
@@ -40,7 +40,7 @@ public class Configuration {
 
         UUID playerId = player.getUUID();
         boolean wasEnabled = enabledPlayers.contains(playerId);
-        boolean isEffectiveGameMode = WorldState.isEffectiveGameMode(player.gameMode());
+        boolean isEffectiveGameMode = WorldModValidity.isEffectiveGameMode(player.gameMode());
 
         if (enabled) {
             enabledPlayers.add(playerId);
