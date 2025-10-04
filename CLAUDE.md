@@ -10,9 +10,9 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 # 進捗
 
-直前の成果！: 警告を確認して対応
+直前の成果！: ホットバー選択制限変更 of プレイヤーはロールスロットを利用できるようにする
 
-実行中: プレイヤーはロールスロットを利用できるようにする
+実行中: クリック時にバリアアイテムスワップ of プレイヤーはロールスロットを利用できるようにする
 
 すべての進捗: [タスクリスト](/docs/task_list.md)
 
