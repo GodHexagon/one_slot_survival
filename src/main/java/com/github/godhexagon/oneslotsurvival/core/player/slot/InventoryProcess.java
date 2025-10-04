@@ -38,7 +38,7 @@ public class InventoryProcess {
             }
 
             // Try to move item to main hand (slot 0)
-            if (moveItemToMainHand(player, item, slot)) {
+            if (moveItemToMainHand(player, item)) {
                 // Successfully moved, place barrier
                 inventory.setItem(slot, SlotBarrier.createBarrierStack());
             } else {
@@ -54,7 +54,7 @@ public class InventoryProcess {
      * Try to move an item to the main hand slot (slot 0)
      * @return true if item was successfully moved, false if main hand is full
      */
-    private static boolean moveItemToMainHand(Player player, ItemStack item, int sourceSlot) {
+    private static boolean moveItemToMainHand(Player player, ItemStack item) {
         Inventory inventory = player.getInventory();
         ItemStack mainHandItem = inventory.getItem(0);
 
