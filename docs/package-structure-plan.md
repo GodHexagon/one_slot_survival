@@ -25,6 +25,13 @@ com.github.godhexagon.oneslotsurvival/
 │   ├── ForgeClientEvents.java
 │   ├── DropItemEvents.java
 │   └── ContainerScreenEvents.java
+├── inventoryui/ #転職機能とレベルアップ機能の操作をするUIです。Mixinから直接参照されます。
+│   └── ...
+├── configui/ #サーバー設定GUIをScreenで定義します。
+│   ├── ConfigScreen.java
+│   ├── CommandBuilder.java
+│   └── components/
+│       └── ...
 ├── command/
 │   ├── player/
 │   │   ├── RoleCommand.java
@@ -41,13 +48,6 @@ com.github.godhexagon.oneslotsurvival/
 │           ├── PlayerRole.java
 │           ├── PlayerLevel.java
 │           └── RoleDistribution
-├── inventoryui/ #転職機能とレベルアップ機能の操作をするUIです。Mixinから直接参照されます。
-│   └── ...
-├── configui/ #サーバー設定GUIをScreenで定義します。
-│   ├── ConfigScreen.java
-│   ├── CommandBuilder.java
-│   └── components/
-│       └── ...
 ├── core/
 │   ├── distribution/ #プレイヤーのロールが全体的に均一になるようにする統合ロジックです。
 │   │   └── DistributionManager.java
