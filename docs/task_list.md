@@ -12,14 +12,16 @@
     * Gradle Daemon有効化
     * JVMメモリ最適化（Gradle及びrunClientプロセス）
     * 詳細：[ビルド速度上昇施策](/docs/build-speed-up.md)
-1. パッケージツリーを構成
-   1. パッケージツリーを構成
-   2. AbstractContainerScreenMixin　のリファクタリング
-   3. event.world　のリファクタリング
-   4. event.client　のリファクタリング
-   5. command　のリファクタリング
-   6. item, core　のリファクタリング
-**警告を確認して対応**
+1. 完了✅|パッケージツリーを構成
+   1. 完了✅|パッケージツリーを構成
+   2. 完了✅|AbstractContainerScreenMixin　のリファクタリング
+   3. 完了✅|event.ForgeWorldEvents　のリファクタリング
+   4. 完了✅|event.ForgeClientEvents　のリファクタリング
+   5. ~~command　のリファクタリング~~
+   6. 完了✅|core　のリファクタリング
+   7. ~~item　のリファクタリング~~
+   8. 完了✅|file/パッケージに分離
+1. 完了✅|警告を確認して対応
 1. プレイヤーはロールスロットを利用できるようにする。
     * プレイヤーはメインハンドのほかに、ロールスロットがホットバーとしてあり、ホットバー選択できる。
         * メインスロットの右側に３つある。

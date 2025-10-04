@@ -1,62 +1,10 @@
-package com.github.godhexagon.oneslotsurvival;
+package com.github.godhexagon.oneslotsurvival.core.player.slot;
 
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-/**
- * Event handler for One Slot Survival mod.
- * Handles command registration and other game events.
- */
-@Mod.EventBusSubscriber(modid = OneSlotSurvivalMod.MODID)
-public class OneSlotEvents {
-
-    // Track which players had restrictions processed in the previous tick
-    private static final Map<UUID, Boolean> previousTickRestrictions = new HashMap<>();
-
-    @SubscribeEvent
-    public static void onRegisterCommands(RegisterCommandsEvent event) {
-        OneSlotCommand.register(event.getDispatcher());
-    }
-
-    @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        // Only process on server side
-        if (event.player.level().isClientSide) {
-            return;
-        }
-
-        // 対象プレイヤーでなくなった時だけ、バリアアイテムをインベントリから削除する
-        Player player = event.player;
-        UUID playerId = player.getUUID();
-        boolean currentlyEnabled = OneSlotManager.isEnabled(player);
-        Boolean wasEnabledLastTick = previousTickRestrictions.get(playerId);
-
-        // Check if restrictions stopped being processed (transition from enabled to disabled)
-        if (wasEnabledLastTick != null && wasEnabledLastTick && !currentlyEnabled) {
-            // Clear barrier items when restrictions stop
-            clearBarrierItems(player);
-        }
-
-        // Update tracking for this tick
-        previousTickRestrictions.put(playerId, currentlyEnabled);
-
-        if (!currentlyEnabled) {
-            return;
-        }
-
-        // Apply all inventory restrictions
-        processInventoryRestrictions(player);
-    }
-
+public class InventoryProcess {
     /**
      * Public method to process all inventory restrictions for a player.
      * Used both by tick events and when initially enabling the mode.
@@ -79,25 +27,25 @@ public class OneSlotEvents {
             ItemStack item = inventory.getItem(slot);
 
             // If slot contains a barrier item, leave it alone
-            if (BarrierItem.isBarrierItem(item)) {
+            if (SlotBarrier.isBarrierItem(item)) {
                 continue;
             }
 
             if (item.isEmpty()) {
                 // Slot is empty, place barrier
-                inventory.setItem(slot, BarrierItem.createBarrierStack());
+                inventory.setItem(slot, SlotBarrier.createBarrierStack());
                 continue;
             }
 
             // Try to move item to main hand (slot 0)
-            if (moveItemToMainHand(player, item, slot)) {
+            if (moveItemToMainHand(player, item)) {
                 // Successfully moved, place barrier
-                inventory.setItem(slot, BarrierItem.createBarrierStack());
+                inventory.setItem(slot, SlotBarrier.createBarrierStack());
             } else {
                 // Drop item on ground using vanilla API
                 player.drop(item, false);
                 // Place barrier after dropping
-                inventory.setItem(slot, BarrierItem.createBarrierStack());
+                inventory.setItem(slot, SlotBarrier.createBarrierStack());
             }
         }
     }
@@ -106,7 +54,7 @@ public class OneSlotEvents {
      * Try to move an item to the main hand slot (slot 0)
      * @return true if item was successfully moved, false if main hand is full
      */
-    private static boolean moveItemToMainHand(Player player, ItemStack item, int sourceSlot) {
+    private static boolean moveItemToMainHand(Player player, ItemStack item) {
         Inventory inventory = player.getInventory();
         ItemStack mainHandItem = inventory.getItem(0);
 
@@ -138,7 +86,7 @@ public class OneSlotEvents {
     /**
      * Clear all barrier items from prohibited slots (1-35) when restrictions are disabled
      */
-    private static void clearBarrierItems(Player player) {
+    public static void clearBarrierItems(Player player) {
         Inventory inventory = player.getInventory();
 
         // Clear barrier items from slots 1-35 (prohibited slots)
@@ -146,9 +94,29 @@ public class OneSlotEvents {
             ItemStack item = inventory.getItem(slot);
 
             // If slot contains a barrier item, remove it
-            if (BarrierItem.isBarrierItem(item)) {
+            if (SlotBarrier.isBarrierItem(item)) {
                 inventory.setItem(slot, ItemStack.EMPTY);
             }
         }
+    }
+
+    public static boolean isProcessedInventoryRestrictions(Player player) {
+        // Check hotbar slots 1-8 (indices 1-8)
+        for (int i = 1; i <= 8; i++) {
+            ItemStack stack = player.getInventory().getItem(i);
+            if (SlotBarrier.isBarrierItem(stack)) {
+                return true;
+            }
+        }
+
+        // Check inventory slots 9-35 (indices 9-35)
+        for (int i = 9; i <= 35; i++) {
+            ItemStack stack = player.getInventory().getItem(i);
+            if (SlotBarrier.isBarrierItem(stack)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

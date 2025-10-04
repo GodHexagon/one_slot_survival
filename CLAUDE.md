@@ -10,7 +10,7 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 # 進捗
 
-直前の成果！: Gradle Daemon有効化とJVMメモリ最適化によりrunClient起動時間を短縮した。
+直前の成果！: 警告を確認して対応
 
 実行中: なし
 

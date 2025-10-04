@@ -1,12 +1,13 @@
-package com.github.godhexagon.oneslotsurvival;
+package com.github.godhexagon.oneslotsurvival.core.player.slot;
 
+import com.github.godhexagon.oneslotsurvival.object.item.ModItems;
 import net.minecraft.world.item.ItemStack;
 
 /**
  * Utility class for creating and managing slot barrier items.
  * Uses a custom MOD item to avoid conflicts with vanilla barrier blocks.
  */
-public class BarrierItem {
+public class SlotBarrier {
 
     /**
      * Creates a barrier ItemStack that acts as a transparent blocker.
