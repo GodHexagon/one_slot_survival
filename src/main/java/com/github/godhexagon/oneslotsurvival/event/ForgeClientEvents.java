@@ -1,10 +1,9 @@
 package com.github.godhexagon.oneslotsurvival.event;
 
-import com.github.godhexagon.oneslotsurvival.core.player.hotbar.MainHandSelection;
+import com.github.godhexagon.oneslotsurvival.core.player.hotbar.HotbarSelection;
 import com.github.godhexagon.oneslotsurvival.core.player.modvalidity.ClientModValidity;
-import com.github.godhexagon.oneslotsurvival.core.player.slot.BarrierItem;
+import com.github.godhexagon.oneslotsurvival.core.player.slot.SlotBarrier;
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -24,12 +23,12 @@ public class ForgeClientEvents {
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         // Only enforce selection if the local player is restricted
-        if (!ClientModValidity.isLocalPlayerRestricted()) {
+        if (!ClientModValidity.isLocalPlayerEnabled()) {
             return;
         }
 
         // Enforce main hand selection
-        MainHandSelection.enforceMainHandSelection();
+        HotbarSelection.enforceMainHandSelection();
     }
 
     /**
@@ -38,7 +37,7 @@ public class ForgeClientEvents {
      */
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event) {
-        if (BarrierItem.isBarrierItem(event.getItemStack())) {
+        if (SlotBarrier.isBarrierItem(event.getItemStack())) {
             event.getToolTip().clear();
         }
     }

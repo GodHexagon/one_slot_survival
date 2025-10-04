@@ -2,7 +2,7 @@ package com.github.godhexagon.oneslotsurvival.core.player.hotbar;
 
 import net.minecraft.client.Minecraft;
 
-public class MainHandSelection {
+public class HotbarSelection {
     /**
      * Force hotbar selection to remain at slot 0 (main hand) during client ticks.
      * Phase 3.2: Disable hotbar scrolling by forcing selection to main hand.

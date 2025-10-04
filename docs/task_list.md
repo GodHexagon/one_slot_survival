@@ -17,8 +17,10 @@
    2. 完了✅|AbstractContainerScreenMixin　のリファクタリング
    3. 完了✅|event.ForgeWorldEvents　のリファクタリング
    4. 完了✅|event.ForgeClientEvents　のリファクタリング
-   5. command　のリファクタリング
-   6. item, core　のリファクタリング
+   5. ~~command　のリファクタリング~~
+   6. 完了✅|core　のリファクタリング
+   7. ~~item　のリファクタリング~~
+   8. file/パッケージに分離
 **警告を確認して対応**
 1. プレイヤーはロールスロットを利用できるようにする。
     * プレイヤーはメインハンドのほかに、ロールスロットがホットバーとしてあり、ホットバー選択できる。

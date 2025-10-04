@@ -27,25 +27,25 @@ public class InventoryProcess {
             ItemStack item = inventory.getItem(slot);
 
             // If slot contains a barrier item, leave it alone
-            if (BarrierItem.isBarrierItem(item)) {
+            if (SlotBarrier.isBarrierItem(item)) {
                 continue;
             }
 
             if (item.isEmpty()) {
                 // Slot is empty, place barrier
-                inventory.setItem(slot, BarrierItem.createBarrierStack());
+                inventory.setItem(slot, SlotBarrier.createBarrierStack());
                 continue;
             }
 
             // Try to move item to main hand (slot 0)
             if (moveItemToMainHand(player, item, slot)) {
                 // Successfully moved, place barrier
-                inventory.setItem(slot, BarrierItem.createBarrierStack());
+                inventory.setItem(slot, SlotBarrier.createBarrierStack());
             } else {
                 // Drop item on ground using vanilla API
                 player.drop(item, false);
                 // Place barrier after dropping
-                inventory.setItem(slot, BarrierItem.createBarrierStack());
+                inventory.setItem(slot, SlotBarrier.createBarrierStack());
             }
         }
     }
@@ -94,9 +94,29 @@ public class InventoryProcess {
             ItemStack item = inventory.getItem(slot);
 
             // If slot contains a barrier item, remove it
-            if (BarrierItem.isBarrierItem(item)) {
+            if (SlotBarrier.isBarrierItem(item)) {
                 inventory.setItem(slot, ItemStack.EMPTY);
             }
         }
+    }
+
+    public static boolean isProcessedInventoryRestrictions(Player player) {
+        // Check hotbar slots 1-8 (indices 1-8)
+        for (int i = 1; i <= 8; i++) {
+            ItemStack stack = player.getInventory().getItem(i);
+            if (SlotBarrier.isBarrierItem(stack)) {
+                return true;
+            }
+        }
+
+        // Check inventory slots 9-35 (indices 9-35)
+        for (int i = 9; i <= 35; i++) {
+            ItemStack stack = player.getInventory().getItem(i);
+            if (SlotBarrier.isBarrierItem(stack)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
