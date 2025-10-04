@@ -10,9 +10,9 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 # 進捗
 
-直前の成果！: core　のリファクタリング of パッケージツリーを構成
+直前の成果！: file/パッケージに分離 of パッケージツリーを構成
 
-実行中: file/パッケージに分離 of パッケージツリーを構成
+実行中: 警告を確認して対応
 
 すべての進捗: [タスクリスト](/docs/task_list.md)
 

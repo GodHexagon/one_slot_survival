@@ -1,13 +1,10 @@
 package com.github.godhexagon.oneslotsurvival.core.player.modvalidity;
 
 import com.github.godhexagon.oneslotsurvival.core.player.slot.InventoryProcess;
+import com.github.godhexagon.oneslotsurvival.file.PropertiesFileHandler;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.chat.Component;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -19,6 +16,8 @@ import java.util.UUID;
  */
 public class ModValidityConfiguration {
     private static final String FILE_NAME = "oneslot_enabled_players.properties";
+    private static final PropertiesFileHandler fileHandler =
+        new PropertiesFileHandler(FILE_NAME, "One Slot Survival - Enabled Players");
 
     private static final Set<UUID> enabledPlayers = new HashSet<>();
     private static boolean dataLoaded = false;
@@ -109,29 +108,19 @@ public class ModValidityConfiguration {
      * Load enabled players data from properties file.
      */
     private static void loadData() {
-        File dataFile = getDataFile();
-        if (!dataFile.exists()) {
-            return;
-        }
-
         enabledPlayers.clear();
-        Properties props = new Properties();
-        try (FileInputStream fis = new FileInputStream(dataFile)) {
-            props.load(fis);
+        Properties props = fileHandler.load();
 
-            for (String key : props.stringPropertyNames()) {
-                if (key.startsWith("player.") && "true".equals(props.getProperty(key))) {
-                    try {
-                        String uuidString = key.substring("player.".length());
-                        UUID playerId = UUID.fromString(uuidString);
-                        enabledPlayers.add(playerId);
-                    } catch (IllegalArgumentException e) {
-                        // Skip invalid UUIDs
-                    }
+        for (String key : props.stringPropertyNames()) {
+            if (key.startsWith("player.") && "true".equals(props.getProperty(key))) {
+                try {
+                    String uuidString = key.substring("player.".length());
+                    UUID playerId = UUID.fromString(uuidString);
+                    enabledPlayers.add(playerId);
+                } catch (IllegalArgumentException e) {
+                    // Skip invalid UUIDs
                 }
             }
-        } catch (IOException e) {
-            // Failed to load, start with empty set
         }
     }
 
@@ -139,33 +128,11 @@ public class ModValidityConfiguration {
      * Save enabled players data to properties file.
      */
     private static boolean saveData() {
-        File dataFile = getDataFile();
-
-        // Ensure parent directory exists
-        File parentDir = dataFile.getParentFile();
-        if (parentDir != null) {
-            parentDir.mkdirs();
-        }
-
         Properties props = new Properties();
         for (UUID playerId : enabledPlayers) {
             props.setProperty("player." + playerId.toString(), "true");
         }
 
-        try (FileOutputStream fos = new FileOutputStream(dataFile)) {
-            props.store(fos, "One Slot Survival - Enabled Players");
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
-    /**
-     * Get the data file.
-     */
-    private static File getDataFile() {
-        File configDir = new File(System.getProperty("user.dir"), "config");
-        configDir.mkdirs();
-        return new File(configDir, FILE_NAME);
+        return fileHandler.save(props);
     }
 }
