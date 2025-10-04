@@ -1,14 +1,13 @@
 package com.github.godhexagon.oneslotsurvival.core.player.modvalidity;
 
+import com.github.godhexagon.oneslotsurvival.core.player.slot.InventoryProcess;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.level.GameType;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -27,12 +26,7 @@ public class Configuration {
     /**
      * Check if One Slot mode is enabled for the given player.
      */
-    public static boolean isEnabled(Player player) {
-        Set<GameType> effectiveGamemode = EnumSet.of(GameType.SURVIVAL, GameType.ADVENTURE);
-        if (!effectiveGamemode.contains(player.gameMode())) {
-            return false;
-        }
-
+    public static boolean getValidity(Player player) {
         ensureDataLoaded();
         return enabledPlayers.contains(player.getUUID());
     }
@@ -41,17 +35,21 @@ public class Configuration {
      * Enable or disable One Slot mode for the given player.
      * When enabling, processes existing inventory items.
      */
-    public static void setEnabled(Player player, boolean enabled) {
+    public static void setValidity(Player player, boolean enabled) {
         ensureDataLoaded();
 
         UUID playerId = player.getUUID();
         boolean wasEnabled = enabledPlayers.contains(playerId);
+        boolean isEffectiveGameMode = WorldState.isEffectiveGameMode(player.gameMode());
 
         if (enabled) {
             enabledPlayers.add(playerId);
 
             // Process existing inventory when first enabling
             if (!wasEnabled) {
+                if (isEffectiveGameMode) {
+                    InventoryProcess.processInventoryRestrictions(player);
+                }
                 player.displayClientMessage(
                     Component.literal("§6[One Slot] Mode enabled. Only main hand slot can be used."),
                     false
@@ -61,6 +59,9 @@ public class Configuration {
             enabledPlayers.remove(playerId);
 
             if (wasEnabled) {
+                if (isEffectiveGameMode) {
+                    InventoryProcess.clearBarrierItems(player);
+                }
                 player.displayClientMessage(
                     Component.literal("§6[One Slot] Mode disabled. All inventory slots available."),
                     false
@@ -81,8 +82,8 @@ public class Configuration {
      * @return the new state (true if now enabled, false if now disabled)
      */
     public static boolean toggle(Player player) {
-        boolean newState = !isEnabled(player);
-        setEnabled(player, newState);
+        boolean newState = !getValidity(player);
+        setValidity(player, newState);
         return newState;
     }
 

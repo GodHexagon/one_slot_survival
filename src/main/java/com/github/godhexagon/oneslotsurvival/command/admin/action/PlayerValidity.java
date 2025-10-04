@@ -42,7 +42,7 @@ public class PlayerValidity {
             String action = enabled ? "enabled" : "disabled";
 
             for (ServerPlayer player : players) {
-                Configuration.setEnabled(player, enabled);
+                Configuration.setValidity(player, enabled);
                 context.getSource().sendSuccess(
                     () -> Component.literal("One Slot Survival " + action + " for " + player.getName().getString()),
                     true
@@ -94,7 +94,7 @@ public class PlayerValidity {
             Collection<ServerPlayer> players = EntityArgument.getPlayers(context, "players");
 
             for (ServerPlayer player : players) {
-                boolean enabled = Configuration.isEnabled(player);
+                boolean enabled = Configuration.getValidity(player);
                 String status = enabled ? "enabled" : "disabled";
                 context.getSource().sendSuccess(
                     () -> Component.literal("One Slot Survival is " + status + " for " + player.getName().getString()),
@@ -112,7 +112,7 @@ public class PlayerValidity {
     private static int getOwnStatus(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         try {
             ServerPlayer player = context.getSource().getPlayerOrException();
-            boolean enabled = Configuration.isEnabled(player);
+            boolean enabled = Configuration.getValidity(player);
             String status = enabled ? "enabled" : "disabled";
             context.getSource().sendSuccess(
                 () -> Component.literal("One Slot Survival is " + status + " for you"),

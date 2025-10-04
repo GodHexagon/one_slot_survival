@@ -15,7 +15,7 @@
 1. パッケージツリーを構成
    1. 完了✅|パッケージツリーを構成
    2. 完了✅|AbstractContainerScreenMixin　のリファクタリング
-   3. event.ForgeWorldEvents　のリファクタリング
+   3. 完了✅|event.ForgeWorldEvents　のリファクタリング
    4. event.ForgeClientEvents　のリファクタリング
    5. command　のリファクタリング
    6. item, core　のリファクタリング
