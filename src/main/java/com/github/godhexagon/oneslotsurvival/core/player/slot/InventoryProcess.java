@@ -1,15 +1,8 @@
 package com.github.godhexagon.oneslotsurvival.core.player.slot;
 
-import net.minecraft.core.NonNullList;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ClickType;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-
-import java.util.List;
 
 public class InventoryProcess {
     public static final int MAIN_HAND = 0;

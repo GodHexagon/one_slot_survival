@@ -3,7 +3,9 @@
     "allow": [
       "WebSearch",
       "WebFetch",
-      "Bash(./gradlew:*)"
+      "Bash(./gradlew:*)",
+      "Read(//c/Users/godhe/.gradle/caches/**)",
+      "Bash(unzip:*)"
     ],
     "deny": [],
     "ask": []
