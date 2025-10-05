@@ -7,14 +7,14 @@ import net.minecraft.world.item.ItemStack;
  * Utility class for creating and managing slot barrier items.
  * Uses a custom MOD item to avoid conflicts with vanilla barrier blocks.
  */
-public class SlotBarrier {
+public class RoleSlotBarrier {
 
     /**
      * Creates a barrier ItemStack that acts as a transparent blocker.
      * Uses our custom slot_barrier item to avoid conflicts.
      */
     public static ItemStack createBarrierStack() {
-        ItemStack barrier = new ItemStack(ModItems.SLOT_BARRIER.get());
+        ItemStack barrier = new ItemStack(ModItems.ROLE_SLOT_BARRIER.get());
         // Set count to 1 to take up the slot
         barrier.setCount(1);
         return barrier;
@@ -29,6 +29,6 @@ public class SlotBarrier {
         }
 
         // Check if it's our custom slot barrier item
-        return stack.getItem() == ModItems.SLOT_BARRIER.get();
+        return stack.getItem() == ModItems.ROLE_SLOT_BARRIER.get();
     }
 }

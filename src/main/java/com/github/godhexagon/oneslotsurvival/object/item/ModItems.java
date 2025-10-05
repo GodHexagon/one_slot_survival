@@ -18,4 +18,11 @@ public class ModItems {
                     .setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(OneSlotSurvivalMod.MODID, "slot_barrier")))
                     .stacksTo(1)
                     .fireResistant()));
+
+    // Invisible barrier item for role slot blocking
+    public static final RegistryObject<Item> ROLE_SLOT_BARRIER = ITEMS.register("role_slot_barrier",
+            () -> new RoleSlotBarrierItem(new Item.Properties()
+                    .setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(OneSlotSurvivalMod.MODID, "role_slot_barrier")))
+                    .stacksTo(1)
+                    .fireResistant()));
 }

@@ -1,10 +1,23 @@
 package com.github.godhexagon.oneslotsurvival.core.player.slot;
 
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.List;
+
 public class InventoryProcess {
+    public static final int MAIN_HAND = 0;
+    public static final int ROLE_START = 1;
+    public static final int ROLE_END = 3;
+    public static final int PROHIBITED_START = 4;
+    public static final int PROHIBITED_END = Inventory.INVENTORY_SIZE - 1;
+
     /**
      * Public method to process all inventory restrictions for a player.
      * Used both by tick events and when initially enabling the mode.
@@ -23,64 +36,31 @@ public class InventoryProcess {
         Inventory inventory = player.getInventory();
 
         // Check slots 1-35 (prohibited slots)
-        for (int slot = 1; slot < 36; slot++) {
+        for (int slot = ROLE_START; slot <= PROHIBITED_END; slot++) {
             ItemStack item = inventory.getItem(slot);
+            boolean isRoleSlot = slot <= ROLE_END;
 
             // If slot contains a barrier item, leave it alone
-            if (SlotBarrier.isBarrierItem(item)) {
-                continue;
-            }
-
-            if (item.isEmpty()) {
-                // Slot is empty, place barrier
-                inventory.setItem(slot, SlotBarrier.createBarrierStack());
-                continue;
-            }
-
-            // Try to move item to main hand (slot 0)
-            if (moveItemToMainHand(player, item)) {
-                // Successfully moved, place barrier
-                inventory.setItem(slot, SlotBarrier.createBarrierStack());
+            if (isRoleSlot) {
+                if (RoleSlotBarrier.isBarrierItem(item)) {
+                    continue;
+                }
             } else {
-                // Drop item on ground using vanilla API
+                if (SlotBarrier.isBarrierItem(item)) {
+                    continue;
+                }
+            }
+
+            if (!item.isEmpty()) {
                 player.drop(item, false);
-                // Place barrier after dropping
+            }
+
+            if (isRoleSlot) {
+                inventory.setItem(slot, RoleSlotBarrier.createBarrierStack());
+            } else {
                 inventory.setItem(slot, SlotBarrier.createBarrierStack());
             }
         }
-    }
-
-    /**
-     * Try to move an item to the main hand slot (slot 0)
-     * @return true if item was successfully moved, false if main hand is full
-     */
-    private static boolean moveItemToMainHand(Player player, ItemStack item) {
-        Inventory inventory = player.getInventory();
-        ItemStack mainHandItem = inventory.getItem(0);
-
-        if (mainHandItem.isEmpty()) {
-            // Main hand is empty, move item there
-            inventory.setItem(0, item.copy());
-            return true;
-        } else if (ItemStack.isSameItemSameComponents(mainHandItem, item)) {
-            // Same item type, try to stack
-            int combinedCount = mainHandItem.getCount() + item.getCount();
-            int maxStackSize = mainHandItem.getMaxStackSize();
-
-            if (combinedCount <= maxStackSize) {
-                // Can stack completely
-                mainHandItem.setCount(combinedCount);
-                return true;
-            } else {
-                // Partial stack - fill main hand to max and leave remainder
-                int remainder = combinedCount - maxStackSize;
-                mainHandItem.setCount(maxStackSize);
-                item.setCount(remainder);
-                return false; // Still have remainder to drop
-            }
-        }
-
-        return false; // Cannot move to main hand
     }
 
     /**
@@ -90,7 +70,7 @@ public class InventoryProcess {
         Inventory inventory = player.getInventory();
 
         // Clear barrier items from slots 1-35 (prohibited slots)
-        for (int slot = 1; slot < 36; slot++) {
+        for (int slot = PROHIBITED_START; slot <= PROHIBITED_END; slot++) {
             ItemStack item = inventory.getItem(slot);
 
             // If slot contains a barrier item, remove it
@@ -101,16 +81,8 @@ public class InventoryProcess {
     }
 
     public static boolean isProcessedInventoryRestrictions(Player player) {
-        // Check hotbar slots 1-8 (indices 1-8)
-        for (int i = 1; i <= 8; i++) {
-            ItemStack stack = player.getInventory().getItem(i);
-            if (SlotBarrier.isBarrierItem(stack)) {
-                return true;
-            }
-        }
-
-        // Check inventory slots 9-35 (indices 9-35)
-        for (int i = 9; i <= 35; i++) {
+        // Check inventory
+        for (int i = PROHIBITED_START; i <= PROHIBITED_END; i++) {
             ItemStack stack = player.getInventory().getItem(i);
             if (SlotBarrier.isBarrierItem(stack)) {
                 return true;
