@@ -1,18 +1,6 @@
 package com.github.godhexagon.oneslotsurvival;
 
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.level.GameType;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.Properties;
-import java.util.Set;
-import java.util.UUID;
 
 /**
  * Manager for tracking which players have One Slot mode enabled.
