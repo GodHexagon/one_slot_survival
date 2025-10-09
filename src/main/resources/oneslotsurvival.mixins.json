@@ -4,9 +4,7 @@
   "compatibilityLevel": "JAVA_21",
   "refmap": "oneslotsurvival.refmap.json",
   "minVersion": "0.8",
-  "client": [
-    "AbstractContainerScreenMixin"
-  ],
+  "client": [],
   "injectors": {
     "defaultRequire": 1
   }

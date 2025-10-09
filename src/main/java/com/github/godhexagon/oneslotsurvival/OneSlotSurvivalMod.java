@@ -17,9 +17,6 @@ public final class OneSlotSurvivalMod {
     public OneSlotSurvivalMod(FMLJavaModLoadingContext context) {
         var modBusGroup = context.getModBusGroup();
 
-        // Register deferred registries
-        ModItems.ITEMS.register(modBusGroup);
-
         // Register the commonSetup method for modloading
         FMLCommonSetupEvent.getBus(modBusGroup).addListener(this::commonSetup);
 
