@@ -10,7 +10,7 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 # 進捗
 
-直前の成果！: Gradle Daemon有効化とJVMメモリ最適化によりrunClient起動時間を短縮した。
+直前の成果！: CommandDispatcherとRegisterCommandsEventの実行環境を調査・検証し、ドキュメント化した。サーバーサイド専用であることを確認。
 
 実行中: なし
 
@@ -71,6 +71,7 @@ The mod currently includes example blocks, items, and creative tabs that should 
 - [Mixin環境構築](/docs/mixin-setup.md) - プロジェクトに初めてMixinを導入するとき
 - [Mixin実装](/docs/mixin-implementation.md) - Forgeイベントでは対応できない深いレベルでの動作変更が必要なとき
 - [Web検索・トラブルシューティング](/docs/research-troubleshooting.md) - API調査で詰まったとき、エラーが解決できないとき
+- [CommandDispatcher実行環境調査](/docs/command-dispatcher-research.md) - コマンドの実行環境（クライアント/サーバー）について知りたいとき
 
 ## **必須**
 
