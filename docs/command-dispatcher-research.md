@@ -172,3 +172,20 @@ event.getDispatcher().register(
 - [ ] 専用サーバー（`./gradlew runServer`）での動作確認
 - [ ] `RegisterClientCommandsEvent`の実装例調査
 - [ ] マルチプレイ環境での動作確認
+
+## 専用サーバー（`./gradlew runServer`）
+
+```
+[21:03:56] [Worker-Main-3/INFO] [co.gi.go.on.se.co.CommandEvent/]: === RegisterCommandsEvent fired ===
+[21:03:56] [Worker-Main-3/INFO] [co.gi.go.on.se.co.CommandEvent/]: Thread: Worker-Main-3
+[21:03:56] [Worker-Main-3/INFO] [co.gi.go.on.se.co.CommandEvent/]: Environment: DEDICATED
+[21:03:56] [Worker-Main-3/INFO] [co.gi.go.on.se.co.CommandEvent/]: ===================================
+```
+
+```
+[21:16:28] [Server thread/INFO] [co.gi.go.on.se.co.CommandEvent/]: === Command Execution ===
+[21:16:28] [Server thread/INFO] [co.gi.go.on.se.co.CommandEvent/]: Thread: Server thread
+[21:16:28] [Server thread/INFO] [co.gi.go.on.se.co.CommandEvent/]: isClientSide: false
+[21:16:28] [Server thread/INFO] [co.gi.go.on.se.co.CommandEvent/]: Player: DOKANthe3rd
+[21:16:28] [Server thread/INFO] [co.gi.go.on.se.co.CommandEvent/]: =========================
+```

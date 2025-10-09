@@ -43,6 +43,7 @@ public class CommandEvent {
     private static void registerTestCommand(RegisterCommandsEvent event) {
         event.getDispatcher().register(
             Commands.literal("testside")
+                .requires(source -> true) // 誰でも実行可能（権限不要）
                 .executes(context -> {
                     CommandSourceStack source = context.getSource();
                     String threadName = Thread.currentThread().getName();
