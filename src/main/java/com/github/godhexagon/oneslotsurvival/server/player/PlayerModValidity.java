@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival;
+package com.github.godhexagon.oneslotsurvival.server.player;
 
 import net.minecraft.world.entity.player.Player;
 
@@ -6,7 +6,7 @@ import net.minecraft.world.entity.player.Player;
  * Manager for tracking which players have One Slot mode enabled.
  * Uses simple properties file persistence for world-wide data.
  */
-public class OneSlotManager {
+public class PlayerModValidity {
 
     /**
      * Check if One Slot mode is enabled for the given player.
