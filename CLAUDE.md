@@ -10,9 +10,9 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 # 進捗
 
-直前の成果！: Gradle Daemon有効化とJVMメモリ最適化によりrunClient起動時間を短縮した。
+直前の成果！: Attribute方式で永続化 of プレイヤーごとに機能の有効性を変更できるようにする
 
-実行中: なし
+実行中: コマンド＆同期要求パケット方式でクライアント同期 of プレイヤーごとに機能の有効性を変更できるようにする
 
 すべての進捗: [タスクリスト](/docs/task_list.md)
 
@@ -68,6 +68,7 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 **シチュエーション別ガイド：**
 - [バニラコード調査](/docs/vanilla-code-research.md) - バニラMinecraftの内部実装を理解したいとき
+- [Attribute実装](/docs/attribute-implementation.md) - プレイヤーデータを自動永続化・自動同期で管理したいとき
 - [Mixin環境構築](/docs/mixin-setup.md) - プロジェクトに初めてMixinを導入するとき
 - [Mixin実装](/docs/mixin-implementation.md) - Forgeイベントでは対応できない深いレベルでの動作変更が必要なとき
 - [Web検索・トラブルシューティング](/docs/research-troubleshooting.md) - API調査で詰まったとき、エラーが解決できないとき
