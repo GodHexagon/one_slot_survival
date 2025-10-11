@@ -3,7 +3,10 @@
     "allow": [
       "WebSearch",
       "WebFetch",
-      "Bash(./gradlew:*)"
+      "Bash(./gradlew:*)",
+      "Read(//c/Users/godhe/.gradle/caches/**)",
+      "Bash(dir \"C:\\Users\\godhe\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.21.8-58.1.0_mapped_official_1.21.8\")",
+      "Read(//tmp/forge_sources_analysis/**)"
     ],
     "deny": [],
     "ask": []

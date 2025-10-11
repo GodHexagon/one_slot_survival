@@ -10,7 +10,7 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 # 進捗
 
-直前の成果！: Gradle Daemon有効化とJVMメモリ最適化によりrunClient起動時間を短縮した。
+直前の成果！: GameTypeの使用箇所を網羅的に調査し、33の機能分類を特定した。MOD有効性パラメーター実装の参考資料として[GameType使用箇所分析](/docs/gametype-usage-analysis.md)を作成。
 
 実行中: なし
 
