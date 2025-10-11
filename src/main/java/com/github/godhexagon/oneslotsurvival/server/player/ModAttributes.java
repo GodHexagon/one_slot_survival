@@ -22,7 +22,7 @@ public class ModAttributes {
         "mod_enabled",
         () -> new RangedAttribute(
             "attribute.oneslotsurvival.mod_enabled",
-            0.0,  // default value (disabled)
+            1.0,  // default value (disabled)
             0.0,  // min value
             1.0   // max value
         ).setSyncable(true)  // Sync to client automatically
