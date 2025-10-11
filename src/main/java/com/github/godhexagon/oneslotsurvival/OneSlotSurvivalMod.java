@@ -1,7 +1,7 @@
 package com.github.godhexagon.oneslotsurvival;
 
-import com.github.godhexagon.oneslotsurvival.server.player.ModAttributes;
-import com.github.godhexagon.oneslotsurvival.server.player.PlayerAttributeHandler;
+import com.github.godhexagon.oneslotsurvival.object.attribute.ModAttributes;
+import com.github.godhexagon.oneslotsurvival.object.attribute.PlayerAttributeHandler;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
