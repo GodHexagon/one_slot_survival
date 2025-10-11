@@ -12,7 +12,7 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 直前の成果！: Attribute方式で永続化 of プレイヤーごとに機能の有効性を変更できるようにする
 
-実行中: コマンド＆同期要求パケット方式でクライアント同期 of プレイヤーごとに機能の有効性を変更できるようにする
+実行中: コマンド方式でクライアントからMOD有効性を取得 of プレイヤーごとに機能の有効性を変更できるようにする
 
 すべての進捗: [タスクリスト](/docs/task_list.md)
 
