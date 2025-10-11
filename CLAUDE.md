@@ -68,6 +68,7 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 **シチュエーション別ガイド：**
 - [バニラコード調査](/docs/vanilla-code-research.md) - バニラMinecraftの内部実装を理解したいとき
+- [バニラクラス使用箇所調査](/docs/vanilla-class-usage-research.md) - 特定のバニラクラスがどこでどう使われているか網羅的に調査したいとき
 - [Mixin環境構築](/docs/mixin-setup.md) - プロジェクトに初めてMixinを導入するとき
 - [Mixin実装](/docs/mixin-implementation.md) - Forgeイベントでは対応できない深いレベルでの動作変更が必要なとき
 - [Web検索・トラブルシューティング](/docs/research-troubleshooting.md) - API調査で詰まったとき、エラーが解決できないとき
