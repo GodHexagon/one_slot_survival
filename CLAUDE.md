@@ -14,7 +14,7 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 実行中: プレイヤーのホットバーは１スロットだけ（これをメインハンドと定義する）になり、それ以外のインベントリとホットバー計３５スロットを使用禁止する。
 
-すべての進捗: [タスクリスト](/docs/task_list.md)
+すべての進捗: [タスクリスト](./docs/task_list.md)
 
 # 開発コマンド
 
