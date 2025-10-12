@@ -67,11 +67,11 @@ The mod currently includes example blocks, items, and creative tabs that should 
 ## 実装手法
 
 **シチュエーション別ガイド：**
-- [バニラコード調査](/docs/vanilla-code-research.md) - バニラMinecraftの内部実装を理解したいとき
-- [Attribute実装](/docs/attribute-implementation.md) - プレイヤーデータを自動永続化・自動同期で管理したいとき
-- [Mixin環境構築](/docs/mixin-setup.md) - プロジェクトに初めてMixinを導入するとき
-- [Mixin実装](/docs/mixin-implementation.md) - Forgeイベントでは対応できない深いレベルでの動作変更が必要なとき
-- [Web検索・トラブルシューティング](/docs/research-troubleshooting.md) - API調査で詰まったとき、エラーが解決できないとき
+- [バニラコード調査](./docs/vanilla-code-research.md) - バニラMinecraftの内部実装を理解したいとき
+- [Attribute実装](./docs/attribute-implementation.md) - プレイヤーデータを自動永続化・自動同期で管理したいとき
+- [Mixin環境構築](./docs/mixin-setup.md) - プロジェクトに初めてMixinを導入するとき
+- [Mixin実装](./docs/mixin-implementation.md) - Forgeイベントでは対応できない深いレベルでの動作変更が必要なとき
+- [Web検索・トラブルシューティング](./docs/research-troubleshooting.md) - API調査で詰まったとき、エラーが解決できないとき
 
 ## **必須**
 
