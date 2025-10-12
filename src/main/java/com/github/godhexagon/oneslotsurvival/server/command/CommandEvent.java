@@ -15,5 +15,6 @@ public class CommandEvent {
     @SubscribeEvent
     public static void onRegisterCommands(RegisterCommandsEvent event) {
         CommandRegisterer.register(event.getDispatcher());
+        TestSavedDataCommand.register(event.getDispatcher());  // Test command for SavedData demonstration
     }
 }
