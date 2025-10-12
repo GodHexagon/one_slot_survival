@@ -1,6 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.server.command;
 
-import com.github.godhexagon.oneslotsurvival.server.player.PlayerModValidity;
+import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
