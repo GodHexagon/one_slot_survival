@@ -48,18 +48,78 @@ public class TestAbstractContainerScreen extends AbstractContainerScreen<Abstrac
 
 **いつ使うか**: IDEでの確認だけでは不十分な場合、またはクラス全体の構造を理解したいとき
 
-**Gradleキャッシュからの抽出:**
+**⚠️ 重要: 環境に応じたパス指定**
+
+**このプロジェクトはリモートリポジトリを使用しており、Windows/WSL/Linux環境で動作する可能性があります。**
+
+**ステップ1: 環境を自動検出**
 ```bash
-# Forge/Minecraftソースの場所
-.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/
-{version}_mapped_official_{mcversion}/
-forge-{version}_mapped_official_{mcversion}-sources.jar
+# 現在の環境を確認
+pwd
+# Windows (Git Bash): /c/Users/godhe/git/one_slot_survival
+# WSL/Linux:          /mnt/c/Users/godhe/git/one_slot_survival または /home/username/...
 
-# ソース抽出コマンド例
-jar -xf "path/to/forge-sources.jar" net/minecraft/world/level/saveddata/SavedDataType.java
+# Gradleキャッシュの場所を確認
+ls ~/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/ 2>/dev/null || ls /c/Users/godhe/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/ 2>/dev/null
+```
 
-# 抽出後、直接ファイルを読む
-# → プロジェクトルートに net/ ディレクトリが作成される
+**ステップ2: 環境別のパス指定方法**
+
+**【Windows Git Bash環境の場合】** (`pwd` が `/c/Users/...` を返す場合)
+```bash
+# ✅ Windowsパスをそのまま使用
+jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.21.8-58.1.0_mapped_official_1.21.8\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/client/gui/screens/inventory/AbstractRecipeBookScreen.java
+```
+
+**【WSL/Linux環境の場合】** (`pwd` が `/mnt/c/...` または `/home/...` を返す場合)
+```bash
+# ✅ UNIXパスを使用
+jar -xf "/mnt/c/Users/godhe/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.21.8-58.1.0_mapped_official_1.21.8/forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/client/gui/screens/inventory/AbstractRecipeBookScreen.java
+
+# または ~/.gradle を使用（Linuxネイティブの場合）
+jar -xf ~/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.21.8-58.1.0_mapped_official_1.21.8/forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar net/minecraft/client/gui/screens/inventory/AbstractRecipeBookScreen.java
+```
+
+**ステップ3: 汎用的なGradleキャッシュ検索**
+```bash
+# 環境に依存しない検索方法
+find ~/.gradle/caches/forge_gradle/minecraft_user_repo -name "*sources.jar" 2>/dev/null | grep "1.21.8-58.1.0"
+
+# または、プロジェクトのGradleビルドから参照
+./gradlew dependencies --configuration compileClasspath | grep forge
+```
+
+**抽出の実例（環境検出付き）:**
+```bash
+# 1. 環境検出
+if [ -d "/c/Users/godhe/.gradle" ]; then
+    # Windows Git Bash
+    GRADLE_CACHE="C:\Users\godhe\.gradle"
+    JAR_PATH="$GRADLE_CACHE\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.21.8-58.1.0_mapped_official_1.21.8\\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar"
+elif [ -d "/mnt/c/Users/godhe/.gradle" ]; then
+    # WSL
+    JAR_PATH="/mnt/c/Users/godhe/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.21.8-58.1.0_mapped_official_1.21.8/forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar"
+else
+    # Linux (ホームディレクトリ)
+    JAR_PATH=~/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.21.8-58.1.0_mapped_official_1.21.8/forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar
+fi
+
+# 2. 抽出実行
+jar -xf "$JAR_PATH" net/minecraft/client/gui/screens/inventory/AbstractRecipeBookScreen.java
+```
+
+**簡易版（エージェント向け）:**
+```bash
+# まず、現在の環境でpwdを実行して環境を判定
+# その結果に応じて適切なパス形式を使用する
+
+# Windows Git Bashの場合 (pwd → /c/Users/...)
+jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\...\sources.jar" net/minecraft/...
+
+# WSL/Linuxの場合 (pwd → /mnt/c/... または /home/...)
+jar -xf "/mnt/c/Users/godhe/.gradle/caches/forge_gradle/.../sources.jar" net/minecraft/...
+# または
+jar -xf ~/.gradle/caches/forge_gradle/.../sources.jar net/minecraft/...
 ```
 
 **JAR内容の探索:**
@@ -204,12 +264,57 @@ JAR抽出（完全な実装）
 実装成功（確実な理解）
 ```
 
+### Claude Code エージェントへの指示
+
+**🤖 エージェントが必ず守るべきルール:**
+
+**1. JAR抽出を最優先する**
+- バニラコードの調査が必要になったら、**まずこのドキュメントを読む**
+- Web検索やTask toolを使う前に、**jar -xf コマンドで直接ソースを抽出する**
+- このプロジェクトでは、Gradleキャッシュに完全なソースコードが既に存在している
+
+**2. 環境を必ず検出する**
+- このプロジェクトは **Windows/WSL/Linux環境で動作する** （リモートリポジトリ使用）
+- **必ず最初に `pwd` を実行**して環境を判定する
+- 判定結果に応じて適切なパス形式を使用：
+  - `/c/Users/...` → Windows Git Bash → `C:\Users\...` 形式
+  - `/mnt/c/Users/...` → WSL → `/mnt/c/Users/...` 形式
+  - `/home/...` → Linux → `~/.gradle/...` 形式
+
+**3. 効率的な調査順序**
+```
+1. このドキュメント（vanilla-code-research.md）を読む
+   ↓
+2. pwd を実行して環境を検出
+   ↓
+3. 環境に応じたパス形式で jar -xf を実行
+   ↓
+4. Read ツールで抽出したファイルを読む
+   ↓
+5. 関連クラスも必要なら追加で抽出
+   ↓
+6. 分析結果をユーザーに報告
+```
+
+**4. やってはいけないこと**
+- ❌ Web検索で古いドキュメントを探す（時間の無駄）
+- ❌ Task tool で general-purpose agent を起動する（JAR抽出で十分）
+- ❌ 環境検出をせずに決め打ちでパスを指定する
+- ❌ cd でディレクトリ移動してから jar -xf を実行する（ワーキングディレクトリが変わる）
+
+**5. 抽出後のクリーンアップ**
+```bash
+# 抽出したファイルは .gitignore に既に登録されている
+# 不要になったら削除しても良い（次回また抽出できる）
+rm -rf net/
+```
+
 ### まとめ: バニラコード調査のベストプラクティス
 
 **効率的な調査フロー:**
-1. **ダミー継承クラス作成** - 基本的なメソッドシグネチャを確認
-2. **コンパイル駆動開発** - エラーから正確なAPIを学習
-3. **JAR抽出** - 複雑な場合は完全なソースを確認
+1. **このドキュメントを読む** - 環境固有の注意事項を確認
+2. **JAR抽出** - jar -xf コマンドで直接ソースを取得（最優先）
+3. **ダミー継承クラス作成** - 必要に応じて基本的なメソッドシグネチャを確認
 4. **IDEナビゲーション** - 使用例と継承関係を探索
 5. **実装と検証** - 実際に動くコードで理解を確認
 
@@ -218,3 +323,4 @@ JAR抽出（完全な実装）
 - ✅ 最新バージョンのAPIに対応
 - ✅ 段階的に理解を深められる
 - ✅ 隠れたAPIや変更点を発見できる
+- ✅ Web検索より圧倒的に速い（数秒でソース取得）
