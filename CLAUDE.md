@@ -10,11 +10,11 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 # 進捗
 
-直前の成果！: Attribute方式で永続化 of プレイヤーごとに機能の有効性を変更できるようにする
+直前の成果！: 共通データパースロジックで、MOD有効性を取得 of プレイヤーごとに機能の有効性を変更できるようにする
 
-実行中: 共通データパースロジックで、MOD有効性を取得 of プレイヤーごとに機能の有効性を変更できるようにする
+実行中: プレイヤーのホットバーは１スロットだけ（これをメインハンドと定義する）になり、それ以外のインベントリとホットバー計３５スロットを使用禁止する。
 
-すべての進捗: [タスクリスト](/docs/task_list.md)
+すべての進捗: [タスクリスト](./docs/task_list.md)
 
 # 開発コマンド
 
@@ -67,11 +67,11 @@ The mod currently includes example blocks, items, and creative tabs that should 
 ## 実装手法
 
 **シチュエーション別ガイド：**
-- [バニラコード調査](/docs/vanilla-code-research.md) - バニラMinecraftの内部実装を理解したいとき
-- [Attribute実装](/docs/attribute-implementation.md) - プレイヤーデータを自動永続化・自動同期で管理したいとき
-- [Mixin環境構築](/docs/mixin-setup.md) - プロジェクトに初めてMixinを導入するとき
-- [Mixin実装](/docs/mixin-implementation.md) - Forgeイベントでは対応できない深いレベルでの動作変更が必要なとき
-- [Web検索・トラブルシューティング](/docs/research-troubleshooting.md) - API調査で詰まったとき、エラーが解決できないとき
+- [バニラコード調査](./docs/vanilla-code-research.md) - バニラMinecraftの内部実装を理解したいとき
+- [Attribute実装](./docs/attribute-implementation.md) - プレイヤーデータを自動永続化・自動同期で管理したいとき
+- [Mixin環境構築](./docs/mixin-setup.md) - プロジェクトに初めてMixinを導入するとき
+- [Mixin実装](./docs/mixin-implementation.md) - Forgeイベントでは対応できない深いレベルでの動作変更が必要なとき
+- [Web検索・トラブルシューティング](./docs/research-troubleshooting.md) - API調査で詰まったとき、エラーが解決できないとき
 
 ## **必須**
 
