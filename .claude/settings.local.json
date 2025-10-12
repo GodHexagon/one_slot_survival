@@ -4,7 +4,8 @@
       "WebSearch",
       "WebFetch",
       "Bash(./gradlew:*)",
-      "Bash(jar -xf:*)"
+      "Bash(jar -xf:*)",
+      "Read(//c/Users/godhe/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.21.8-58.1.0_mapped_official_1.21.8/net/minecraft/client/gui/**)"
     ],
     "deny": [],
     "ask": []

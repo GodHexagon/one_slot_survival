@@ -4,7 +4,9 @@
   "compatibilityLevel": "JAVA_21",
   "refmap": "oneslotsurvival.refmap.json",
   "minVersion": "0.8",
-  "client": [],
+  "client": [
+    "GuiMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

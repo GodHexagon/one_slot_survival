@@ -22,7 +22,7 @@ public class ModAttributes {
         "mod_enabled",
         () -> new RangedAttribute(
             "attribute.oneslotsurvival.mod_enabled",
-            0.0,  // default value (disabled). ワールド設定によるデフォルト変更は後で実装.
+            1.0,  // TODO: デバッグを楽にするために有効状態をデフォルトに変更
             0.0,  // min value
             1.0   // max value
         ).setSyncable(true)  // Sync to client automatically

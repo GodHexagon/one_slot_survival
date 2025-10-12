@@ -5,6 +5,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.GameType;
 
 /**
  * Manager for tracking which players have One Slot mode enabled.
@@ -43,6 +44,12 @@ public class PlayerModValidity {
         }
         // Value > 0.5 means enabled (using 0.5 as threshold for floating point safety)
         return attribute.getBaseValue() > 0.5;
+    }
+
+    public static boolean isEffective(Player player) {
+        return (player.gameMode() == GameType.ADVENTURE ||
+                player.gameMode() == GameType.SURVIVAL) &&
+                isEnabled(player);
     }
 
     /**
