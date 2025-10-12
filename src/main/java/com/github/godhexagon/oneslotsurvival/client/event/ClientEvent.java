@@ -1,10 +1,10 @@
 package com.github.godhexagon.oneslotsurvival.client.event;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
+import com.github.godhexagon.oneslotsurvival.client.gui.CustomInventoryScreen;
 import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
-import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.TickEvent;
@@ -52,23 +52,24 @@ public class ClientEvent {
 
     /**
      * Called when any screen is about to open on the client.
-     * If it's the player's inventory screen, query mod validity from server.
+     * If it's the player's inventory screen, replace it with CustomInventoryScreen
+     * and display mod validity status.
      *
      * @param event the screen opening event
      */
     @SubscribeEvent
     public static void onScreenOpen(ScreenEvent.Opening event) {
         // Check if the opening screen is the player's inventory
-        if (event.getNewScreen() instanceof InventoryScreen) {
+        // But not already our custom screen (to avoid infinite loop)
+        if (event.getNewScreen() instanceof InventoryScreen &&
+            !(event.getNewScreen() instanceof CustomInventoryScreen)) {
+
             Minecraft minecraft = Minecraft.getInstance();
 
             // Ensure we have a valid client player and connection
-            if (minecraft.player != null) {
-                boolean enabled = PlayerModValidity.isEnabled(minecraft.player);
-                minecraft.player.displayClientMessage(
-                    Component.literal("One Slot Survival Validity: " + enabled),
-                    false
-                );
+            if (minecraft.player != null && PlayerModValidity.isEffective(minecraft.player)) {
+                // Replace vanilla InventoryScreen with our CustomInventoryScreen
+                event.setNewScreen(new CustomInventoryScreen(minecraft.player));
             }
         }
     }
