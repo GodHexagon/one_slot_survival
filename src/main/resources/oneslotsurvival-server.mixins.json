@@ -1,11 +1,10 @@
 {
   "required": true,
-  "package": "com.github.godhexagon.oneslotsurvival.client.mixin",
+  "package": "com.github.godhexagon.oneslotsurvival.server.mixin",
   "compatibilityLevel": "JAVA_21",
   "refmap": "oneslotsurvival.refmap.json",
   "minVersion": "0.8",
-  "client": [
-    "GuiMixin"
+  "server": [
   ],
   "injectors": {
     "defaultRequire": 1

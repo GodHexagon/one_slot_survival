@@ -1,7 +1,7 @@
 package com.github.godhexagon.oneslotsurvival.client.event;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
-import com.github.godhexagon.oneslotsurvival.client.gui.CustomInventoryScreen;
+import com.github.godhexagon.oneslotsurvival.client.gui.RestrictedInventoryScreen;
 import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -52,24 +52,24 @@ public class ClientEvent {
 
     /**
      * Called when any screen is about to open on the client.
-     * If it's the player's inventory screen, replace it with CustomInventoryScreen
-     * and display mod validity status.
+     * If it's the player's inventory screen, replace it with RestrictedInventoryScreen
+     * to restrict inventory and hotbar slots.
      *
      * @param event the screen opening event
      */
     @SubscribeEvent
     public static void onScreenOpen(ScreenEvent.Opening event) {
         // Check if the opening screen is the player's inventory
-        // But not already our custom screen (to avoid infinite loop)
+        // But not already our restricted screen (to avoid infinite loop)
         if (event.getNewScreen() instanceof InventoryScreen &&
-            !(event.getNewScreen() instanceof CustomInventoryScreen)) {
+            !(event.getNewScreen() instanceof RestrictedInventoryScreen)) {
 
             Minecraft minecraft = Minecraft.getInstance();
 
             // Ensure we have a valid client player and connection
             if (minecraft.player != null && PlayerModValidity.isEffective(minecraft.player)) {
-                // Replace vanilla InventoryScreen with our CustomInventoryScreen
-                event.setNewScreen(new CustomInventoryScreen(minecraft.player));
+                // Replace vanilla InventoryScreen with our RestrictedInventoryScreen
+                event.setNewScreen(new RestrictedInventoryScreen(minecraft.player));
             }
         }
     }
