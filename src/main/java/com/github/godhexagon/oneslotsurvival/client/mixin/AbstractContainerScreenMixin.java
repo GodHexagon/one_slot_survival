@@ -37,7 +37,7 @@ public class AbstractContainerScreenMixin {
             return;
         }
 
-        // Only restrict player inventory slots, not container slots
+        // クライアントのプレイヤーインスタンスを取得
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null) {
             return;
