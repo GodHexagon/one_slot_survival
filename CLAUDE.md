@@ -72,6 +72,7 @@ The mod currently includes example blocks, items, and creative tabs that should 
 - [Attribute実装](./docs/attribute-implementation.md) - プレイヤーデータを自動永続化・自動同期で管理したいとき
 - [Mixin環境構築](./docs/mixin-setup.md) - プロジェクトに初めてMixinを導入するとき
 - [Mixin実装](./docs/mixin-implementation.md) - Forgeイベントでは対応できない深いレベルでの動作変更が必要なとき
+- [プレイヤーインベントリ拡張](./docs/player-inventory-extension.md) - プレイヤーに追加スロットを追加する設計資料（調査メモ）
 - [Web検索・トラブルシューティング](./docs/research-troubleshooting.md) - API調査で詰まったとき、エラーが解決できないとき
 
 **🚨 重要な環境情報:**
