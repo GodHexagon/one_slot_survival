@@ -110,6 +110,14 @@ public class RestrictedInventoryScreen extends InventoryScreen {
         }
     }
 
+    @Override
+    public void removed() {
+        super.removed();
+        this.menu.slots.clear();
+        this.menu.slots.addAll(this.originalSlots);
+        this.originalSlots = null;
+    }
+
     /**
      * 制限対象のスロットかどうかを判定
      *
