@@ -23,10 +23,8 @@ public class ServerEvent {
         if (PlayerModValidity.isEffective(player) && SlotBarrierFilling.shouldBeFilledUp(player)) {
             // スロットバリアで埋める
             SlotBarrierFilling.fillUp(player);
-            // TODO: インベントリーをクライアントに同期
         } else if (!PlayerModValidity.isEffective(player) && SlotBarrierFilling.shouldBeClean(player)) {
             SlotBarrierFilling.clean(player);
-            // TODO: インベントリーをクライアントに同期
         }
     }
 }
