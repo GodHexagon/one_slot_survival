@@ -72,8 +72,6 @@ public class PlayerModValidity {
 
         // Set base value: 1.0 for enabled, 0.0 for disabled
         attribute.setBaseValue(enabled ? 1.0 : 0.0);
-
-        // TODO: Process existing inventory items when enabling
     }
 
     /**
