@@ -106,5 +106,11 @@ public abstract class AbstractContainerMenuMixin {
         // Allow the operation to proceed if:
         // - Carried item is a pickaxe, or
         // - Carried item is empty (picking up from slot)
+
+        /*
+        # 問題
+        - たまにシングルクリックも許可されることがある
+        - 作業台スロットがロールスロットになっている
+         */
     }
 }
