@@ -5,12 +5,12 @@
   "refmap": "oneslotsurvival.refmap.json",
   "minVersion": "0.8",
   "client": [
-    "GuiMixin",
-    "AbstractContainerScreenMixin",
-    "InventoryMixin"
+    "client.GuiMixin",
+    "client.AbstractContainerScreenMixin",
+    "world.InventoryMixin"
   ],
   "server": [
-    "InventoryMixin"
+    "world.InventoryMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.mixin;
+package com.github.godhexagon.oneslotsurvival.mixin.world;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.player.Inventory;

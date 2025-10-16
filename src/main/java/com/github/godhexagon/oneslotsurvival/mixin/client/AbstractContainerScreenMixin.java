@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.mixin;
+package com.github.godhexagon.oneslotsurvival.mixin.client;
 
 import com.github.godhexagon.oneslotsurvival.world.item.ModItems;
 import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
