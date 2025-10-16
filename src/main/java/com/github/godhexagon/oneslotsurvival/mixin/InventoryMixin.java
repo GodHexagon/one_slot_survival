@@ -1,12 +1,13 @@
-package com.github.godhexagon.oneslotsurvival.both.mixin;
+package com.github.godhexagon.oneslotsurvival.mixin;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
@@ -14,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 @Mixin(Inventory.class)
 public abstract class InventoryMixin {
+    private static final Logger LOGGER = LoggerFactory.getLogger("OneSlotSurvival/InventoryMixin");
 
     @Shadow
     @Final
@@ -21,6 +23,8 @@ public abstract class InventoryMixin {
 
     @Inject(method = "getFreeSlot", at = @At("HEAD"), cancellable = true)
     private void onGetFreeSlot(CallbackInfoReturnable<Integer> cir) {
+        LOGGER.info("onGetFreeSlot called");
+
         cir.cancel();
 
         for (int i = 0; i < this.items.size(); i++) {

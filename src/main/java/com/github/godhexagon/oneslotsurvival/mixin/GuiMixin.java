@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.client.mixin;
+package com.github.godhexagon.oneslotsurvival.mixin;
 
 import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
 import net.minecraft.client.DeltaTracker;
