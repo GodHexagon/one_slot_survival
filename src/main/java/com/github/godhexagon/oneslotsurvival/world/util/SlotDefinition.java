@@ -18,7 +18,12 @@ public class SlotDefinition {
             return true;
         }
 
-        // ホットバースロット（37-44、メインハンド36以外）を制限
+        // インベントリホットバーを制限
+        if (4 <= index && index <= 9) {
+            return true;
+        }
+
+        // ホットバーのもう一つの範囲（バニラの実装、よくわらかん）を制限
         if (index >= 40 && index <= 44) {
             return true;
         }
