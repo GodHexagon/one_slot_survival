@@ -12,7 +12,7 @@ public class SlotDefinition {
      * @param index スロットインデックス
      * @return true の場合、制限対象
      */
-    private boolean isRestrictedSlot(int index) {
+    public static boolean isRestrictedSlot(int index) {
         // インベントリスロット（9-35）を制限
         if (index >= 9 && index <= 35) {
             return true;

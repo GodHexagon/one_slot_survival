@@ -1,5 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.client.gui;
 
+import com.github.godhexagon.oneslotsurvival.world.util.SlotDefinition;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -96,7 +97,7 @@ public class RestrictedInventoryScreen extends InventoryScreen {
             boolean restricted = false;
 
             // 制限対象のスロットを判定（menu.slots内のインデックス i を使用）
-            if (isRestrictedSlot(i)) {
+            if (SlotDefinition.isRestrictedSlot(i)) {
                 // 画面外に配置
                 x = -2000;
                 y = -2000;
@@ -116,27 +117,6 @@ public class RestrictedInventoryScreen extends InventoryScreen {
         this.menu.slots.clear();
         this.menu.slots.addAll(this.originalSlots);
         this.originalSlots = null;
-    }
-
-    /**
-     * 制限対象のスロットかどうかを判定
-     *
-     * @param index スロットインデックス
-     * @return true の場合、制限対象
-     */
-    private boolean isRestrictedSlot(int index) {
-        // インベントリスロット（9-35）を制限
-        if (index >= 9 && index <= 35) {
-            return true;
-        }
-
-        // ホットバースロット（37-44、メインハンド36以外）を制限
-        if (index >= 40 && index <= 44) {
-            return true;
-        }
-
-        // その他のスロット（クラフト、防具、オフハンド、メインハンド）は制限しない
-        return false;
     }
 
     @Override

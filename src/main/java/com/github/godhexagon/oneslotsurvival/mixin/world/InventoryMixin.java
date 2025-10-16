@@ -1,7 +1,10 @@
 package com.github.godhexagon.oneslotsurvival.mixin.world;
 
+import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
+import com.github.godhexagon.oneslotsurvival.world.util.SlotDefinition;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,43 +24,21 @@ public abstract class InventoryMixin {
     @Final
     private NonNullList<ItemStack> items;
 
+    @Shadow
+    @Final
+    public Player player;
+
     @Inject(method = "getFreeSlot", at = @At("HEAD"), cancellable = true)
     private void onGetFreeSlot(CallbackInfoReturnable<Integer> cir) {
-        LOGGER.info("onGetFreeSlot called");
-
-        cir.cancel();
-
-        for (int i = 0; i < this.items.size(); i++) {
-            if (isRestrictedSlot(i)) {
-                continue;
+        if (PlayerModValidity.isEffective(player)) {
+            for (int i = 0; i < this.items.size(); i++) {
+                if (!SlotDefinition.isRestrictedSlot(i) && this.items.get(i).isEmpty()) {
+                    cir.setReturnValue(i);
+                    return;
+                }
             }
 
-            if (this.items.get(i).isEmpty()) {
-                cir.setReturnValue(i);
-            }
+            cir.setReturnValue(-1);
         }
-
-        cir.setReturnValue(-1);
-    }
-
-    /**
-     * 制限対象のスロットかどうかを判定
-     *
-     * @param index スロットインデックス
-     * @return true の場合、制限対象
-     */
-    private boolean isRestrictedSlot(int index) {
-        // インベントリスロット（9-35）を制限
-        if (index >= 9 && index <= 35) {
-            return true;
-        }
-
-        // ホットバースロット（37-44、メインハンド36以外）を制限
-        if (index >= 40 && index <= 44) {
-            return true;
-        }
-
-        // その他のスロット（クラフト、防具、オフハンド、メインハンド）は制限しない
-        return false;
     }
 }
