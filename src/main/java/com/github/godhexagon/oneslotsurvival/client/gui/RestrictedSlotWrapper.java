@@ -9,23 +9,23 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * 制限付きスロットラッパー
+ * スロットラッパー
  *
  * <p>このクラスは {@link net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen.SlotWrapper}
  * の設計パターンをコピーして実装されています。</p>
  *
  * <h2>CreativeModeInventoryScreen.SlotWrapper との類似点</h2>
  * <ul>
- *   <li>元のスロットをラップして表示位置と動作を変更</li>
+ *   <li>元のスロットをラップして表示位置を変更</li>
  *   <li>すべてのメソッドを元の target スロットに委譲</li>
  *   <li>必要に応じてメソッドをオーバーライドして動作をカスタマイズ</li>
  * </ul>
  *
  * <h2>現在の実装機能</h2>
  * <ul>
- *   <li>{@code isActive()} を false にしてスロットを無効化（クリック、ツールチップ、描画を防ぐ）</li>
- *   <li>{@code mayPickup()} と {@code mayPlace()} で取得・配置を防ぐ</li>
- *   <li>画面外（-2000, -2000）に配置して視覚的に隠す</li>
+ *   <li>{@code isActive()}, {@code mayPickup()}, {@code mayPlace()} を元スロットへ完全に移譲</li>
+ *   <li>表示位置のみを変更（画面外 -2000, -2000 など）</li>
+ *   <li>restricted フラグは残されているが、現在は使用されていない（将来の拡張用）</li>
  * </ul>
  *
  * <h2>今後追加できる機能（CreativeModeInventoryScreen を参考）</h2>
@@ -49,7 +49,7 @@ public class RestrictedSlotWrapper extends Slot {
      * @param index スロットインデックス（menu.slots内の位置）
      * @param x 表示X座標（-2000で画面外）
      * @param y 表示Y座標（-2000で画面外）
-     * @param restricted true の場合、このスロットを制限する
+     * @param restricted 将来の拡張用フラグ（現在は未使用）
      */
     public RestrictedSlotWrapper(Slot target, int index, int x, int y, boolean restricted) {
         super(target.container, target.getContainerSlot(), x, y);
@@ -59,28 +59,25 @@ public class RestrictedSlotWrapper extends Slot {
         this.index = index;
     }
 
-    // === 制限機能 ===
+    // === 元のスロットへの委譲 ===
 
     @Override
     public boolean isActive() {
-        // 制限されている場合、スロットを無効化
-        // これにより、クリック、ツールチップ、描画がすべて防がれる
-        return !restricted && target.isActive();
+        // 元スロットの isActive() をそのまま返す
+        return target.isActive();
     }
 
     @Override
     public boolean mayPickup(Player player) {
-        // 制限されている場合、アイテムの取得を防ぐ
-        return !restricted && target.mayPickup(player);
+        // 元スロットの mayPickup() をそのまま返す
+        return target.mayPickup(player);
     }
 
     @Override
     public boolean mayPlace(ItemStack stack) {
-        // 制限されている場合、アイテムの配置を防ぐ
-        return !restricted && target.mayPlace(stack);
+        // 元スロットの mayPlace() をそのまま返す
+        return target.mayPlace(stack);
     }
-
-    // === 元のスロットへの委譲 ===
 
     @Override
     public void onTake(Player player, ItemStack stack) {
