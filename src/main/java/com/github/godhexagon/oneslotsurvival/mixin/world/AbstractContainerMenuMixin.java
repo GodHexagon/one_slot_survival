@@ -145,7 +145,7 @@ public abstract class AbstractContainerMenuMixin {
      * @return true if the operation should be allowed, false otherwise
      */
     private boolean canPlaceInRoleSlot(int slotIndex, ItemStack item) {
-        if (!SlotDefinition.isRestrictedSlot(slotIndex)) {
+        if (!SlotDefinition.isRoleSlot(slotIndex)) {
             return true;  // Not a role slot, allow
         }
 
