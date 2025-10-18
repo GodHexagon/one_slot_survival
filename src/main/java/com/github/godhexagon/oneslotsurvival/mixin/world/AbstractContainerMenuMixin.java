@@ -1,7 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.mixin.world;
 
 import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
-import com.github.godhexagon.oneslotsurvival.world.util.SlotDefinition;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
@@ -112,12 +111,13 @@ public abstract class AbstractContainerMenuMixin {
      */
     @Inject(method = "clicked", at = @At("HEAD"), cancellable = true)
     private void onClicked(int slotId, int button, ClickType clickType, Player player, CallbackInfo ci) {
-        // ロールスロットの時だけふるまいを変える
-        if (PlayerModValidity.isEffective(player) && SlotDefinition.isRestrictedSlot(slotId)) {
+        // 対象プレイヤーの時だけふるまいを変える
+        if (PlayerModValidity.isEffective(player)) {
             ci.cancel();
 
             try {
-                this.RoleSlotDoClick(slotId, button, clickType, player);
+                // ロールスロットかどうかは内部で判定
+                this.RoledPlayerDoClick(slotId, button, clickType, player);
             } catch (Exception exception) {
                 // エラーハンドリングは完全コピー
                 CrashReport crashreport = CrashReport.forThrowable(exception, "Container click");
@@ -135,7 +135,7 @@ public abstract class AbstractContainerMenuMixin {
         }
     }
 
-    private void RoleSlotDoClick(int p_150431_, int p_150432_, ClickType p_150433_, Player p_150434_) {
+    private void RoledPlayerDoClick(int p_150431_, int p_150432_, ClickType p_150433_, Player p_150434_) {
         // ここで独自実装をする。バグを減らすために、完全コピー状態にしてある。ここから変更を加える。
         Inventory inventory = p_150434_.getInventory();
         if (p_150433_ == ClickType.QUICK_CRAFT) {
