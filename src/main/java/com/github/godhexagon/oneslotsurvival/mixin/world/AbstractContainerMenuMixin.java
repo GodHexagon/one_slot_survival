@@ -112,20 +112,24 @@ public abstract class AbstractContainerMenuMixin {
      */
     @Inject(method = "clicked", at = @At("HEAD"), cancellable = true)
     private void onClicked(int slotId, int button, ClickType clickType, Player player, CallbackInfo ci) {
-        try {
-            this.customDoClick(slotId, button, clickType, player);
-        } catch (Exception exception) {
-            CrashReport crashreport = CrashReport.forThrowable(exception, "Container click");
-            CrashReportCategory crashreportcategory = crashreport.addCategory("Click info");
-            crashreportcategory.setDetail(
-                    "Menu Type", () -> this.menuType != null ? BuiltInRegistries.MENU.getKey(this.menuType).toString() : "<no type>"
-            );
-            crashreportcategory.setDetail("Menu Class", () -> this.getClass().getCanonicalName());
-            crashreportcategory.setDetail("Slot Count", this.slots.size());
-            crashreportcategory.setDetail("Slot", slotId);
-            crashreportcategory.setDetail("Button", button);
-            crashreportcategory.setDetail("Type", clickType);
-            throw new ReportedException(crashreport);
+        if (PlayerModValidity.isEffective(player) && SlotDefinition.isRestrictedSlot(slotId)) {
+            ci.cancel();
+
+            try {
+                this.customDoClick(slotId, button, clickType, player);
+            } catch (Exception exception) {
+                CrashReport crashreport = CrashReport.forThrowable(exception, "Container click");
+                CrashReportCategory crashreportcategory = crashreport.addCategory("Click info");
+                crashreportcategory.setDetail(
+                        "Menu Type", () -> this.menuType != null ? BuiltInRegistries.MENU.getKey(this.menuType).toString() : "<no type>"
+                );
+                crashreportcategory.setDetail("Menu Class", () -> this.getClass().getCanonicalName());
+                crashreportcategory.setDetail("Slot Count", this.slots.size());
+                crashreportcategory.setDetail("Slot", slotId);
+                crashreportcategory.setDetail("Button", button);
+                crashreportcategory.setDetail("Type", clickType);
+                throw new ReportedException(crashreport);
+            }
         }
     }
 
@@ -275,8 +279,8 @@ public abstract class AbstractContainerMenuMixin {
                 if (itemstack2.isEmpty()) {
                     if (slot5.mayPickup(p_150434_)) {
                         inventory.setItem(p_150432_, itemstack7);
-                        // TODO: onSwapCraft is protected, need to create accessor or use reflection
-                        // slot5.onSwapCraft(itemstack7.getCount());
+                        // Use accessor to call protected onSwapCraft method
+                        ((SlotAccessor) slot5).invokeOnSwapCraft(itemstack7.getCount());
                         slot5.setByPlayer(ItemStack.EMPTY);
                         slot5.onTake(p_150434_, itemstack7);
                     }
