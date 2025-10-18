@@ -18,8 +18,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Mixin to modify hotbar rendering.
- * For players with One Slot mode enabled, renders only a single slot hotbar centered on screen.
+ * ホットバーレンダリングを変更する Mixin
+ * One Slot モードが有効なプレイヤーに対して、画面中央に単一スロットのホットバーのみをレンダリング
  */
 @Mixin(Gui.class)
 public abstract class GuiMixin {
@@ -28,7 +28,7 @@ public abstract class GuiMixin {
     @Final
     private Minecraft minecraft;
 
-    // Sprite constants - using vanilla for most, custom only for hotbar background
+    // スプライト定数 - ほとんどはバニラを使用、ホットバー背景のみカスタム
     private static final ResourceLocation CUSTOM_HOTBAR_SPRITE = ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "hud/hotbar");
     private static final ResourceLocation HOTBAR_SELECTION_SPRITE = ResourceLocation.withDefaultNamespace("hud/hotbar_selection");
     private static final ResourceLocation HOTBAR_OFFHAND_LEFT_SPRITE = ResourceLocation.withDefaultNamespace("hud/hotbar_offhand_left");
@@ -42,28 +42,28 @@ public abstract class GuiMixin {
     protected abstract Player getCameraPlayer();
 
     /**
-     * Replaces the vanilla hotbar rendering with a custom single-slot hotbar when mod is effective.
+     * mod が有効な場合、バニラのホットバーレンダリングをカスタムの単一スロットホットバーに置き換え
      */
     @Inject(method = "renderItemHotbar", at = @At("HEAD"), cancellable = true)
     private void onRenderItemHotbar(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
         Player player = this.minecraft.player;
 
-        // Only apply custom rendering if the mod is enabled for this player
+        // このプレイヤーに対して mod が有効な場合のみカスタムレンダリングを適用
         if (player == null || !PlayerModValidity.isEffective(player)) {
             return;
         }
 
-        // Cancel vanilla rendering
+        // バニラレンダリングをキャンセル
         ci.cancel();
 
-        // Render custom single-slot hotbar
+        // カスタム単一スロットホットバーをレンダリング
         this.renderSingleSlotHotbar(guiGraphics, deltaTracker);
     }
 
     /**
-     * Renders a custom single-slot hotbar centered on screen.
-     * Uses vanilla background but only renders the first slot item.
-     * The hotbar is shifted left so that slot 0 appears in the center.
+     * 画面中央にカスタム単一スロットホットバーをレンダリング
+     * バニラ背景を使用するが、最初のスロットアイテムのみをレンダリング
+     * スロット 0 が中央に表示されるようにホットバーを左にシフト
      */
     private void renderSingleSlotHotbar(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         Player player = this.getCameraPlayer();
@@ -76,18 +76,18 @@ public abstract class GuiMixin {
         int centerX = guiGraphics.guiWidth() / 2;
         int bottomY = guiGraphics.guiHeight() - 22;
 
-        // Shift hotbar RIGHT by 80 pixels so that slot 0 (leftmost) appears in center
-        // Each slot is 20 pixels wide, shifting right 4 slots = 80 pixels
+        // スロット 0（左端）が中央に表示されるようにホットバーを右に 80 ピクセルシフト
+        // 各スロットの幅は 20 ピクセル、4 スロット右にシフト = 80 ピクセル
         int offsetX = 80;
         int hotbarX = centerX - 91 + offsetX;
 
-        // Render custom hotbar background (182 pixels wide), shifted right
+        // カスタムホットバー背景（幅 182 ピクセル）を右にシフトしてレンダリング
         guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, CUSTOM_HOTBAR_SPRITE, hotbarX, bottomY, 182, 22);
 
-        // Render vanilla selection overlay at slot 0 position (now in center)
+        // スロット 0 の位置（現在は中央）にバニラ選択オーバーレイをレンダリング
         guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, HOTBAR_SELECTION_SPRITE, hotbarX - 1, bottomY - 1, 24, 23);
 
-        // Render vanilla offhand slot if present
+        // オフハンドスロットが存在する場合、バニラオフハンドスロットをレンダリング
         if (!itemstack.isEmpty()) {
             if (humanoidarm == HumanoidArm.LEFT) {
                 guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, HOTBAR_OFFHAND_LEFT_SPRITE, hotbarX - 29, bottomY - 1, 29, 24);
@@ -96,13 +96,13 @@ public abstract class GuiMixin {
             }
         }
 
-        // Render only the first slot item (slot 0) - now in center
-        int itemX = hotbarX + 2; // Position of slot 0 item
+        // 最初のスロットアイテム（スロット 0）のみをレンダリング - 現在は中央
+        int itemX = hotbarX + 2; // スロット 0 アイテムの位置
         int itemY = guiGraphics.guiHeight() - 16 - 3;
-        ItemStack selectedItem = player.getInventory().getItem(0); // Always render slot 0
+        ItemStack selectedItem = player.getInventory().getItem(0); // 常にスロット 0 をレンダリング
         this.renderSlot(guiGraphics, itemX, itemY, deltaTracker, player, selectedItem, 1);
 
-        // Render offhand item if present
+        // オフハンドアイテムが存在する場合はレンダリング
         if (!itemstack.isEmpty()) {
             int offhandY = guiGraphics.guiHeight() - 16 - 3;
             if (humanoidarm == HumanoidArm.LEFT) {

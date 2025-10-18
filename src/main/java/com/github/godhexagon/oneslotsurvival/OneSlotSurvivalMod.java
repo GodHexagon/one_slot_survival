@@ -20,20 +20,20 @@ public final class OneSlotSurvivalMod {
     public OneSlotSurvivalMod(FMLJavaModLoadingContext context) {
         var modBusGroup = context.getModBusGroup();
 
-        // Register deferred registries
+        // DeferredRegistry を登録
         ModItems.ITEMS.register(modBusGroup);
 
-        // Register attributes
+        // Attribute を登録
         ModAttributes.ATTRIBUTES.register(modBusGroup);
 
-        // Register attribute handler (EntityAttributeModificationEvent is on mod bus)
+        // Attribute ハンドラを登録（EntityAttributeModificationEvent は mod bus で発火）
         net.minecraftforge.event.entity.EntityAttributeModificationEvent.getBus(modBusGroup)
             .addListener(PlayerAttributeHandler::onEntityAttributeModification);
 
-        // Register the commonSetup method for modloading
+        // mod ローディング用の共通セットアップメソッドを登録
         FMLCommonSetupEvent.getBus(modBusGroup).addListener(this::commonSetup);
 
-        // Register ourselves for server and other game events we are interested in
+        // サーバーおよびその他のゲームイベントを処理するため自身を登録
         MinecraftForge.EVENT_BUS.register(this);
     }
 

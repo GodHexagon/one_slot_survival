@@ -40,8 +40,8 @@ public class SlotBarrierFilling {
     }
 
     /**
-     * Check if a slot should have a barrier item
-     * Slots 1-35 are prohibited (hotbar 1-8 and inventory 9-35)
+     * スロットにバリアアイテムが必要かどうかをチェック
+     * スロット 1-35 は禁止（ホットバー 1-8 とインベントリ 9-35）
      */
     public static boolean shouldHaveBarrier(int slotId) {
         return slotId >= 1 && slotId <= 35;

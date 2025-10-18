@@ -14,7 +14,7 @@ public class ServerEvent {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
 
-        // Only process on server side
+        // サーバー側でのみ処理
         if (player.level().isClientSide) {
             return;
         }
