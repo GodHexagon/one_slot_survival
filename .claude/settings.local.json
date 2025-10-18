@@ -10,7 +10,8 @@
       "Read(//c/Users/godhe/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/**)",
       "Read(//c/**)",
       "Read(//tmp/**)",
-      "Bash(javap:*)"
+      "Bash(javap:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []
