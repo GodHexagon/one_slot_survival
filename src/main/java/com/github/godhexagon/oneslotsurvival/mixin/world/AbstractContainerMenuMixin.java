@@ -12,8 +12,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickAction;
 import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.Final;
@@ -24,6 +26,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Mixin to restrict item placement in role slots.
@@ -38,10 +41,70 @@ public abstract class AbstractContainerMenuMixin {
     public NonNullList<Slot> slots;
 
     @Shadow
+    @Nullable
+    private MenuType<?> menuType;
+
+    @Shadow
+    private int quickcraftStatus;
+
+    @Shadow
+    private int quickcraftType;
+
+    @Shadow
+    @Final
+    private Set<Slot> quickcraftSlots;
+
+    @Shadow
     public abstract ItemStack getCarried();
 
     @Shadow
     public abstract void setCarried(ItemStack stack);
+
+    @Shadow
+    protected abstract void resetQuickCraft();
+
+    @Shadow
+    protected abstract boolean canDragTo(Slot slot);
+
+    @Shadow
+    public abstract ItemStack quickMoveStack(Player player, int index);
+
+    @Shadow
+    protected abstract boolean tryItemClickBehaviourOverride(Player player, ClickAction action, Slot slot, ItemStack clickedItem, ItemStack carriedItem);
+
+    @Shadow
+    protected abstract net.minecraft.world.entity.SlotAccess createCarriedSlotAccess();
+
+    @Shadow
+    protected abstract boolean canTakeItemForPickAll(ItemStack stack, Slot slot);
+
+    @Shadow
+    protected abstract void doClick(int slotId, int button, ClickType clickType, Player player);
+
+    @Shadow
+    public static int getQuickcraftHeader(int p_38980_) {
+        throw new AssertionError();
+    }
+
+    @Shadow
+    public static int getQuickcraftType(int p_38986_) {
+        throw new AssertionError();
+    }
+
+    @Shadow
+    public static boolean isValidQuickcraftType(int p_150421_, Player p_150422_) {
+        throw new AssertionError();
+    }
+
+    @Shadow
+    public static int getQuickCraftPlaceCount(Set<Slot> p_150426_, int p_150427_, ItemStack p_150428_) {
+        throw new AssertionError();
+    }
+
+    @Shadow
+    public static boolean canItemQuickReplace(@Nullable Slot p_150432_, ItemStack p_150433_, boolean p_150434_) {
+        throw new AssertionError();
+    }
 
     /**
      * Inject into clicked() to intercept ClickType.PICKUP on role slots.
@@ -212,7 +275,8 @@ public abstract class AbstractContainerMenuMixin {
                 if (itemstack2.isEmpty()) {
                     if (slot5.mayPickup(p_150434_)) {
                         inventory.setItem(p_150432_, itemstack7);
-                        slot5.onSwapCraft(itemstack7.getCount());
+                        // TODO: onSwapCraft is protected, need to create accessor or use reflection
+                        // slot5.onSwapCraft(itemstack7.getCount());
                         slot5.setByPlayer(ItemStack.EMPTY);
                         slot5.onTake(p_150434_, itemstack7);
                     }
