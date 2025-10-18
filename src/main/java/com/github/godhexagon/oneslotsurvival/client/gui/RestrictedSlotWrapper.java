@@ -42,19 +42,16 @@ import org.jetbrains.annotations.Nullable;
 @OnlyIn(Dist.CLIENT)
 public class RestrictedSlotWrapper extends Slot {
     private final Slot target;
-    private final boolean restricted;
 
     /**
      * @param target 元のスロット
      * @param index スロットインデックス（menu.slots内の位置）
      * @param x 表示X座標（-2000で画面外）
      * @param y 表示Y座標（-2000で画面外）
-     * @param restricted 将来の拡張用フラグ（現在は未使用）
      */
-    public RestrictedSlotWrapper(Slot target, int index, int x, int y, boolean restricted) {
+    public RestrictedSlotWrapper(Slot target, int index, int x, int y) {
         super(target.container, target.getContainerSlot(), x, y);
         this.target = target;
-        this.restricted = restricted;
         // 重要: スロットのindexを正しく設定する
         this.index = index;
     }
