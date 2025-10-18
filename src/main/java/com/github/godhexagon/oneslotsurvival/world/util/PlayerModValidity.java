@@ -2,6 +2,7 @@ package com.github.godhexagon.oneslotsurvival.world.util;
 
 import com.github.godhexagon.oneslotsurvival.world.attribute.ModAttributes;
 import net.minecraft.core.Holder;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
@@ -61,7 +62,7 @@ public class PlayerModValidity {
      * @param enabled true to enable One Slot mode, false to disable
      * @throws IllegalStateException if the MOD_ENABLED attribute is not registered or not present on the player
      */
-    public static void setEnabled(Player player, boolean enabled) {
+    public static void setEnabled(ServerPlayer player, boolean enabled) {
         AttributeInstance attribute = player.getAttribute(getAttributeHolder());
         if (attribute == null) {
             throw new IllegalStateException(
@@ -82,7 +83,7 @@ public class PlayerModValidity {
      * @return the new state (true if now enabled, false if now disabled)
      * @throws IllegalStateException if the MOD_ENABLED attribute is not registered or not present on the player
      */
-    public static boolean toggle(Player player) {
+    public static boolean toggle(ServerPlayer player) {
         boolean newState = !isEnabled(player);
         setEnabled(player, newState);
         return newState;
