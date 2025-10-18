@@ -1,10 +1,10 @@
 package com.github.godhexagon.oneslotsurvival.server.event;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
-import com.github.godhexagon.oneslotsurvival.server.service.SlotBarrierFilling;
 import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.event.TickEvent;
+import com.github.godhexagon.oneslotsurvival.world.util.SlotBarrierFilling;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -14,25 +14,30 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = OneSlotSurvivalMod.MODID)
 public class ServerEvent {
     /**
-     * ここでは、プレイヤーに配布されるスロットバリアを常に適切な状態に保つ処理を行っている。
+     * ここでは、プレイヤーに配布されるスロットバリアを適切な状態に保つために、ゲームモードが変更されたときのイベントをハンドリング
      *
      * @param event *Forge API
      */
     @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        Player player = event.player;
-
-        // サーバー側でのみ処理
-        if (player.level().isClientSide) {
+    public static void onPlayerChangeGameMode(PlayerEvent.PlayerChangeGameModeEvent event) {
+        // パターンマッチングでServerPlayerに自動キャスト（Java 16+の流儀）
+        // サーバーのときだけしかServerPlayerでない仕様を利用
+        if (!(event.getEntity() instanceof ServerPlayer serverPlayer)) {
             return;
         }
 
-        // スロットバリアで埋める必要があるプレイヤーだけ
-        if (PlayerModValidity.isEffective(player) && SlotBarrierFilling.shouldBeFilledUp(player)) {
-            // スロットバリアで埋める
-            SlotBarrierFilling.fillUp(player);
-        } else if (!PlayerModValidity.isEffective(player) && SlotBarrierFilling.shouldBeClean(player)) {
-            SlotBarrierFilling.clean(player);
+        boolean wasEffective = PlayerModValidity.isEffective(serverPlayer, event.getCurrentGameMode());
+        boolean willBeEffective = PlayerModValidity.isEffective(serverPlayer, event.getNewGameMode());
+
+        // 状態変化がない場合は何もしない
+        if (wasEffective == willBeEffective) {
+            return;
+        }
+
+        if (willBeEffective) {
+            SlotBarrierFilling.fillUp(serverPlayer);
+        } else {
+            SlotBarrierFilling.clean(serverPlayer);
         }
     }
 }

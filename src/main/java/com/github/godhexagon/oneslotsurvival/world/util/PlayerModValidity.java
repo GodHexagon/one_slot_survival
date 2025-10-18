@@ -57,9 +57,11 @@ public class PlayerModValidity {
      * @throws IllegalStateException MOD_ENABLED Attribute が登録されていない場合
      */
     public static boolean isEffective(Player player) {
-        return (player.gameMode() == GameType.ADVENTURE ||
-                player.gameMode() == GameType.SURVIVAL) &&
-                isEnabled(player);
+        return isEffective(player, player.gameMode());
+    }
+
+    public static boolean isEffective(Player player, GameType mode) {
+        return (mode == GameType.ADVENTURE || mode == GameType.SURVIVAL) && isEnabled(player);
     }
 
     /**
@@ -82,6 +84,12 @@ public class PlayerModValidity {
 
         // 基本値を設定: 有効の場合は 1.0、無効の場合は 0.0
         attribute.setBaseValue(enabled ? 1.0 : 0.0);
+
+        if (enabled) {
+            SlotBarrierFilling.fillUp(player);
+        } else {
+            SlotBarrierFilling.clean(player);
+        }
     }
 
     /**
