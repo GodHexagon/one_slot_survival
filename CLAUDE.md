@@ -10,9 +10,9 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 # 進捗
 
-直前の成果！: 実現可能性を探る
+直前の成果！: スロットバリアのツールチップが表示される問題を修正 of 修正
 
-実行中: スロットバリアのツールチップが表示される問題を修正 of 修正
+実行中: 全ソースコードを再レビュー of 修正
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
