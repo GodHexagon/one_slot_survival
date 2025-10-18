@@ -21,6 +21,14 @@ public class ClientEvent {
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         enforceMainHandSelection();
+
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null || mc.level == null) {
+            return;
+        }
+        if (PlayerModValidity.isEnabled(mc.player)) {
+            PlayerModValidity.setEnabled(mc.player, false);
+        }
     }
 
     /**
