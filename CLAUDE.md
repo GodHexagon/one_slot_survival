@@ -10,7 +10,7 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 # 進捗
 
-直前の成果！: スロットバリアのツールチップが表示される問題を修正 of 修正
+直前の成果！: 全ソースコードの英語コメントを日本語に翻訳・コードとの整合性を確認 of 修正
 
 実行中: 全ソースコードを再レビュー of 修正
 

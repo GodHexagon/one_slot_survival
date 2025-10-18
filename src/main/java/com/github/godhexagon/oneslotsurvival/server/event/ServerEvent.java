@@ -8,13 +8,21 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+/**
+ * Forge API用サーバー（Dedicated/Integrated）イベントハンドラー
+ */
 @Mod.EventBusSubscriber(modid = OneSlotSurvivalMod.MODID)
 public class ServerEvent {
+    /**
+     * ここでは、プレイヤーに配布されるスロットバリアを常に適切な状態に保つ処理を行っている。
+     *
+     * @param event *Forge API
+     */
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
 
-        // Only process on server side
+        // サーバー側でのみ処理
         if (player.level().isClientSide) {
             return;
         }

@@ -13,15 +13,15 @@ import net.minecraft.server.level.ServerPlayer;
 import java.util.Collection;
 
 /**
- * Command handling for One Slot Survival mod.
- * Provides /oneslot command with enable/disable/toggle/status subcommands.
+ * One Slot Survival mod のコマンド処理
+ * /oneslot コマンドに enable/disable/toggle/status サブコマンドを提供
  */
 public class CommandRegisterer {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
             Commands.literal("oneslot")
-                .requires(source -> source.hasPermission(2)) // OP level 2 required
+                .requires(source -> source.hasPermission(2)) // OP レベル 2 が必要
                 .then(Commands.argument("players", EntityArgument.players())
                     .then(Commands.literal("enable")
                         .executes(context -> setOneSlotMode(context, true)))
@@ -36,7 +36,7 @@ public class CommandRegisterer {
         );
     }
 
-    private static int setOneSlotMode(CommandContext<CommandSourceStack> context, boolean enabled) throws CommandSyntaxException {
+    private static int setOneSlotMode(CommandContext<CommandSourceStack> context, boolean enabled) {
         try {
             Collection<ServerPlayer> players = EntityArgument.getPlayers(context, "players");
             String action = enabled ? "enabled" : "disabled";
@@ -48,7 +48,7 @@ public class CommandRegisterer {
                     true
                 );
 
-                // Notify the target player
+                // 対象プレイヤーに通知
                 player.sendSystemMessage(
                     Component.literal("One Slot Survival has been " + action + " for you by " +
                         context.getSource().getDisplayName().getString())
@@ -62,7 +62,7 @@ public class CommandRegisterer {
         }
     }
 
-    private static int toggleOneSlotMode(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+    private static int toggleOneSlotMode(CommandContext<CommandSourceStack> context) {
         try {
             Collection<ServerPlayer> players = EntityArgument.getPlayers(context, "players");
 
@@ -75,7 +75,7 @@ public class CommandRegisterer {
                     true
                 );
 
-                // Notify the target player
+                // 対象プレイヤーに通知
                 player.sendSystemMessage(
                     Component.literal("One Slot Survival has been " + action + " for you by " +
                         context.getSource().getDisplayName().getString())
@@ -89,7 +89,7 @@ public class CommandRegisterer {
         }
     }
 
-    private static int getOneSlotStatus(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+    private static int getOneSlotStatus(CommandContext<CommandSourceStack> context) {
         try {
             Collection<ServerPlayer> players = EntityArgument.getPlayers(context, "players");
 
@@ -109,7 +109,7 @@ public class CommandRegisterer {
         }
     }
 
-    private static int getOwnStatus(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+    private static int getOwnStatus(CommandContext<CommandSourceStack> context) {
         try {
             ServerPlayer player = context.getSource().getPlayerOrException();
             boolean enabled = PlayerModValidity.isEnabled(player);

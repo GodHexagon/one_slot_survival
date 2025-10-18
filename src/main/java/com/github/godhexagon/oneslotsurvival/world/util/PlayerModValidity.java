@@ -2,22 +2,24 @@ package com.github.godhexagon.oneslotsurvival.world.util;
 
 import com.github.godhexagon.oneslotsurvival.world.attribute.ModAttributes;
 import net.minecraft.core.Holder;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
 
 /**
- * Manager for tracking which players have One Slot mode enabled.
- * Uses the Attribute system for automatic persistence and client synchronization.
+ * どのプレイヤーが One Slot モードを有効にしているかを追跡する処理の集合。
+ * 自動永続化とクライアント同期のために Attribute システムを使用
+ * Attributeシステムをラップする。
  */
 public class PlayerModValidity {
 
     /**
-     * Get the attribute holder safely, throwing a clear exception if not registered.
+     * Attribute Holder を安全に取得し、登録されていない場合は明確な例外をスロー
      *
-     * @return the MOD_ENABLED attribute holder
-     * @throws IllegalStateException if the attribute is not registered
+     * @return MOD_ENABLED Attribute Holder
+     * @throws IllegalStateException Attribute が登録されていない場合
      */
     private static Holder<Attribute> getAttributeHolder() {
         return ModAttributes.MOD_ENABLED.getHolder().orElseThrow(
@@ -29,23 +31,31 @@ public class PlayerModValidity {
     }
 
     /**
-     * Check if One Slot mode is enabled for the given player.
-     * Works on both client and server side - automatically synchronized.
+     * 指定されたプレイヤーに対して One Slot モード有効性のワールド設定をチェック
+     * クライアントとサーバーの両側で動作 - 自動的に同期される
      *
-     * @param player the player to check
-     * @return true if One Slot mode is enabled for this player
-     * @throws IllegalStateException if the MOD_ENABLED attribute is not registered
+     * @param player チェックするプレイヤー
+     * @return このプレイヤーに対して One Slot モードが有効な場合は true
+     * @throws IllegalStateException MOD_ENABLED Attribute が登録されていない場合
      */
     public static boolean isEnabled(Player player) {
         AttributeInstance attribute = player.getAttribute(getAttributeHolder());
         if (attribute == null) {
-            // Attribute not present on this player entity (should not happen after EntityAttributeModificationEvent)
+            // このプレイヤーエンティティに Attribute が存在しない（EntityAttributeModificationEvent 後は発生しないはず）
             return false;
         }
-        // Value > 0.5 means enabled (using 0.5 as threshold for floating point safety)
+        // 値 > 0.5 は有効を意味する（浮動小数点の安全性のため 0.5 を閾値として使用）
         return attribute.getBaseValue() > 0.5;
     }
 
+    /**
+     * 指定されたプレイヤーに対して One Slot モードが実際に有効か、ゲームモードと照らし合わせて適切かチェック
+     * クライアントとサーバーの両側で動作 - 自動的に同期される
+     *
+     * @param player チェックするプレイヤー
+     * @return このプレイヤーに対して One Slot モードが有効な場合は true
+     * @throws IllegalStateException MOD_ENABLED Attribute が登録されていない場合
+     */
     public static boolean isEffective(Player player) {
         return (player.gameMode() == GameType.ADVENTURE ||
                 player.gameMode() == GameType.SURVIVAL) &&
@@ -53,15 +63,15 @@ public class PlayerModValidity {
     }
 
     /**
-     * Enable or disable One Slot mode for the given player.
-     * When enabling, processes existing inventory items.
-     * Automatically persisted and synchronized to client.
+     * 指定されたプレイヤーに対して One Slot モードを有効または無効にする
+     * 有効化時は、既存のインベントリアイテムを処理
+     * 自動的に永続化され、クライアントと同期される
      *
-     * @param player the player to modify
-     * @param enabled true to enable One Slot mode, false to disable
-     * @throws IllegalStateException if the MOD_ENABLED attribute is not registered or not present on the player
+     * @param player 変更するプレイヤー
+     * @param enabled One Slot モードを有効にする場合は true、無効にする場合は false
+     * @throws IllegalStateException MOD_ENABLED Attribute が登録されていないか、プレイヤーに存在しない場合
      */
-    public static void setEnabled(Player player, boolean enabled) {
+    public static void setEnabled(ServerPlayer player, boolean enabled) {
         AttributeInstance attribute = player.getAttribute(getAttributeHolder());
         if (attribute == null) {
             throw new IllegalStateException(
@@ -70,19 +80,19 @@ public class PlayerModValidity {
             );
         }
 
-        // Set base value: 1.0 for enabled, 0.0 for disabled
+        // 基本値を設定: 有効の場合は 1.0、無効の場合は 0.0
         attribute.setBaseValue(enabled ? 1.0 : 0.0);
     }
 
     /**
-     * Toggle One Slot mode for the given player.
-     * Automatically persisted and synchronized to client.
+     * 指定されたプレイヤーの One Slot モードをトグル
+     * 自動的に永続化され、クライアントと同期される
      *
-     * @param player the player to toggle
-     * @return the new state (true if now enabled, false if now disabled)
-     * @throws IllegalStateException if the MOD_ENABLED attribute is not registered or not present on the player
+     * @param player トグルするプレイヤー
+     * @return 新しい状態（有効になった場合は true、無効になった場合は false）
+     * @throws IllegalStateException MOD_ENABLED Attribute が登録されていないか、プレイヤーに存在しない場合
      */
-    public static boolean toggle(Player player) {
+    public static boolean toggle(ServerPlayer player) {
         boolean newState = !isEnabled(player);
         setEnabled(player, newState);
         return newState;

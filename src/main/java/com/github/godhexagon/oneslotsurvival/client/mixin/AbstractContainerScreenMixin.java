@@ -12,27 +12,26 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Mixin to disable slot clicking on restricted slots for One Slot Survival mod.
- * Targets the slotClicked method in AbstractContainerScreen to prevent interaction
- * with prohibited slots when the player is restricted.
+ * One Slot Survival mod において、スロットバリアへのクリックを無効化する Mixin
+ * AbstractContainerScreen の slotClicked メソッドをターゲットにして、
+ * プレイヤーが制限されている場合に禁止されたスロットとの相互作用を防ぐ
  */
 @Mixin(AbstractContainerScreen.class)
 public class AbstractContainerScreenMixin {
 
     /**
-     * Inject into the slotClicked method to prevent clicks on restricted slots.
-     * This injection happens at the HEAD (beginning) of the method before any
-     * vanilla processing occurs.
+     * スロットバリアへのクリックを防ぐため slotClicked メソッドに注入
+     * この注入は、バニラ処理が行われる前のメソッドの先頭（HEAD）で発生する
      *
-     * @param slot The slot being clicked
-     * @param slotId The ID of the slot
-     * @param mouseButton The mouse button used (0=left, 1=right, 2=middle)
-     * @param type The type of click (PICKUP, QUICK_MOVE, SWAP, etc.)
-     * @param ci CallbackInfo for controlling the injection
+     * @param slot クリックされたスロット
+     * @param slotId スロットのID
+     * @param mouseButton 使用されたマウスボタン（0=左、1=右、2=中央）
+     * @param type クリックのタイプ（PICKUP、QUICK_MOVE、SWAP など）
+     * @param ci 注入を制御するための CallbackInfo
      */
     @Inject(method = "slotClicked", at = @At("HEAD"), cancellable = true)
     private void onSlotClicked(Slot slot, int slotId, int mouseButton, ClickType type, CallbackInfo ci) {
-        // Allow null slots (clicking outside inventory)
+        // null スロット（インベントリ外のクリック）を許可
         if (slot == null) {
             return;
         }
@@ -50,7 +49,7 @@ public class AbstractContainerScreenMixin {
 
         // バリアアイテムは触れない
         if (slot.getItem().is(ModItems.SLOT_BARRIER.get())) {
-            // Cancel the slot click by cancelling the callback
+            // コールバックをキャンセルしてスロットクリックを中止
             ci.cancel();
         }
     }
