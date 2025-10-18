@@ -84,9 +84,13 @@ public abstract class GuiMixin {
         // Render custom hotbar background (182 pixels wide), shifted right
         guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, CUSTOM_HOTBAR_SPRITE, hotbarX, bottomY, 182, 22);
 
-        // Render vanilla selection overlay (slot 0-3)
-        // TODO: 適切な場所に描画（
-        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, HOTBAR_SELECTION_SPRITE, hotbarX - 1, bottomY - 1, 24, 23);
+        // Render vanilla selection overlay based on selected slot (0-3)
+        // Selection sprite is -1 from hotbar position and moves 20px per slot
+        int selectedSlot = player.getInventory().getSelectedSlot();
+        if (selectedSlot >= 0 && selectedSlot <= 3) {
+            int selectionX = hotbarX - 1 + selectedSlot * 20;
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, HOTBAR_SELECTION_SPRITE, selectionX, bottomY - 1, 24, 23);
+        }
 
         // Render vanilla offhand slot if present
         if (!itemstack.isEmpty()) {
@@ -98,12 +102,13 @@ public abstract class GuiMixin {
         }
 
         // Render items (0-3)
-        int itemX = hotbarX + 2; // Position of slot 0 item
+        // Using vanilla spacing: each slot is 20 pixels apart with +2 base offset
         int itemY = guiGraphics.guiHeight() - 16 - 3;
         // 常に0 ~ 3を表示
         for (int i = 0; i <= 3; i++) {
+            int itemX = hotbarX + i * 20 + 2; // Vanilla spacing: 20px per slot, +2 offset
             ItemStack selectedItem = player.getInventory().getItem(i);
-            this.renderSlot(guiGraphics, itemX + i * 22, itemY, deltaTracker, player, selectedItem, 1);
+            this.renderSlot(guiGraphics, itemX, itemY, deltaTracker, player, selectedItem, 1);
         }
 
         // Render offhand item if present

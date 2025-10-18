@@ -10,9 +10,9 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 # 進捗
 
-直前の成果！: インベントリからアクセス可能なロールスロット of 実現可能性を探る
+直前の成果！: ホットバー選択できるロールスロット of 実現可能性を探る
 
-実行中: ホットバー選択できるロールスロット of 実現可能性を探る
+実行中: インベントリにjava.util.Random使っておみくじ of 実現可能性を探る
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
