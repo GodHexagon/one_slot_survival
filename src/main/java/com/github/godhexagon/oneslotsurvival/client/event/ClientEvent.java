@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * Forge API用クライアント側イベントハンドラ。
- * ここでは、ホットバー制御とインベントリースロットツールバーを改変している。
+ * ここでは、ホットバー制御とカスタムインベントリ挿入とインベントリースロットツールバー改変をしている。
  */
 @Mod.EventBusSubscriber(modid = OneSlotSurvivalMod.MODID, value = Dist.CLIENT)
 public class ClientEvent {
