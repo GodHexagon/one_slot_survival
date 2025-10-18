@@ -1,5 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.world.util;
 
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
@@ -47,11 +48,9 @@ public class SlotDefinition {
      * @return true の場合、つるはし
      */
     public static boolean isPickaxe(ItemStack stack) {
-        // TODO: つるはしの判定ロジックを実装する
-        // 候補:
-        // - item instanceof PickaxeItem
-        // - ItemTags.PICKAXES
-        // - 特定のアイテムID
-        return false; // 仮実装
+        if (stack.isEmpty()) {
+            return false;
+        }
+        return stack.is(ItemTags.PICKAXES);
     }
 }

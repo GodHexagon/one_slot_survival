@@ -1,6 +1,7 @@
 package com.github.godhexagon.oneslotsurvival.mixin.world;
 
 import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
+import com.github.godhexagon.oneslotsurvival.world.util.SlotDefinition;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
@@ -135,8 +136,35 @@ public abstract class AbstractContainerMenuMixin {
         }
     }
 
+    /**
+     * Check if an item can be placed in a role slot.
+     * Only pickaxes are allowed in role slots.
+     *
+     * @param slotIndex The slot index to check
+     * @param item The item being placed
+     * @return true if the operation should be allowed, false otherwise
+     */
+    private boolean canPlaceInRoleSlot(int slotIndex, ItemStack item) {
+        if (!SlotDefinition.isRestrictedSlot(slotIndex)) {
+            return true;  // Not a role slot, allow
+        }
+
+        if (item.isEmpty()) {
+            return true;  // Empty item (picking up), allow
+        }
+
+        // Role slot: only allow pickaxes
+        boolean isPickaxe = SlotDefinition.isPickaxe(item);
+        if (!isPickaxe) {
+            LOGGER.info("Blocked non-pickaxe item {} from being placed in role slot {}", item, slotIndex);
+        }
+        return isPickaxe;
+    }
+
     private void RoledPlayerDoClick(int p_150431_, int p_150432_, ClickType p_150433_, Player p_150434_) {
         // ここで独自実装をする。バグを減らすために、完全コピー状態にしてある。ここから変更を加える。
+        // SlotDefinition.isRestrictedSlot(int) - ロールスロットかどうかの判定
+        // SlotDefinition.isPickaxe(ItemStack) - つるはしかどうかの判定
         Inventory inventory = p_150434_.getInventory();
         if (p_150433_ == ClickType.QUICK_CRAFT) {
             int i = this.quickcraftStatus;
@@ -156,10 +184,12 @@ public abstract class AbstractContainerMenuMixin {
             } else if (this.quickcraftStatus == 1) {
                 Slot slot = this.slots.get(p_150431_);
                 ItemStack itemstack = this.getCarried();
+                // Add pickaxe check for role slots
                 if (canItemQuickReplace(slot, itemstack, true)
                         && slot.mayPlace(itemstack)
                         && (this.quickcraftType == 2 || itemstack.getCount() > this.quickcraftSlots.size())
-                        && this.canDragTo(slot)) {
+                        && this.canDragTo(slot)
+                        && this.canPlaceInRoleSlot(slot.index, itemstack)) {  // つるはしチェック
                     this.quickcraftSlots.add(slot);
                 }
             } else if (this.quickcraftStatus == 2) {
@@ -185,7 +215,8 @@ public abstract class AbstractContainerMenuMixin {
                                 && canItemQuickReplace(slot1, itemstack1, true)
                                 && slot1.mayPlace(itemstack1)
                                 && (this.quickcraftType == 2 || itemstack1.getCount() >= this.quickcraftSlots.size())
-                                && this.canDragTo(slot1)) {
+                                && this.canDragTo(slot1)
+                                && this.canPlaceInRoleSlot(slot1.index, itemstack3)) {  // つるはしチェック
                             int j = slot1.hasItem() ? slot1.getItem().getCount() : 0;
                             int k = Math.min(itemstack3.getMaxStackSize(), slot1.getMaxStackSize(itemstack3));
                             int l = Math.min(getQuickCraftPlaceCount(this.quickcraftSlots, this.quickcraftType, itemstack3) + j, k);
@@ -242,7 +273,7 @@ public abstract class AbstractContainerMenuMixin {
                 if (!this.tryItemClickBehaviourOverride(p_150434_, clickaction, slot7, itemstack9, itemstack10)) {
                     if (!net.minecraftforge.event.ForgeEventFactory.onItemStackedOn(itemstack9, itemstack10, slot7, clickaction, p_150434_, createCarriedSlotAccess()))
                         if (itemstack9.isEmpty()) {
-                            if (!itemstack10.isEmpty()) {
+                            if (!itemstack10.isEmpty() && this.canPlaceInRoleSlot(slot7.index, itemstack10)) {  // つるはしチェック
                                 int i3 = clickaction == ClickAction.PRIMARY ? itemstack10.getCount() : 1;
                                 this.setCarried(slot7.safeInsert(itemstack10, i3));
                             }
@@ -255,10 +286,10 @@ public abstract class AbstractContainerMenuMixin {
                                     slot7.onTake(p_150434_, p_150421_);
                                 });
                             } else if (slot7.mayPlace(itemstack10)) {
-                                if (ItemStack.isSameItemSameComponents(itemstack9, itemstack10)) {
+                                if (ItemStack.isSameItemSameComponents(itemstack9, itemstack10) && this.canPlaceInRoleSlot(slot7.index, itemstack10)) {  // つるはしチェック（スタック時）
                                     int k3 = clickaction == ClickAction.PRIMARY ? itemstack10.getCount() : 1;
                                     this.setCarried(slot7.safeInsert(itemstack10, k3));
-                                } else if (itemstack10.getCount() <= slot7.getMaxStackSize(itemstack10)) {
+                                } else if (itemstack10.getCount() <= slot7.getMaxStackSize(itemstack10) && this.canPlaceInRoleSlot(slot7.index, itemstack10)) {  // つるはしチェック
                                     this.setCarried(itemstack9);
                                     slot7.setByPlayer(itemstack10);
                                 }
@@ -288,7 +319,7 @@ public abstract class AbstractContainerMenuMixin {
                         slot5.onTake(p_150434_, itemstack7);
                     }
                 } else if (itemstack7.isEmpty()) {
-                    if (slot5.mayPlace(itemstack2)) {
+                    if (slot5.mayPlace(itemstack2) && this.canPlaceInRoleSlot(slot5.index, itemstack2)) {  // つるはしチェック
                         int j2 = slot5.getMaxStackSize(itemstack2);
                         if (itemstack2.getCount() > j2) {
                             slot5.setByPlayer(itemstack2.split(j2));
@@ -297,7 +328,7 @@ public abstract class AbstractContainerMenuMixin {
                             slot5.setByPlayer(itemstack2);
                         }
                     }
-                } else if (slot5.mayPickup(p_150434_) && slot5.mayPlace(itemstack2)) {
+                } else if (slot5.mayPickup(p_150434_) && slot5.mayPlace(itemstack2) && this.canPlaceInRoleSlot(slot5.index, itemstack2)) {  // つるはしチェック
                     int k2 = slot5.getMaxStackSize(itemstack2);
                     if (itemstack2.getCount() > k2) {
                         slot5.setByPlayer(itemstack2.split(k2));

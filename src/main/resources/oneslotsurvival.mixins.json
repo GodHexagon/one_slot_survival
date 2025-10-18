@@ -7,11 +7,13 @@
   "client": [
     "client.GuiMixin",
     "world.InventoryMixin",
-    "world.AbstractContainerMenuMixin"
+    "world.AbstractContainerMenuMixin",
+    "world.SlotAccessor"
   ],
   "server": [
     "world.InventoryMixin",
-    "world.AbstractContainerMenuMixin"
+    "world.AbstractContainerMenuMixin",
+    "world.SlotAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
