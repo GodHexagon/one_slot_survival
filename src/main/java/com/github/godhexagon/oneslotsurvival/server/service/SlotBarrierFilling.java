@@ -5,6 +5,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
+/**
+ * スロットバリアをプレイヤーに配布する処理の集合。
+ */
 public class SlotBarrierFilling {
     public static boolean shouldBeFilledUp(Player player) {
         Inventory inventory = player.getInventory();

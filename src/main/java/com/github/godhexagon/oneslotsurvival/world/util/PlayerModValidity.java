@@ -9,8 +9,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameType;
 
 /**
- * どのプレイヤーが One Slot モードを有効にしているかを追跡するマネージャー
+ * どのプレイヤーが One Slot モードを有効にしているかを追跡する処理の集合。
  * 自動永続化とクライアント同期のために Attribute システムを使用
+ * Attributeシステムをラップする。
  */
 public class PlayerModValidity {
 

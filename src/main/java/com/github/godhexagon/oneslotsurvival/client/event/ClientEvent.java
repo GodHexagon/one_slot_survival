@@ -16,11 +16,18 @@ import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * インベントリ関連イベント用のクライアント側イベントハンドラ
+ * Forge API用クライアント側イベントハンドラ。
+ * ここでは、ホットバー制御とインベントリースロットツールバーを改変している。
  */
 @Mod.EventBusSubscriber(modid = OneSlotSurvivalMod.MODID, value = Dist.CLIENT)
 public class ClientEvent {
 
+    /**
+     * 各クライアントでティック処理。
+     * ここでは、ホットバーの制御を改変している。
+     *
+     * @param event *Forge API
+     */
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         enforceMainHandSelection();
@@ -58,12 +65,12 @@ public class ClientEvent {
      * プレイヤーのインベントリ画面の場合、RestrictedInventoryScreen に置き換えて
      * インベントリとホットバースロットを制限
      *
-     * @param event 画面オープニングイベント
+     * @param event *Forge API
      */
     @SubscribeEvent
     public static void onScreenOpen(ScreenEvent.Opening event) {
         // 開こうとしている画面がプレイヤーのインベントリかチェック
-        // ただし、すでに制限画面の場合は無限ループを避けるため除外
+        // RestrictedInventoryScreenはInventoryScreenを継承しているため除外（これがないとスロットラッパーが多重ラッピングになる問題が確認されている）
         if (event.getNewScreen() instanceof InventoryScreen &&
             !(event.getNewScreen() instanceof RestrictedInventoryScreen)) {
 
@@ -80,7 +87,7 @@ public class ClientEvent {
     /**
      * バリアアイテムのツールチップを無効化する。
      *
-     * @param event
+     * @param event *Forge API
      */
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event) {

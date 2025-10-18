@@ -36,7 +36,7 @@ public class CommandRegisterer {
         );
     }
 
-    private static int setOneSlotMode(CommandContext<CommandSourceStack> context, boolean enabled) throws CommandSyntaxException {
+    private static int setOneSlotMode(CommandContext<CommandSourceStack> context, boolean enabled) {
         try {
             Collection<ServerPlayer> players = EntityArgument.getPlayers(context, "players");
             String action = enabled ? "enabled" : "disabled";
@@ -62,7 +62,7 @@ public class CommandRegisterer {
         }
     }
 
-    private static int toggleOneSlotMode(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+    private static int toggleOneSlotMode(CommandContext<CommandSourceStack> context) {
         try {
             Collection<ServerPlayer> players = EntityArgument.getPlayers(context, "players");
 
@@ -89,7 +89,7 @@ public class CommandRegisterer {
         }
     }
 
-    private static int getOneSlotStatus(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+    private static int getOneSlotStatus(CommandContext<CommandSourceStack> context) {
         try {
             Collection<ServerPlayer> players = EntityArgument.getPlayers(context, "players");
 
@@ -109,7 +109,7 @@ public class CommandRegisterer {
         }
     }
 
-    private static int getOwnStatus(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+    private static int getOwnStatus(CommandContext<CommandSourceStack> context) {
         try {
             ServerPlayer player = context.getSource().getPlayerOrException();
             boolean enabled = PlayerModValidity.isEnabled(player);

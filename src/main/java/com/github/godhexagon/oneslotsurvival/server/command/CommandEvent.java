@@ -6,8 +6,8 @@ import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 /**
- * One Slot Survival mod のイベントハンドラ
- * コマンド登録やその他のゲームイベントを処理
+ * One Slot Survival mod のコマンドのイベントハンドラ
+ * コマンド登録を処理
  */
 @Mod.EventBusSubscriber(modid = OneSlotSurvivalMod.MODID)
 public class CommandEvent {

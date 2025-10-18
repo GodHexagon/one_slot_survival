@@ -13,12 +13,13 @@ import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * ホットバーレンダリングを変更する Mixin
+ * ここでは、ホットバーレンダリングを改変する
  * One Slot モードが有効なプレイヤーに対して、画面中央に単一スロットのホットバーのみをレンダリング
  */
 @Mixin(Gui.class)
@@ -29,17 +30,24 @@ public abstract class GuiMixin {
     private Minecraft minecraft;
 
     // スプライト定数 - ほとんどはバニラを使用、ホットバー背景のみカスタム
+    @Unique
     private static final ResourceLocation CUSTOM_HOTBAR_SPRITE = ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "hud/hotbar");
-    private static final ResourceLocation HOTBAR_SELECTION_SPRITE = ResourceLocation.withDefaultNamespace("hud/hotbar_selection");
-    private static final ResourceLocation HOTBAR_OFFHAND_LEFT_SPRITE = ResourceLocation.withDefaultNamespace("hud/hotbar_offhand_left");
-    private static final ResourceLocation HOTBAR_OFFHAND_RIGHT_SPRITE = ResourceLocation.withDefaultNamespace("hud/hotbar_offhand_right");
+    @Shadow
+    @Final
+    private static ResourceLocation HOTBAR_SELECTION_SPRITE;
+    @Shadow
+    @Final
+    private static ResourceLocation HOTBAR_OFFHAND_LEFT_SPRITE;
+    @Shadow
+    @Final
+    private static ResourceLocation HOTBAR_OFFHAND_RIGHT_SPRITE;
 
     @Shadow
-    protected abstract void renderSlot(GuiGraphics p_283283_, int p_283213_, int p_281301_, DeltaTracker p_344149_, Player p_283644_, ItemStack p_283317_, int p_283261_);
+    public abstract void renderSlot(GuiGraphics p_283283_, int p_283213_, int p_281301_, DeltaTracker p_344149_, Player p_283644_, ItemStack p_283317_, int p_283261_);
 
     @Shadow
     @javax.annotation.Nullable
-    protected abstract Player getCameraPlayer();
+    public abstract Player getCameraPlayer();
 
     /**
      * mod が有効な場合、バニラのホットバーレンダリングをカスタムの単一スロットホットバーに置き換え
@@ -57,7 +65,7 @@ public abstract class GuiMixin {
         ci.cancel();
 
         // カスタム単一スロットホットバーをレンダリング
-        this.renderSingleSlotHotbar(guiGraphics, deltaTracker);
+        this.one_slot_survival$renderSingleSlotHotbar(guiGraphics, deltaTracker);
     }
 
     /**
@@ -65,7 +73,8 @@ public abstract class GuiMixin {
      * バニラ背景を使用するが、最初のスロットアイテムのみをレンダリング
      * スロット 0 が中央に表示されるようにホットバーを左にシフト
      */
-    private void renderSingleSlotHotbar(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
+    @Unique
+    private void one_slot_survival$renderSingleSlotHotbar(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         Player player = this.getCameraPlayer();
         if (player == null) {
             return;
