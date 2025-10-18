@@ -110,7 +110,7 @@ public abstract class AbstractContainerMenuMixin {
         /*
         # 問題
         - たまにシングルクリックも許可されることがある
-        - 作業台スロットがロールスロットになっている
+        - ~~作業台スロットがロールスロットになっている~~
          */
     }
 }

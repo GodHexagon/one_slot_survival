@@ -10,22 +10,17 @@ public class SlotDefinition {
     /**
      * 制限対象のスロットかどうかを判定
      *
-     * @param index スロットインデックス
+     * @param slot スロットID（AbstractContainerMenuのスロットID）
      * @return true の場合、制限対象
      */
-    public static boolean isRestrictedSlot(int index) {
+    public static boolean isRestrictedSlot(int slot) {
         // インベントリスロット（9-35）を制限
-        if (index >= 9 && index <= 35) {
+        if (slot >= 9 && slot <= 35) {
             return true;
         }
 
-        // インベントリホットバーを制限
-        if (4 <= index && index <= 9) {
-            return true;
-        }
-
-        // ホットバーのもう一つの範囲（バニラの実装、よくわらかん）を制限
-        if (index >= 40 && index <= 44) {
+        // ホットバーの範囲を制限
+        if (slot >= 40 && slot <= 44) {
             return true;
         }
 
@@ -37,12 +32,12 @@ public class SlotDefinition {
      * ロールスロットかどうかを判定
      * ロールスロット = メインスロット（インデックス0）の右側に3つあるスロット
      *
-     * @param index スロットインデックス
+     * @param index スロットID（AbstractContainerMenuのスロットID）
      * @return true の場合、ロールスロット
      */
     public static boolean isRoleSlot(int index) {
-        // ホットバーの二つの範囲（バニラの実装、よくわらかん）を判定
-        return (1 <= index && index <= 3) || (37 <= index && index <= 39);
+        // ホットバーの範囲を制限
+        return 37 <= index && index <= 39;
     }
 
     /**

@@ -1,7 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.mixin.world;
 
 import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
-import com.github.godhexagon.oneslotsurvival.world.util.SlotDefinition;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -32,7 +31,7 @@ public abstract class InventoryMixin {
     private void onGetFreeSlot(CallbackInfoReturnable<Integer> cir) {
         if (PlayerModValidity.isEffective(player)) {
             for (int i = 0; i < this.items.size(); i++) {
-                if (!SlotDefinition.isRestrictedSlot(i) && this.items.get(i).isEmpty()) {
+                if (!isRestrictedSlot(i) && this.items.get(i).isEmpty()) {
                     cir.setReturnValue(i);
                     return;
                 }
@@ -40,5 +39,26 @@ public abstract class InventoryMixin {
 
             cir.setReturnValue(-1);
         }
+    }
+
+    /**
+     * 制限対象のスロットかどうかを判定
+     *
+     * @param index スロットインデックス
+     * @return true の場合、制限対象
+     */
+    private static boolean isRestrictedSlot(int index) {
+        // インベントリホットバーを制限
+        if (4 <= index && index <= 9) {
+            return true;
+        }
+
+        // インベントリスロット（9-35）を制限
+        if (index >= 9 && index <= 35) {
+            return true;
+        }
+
+        // その他のスロット（クラフト、防具、オフハンド、メインハンド）は制限しない
+        return false;
     }
 }
