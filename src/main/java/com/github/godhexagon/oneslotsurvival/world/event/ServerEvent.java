@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.server.event;
+package com.github.godhexagon.oneslotsurvival.world.event;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
 import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
@@ -9,7 +9,7 @@ import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 /**
- * Forge API用サーバー（Dedicated/Integrated）イベントハンドラー
+ * Forge API用サーバー側（Dedicated/Integrated）イベントハンドラー
  */
 @Mod.EventBusSubscriber(modid = OneSlotSurvivalMod.MODID)
 public class ServerEvent {
@@ -19,7 +19,7 @@ public class ServerEvent {
      * @param event *Forge API
      */
     @SubscribeEvent
-    public static void onPlayerChangeGameMode(PlayerEvent.PlayerChangeGameModeEvent event) {
+    private static void onPlayerChangeGameMode(PlayerEvent.PlayerChangeGameModeEvent event) {
         // パターンマッチングでServerPlayerに自動キャスト（Java 16+の流儀）
         // サーバーのときだけしかServerPlayerでない仕様を利用
         if (!(event.getEntity() instanceof ServerPlayer serverPlayer)) {
