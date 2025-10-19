@@ -30,7 +30,14 @@ public class ClientEvent {
      */
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
-        enforceMainHandSelection();
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null || mc.level == null) {
+            return;
+        }
+
+        if (PlayerModValidity.isEffective(mc.player)) {
+            enforceMainHandSelection(mc.player);
+        }
     }
 
     private static final int MAX_SLOT_INDEX = 8;
@@ -38,19 +45,14 @@ public class ClientEvent {
     /**
      * クライアントティック中にホットバー選択を正しい範囲に制限
      */
-    public static void enforceMainHandSelection() {
-        enforceMainHandSelection(4);
+    public static void enforceMainHandSelection(Player player) {
+        enforceMainHandSelection(player, 4);
     }
 
-    public static void enforceMainHandSelection(int exclusiveEnd) {
-        Minecraft mc = Minecraft.getInstance();
-        if (mc.player == null || mc.level == null) {
-            return;
-        }
-
+    public static void enforceMainHandSelection(Player player, int exclusiveEnd) {
         // Use reflection to access private selected field if available
         try {
-            var inventory = mc.player.getInventory();
+            var inventory = player.getInventory();
             var selectedField = inventory.getClass().getDeclaredField("selected");
             selectedField.setAccessible(true);
             int currentSelected = selectedField.getInt(inventory);
