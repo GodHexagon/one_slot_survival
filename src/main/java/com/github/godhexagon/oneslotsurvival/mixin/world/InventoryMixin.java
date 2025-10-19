@@ -66,7 +66,7 @@ public abstract class InventoryMixin {
         return 9;
     }
 
-    TODO: Inject
+    TODO: 使用箇所を調査して追跡が必要
     public NonNullList<ItemStack> getNonEquipmentItems() {
         // ⚠️ CONCERN: this.itemsをそのまま返す。呼び出し元で制御不可能
         return this.items;
@@ -77,7 +77,7 @@ public abstract class InventoryMixin {
         return this.equipment;
     }
 
-    TODO: Inject
+    === this.itemsに直接アクセスしない（ItemStackの比較のみ） ===
     private boolean hasRemainingSpaceForItem(ItemStack p_36015_, ItemStack p_36016_) {
         // ✅ OK: this.itemsに直接アクセスしない（ItemStackの比較のみ）
         return !p_36015_.isEmpty() && ItemStack.isSameItemSameComponents(p_36015_, p_36016_) && p_36015_.isStackable() && p_36015_.getCount() < this.getMaxStackSize(p_36015_);
@@ -111,22 +111,22 @@ public abstract class InventoryMixin {
 
 
 /*
-    // TODO: Inject
+    === メインハンドはthis.selectedレイヤーで制御 ===
     public void addAndPickItem(ItemStack p_378587_) {
         this.setSelectedSlot(this.getSuitableHotbarSlot());
-        // ⚠️ CONCERN: this.items.get(this.selected)でロールスロット無視不可（選択されたスロット直接アクセス）
+        // ⚠️ OK: this.items.get(this.selected)でロールスロット無視不可（選択されたスロット直接アクセス）
         if (!this.items.get(this.selected).isEmpty()) {
             int i = this.getFreeSlot();
             if (i != -1) {
-                // ⚠️ CONCERN: this.items.set()でロールスロット無視不可（選択されたスロット直接アクセス）
+                // ⚠️ OK: this.items.set()でロールスロット無視不可（選択されたスロット直接アクセス）
                 this.items.set(i, this.items.get(this.selected));
             }
         }
-        // ⚠️ CONCERN: this.items.set()でロールスロット無視不可（選択されたスロット直接アクセス）
+        // ⚠️ OK: this.items.set()でロールスロット無視不可（選択されたスロット直接アクセス）
         this.items.set(this.selected, p_378587_);
     }
 
-    // TODO: Inject
+    // TODO: Inject 制限スロットはEMPTYを返すようにしよう
     public void pickSlot(int p_36039_) {
         this.setSelectedSlot(this.getSuitableHotbarSlot());
         // ⚠️ CONCERN: this.items.get/set()でロールスロット無視不可（選択されたスロット・引数スロット直接アクセス）
@@ -135,7 +135,7 @@ public abstract class InventoryMixin {
         this.items.set(p_36039_, itemstack);
     }
 
-    // TODO: Inject
+    === this.itemsに直接アクセスしない（静的メソッド） ===
     public static boolean isHotbarSlot(int p_36046_) {
         // ✅ OK: this.itemsに直接アクセスしない（静的メソッド）
         return p_36046_ >= 0 && p_36046_ < 9;
@@ -258,7 +258,7 @@ public abstract class InventoryMixin {
     }
 /*
 
-    // TODO: Inject
+    // TODO: ContainerHelperを調査する
     public int clearOrCountMatchingItems(Predicate<ItemStack> p_36023_, int p_36024_, Container p_36025_) {
         // ⚠️ COMPLEX: ContainerHelper.clearOrCountMatchingItems(this, ...)でthis(Inventory)を渡している
         // ContainerHelperが内部でthis.itemsをどう扱うか不明
@@ -275,7 +275,7 @@ public abstract class InventoryMixin {
         return i;
     }
 
-    // TODO: わからん
+    === this.itemsに直接アクセスしない（他のメソッドを呼び出すのみ） ===
     private int addResource(ItemStack p_36067_) {
         // ✅ OK: this.itemsに直接アクセスしない（他のメソッドを呼び出すのみ）
         int i = this.getSlotWithRemainingSpace(p_36067_);
@@ -365,7 +365,7 @@ public abstract class InventoryMixin {
         return this.add(-1, p_36055_);
     }
 
-    // TODO: Inject
+    // TODO: わからん
     public boolean add(int p_36041_, ItemStack p_36042_) {
         // ⚠️ CONCERN: this.items.set()を直接呼び出している
         // ⚠️ VALUE_LOSS: p_36042_.copyAndClear()で元のアイテムがクリアされる
@@ -426,7 +426,7 @@ public abstract class InventoryMixin {
         this.placeItemBackInInventory(p_150080_, true);
     }
 
-    // TODO: Inject
+    === 他のメソッドで対応するので大丈夫そう ===
     public void placeItemBackInInventory(ItemStack p_150077_, boolean p_150078_) {
         // ⚠️ VALUE_LOSS: p_150077_.split(j)でアイテムが分割される
         while (!p_150077_.isEmpty()) {
@@ -447,12 +447,13 @@ public abstract class InventoryMixin {
         }
     }
 
-    // TODO: ClientboundSetPlayerInventoryPacketの実装を確認する
+    === ネットワークレイヤーに見える。this.itemレイヤーやAbstractContainerMenu.doClickのレイヤーで改変するので大丈夫 ===
     public ClientboundSetPlayerInventoryPacket createInventoryUpdatePacket(int p_362278_) {
         // ✅ OK: this.itemsに直接アクセスしない（getItem()を呼び出すのみ）
         return new ClientboundSetPlayerInventoryPacket(p_362278_, this.getItem(p_362278_).copy());
     }
 
+    TODO: ContainerHelperを調査する
     @Override
     public ItemStack removeItem(int p_35993_, int p_35994_) {
         // ⚠️ COMPLEX: ContainerHelper.removeItem(this.items, ...)でthis.itemsを渡している
@@ -473,6 +474,7 @@ public abstract class InventoryMixin {
         }
     }
 
+    // TODO: Inject
     public void removeItem(ItemStack p_36058_) {
         // ⚠️ CONCERN: this.items.get/set()を直接呼び出している
         // ⚠️ VALUE_LOSS: this.items.set(i, ItemStack.EMPTY)でアイテムが削除される
@@ -492,6 +494,7 @@ public abstract class InventoryMixin {
         }
     }
 
+    === index指定なので無視 ===
     @Override
     public ItemStack removeItemNoUpdate(int p_36029_) {
         // ⚠️ CONCERN: this.items.get/set()を直接呼び出している
@@ -506,6 +509,7 @@ public abstract class InventoryMixin {
         }
     }
 
+    === index指定なので無視 ===
     @Override
     public void setItem(int p_35999_, ItemStack p_36000_) {
         // ⚠️ CONCERN: this.items.set()を直接呼び出している
@@ -520,6 +524,7 @@ public abstract class InventoryMixin {
         }
     }
 
+    === 永続化レイヤーは触らない ===
     public void save(ValueOutput.TypedOutputList<ItemStackWithSlot> p_406529_) {
         // ✅ OK: ロールスロットのアイテムも保存すべき（セーブデータのため）
         for (int i = 0; i < this.items.size(); i++) {
@@ -530,9 +535,10 @@ public abstract class InventoryMixin {
         }
     }
 
+    === 永続化レイヤーは触らない ===
     public void load(ValueInput.TypedInputList<ItemStackWithSlot> p_409752_) {
-        // ⚠️ CONCERN: this.items.clear()で全アイテムが削除される
         // ✅ OK: ロールスロットのアイテムもロードすべき（セーブデータのため）
+        // これは多分ログインした直後は空っぽだけど念のためクリアしているだけ
         this.items.clear();
 
         for (ItemStackWithSlot itemstackwithslot : p_409752_) {
@@ -542,15 +548,16 @@ public abstract class InventoryMixin {
         }
     }
 
+    TODO: Inject
     @Override
     public int getContainerSize() {
         // ✅ OK: this.itemsに直接アクセスしない（size()のみ）
         return this.items.size() + EQUIPMENT_SLOT_MAPPING.size();
     }
 
+    TODO: Inject
     @Override
     public boolean isEmpty() {
-        // ✅ OK: ロールスロットのアイテムも空チェックに含めるべき
         for (ItemStack itemstack : this.items) {
             if (!itemstack.isEmpty()) {
                 return false;
@@ -566,6 +573,7 @@ public abstract class InventoryMixin {
         return true;
     }
 
+    TODO: Inject 無効なスロットはEMPTYを返すべき
     @Override
     public ItemStack getItem(int p_35991_) {
         // ⚠️ CONCERN: this.items.get()を直接呼び出している（インデックス指定アクセス）
@@ -577,16 +585,15 @@ public abstract class InventoryMixin {
         }
     }
 
+    === this.itemsに直接アクセスしない ===
     @Override
     public Component getName() {
         // ✅ OK: this.itemsに直接アクセスしない
         return Component.translatable("container.inventory");
     }
 
+    === 基本的にはアイテムが保存される方針->全てドロップすべき。SlotBarrier.onEntityItemUpdateでドロップアイテムは削除される。
     public void dropAll() {
-        // ⚠️ CONCERN: this.items.get/set()を直接呼び出している
-        // ⚠️ VALUE_LOSS: this.items.set(i, ItemStack.EMPTY)でアイテムが削除される
-        // ❓ QUESTION: ロールスロットのアイテムもドロップすべきか？
         for (int i = 0; i < this.items.size(); i++) {
             ItemStack itemstack = this.items.get(i);
             if (!itemstack.isEmpty()) {
@@ -598,6 +605,7 @@ public abstract class InventoryMixin {
         this.equipment.dropAll(this.player);
     }
 
+    === this.itemsに直接アクセスしない ===
     @Override
     public void setChanged() {
         // ✅ OK: this.itemsに直接アクセスしない
@@ -614,11 +622,12 @@ public abstract class InventoryMixin {
         // ✅ OK: this.itemsに直接アクセスしない
         return true;
     }
+    === ===
 
+    TODO: Inject
     public boolean contains(ItemStack p_36064_) {
         // ⚠️ COMPLEX: for (ItemStack itemstack : this)はIteratorを使用
         // Inventoryのiteratorがthis.itemsをどう扱うか不明
-        // ✅ OK: ロールスロットのアイテムも検索対象に含めるべき
         for (ItemStack itemstack : this) {
             if (!itemstack.isEmpty() && ItemStack.isSameItemSameComponents(itemstack, p_36064_)) {
                 return true;
@@ -628,9 +637,9 @@ public abstract class InventoryMixin {
         return false;
     }
 
+    TODO: Inject
     public boolean contains(TagKey<Item> p_204076_) {
         // ⚠️ COMPLEX: for (ItemStack itemstack : this)はIteratorを使用
-        // ✅ OK: ロールスロットのアイテムも検索対象に含めるべき
         for (ItemStack itemstack : this) {
             if (!itemstack.isEmpty() && itemstack.is(p_204076_)) {
                 return true;
@@ -640,9 +649,9 @@ public abstract class InventoryMixin {
         return false;
     }
 
+    TODO: Inject
     public boolean contains(Predicate<ItemStack> p_332183_) {
         // ⚠️ COMPLEX: for (ItemStack itemstack : this)はIteratorを使用
-        // ✅ OK: ロールスロットのアイテムも検索対象に含めるべき
         for (ItemStack itemstack : this) {
             if (p_332183_.test(itemstack)) {
                 return true;
@@ -652,8 +661,8 @@ public abstract class InventoryMixin {
         return false;
     }
 
+    TODO: Inject
     public void replaceWith(Inventory p_36007_) {
-        // ✅ OK: this.itemsに直接アクセスしない（setItem/getItemを呼び出すのみ）
         for (int i = 0; i < this.getContainerSize(); i++) {
             this.setItem(i, p_36007_.getItem(i));
         }
@@ -661,6 +670,7 @@ public abstract class InventoryMixin {
         this.setSelectedSlot(p_36007_.getSelectedSlot());
     }
 
+    === 他のアイテムは結局消えてしまう仕様なので触らなくてよし ===
     @Override
     public void clearContent() {
         // ⚠️ CONCERN: this.items.clear()で全アイテムが削除される
@@ -669,13 +679,14 @@ public abstract class InventoryMixin {
         this.equipment.clear();
     }
 
+    TODO: Inject
     public void fillStackedContents(StackedItemContents p_364670_) {
-        // ✅ OK: ロールスロットのアイテムもスタック集計に含めるべき
         for (ItemStack itemstack : this.items) {
             p_364670_.accountSimpleStack(itemstack);
         }
     }
 
+    === メインハンドはthis.selectedレイヤーで制御 ===
     public ItemStack removeFromSelected(boolean p_182404_) {
         // ✅ OK: this.itemsに直接アクセスしない（他のメソッドを呼び出すのみ）
         ItemStack itemstack = this.getSelectedItem();
