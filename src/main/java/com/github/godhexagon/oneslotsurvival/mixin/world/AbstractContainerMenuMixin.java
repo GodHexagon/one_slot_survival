@@ -393,7 +393,7 @@ public abstract class AbstractContainerMenuMixin {
             Player player = inventory.player;
             int roleSlotIndex = inventoryIndex - 1;
 
-            return ItemType.isPickAxe(item) || item.isEmpty();
+            return ItemType.isPickaxe(item) || item.isEmpty();
         }
 
         return true;
