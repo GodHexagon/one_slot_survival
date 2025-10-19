@@ -4,6 +4,9 @@
   "compatibilityLevel": "JAVA_21",
   "refmap": "oneslotsurvival.refmap.json",
   "minVersion": "0.8",
+  "mixins": [
+    "accessor.SlotAccessor"
+  ],
   "client": [
     "client.GuiMixin",
     "client.AbstractContainerScreenMixin",
