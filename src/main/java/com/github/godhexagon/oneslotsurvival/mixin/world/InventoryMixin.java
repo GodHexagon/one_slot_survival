@@ -145,21 +145,22 @@ public abstract class InventoryMixin {
         this.items.set(this.selected, p_378587_);
     }
 */
+
+    // 対象スロットを指定されているけど、アイテムが与えられていないので握りつぶしてOK
     @Inject(method = "pickSlot", at = @At("HEAD"), cancellable = true)
     private void onPickSlot(int p_36039_, CallbackInfo ci) {
         if (PlayerModValidity.isEffective(this.player)) {
             ci.cancel();
 
+            // 対象スロットが制限されている場合、全ての処理をスキップ
+            if (one_slot_survival$shouldSkipSlot(p_36039_)) {
+                return;
+            }
+
             Inventory inv = (Inventory)(Object)this;
             inv.setSelectedSlot(inv.getSuitableHotbarSlot());
             ItemStack itemstack = this.items.get(this.selected);
-
-            // 対象スロットが使用不可能スロットでも大丈夫
-            if (one_slot_survival$shouldSkipSlot(p_36039_)) {
-                this.items.set(this.selected, ItemStack.EMPTY);
-            } else {
-                this.items.set(this.selected, this.items.get(p_36039_));
-            }
+            this.items.set(this.selected, this.items.get(p_36039_));
             this.items.set(p_36039_, itemstack);
         }
     }
@@ -505,7 +506,7 @@ public abstract class InventoryMixin {
     }
 /*
 
-    === index指定なので無視 ===
+    TODO: Inject
     @Override
     public ItemStack removeItemNoUpdate(int p_36029_) {
         // ⚠️ CONCERN: this.items.get/set()を直接呼び出している
