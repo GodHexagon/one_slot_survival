@@ -1,5 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.mixin.world;
 
+import com.github.godhexagon.oneslotsurvival.world.item.ModItems;
 import com.github.godhexagon.oneslotsurvival.world.util.InventoryDefinition;
 import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
 import net.minecraft.core.NonNullList;
@@ -76,7 +77,17 @@ public abstract class InventoryMixin {
             cir.cancel();
 
             for (int i = 0; i < this.items.size(); i++) {
-                if (!InventoryDefinition.isRestrictedSlot(i) && this.items.get(i).isEmpty()) {
+                // ロールスロットでなおかつ空の場合は無視される
+                if (InventoryDefinition.isRoleSlot(i) && this.items.get(i).isEmpty()) {
+                    continue;
+                }
+                // 正常な制限スロットは無視される
+                if (InventoryDefinition.isDisableSlot(i) && this.items.get(i).is(ModItems.SLOT_BARRIER.get())) {
+                    continue;
+                }
+
+                // バニラの処理
+                if (this.items.get(i).isEmpty()) {
                     cir.setReturnValue(i);
                     return;
                 }
