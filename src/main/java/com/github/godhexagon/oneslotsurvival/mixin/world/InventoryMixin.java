@@ -506,21 +506,25 @@ public abstract class InventoryMixin {
     }
 /*
 
-    TODO: Inject
-    @Override
-    public ItemStack removeItemNoUpdate(int p_36029_) {
-        // ⚠️ CONCERN: this.items.get/set()を直接呼び出している
-        // ⚠️ VALUE_LOSS: this.items.set(p_36029_, ItemStack.EMPTY)でアイテムが削除される
-        if (p_36029_ < this.items.size()) {
-            ItemStack itemstack = this.items.get(p_36029_);
-            this.items.set(p_36029_, ItemStack.EMPTY);
-            return itemstack;
-        } else {
-            EquipmentSlot equipmentslot = EQUIPMENT_SLOT_MAPPING.get(p_36029_);
-            return equipmentslot != null ? this.equipment.set(equipmentslot, ItemStack.EMPTY) : ItemStack.EMPTY;
+ */
+    // TODO
+    @Inject(method = "removeItemNoUpdate", at = @At("HEAD"), cancellable = true)
+    private void onRemoveItemNoUpdate(int p_36029_, CallbackInfoReturnable<ItemStack> cir) {
+        if (PlayerModValidity.isEffective(this.player)) {
+            cir.cancel();
+
+            // バニラの処理
+            if (p_36029_ < this.items.size()) {
+                ItemStack itemstack = this.items.get(p_36029_);
+                this.items.set(p_36029_, ItemStack.EMPTY);
+                cir.setReturnValue(itemstack);
+            } else {
+                net.minecraft.world.entity.EquipmentSlot equipmentslot = Inventory.EQUIPMENT_SLOT_MAPPING.get(p_36029_);
+                cir.setReturnValue(equipmentslot != null ? this.equipment.set(equipmentslot, ItemStack.EMPTY) : ItemStack.EMPTY);
+            }
         }
     }
-
+/*
     === index指定なので無視 ===
     @Override
     public void setItem(int p_35999_, ItemStack p_36000_) {
@@ -619,20 +623,26 @@ public abstract class InventoryMixin {
         // ✅ OK: this.itemsに直接アクセスしない
         return Component.translatable("container.inventory");
     }
+*/
+    //TODO
+    @Inject(method = "dropAll", at = @At("HEAD"), cancellable = true)
+    private void onDropAll(CallbackInfo ci) {
+        if (PlayerModValidity.isEffective(this.player)) {
+            ci.cancel();
 
-    TODO: Inject
-    public void dropAll() {
-        for (int i = 0; i < this.items.size(); i++) {
-            ItemStack itemstack = this.items.get(i);
-            if (!itemstack.isEmpty()) {
-                this.player.drop(itemstack, true, false);
-                this.items.set(i, ItemStack.EMPTY);
+            // バニラの処理
+            for (int i = 0; i < this.items.size(); i++) {
+                ItemStack itemstack = this.items.get(i);
+                if (!itemstack.isEmpty()) {
+                    this.player.drop(itemstack, true, false);
+                    this.items.set(i, ItemStack.EMPTY);
+                }
             }
+
+            this.equipment.dropAll(this.player);
         }
-
-        this.equipment.dropAll(this.player);
     }
-
+/*
     === this.itemsに直接アクセスしない ===
     @Override
     public void setChanged() {
@@ -651,8 +661,9 @@ public abstract class InventoryMixin {
         return true;
     }
     === ===
-
-    TODO: Inject
+*/
+/*
+    TODO: Inventoryをイテレーションしているの面倒よねっていう話
 */
     @Inject(method = "contains(Lnet/minecraft/world/item/ItemStack;)Z", at = @At("HEAD"), cancellable = true)
     private void onContainsItemStack(ItemStack p_36064_, CallbackInfoReturnable<Boolean> cir) {
@@ -670,7 +681,7 @@ public abstract class InventoryMixin {
         }
     }
 /*
-    TODO: Inject
+    TODO: Inventoryをイテレーションしているの面倒よねっていう話
 */
     @Inject(method = "contains(Lnet/minecraft/tags/TagKey;)Z", at = @At("HEAD"), cancellable = true)
     private void onContainsTagKey(net.minecraft.tags.TagKey<Item> p_204076_, CallbackInfoReturnable<Boolean> cir) {
@@ -688,7 +699,7 @@ public abstract class InventoryMixin {
         }
     }
 /*
-    TODO: Inject
+    TODO: Inventoryをイテレーションしているの面倒よねっていう話
 */
     @Inject(method = "contains(Ljava/util/function/Predicate;)Z", at = @At("HEAD"), cancellable = true)
     private void onContainsPredicate(java.util.function.Predicate<ItemStack> p_332183_, CallbackInfoReturnable<Boolean> cir) {
@@ -718,17 +729,18 @@ public abstract class InventoryMixin {
             inv.setSelectedSlot(p_36007_.getSelectedSlot());
         }
     }
-/*
 
-    TODO: Inject
-    @Override
-    public void clearContent() {
-        // ⚠️ CONCERN: this.items.clear()で全アイテムが削除される
-        // ⚠️ VALUE_LOSS: this.items.clear()で全アイテムが削除される
-        this.items.clear();
-        this.equipment.clear();
+    // TODO
+    @Inject(method = "clearContent", at = @At("HEAD"), cancellable = true)
+    private void onClearContent(CallbackInfo ci) {
+        if (PlayerModValidity.isEffective(this.player)) {
+            ci.cancel();
+
+            // バニラの処理
+            this.items.clear();
+            this.equipment.clear();
+        }
     }
-*/
     @Inject(method = "fillStackedContents", at = @At("HEAD"), cancellable = true)
     private void onFillStackedContents(net.minecraft.world.entity.player.StackedItemContents p_364670_, CallbackInfo ci) {
         if (PlayerModValidity.isEffective(this.player)) {
