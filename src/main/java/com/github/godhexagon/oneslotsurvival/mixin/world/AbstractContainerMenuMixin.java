@@ -140,6 +140,18 @@ public abstract class AbstractContainerMenuMixin {
 
     @Unique
     private void one_slot_survival$roledPlayerDoClick(int p_150431_, int p_150432_, ClickType p_150433_, Player p_150434_) {
+        // デバッグログ: ClickTypeとゲーム操作の関連を確認
+        LOGGER.info("=== Click Debug ===");
+        LOGGER.info("ClickType: {}", p_150433_);
+        LOGGER.info("Slot ID: {}", p_150431_);
+        LOGGER.info("Button: {}", p_150432_);
+        if (p_150431_ >= 0 && p_150431_ < this.slots.size()) {
+            Slot slot = this.slots.get(p_150431_);
+            LOGGER.info("Slot has item: {}, Item: {}", slot.hasItem(), slot.hasItem() ? slot.getItem().getDisplayName().getString() : "empty");
+        }
+        LOGGER.info("Carried item: {}", this.getCarried().isEmpty() ? "empty" : this.getCarried().getDisplayName().getString());
+        LOGGER.info("==================");
+
         Inventory inventory = p_150434_.getInventory();
         if (p_150433_ == ClickType.QUICK_CRAFT) {
             int i = this.quickcraftStatus;
