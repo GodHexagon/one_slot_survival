@@ -58,7 +58,7 @@
    3. 完了✅|死ぬとスロットバリアが残らない問題を修正
    4. 完了✅|インベントリの見た目を４スロット分にする
    5. 完了✅|AbstractContainerMenu.clickedインジェクション＆roledPlayerDoClickで本来の処理をトレース＆ClickTypeが何を意味するかをデバッグログ出力で確認
-   6. isRoleSlot(int)を持つインターフェイスを定義・AbstractContainerMenu以下全てに実装＆isRoleSlotが正しいかをデバッグ出力で確認
+   6. 完了✅|isRoleSlot(int)を持つインターフェイスを定義・AbstractContainerMenu以下全てに実装＆isRoleSlotが正しいかをデバッグ出力で確認
    7. RoledPlayerDoClickをカスタマイズ
    8. ゲーム中にオフハンドからロールスロットへの移動を制限する
    9. スロットバリアを消してもよさそうか考える
