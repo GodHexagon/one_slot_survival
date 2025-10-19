@@ -704,9 +704,7 @@ public abstract class InventoryMixin {
             cir.setReturnValue(false);
         }
     }
-/*
-    TODO: Inject
-*/
+
     @Inject(method = "replaceWith", at = @At("HEAD"), cancellable = true)
     private void onReplaceWith(Inventory p_36007_, CallbackInfo ci) {
         if (PlayerModValidity.isEffective(this.player)) {
