@@ -145,7 +145,7 @@ public abstract class AbstractContainerMenuMixin {
     @Unique
     private void one_slot_survival$roledPlayerDoClick(int slotId, int button, ClickType clickType, Player player) {
         LOGGER.debug("Clicked slot is inventory slot: {}", one_slot_survival$isInventorySlot(slotId));
-        LOGGER.debug("Clicked slot is ineligible for empty: {}", one_slot_survival$isIneligibleItemType(ItemStack.EMPTY, slotId));
+        LOGGER.debug("Clicked slot is eligible for empty: {}", one_slot_survival$isEligibleItemTypeForRoledPlayer(ItemStack.EMPTY, slotId));
 
         Inventory inventory = player.getInventory();
         if (clickType == ClickType.QUICK_CRAFT) {
@@ -169,7 +169,8 @@ public abstract class AbstractContainerMenuMixin {
                 if (canItemQuickReplace(slot, itemstack, true)
                         && slot.mayPlace(itemstack)
                         && (this.quickcraftType == 2 || itemstack.getCount() > this.quickcraftSlots.size())
-                        && this.canDragTo(slot)) {
+                        && this.canDragTo(slot)
+                        && one_slot_survival$isEligibleItemTypeForRoledPlayer(itemstack, slotId)) {
                     this.quickcraftSlots.add(slot);
                 }
             } else if (this.quickcraftStatus == 2) {
@@ -195,7 +196,8 @@ public abstract class AbstractContainerMenuMixin {
                                 && canItemQuickReplace(slot1, itemstack1, true)
                                 && slot1.mayPlace(itemstack1)
                                 && (this.quickcraftType == 2 || itemstack1.getCount() >= this.quickcraftSlots.size())
-                                && this.canDragTo(slot1)) {
+                                && this.canDragTo(slot1)
+                                && one_slot_survival$isEligibleItemTypeForRoledPlayer(itemstack1, slot1.index)) {
                             int j = slot1.hasItem() ? slot1.getItem().getCount() : 0;
                             int k = Math.min(itemstack3.getMaxStackSize(), slot1.getMaxStackSize(itemstack3));
                             int l = Math.min(getQuickCraftPlaceCount(this.quickcraftSlots, this.quickcraftType, itemstack3) + j, k);
@@ -252,7 +254,7 @@ public abstract class AbstractContainerMenuMixin {
                 if (!this.tryItemClickBehaviourOverride(player, clickaction, slot7, itemstack9, itemstack10)) {
                     if (!ForgeEventFactory.onItemStackedOn(itemstack9, itemstack10, slot7, clickaction, player, createCarriedSlotAccess()))
                         if (itemstack9.isEmpty()) {
-                            if (!itemstack10.isEmpty()) {
+                            if (!itemstack10.isEmpty() && one_slot_survival$isEligibleItemTypeForRoledPlayer(itemstack10, slotId)) {
                                 int i3 = clickaction == ClickAction.PRIMARY ? itemstack10.getCount() : 1;
                                 this.setCarried(slot7.safeInsert(itemstack10, i3));
                             }
@@ -264,7 +266,7 @@ public abstract class AbstractContainerMenuMixin {
                                     this.setCarried(p_150421_);
                                     slot7.onTake(player, p_150421_);
                                 });
-                            } else if (slot7.mayPlace(itemstack10)) {
+                            } else if (slot7.mayPlace(itemstack10) && one_slot_survival$isEligibleItemTypeForRoledPlayer(itemstack10, slotId)) {
                                 if (ItemStack.isSameItemSameComponents(itemstack9, itemstack10)) {
                                     int k3 = clickaction == ClickAction.PRIMARY ? itemstack10.getCount() : 1;
                                     this.setCarried(slot7.safeInsert(itemstack10, k3));
@@ -297,7 +299,7 @@ public abstract class AbstractContainerMenuMixin {
                         slot5.onTake(player, itemstack7);
                     }
                 } else if (itemstack7.isEmpty()) {
-                    if (slot5.mayPlace(itemstack2)) {
+                    if (slot5.mayPlace(itemstack2) && one_slot_survival$isEligibleItemTypeForRoledPlayer(itemstack2, slotId)) {
                         int j2 = slot5.getMaxStackSize(itemstack2);
                         if (itemstack2.getCount() > j2) {
                             slot5.setByPlayer(itemstack2.split(j2));
@@ -306,7 +308,7 @@ public abstract class AbstractContainerMenuMixin {
                             slot5.setByPlayer(itemstack2);
                         }
                     }
-                } else if (slot5.mayPickup(player) && slot5.mayPlace(itemstack2)) {
+                } else if (slot5.mayPickup(player) && slot5.mayPlace(itemstack2) && one_slot_survival$isEligibleItemTypeForRoledPlayer(itemstack2, slotId)) {
                     int k2 = slot5.getMaxStackSize(itemstack2);
                     if (itemstack2.getCount() > k2) {
                         slot5.setByPlayer(itemstack2.split(k2));
@@ -376,10 +378,10 @@ public abstract class AbstractContainerMenuMixin {
      *
      * @param item 新しいアイテム。
      * @param slotId itemが格納される予定のスロットのID。
-     * @return trueのとき適切。
+     * @return trueのとき適切（配置可能）。
      */
     @Unique
-    private boolean one_slot_survival$isIneligibleItemType(ItemStack item, int slotId) {
+    private boolean one_slot_survival$isEligibleItemTypeForRoledPlayer(ItemStack item, int slotId) {
         int inventoryIndex = one_slot_survival$getInventoryIndex(slotId);
 
         if (InventoryDefinition.isDisableSlot(inventoryIndex)) {
