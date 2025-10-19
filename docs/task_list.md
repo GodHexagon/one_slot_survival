@@ -56,12 +56,11 @@
    1. スロットバリア、ホットバーの見た目、ホットバー選択制御を４スロット分にする
    2. Inventory挿入で拾得制限＆その他（バニラのメソッド全部レビュー）
    3. インベントリの見た目を４スロット分にする
-   4. AbstractContainerMenu.doClick挿入でインベントリ制限を実装
-      1. clickedインジェクション＆roledPlayerDoClickで本来の処理をトレース＆ClickTypeが何を意味するかをデバッグログ出力で確認
-      2. isRoleSlot(int)を持つインターフェイスを定義・AbstractContainerMenu以下全てに実装＆isRoleSlotが正しいかをデバッグ出力で確認
-      3. RoledPlayerDoClickをカスタマイズ
-   5. ゲーム中にオフハンドからロールスロットへの移動を制限する
-   6. スロットバリアを消してもよさそうか考える
+   5. AbstractContainerMenu.clickedインジェクション＆roledPlayerDoClickで本来の処理をトレース＆ClickTypeが何を意味するかをデバッグログ出力で確認
+   6. isRoleSlot(int)を持つインターフェイスを定義・AbstractContainerMenu以下全てに実装＆isRoleSlotが正しいかをデバッグ出力で確認
+   7. RoledPlayerDoClickをカスタマイズ
+   8. ゲーム中にオフハンドからロールスロットへの移動を制限する
+   9. スロットバリアを消してもよさそうか考える
 1. RestrictedInventoryScreenをリファクタリング＆チェストとかも共通処理化で見た目を制御
     * CreativeModeInventoryScreenを模倣したヘルパークラスを作成する作戦
         * CreativeModeInventoryScreenの完全コピー -> ヘルパーメソッド（public化）でアクセス可能に -> いらない処理を削る・カスタマイズ
