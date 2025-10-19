@@ -507,11 +507,14 @@ public abstract class InventoryMixin {
 /*
 
  */
-    // TODO
     @Inject(method = "removeItemNoUpdate", at = @At("HEAD"), cancellable = true)
     private void onRemoveItemNoUpdate(int p_36029_, CallbackInfoReturnable<ItemStack> cir) {
         if (PlayerModValidity.isEffective(this.player)) {
             cir.cancel();
+
+            if (one_slot_survival$shouldSkipSlot(p_36029_)) {
+                return;
+            }
 
             // バニラの処理
             if (p_36029_ < this.items.size()) {
@@ -624,14 +627,17 @@ public abstract class InventoryMixin {
         return Component.translatable("container.inventory");
     }
 */
-    //TODO
     @Inject(method = "dropAll", at = @At("HEAD"), cancellable = true)
     private void onDropAll(CallbackInfo ci) {
         if (PlayerModValidity.isEffective(this.player)) {
             ci.cancel();
 
-            // バニラの処理
             for (int i = 0; i < this.items.size(); i++) {
+                if (one_slot_survival$shouldSkipSlot(i)) {
+                    continue;
+                }
+
+                // バニラの処理
                 ItemStack itemstack = this.items.get(i);
                 if (!itemstack.isEmpty()) {
                     this.player.drop(itemstack, true, false);
@@ -730,17 +736,17 @@ public abstract class InventoryMixin {
         }
     }
 
-    // TODO
-    @Inject(method = "clearContent", at = @At("HEAD"), cancellable = true)
-    private void onClearContent(CallbackInfo ci) {
-        if (PlayerModValidity.isEffective(this.player)) {
-            ci.cancel();
-
-            // バニラの処理
-            this.items.clear();
-            this.equipment.clear();
-        }
+    /*
+    === リストごと消すので多分ライフサイクル関連 ===
+    @Override
+    public void clearContent() {
+        // ⚠️ CONCERN: this.items.clear()で全アイテムが削除される
+        // ⚠️ VALUE_LOSS: this.items.clear()で全アイテムが削除される
+        this.items.clear();
+        this.equipment.clear();
     }
+     */
+
     @Inject(method = "fillStackedContents", at = @At("HEAD"), cancellable = true)
     private void onFillStackedContents(net.minecraft.world.entity.player.StackedItemContents p_364670_, CallbackInfo ci) {
         if (PlayerModValidity.isEffective(this.player)) {
