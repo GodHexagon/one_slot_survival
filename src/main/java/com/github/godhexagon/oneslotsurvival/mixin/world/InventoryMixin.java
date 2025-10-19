@@ -144,8 +144,6 @@ public abstract class InventoryMixin {
         // ⚠️ OK: this.items.set()でロールスロット無視不可（選択されたスロット直接アクセス）
         this.items.set(this.selected, p_378587_);
     }
-
-    // TODO: Inject 制限スロットはEMPTYを返すようにしよう
 */
     @Inject(method = "pickSlot", at = @At("HEAD"), cancellable = true)
     private void onPickSlot(int p_36039_, CallbackInfo ci) {
@@ -155,7 +153,13 @@ public abstract class InventoryMixin {
             Inventory inv = (Inventory)(Object)this;
             inv.setSelectedSlot(inv.getSuitableHotbarSlot());
             ItemStack itemstack = this.items.get(this.selected);
-            this.items.set(this.selected, this.items.get(p_36039_));
+
+            // 対象スロットが使用不可能スロットでも大丈夫
+            if (one_slot_survival$shouldSkipSlot(p_36039_)) {
+                this.items.set(this.selected, ItemStack.EMPTY);
+            } else {
+                this.items.set(this.selected, this.items.get(p_36039_));
+            }
             this.items.set(p_36039_, itemstack);
         }
     }
@@ -473,8 +477,6 @@ public abstract class InventoryMixin {
             return ItemStack.EMPTY;
         }
     }
-
-    // TODO: Inject
 */
     @Inject(method = "removeItem(Lnet/minecraft/world/item/ItemStack;)V", at = @At("HEAD"), cancellable = true)
     private void onRemoveItem(ItemStack p_36058_, CallbackInfo ci) {
@@ -482,11 +484,16 @@ public abstract class InventoryMixin {
             ci.cancel();
 
             for (int i = 0; i < this.items.size(); i++) {
+                if (one_slot_survival$shouldSkipSlot(i)) {
+                    continue;
+                }
+
                 if (this.items.get(i) == p_36058_) {
                     this.items.set(i, ItemStack.EMPTY);
                     return;
                 }
             }
+
             for (net.minecraft.world.entity.EquipmentSlot equipmentslot : Inventory.EQUIPMENT_SLOT_MAPPING.values()) {
                 ItemStack itemstack = this.equipment.get(equipmentslot);
                 if (itemstack == p_36058_) {
@@ -552,30 +559,30 @@ public abstract class InventoryMixin {
         }
     }
 
-    TODO: Inject
-*/
-    @Inject(method = "getContainerSize", at = @At("HEAD"), cancellable = true)
-    private void onGetContainerSize(CallbackInfoReturnable<Integer> cir) {
-        if (PlayerModValidity.isEffective(this.player)) {
-            cir.cancel();
-
-            cir.setReturnValue(this.items.size() + Inventory.EQUIPMENT_SLOT_MAPPING.size());
-        }
+    === これを変えるとめっちゃOutBoundエラーになる気がするので放っておく ===
+    @Override
+    public int getContainerSize() {
+        // ✅ OK: this.itemsに直接アクセスしない（size()のみ）
+        return this.items.size() + EQUIPMENT_SLOT_MAPPING.size();
     }
-/*
-    TODO: Inject
 */
     @Inject(method = "isEmpty", at = @At("HEAD"), cancellable = true)
     private void onIsEmpty(CallbackInfoReturnable<Boolean> cir) {
         if (PlayerModValidity.isEffective(this.player)) {
             cir.cancel();
 
-            for (ItemStack itemstack : this.items) {
+            for (int i = 0; i < this.items.size(); i++) {
+                if (one_slot_survival$shouldSkipSlot(i)) {
+                    continue;
+                }
+
+                ItemStack itemstack = this.items.get(i);
                 if (!itemstack.isEmpty()) {
                     cir.setReturnValue(false);
                     return;
                 }
             }
+
             for (net.minecraft.world.entity.EquipmentSlot equipmentslot : Inventory.EQUIPMENT_SLOT_MAPPING.values()) {
                 if (!this.equipment.get(equipmentslot).isEmpty()) {
                     cir.setReturnValue(false);
@@ -585,16 +592,18 @@ public abstract class InventoryMixin {
             cir.setReturnValue(true);
         }
     }
-/*
-    TODO: Inject 無効なスロットはEMPTYを返すべき
-*/
+
     @Inject(method = "getItem", at = @At("HEAD"), cancellable = true)
     private void onGetItem(int p_35991_, CallbackInfoReturnable<ItemStack> cir) {
         if (PlayerModValidity.isEffective(this.player)) {
             cir.cancel();
 
             if (p_35991_ < this.items.size()) {
-                cir.setReturnValue(this.items.get(p_35991_));
+                if (one_slot_survival$shouldSkipSlot(p_35991_)) {
+                    cir.setReturnValue(ItemStack.EMPTY);
+                } else {
+                    cir.setReturnValue(this.items.get(p_35991_));
+                }
             } else {
                 net.minecraft.world.entity.EquipmentSlot equipmentslot = Inventory.EQUIPMENT_SLOT_MAPPING.get(p_35991_);
                 cir.setReturnValue(equipmentslot != null ? this.equipment.get(equipmentslot) : ItemStack.EMPTY);
@@ -712,7 +721,7 @@ public abstract class InventoryMixin {
     }
 /*
 
-    === 他のアイテムは結局消えてしまう仕様なので触らなくてよし ===
+    TODO: Inject
     @Override
     public void clearContent() {
         // ⚠️ CONCERN: this.items.clear()で全アイテムが削除される
@@ -728,7 +737,12 @@ public abstract class InventoryMixin {
         if (PlayerModValidity.isEffective(this.player)) {
             ci.cancel();
 
-            for (ItemStack itemstack : this.items) {
+            for (int i = 0; i < this.items.size(); i++) {
+                if (one_slot_survival$shouldSkipSlot(i)) {
+                    continue;
+                }
+
+                ItemStack itemstack = this.items.get(i);
                 p_364670_.accountSimpleStack(itemstack);
             }
         }
