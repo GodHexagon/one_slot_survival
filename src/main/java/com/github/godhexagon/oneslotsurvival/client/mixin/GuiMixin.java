@@ -115,7 +115,7 @@ public abstract class GuiMixin {
         int itemY = guiGraphics.guiHeight() - 16 - 3;
         // 常に0 ~ 3を表示
         for (int i = 0; i <= 3; i++) {
-            int itemX = hotbarX + i * 20 + 2; // Vanilla spacing: 20px per slot, +2 offset
+            int itemX = hotbarX + i * 20 + 3; // Vanilla spacing: 20px per slot
             ItemStack selectedItem = player.getInventory().getItem(i);
             this.renderSlot(guiGraphics, itemX, itemY, deltaTracker, player, selectedItem, 1);
         }
