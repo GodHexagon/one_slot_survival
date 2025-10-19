@@ -1,5 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.mixin.world;
 
+import com.github.godhexagon.oneslotsurvival.mixin.accessor.SlotAccessor;
 import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
@@ -284,7 +285,7 @@ public abstract class AbstractContainerMenuMixin {
                 if (itemstack2.isEmpty()) {
                     if (slot5.mayPickup(p_150434_)) {
                         inventory.setItem(p_150432_, itemstack7);
-                        slot5.onSwapCraft(itemstack7.getCount());
+                        ((SlotAccessor) slot5).invokeOnSwapCraft(itemstack7.getCount());
                         slot5.setByPlayer(ItemStack.EMPTY);
                         slot5.onTake(p_150434_, itemstack7);
                     }
