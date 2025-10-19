@@ -10,9 +10,9 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 # 進捗
 
-直前の成果！: 死ぬとスロットバリアが残らない問題を修正 of プレイヤーはロールスロットを利用できるようにする
+直前の成果！: インベントリの見た目を４スロット分にする of プレイヤーはロールスロットを利用できるようにする
 
-実行中: インベントリの見た目を４スロット分にする of プレイヤーはロールスロットを利用できるようにする
+実行中: AbstractContainerMenu.clickedインジェクション＆roledPlayerDoClickで本来の処理をトレース＆ClickTypeが何を意味するかをデバッグログ出力で確認 of プレイヤーはロールスロットを利用できるようにする
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
