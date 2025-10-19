@@ -129,7 +129,7 @@ public class RestrictedInventoryScreen extends InventoryScreen {
         }
 
         // ホットバースロット（37-44、メインハンド36以外）を制限
-        if (index >= 37 && index <= 44) {
+        if (index >= 40 && index <= 44) {
             return true;
         }
 
