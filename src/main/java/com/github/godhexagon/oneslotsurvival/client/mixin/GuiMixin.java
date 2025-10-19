@@ -93,10 +93,15 @@ public abstract class GuiMixin {
         // カスタムホットバー背景（幅 182 ピクセル）を右にシフトしてレンダリング
         guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, CUSTOM_HOTBAR_SPRITE, hotbarX, bottomY, 182, 22);
 
-        // スロット 0 の位置（現在は中央）にバニラ選択オーバーレイをレンダリング
-        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, HOTBAR_SELECTION_SPRITE, hotbarX - 1, bottomY - 1, 24, 23);
+        // Render vanilla selection overlay based on selected slot (0-3)
+        // Selection sprite is -1 from hotbar position and moves 20px per slot
+        int selectedSlot = player.getInventory().getSelectedSlot();
+        if (selectedSlot >= 0 && selectedSlot <= 3) {
+            int selectionX = hotbarX - 1 + selectedSlot * 20;
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, HOTBAR_SELECTION_SPRITE, selectionX, bottomY - 1, 24, 23);
+        }
 
-        // オフハンドスロットが存在する場合、バニラオフハンドスロットをレンダリング
+        // Render vanilla offhand slot if present
         if (!itemstack.isEmpty()) {
             if (humanoidarm == HumanoidArm.LEFT) {
                 guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, HOTBAR_OFFHAND_LEFT_SPRITE, hotbarX - 29, bottomY - 1, 29, 24);
@@ -105,11 +110,15 @@ public abstract class GuiMixin {
             }
         }
 
-        // 最初のスロットアイテム（スロット 0）のみをレンダリング - 現在は中央
-        int itemX = hotbarX + 2; // スロット 0 アイテムの位置
+        // Render items (0-3)
+        // Using vanilla spacing: each slot is 20 pixels apart with +2 base offset
         int itemY = guiGraphics.guiHeight() - 16 - 3;
-        ItemStack selectedItem = player.getInventory().getItem(0); // 常にスロット 0 をレンダリング
-        this.renderSlot(guiGraphics, itemX, itemY, deltaTracker, player, selectedItem, 1);
+        // 常に0 ~ 3を表示
+        for (int i = 0; i <= 3; i++) {
+            int itemX = hotbarX + i * 20 + 2; // Vanilla spacing: 20px per slot, +2 offset
+            ItemStack selectedItem = player.getInventory().getItem(i);
+            this.renderSlot(guiGraphics, itemX, itemY, deltaTracker, player, selectedItem, 1);
+        }
 
         // オフハンドアイテムが存在する場合はレンダリング
         if (!itemstack.isEmpty()) {

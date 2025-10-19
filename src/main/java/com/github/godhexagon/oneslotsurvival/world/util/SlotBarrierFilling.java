@@ -33,7 +33,7 @@ public class SlotBarrierFilling {
      * スロット 1-35 は禁止（ホットバー 1-8 とインベントリ 9-35）
      */
     public static boolean shouldHaveBarrier(int slotId) {
-        return slotId >= 1 && slotId <= 35;
+        return slotId >= 4 && slotId <= 35;
     }
 
     public static void clean(ServerPlayer player) {
