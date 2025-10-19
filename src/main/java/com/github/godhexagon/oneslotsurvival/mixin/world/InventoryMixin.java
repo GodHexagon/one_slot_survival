@@ -23,24 +23,9 @@ public abstract class InventoryMixin {
     @Final
     public Player player;
 
-    @Inject(method = "getFreeSlot", at = @At("HEAD"), cancellable = true)
-    private void onGetFreeSlot(CallbackInfoReturnable<Integer> cir) {
-        if (PlayerModValidity.isEffective(this.player))
-        {
-            cir.cancel();
-
-            for (int i = 0; i < this.items.size(); i++) {
-                if (!InventoryDefinition.isRestrictedSlot(i) && this.items.get(i).isEmpty()) {
-                    cir.setReturnValue(i);
-                    return;
-                }
-            }
-
-            cir.setReturnValue(-1);
-        }
-    }
-
     /*
+
+    === ClientEvent.enforceMainHandSelectionで改変しているため不要 ===
 
     public int getSelectedSlot() {
         return this.selected;
@@ -62,32 +47,46 @@ public abstract class InventoryMixin {
         return this.items.set(this.selected, p_393963_);
     }
 
+    === ===
+
+    === これは定数を返す静的メソッド ===
     public static int getSelectionSize() {
         return 9;
     }
 
+    TODO: Inject
     public NonNullList<ItemStack> getNonEquipmentItems() {
         return this.items;
     }
 
+    === 防具とオフハンドは関係無い。メインハンドはthis.selectedレイヤーで制御 ===
     public EntityEquipment getEquipment() {
         return this.equipment;
     }
 
+    TODO: Inject
     private boolean hasRemainingSpaceForItem(ItemStack p_36015_, ItemStack p_36016_) {
         return !p_36015_.isEmpty() && ItemStack.isSameItemSameComponents(p_36015_, p_36016_) && p_36015_.isStackable() && p_36015_.getCount() < this.getMaxStackSize(p_36015_);
     }
+*/
+    @Inject(method = "getFreeSlot", at = @At("HEAD"), cancellable = true)
+    private void onGetFreeSlot(CallbackInfoReturnable<Integer> cir) {
+        if (PlayerModValidity.isEffective(this.player))
+        {
+            cir.cancel();
 
-    public int getFreeSlot() {
-        for (int i = 0; i < this.items.size(); i++) {
-            if (this.items.get(i).isEmpty()) {
-                return i;
+            for (int i = 0; i < this.items.size(); i++) {
+                if (!InventoryDefinition.isRestrictedSlot(i) && this.items.get(i).isEmpty()) {
+                    cir.setReturnValue(i);
+                    return;
+                }
             }
+
+            cir.setReturnValue(-1);
         }
-
-        return -1;
     }
-
+/*
+    TODO: Inject
     public void addAndPickItem(ItemStack p_378587_) {
         this.setSelectedSlot(this.getSuitableHotbarSlot());
         if (!this.items.get(this.selected).isEmpty()) {
@@ -100,6 +99,7 @@ public abstract class InventoryMixin {
         this.items.set(this.selected, p_378587_);
     }
 
+    TODO: Inject
     public void pickSlot(int p_36039_) {
         this.setSelectedSlot(this.getSuitableHotbarSlot());
         ItemStack itemstack = this.items.get(this.selected);
@@ -107,10 +107,12 @@ public abstract class InventoryMixin {
         this.items.set(p_36039_, itemstack);
     }
 
+    TODO: Inject
     public static boolean isHotbarSlot(int p_36046_) {
         return p_36046_ >= 0 && p_36046_ < 9;
     }
 
+    TODO: Inject
     public int findSlotMatchingItem(ItemStack p_36031_) {
         for (int i = 0; i < this.items.size(); i++) {
             if (!this.items.get(i).isEmpty() && ItemStack.isSameItemSameComponents(p_36031_, this.items.get(i))) {
@@ -121,10 +123,12 @@ public abstract class InventoryMixin {
         return -1;
     }
 
+    === ツール耐久システム・エンチャント・名づけシステムはバニラのままにする ===
     public static boolean isUsableForCrafting(ItemStack p_362871_) {
         return !p_362871_.isDamaged() && !p_362871_.isEnchanted() && !p_362871_.has(DataComponents.CUSTOM_NAME);
     }
 
+    // TODO: Inject
     public int findSlotMatchingCraftingIngredient(Holder<Item> p_363996_, ItemStack p_376934_) {
         for (int i = 0; i < this.items.size(); i++) {
             ItemStack itemstack = this.items.get(i);
@@ -139,6 +143,7 @@ public abstract class InventoryMixin {
         return -1;
     }
 
+    // TODO: Inject
     public int getSuitableHotbarSlot() {
         for (int i = 0; i < 9; i++) {
             int j = (this.selected + i) % 9;
@@ -157,6 +162,7 @@ public abstract class InventoryMixin {
         return this.selected;
     }
 
+    // TODO: Inject
     public int clearOrCountMatchingItems(Predicate<ItemStack> p_36023_, int p_36024_, Container p_36025_) {
         int i = 0;
         boolean flag = p_36024_ == 0;
@@ -171,6 +177,7 @@ public abstract class InventoryMixin {
         return i;
     }
 
+    // TODO: わからん
     private int addResource(ItemStack p_36067_) {
         int i = this.getSlotWithRemainingSpace(p_36067_);
         if (i == -1) {
@@ -180,6 +187,7 @@ public abstract class InventoryMixin {
         return i == -1 ? p_36067_.getCount() : this.addResource(i, p_36067_);
     }
 
+    // TODO: わからん
     private int addResource(int p_36048_, ItemStack p_36049_) {
         int i = p_36049_.getCount();
         ItemStack itemstack = this.getItem(p_36048_);
@@ -200,6 +208,7 @@ public abstract class InventoryMixin {
         }
     }
 
+    // TODO: わからん
     public int getSlotWithRemainingSpace(ItemStack p_36051_) {
         if (this.hasRemainingSpaceForItem(this.getItem(this.selected), p_36051_)) {
             return this.selected;
@@ -216,6 +225,7 @@ public abstract class InventoryMixin {
         }
     }
 
+    === ItemStack.inventoryTickは実行しておいたほうがよさそう ===
     public void tick() {
         for (int i = 0; i < this.items.size(); i++) {
             ItemStack itemstack = this.getItem(i);
@@ -225,10 +235,12 @@ public abstract class InventoryMixin {
         }
     }
 
+    === オーバーライド先で変更する ===
     public boolean add(ItemStack p_36055_) {
         return this.add(-1, p_36055_);
     }
 
+    TODO: Inject
     public boolean add(int p_36041_, ItemStack p_36042_) {
         if (p_36042_.isEmpty()) {
             return false;
@@ -280,10 +292,12 @@ public abstract class InventoryMixin {
         }
     }
 
+    === オーバーライド先で変更する ===
     public void placeItemBackInInventory(ItemStack p_150080_) {
         this.placeItemBackInInventory(p_150080_, true);
     }
 
+    TODO: Inject
     public void placeItemBackInInventory(ItemStack p_150077_, boolean p_150078_) {
         while (!p_150077_.isEmpty()) {
             int i = this.getSlotWithRemainingSpace(p_150077_);
@@ -303,6 +317,7 @@ public abstract class InventoryMixin {
         }
     }
 
+    TODO: ClientboundSetPlayerInventoryPacketの実装を確認する
     public ClientboundSetPlayerInventoryPacket createInventoryUpdatePacket(int p_362278_) {
         return new ClientboundSetPlayerInventoryPacket(p_362278_, this.getItem(p_362278_).copy());
     }
