@@ -29,6 +29,7 @@ public abstract class InventoryMixin {
     public Player player;
     @Shadow
     private int selected;
+    @Final
     @Shadow
     private EntityEquipment equipment;
 
@@ -43,7 +44,8 @@ public abstract class InventoryMixin {
      * @param slotIndex チェックするスロットインデックス
      * @return true: スロットをスキップすべき, false: スロットを処理すべき
      */
-    private boolean shouldSkipSlot(int slotIndex) {
+    @Unique
+    private boolean one_slot_survival$shouldSkipSlot(int slotIndex) {
         // ロールスロットでなおかつ空の場合は無視される
         if (InventoryDefinition.isRoleSlot(slotIndex) && this.items.get(slotIndex).isEmpty()) {
             return true;
@@ -111,7 +113,7 @@ public abstract class InventoryMixin {
             cir.cancel();
 
             for (int i = 0; i < this.items.size(); i++) {
-                if (shouldSkipSlot(i)) {
+                if (one_slot_survival$shouldSkipSlot(i)) {
                     continue;
                 }
 
@@ -173,7 +175,7 @@ public abstract class InventoryMixin {
             cir.cancel();
 
             for (int i = 0; i < this.items.size(); i++) {
-                if (shouldSkipSlot(i)) {
+                if (one_slot_survival$shouldSkipSlot(i)) {
                     continue;
                 }
 
@@ -203,7 +205,7 @@ public abstract class InventoryMixin {
             cir.cancel();
 
             for (int i = 0; i < this.items.size(); i++) {
-                if (shouldSkipSlot(i)) {
+                if (one_slot_survival$shouldSkipSlot(i)) {
                     continue;
                 }
 
@@ -232,7 +234,7 @@ public abstract class InventoryMixin {
 
             for (int i = 0; i < 9; i++) {
                 int j = (this.selected + i) % 9;
-                if (shouldSkipSlot(j)) {
+                if (one_slot_survival$shouldSkipSlot(j)) {
                     continue;
                 }
 
@@ -245,7 +247,7 @@ public abstract class InventoryMixin {
 
             for (int k = 0; k < 9; k++) {
                 int l = (this.selected + k) % 9;
-                if (shouldSkipSlot(l)) {
+                if (one_slot_survival$shouldSkipSlot(l)) {
                     continue;
                 }
 
@@ -329,7 +331,7 @@ public abstract class InventoryMixin {
                 return;
             } else {
                 for (int i = 0; i < this.items.size(); i++) {
-                    if (shouldSkipSlot(i)) {
+                    if (one_slot_survival$shouldSkipSlot(i)) {
                         continue;
                     }
 
