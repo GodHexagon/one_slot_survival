@@ -12,7 +12,9 @@ import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import net.minecraft.world.entity.EntityEquipment;
 
 /**
  * Inventoryクラスに仮想スロット機能を追加するMixin
@@ -27,6 +29,8 @@ public abstract class InventoryMixin {
     public Player player;
     @Shadow
     private int selected;
+    @Shadow
+    private EntityEquipment equipment;
 
     @Shadow
     private boolean hasRemainingSpaceForItem(ItemStack p_36015_, ItemStack p_36016_) {
@@ -140,14 +144,20 @@ public abstract class InventoryMixin {
     }
 
     // TODO: Inject 制限スロットはEMPTYを返すようにしよう
-    public void pickSlot(int p_36039_) {
-        this.setSelectedSlot(this.getSuitableHotbarSlot());
-        // ⚠️ CONCERN: this.items.get/set()でロールスロット無視不可（選択されたスロット・引数スロット直接アクセス）
-        ItemStack itemstack = this.items.get(this.selected);
-        this.items.set(this.selected, this.items.get(p_36039_));
-        this.items.set(p_36039_, itemstack);
-    }
+*/
+    @Inject(method = "pickSlot", at = @At("HEAD"), cancellable = true)
+    private void onPickSlot(int p_36039_, CallbackInfo ci) {
+        if (PlayerModValidity.isEffective(this.player)) {
+            ci.cancel();
 
+            Inventory inv = (Inventory)(Object)this;
+            inv.setSelectedSlot(inv.getSuitableHotbarSlot());
+            ItemStack itemstack = this.items.get(this.selected);
+            this.items.set(this.selected, this.items.get(p_36039_));
+            this.items.set(p_36039_, itemstack);
+        }
+    }
+/*
     === this.itemsに直接アクセスしない（静的メソッド） ===
     public static boolean isHotbarSlot(int p_36046_) {
         // ✅ OK: this.itemsに直接アクセスしない（静的メソッド）
@@ -463,24 +473,28 @@ public abstract class InventoryMixin {
     }
 
     // TODO: Inject
-    public void removeItem(ItemStack p_36058_) {
-        // ⚠️ CONCERN: this.items.get/set()を直接呼び出している
-        // ⚠️ VALUE_LOSS: this.items.set(i, ItemStack.EMPTY)でアイテムが削除される
-        for (int i = 0; i < this.items.size(); i++) {
-            if (this.items.get(i) == p_36058_) {
-                this.items.set(i, ItemStack.EMPTY);
-                return;
-            }
-        }
+*/
+    @Inject(method = "removeItem(Lnet/minecraft/world/item/ItemStack;)V", at = @At("HEAD"), cancellable = true)
+    private void onRemoveItem(ItemStack p_36058_, CallbackInfo ci) {
+        if (PlayerModValidity.isEffective(this.player)) {
+            ci.cancel();
 
-        for (EquipmentSlot equipmentslot : EQUIPMENT_SLOT_MAPPING.values()) {
-            ItemStack itemstack = this.equipment.get(equipmentslot);
-            if (itemstack == p_36058_) {
-                this.equipment.set(equipmentslot, ItemStack.EMPTY);
-                return;
+            for (int i = 0; i < this.items.size(); i++) {
+                if (this.items.get(i) == p_36058_) {
+                    this.items.set(i, ItemStack.EMPTY);
+                    return;
+                }
+            }
+            for (net.minecraft.world.entity.EquipmentSlot equipmentslot : Inventory.EQUIPMENT_SLOT_MAPPING.values()) {
+                ItemStack itemstack = this.equipment.get(equipmentslot);
+                if (itemstack == p_36058_) {
+                    this.equipment.set(equipmentslot, ItemStack.EMPTY);
+                    return;
+                }
             }
         }
     }
+/*
 
     === index指定なので無視 ===
     @Override
@@ -537,41 +551,55 @@ public abstract class InventoryMixin {
     }
 
     TODO: Inject
-    @Override
-    public int getContainerSize() {
-        // ✅ OK: this.itemsに直接アクセスしない（size()のみ）
-        return this.items.size() + EQUIPMENT_SLOT_MAPPING.size();
-    }
+*/
+    @Inject(method = "getContainerSize", at = @At("HEAD"), cancellable = true)
+    private void onGetContainerSize(CallbackInfoReturnable<Integer> cir) {
+        if (PlayerModValidity.isEffective(this.player)) {
+            cir.cancel();
 
+            cir.setReturnValue(this.items.size() + Inventory.EQUIPMENT_SLOT_MAPPING.size());
+        }
+    }
+/*
     TODO: Inject
-    @Override
-    public boolean isEmpty() {
-        for (ItemStack itemstack : this.items) {
-            if (!itemstack.isEmpty()) {
-                return false;
-            }
-        }
+*/
+    @Inject(method = "isEmpty", at = @At("HEAD"), cancellable = true)
+    private void onIsEmpty(CallbackInfoReturnable<Boolean> cir) {
+        if (PlayerModValidity.isEffective(this.player)) {
+            cir.cancel();
 
-        for (EquipmentSlot equipmentslot : EQUIPMENT_SLOT_MAPPING.values()) {
-            if (!this.equipment.get(equipmentslot).isEmpty()) {
-                return false;
+            for (ItemStack itemstack : this.items) {
+                if (!itemstack.isEmpty()) {
+                    cir.setReturnValue(false);
+                    return;
+                }
             }
+            for (net.minecraft.world.entity.EquipmentSlot equipmentslot : Inventory.EQUIPMENT_SLOT_MAPPING.values()) {
+                if (!this.equipment.get(equipmentslot).isEmpty()) {
+                    cir.setReturnValue(false);
+                    return;
+                }
+            }
+            cir.setReturnValue(true);
         }
-
-        return true;
     }
-
+/*
     TODO: Inject 無効なスロットはEMPTYを返すべき
-    @Override
-    public ItemStack getItem(int p_35991_) {
-        // ⚠️ CONCERN: this.items.get()を直接呼び出している（インデックス指定アクセス）
-        if (p_35991_ < this.items.size()) {
-            return this.items.get(p_35991_);
-        } else {
-            EquipmentSlot equipmentslot = EQUIPMENT_SLOT_MAPPING.get(p_35991_);
-            return equipmentslot != null ? this.equipment.get(equipmentslot) : ItemStack.EMPTY;
+*/
+    @Inject(method = "getItem", at = @At("HEAD"), cancellable = true)
+    private void onGetItem(int p_35991_, CallbackInfoReturnable<ItemStack> cir) {
+        if (PlayerModValidity.isEffective(this.player)) {
+            cir.cancel();
+
+            if (p_35991_ < this.items.size()) {
+                cir.setReturnValue(this.items.get(p_35991_));
+            } else {
+                net.minecraft.world.entity.EquipmentSlot equipmentslot = Inventory.EQUIPMENT_SLOT_MAPPING.get(p_35991_);
+                cir.setReturnValue(equipmentslot != null ? this.equipment.get(equipmentslot) : ItemStack.EMPTY);
+            }
         }
     }
+/*
 
     === this.itemsに直接アクセスしない ===
     @Override
@@ -613,50 +641,74 @@ public abstract class InventoryMixin {
     === ===
 
     TODO: Inject
-    public boolean contains(ItemStack p_36064_) {
-        // ⚠️ COMPLEX: for (ItemStack itemstack : this)はIteratorを使用
-        // Inventoryのiteratorがthis.itemsをどう扱うか不明
-        for (ItemStack itemstack : this) {
-            if (!itemstack.isEmpty() && ItemStack.isSameItemSameComponents(itemstack, p_36064_)) {
-                return true;
+*/
+    @Inject(method = "contains(Lnet/minecraft/world/item/ItemStack;)Z", at = @At("HEAD"), cancellable = true)
+    private void onContainsItemStack(ItemStack p_36064_, CallbackInfoReturnable<Boolean> cir) {
+        if (PlayerModValidity.isEffective(this.player)) {
+            cir.cancel();
+
+            Inventory inv = (Inventory)(Object)this;
+            for (ItemStack itemstack : inv) {
+                if (!itemstack.isEmpty() && ItemStack.isSameItemSameComponents(itemstack, p_36064_)) {
+                    cir.setReturnValue(true);
+                    return;
+                }
             }
+            cir.setReturnValue(false);
         }
-
-        return false;
     }
-
+/*
     TODO: Inject
-    public boolean contains(TagKey<Item> p_204076_) {
-        // ⚠️ COMPLEX: for (ItemStack itemstack : this)はIteratorを使用
-        for (ItemStack itemstack : this) {
-            if (!itemstack.isEmpty() && itemstack.is(p_204076_)) {
-                return true;
+*/
+    @Inject(method = "contains(Lnet/minecraft/tags/TagKey;)Z", at = @At("HEAD"), cancellable = true)
+    private void onContainsTagKey(net.minecraft.tags.TagKey<Item> p_204076_, CallbackInfoReturnable<Boolean> cir) {
+        if (PlayerModValidity.isEffective(this.player)) {
+            cir.cancel();
+
+            Inventory inv = (Inventory)(Object)this;
+            for (ItemStack itemstack : inv) {
+                if (!itemstack.isEmpty() && itemstack.is(p_204076_)) {
+                    cir.setReturnValue(true);
+                    return;
+                }
             }
+            cir.setReturnValue(false);
         }
-
-        return false;
     }
-
+/*
     TODO: Inject
-    public boolean contains(Predicate<ItemStack> p_332183_) {
-        // ⚠️ COMPLEX: for (ItemStack itemstack : this)はIteratorを使用
-        for (ItemStack itemstack : this) {
-            if (p_332183_.test(itemstack)) {
-                return true;
+*/
+    @Inject(method = "contains(Ljava/util/function/Predicate;)Z", at = @At("HEAD"), cancellable = true)
+    private void onContainsPredicate(java.util.function.Predicate<ItemStack> p_332183_, CallbackInfoReturnable<Boolean> cir) {
+        if (PlayerModValidity.isEffective(this.player)) {
+            cir.cancel();
+
+            Inventory inv = (Inventory)(Object)this;
+            for (ItemStack itemstack : inv) {
+                if (p_332183_.test(itemstack)) {
+                    cir.setReturnValue(true);
+                    return;
+                }
             }
+            cir.setReturnValue(false);
         }
-
-        return false;
     }
-
+/*
     TODO: Inject
-    public void replaceWith(Inventory p_36007_) {
-        for (int i = 0; i < this.getContainerSize(); i++) {
-            this.setItem(i, p_36007_.getItem(i));
-        }
+*/
+    @Inject(method = "replaceWith", at = @At("HEAD"), cancellable = true)
+    private void onReplaceWith(Inventory p_36007_, CallbackInfo ci) {
+        if (PlayerModValidity.isEffective(this.player)) {
+            ci.cancel();
 
-        this.setSelectedSlot(p_36007_.getSelectedSlot());
+            Inventory inv = (Inventory)(Object)this;
+            for (int i = 0; i < inv.getContainerSize(); i++) {
+                inv.setItem(i, p_36007_.getItem(i));
+            }
+            inv.setSelectedSlot(p_36007_.getSelectedSlot());
+        }
     }
+/*
 
     === 他のアイテムは結局消えてしまう仕様なので触らなくてよし ===
     @Override
@@ -668,11 +720,18 @@ public abstract class InventoryMixin {
     }
 
     TODO: Inject
-    public void fillStackedContents(StackedItemContents p_364670_) {
-        for (ItemStack itemstack : this.items) {
-            p_364670_.accountSimpleStack(itemstack);
+*/
+    @Inject(method = "fillStackedContents", at = @At("HEAD"), cancellable = true)
+    private void onFillStackedContents(net.minecraft.world.entity.player.StackedItemContents p_364670_, CallbackInfo ci) {
+        if (PlayerModValidity.isEffective(this.player)) {
+            ci.cancel();
+
+            for (ItemStack itemstack : this.items) {
+                p_364670_.accountSimpleStack(itemstack);
+            }
         }
     }
+/*
 
     === メインハンドはthis.selectedレイヤーで制御 ===
     public ItemStack removeFromSelected(boolean p_182404_) {
