@@ -12,6 +12,7 @@ public class SlotBarrierFilling {
     public static void fillUp(ServerPlayer player) {
         Inventory inventory = player.getInventory();
 
+        // TODO: 改変されていないメソッドを利用する必要あり
         for (int i = 0; i < inventory.getContainerSize(); i++) {
             ItemStack item = inventory.getItem(i);
 

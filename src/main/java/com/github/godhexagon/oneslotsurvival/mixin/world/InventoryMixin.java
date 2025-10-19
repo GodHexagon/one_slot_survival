@@ -619,7 +619,7 @@ public abstract class InventoryMixin {
         return Component.translatable("container.inventory");
     }
 
-    === 基本的にはアイテムが保存される方針->全てドロップすべき。SlotBarrier.onEntityItemUpdateでドロップアイテムは削除される。
+    TODO: Inject
     public void dropAll() {
         for (int i = 0; i < this.items.size(); i++) {
             ItemStack itemstack = this.items.get(i);
