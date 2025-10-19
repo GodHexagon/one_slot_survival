@@ -40,6 +40,7 @@ public abstract class AbstractContainerMenuMixin {
     @Final
     public NonNullList<Slot> slots;
 
+    @Final
     @Shadow
     @Nullable
     private MenuType<?> menuType;
@@ -64,7 +65,7 @@ public abstract class AbstractContainerMenuMixin {
     protected abstract void resetQuickCraft();
 
     @Shadow
-    protected abstract boolean canDragTo(Slot slot);
+    public abstract boolean canDragTo(Slot slot);
 
     @Shadow
     public abstract ItemStack quickMoveStack(Player player, int index);
@@ -76,7 +77,7 @@ public abstract class AbstractContainerMenuMixin {
     protected abstract net.minecraft.world.entity.SlotAccess createCarriedSlotAccess();
 
     @Shadow
-    protected abstract boolean canTakeItemForPickAll(ItemStack stack, Slot slot);
+    public abstract boolean canTakeItemForPickAll(ItemStack stack, Slot slot);
 
     @Shadow
     protected abstract void doClick(int slotId, int button, ClickType clickType, Player player);
