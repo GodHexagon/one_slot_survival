@@ -1,12 +1,15 @@
 package com.github.godhexagon.oneslotsurvival.mixin.world;
 
 import com.github.godhexagon.oneslotsurvival.mixin.accessor.SlotAccessor;
+import com.github.godhexagon.oneslotsurvival.world.util.InventoryDefinition;
+import com.github.godhexagon.oneslotsurvival.world.util.ItemType;
 import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -15,6 +18,7 @@ import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,7 +79,7 @@ public abstract class AbstractContainerMenuMixin {
     protected abstract boolean tryItemClickBehaviourOverride(Player player, ClickAction action, Slot slot, ItemStack clickedItem, ItemStack carriedItem);
 
     @Shadow
-    protected abstract net.minecraft.world.entity.SlotAccess createCarriedSlotAccess();
+    protected abstract SlotAccess createCarriedSlotAccess();
 
     @Shadow
     public abstract boolean canTakeItemForPickAll(ItemStack stack, Slot slot);
@@ -140,7 +144,8 @@ public abstract class AbstractContainerMenuMixin {
 
     @Unique
     private void one_slot_survival$roledPlayerDoClick(int slotId, int button, ClickType clickType, Player player) {
-        LOGGER.debug("Clicked slot is Role Slot: {}", one_slot_survival$isRoleSlot(slotId));
+        LOGGER.debug("Clicked slot is inventory slot: {}", one_slot_survival$isInventorySlot(slotId));
+        LOGGER.debug("Clicked slot is ineligible for empty: {}", one_slot_survival$isIneligibleItemType(ItemStack.EMPTY, slotId));
 
         Inventory inventory = player.getInventory();
         if (clickType == ClickType.QUICK_CRAFT) {
@@ -245,7 +250,7 @@ public abstract class AbstractContainerMenuMixin {
                 ItemStack itemstack10 = this.getCarried();
                 player.updateTutorialInventoryAction(itemstack10, slot7.getItem(), clickaction);
                 if (!this.tryItemClickBehaviourOverride(player, clickaction, slot7, itemstack9, itemstack10)) {
-                    if (!net.minecraftforge.event.ForgeEventFactory.onItemStackedOn(itemstack9, itemstack10, slot7, clickaction, player, createCarriedSlotAccess()))
+                    if (!ForgeEventFactory.onItemStackedOn(itemstack9, itemstack10, slot7, clickaction, player, createCarriedSlotAccess()))
                         if (itemstack9.isEmpty()) {
                             if (!itemstack10.isEmpty()) {
                                 int i3 = clickaction == ClickAction.PRIMARY ? itemstack10.getCount() : 1;
@@ -367,30 +372,51 @@ public abstract class AbstractContainerMenuMixin {
     }
 
     /**
-     * ロールスロットかどうかを判定します。
+     * ロールスロットルールにおいて、新しいアイテムの割り当てとして適切か判定します。
      *
-     * @param slotId The slot index to check
-     * @return true if the slot is a role slot, false otherwise
+     * @param item 新しいアイテム。
+     * @param slotId itemが格納される予定のスロットのID。
+     * @return trueのとき適切。
      */
     @Unique
-    public boolean one_slot_survival$isRoleSlot(int slotId) {
+    private boolean one_slot_survival$isIneligibleItemType(ItemStack item, int slotId) {
+        int inventoryIndex = one_slot_survival$getInventoryIndex(slotId);
+
+        if (InventoryDefinition.isDisableSlot(inventoryIndex)) {
+            return false;
+        }
+
+        if (InventoryDefinition.isRoleSlot(inventoryIndex) && this.slots.get(slotId).container instanceof Inventory inventory) {
+            // 将来的に使用します。
+            Player player = inventory.player;
+            int roleSlotIndex = inventoryIndex - 1;
+
+            return ItemType.isPickAxe(item) || item.isEmpty();
+        }
+
+        return true;
+    }
+
+    @Unique
+    private boolean one_slot_survival$isInventorySlot(int slotId) {
+        return one_slot_survival$getInventoryIndex(slotId) > -1;
+    }
+
+    @Unique
+    private int one_slot_survival$getInventoryIndex(int slotId) {
         // スロットIDの範囲チェック
         if (slotId < 0 || slotId >= this.slots.size()) {
-            return false;
+            return -1;
         }
 
         Slot slot = this.slots.get(slotId);
 
         // Check if this slot belongs to player inventory
         if (!(slot.container instanceof Inventory)) {
-            return false;
+            return -1;
         }
 
         // Get the index within the player's inventory
-        int inventoryIndex = slot.getContainerSlot();
-
-        // Role slots are indices 1-3 in the player inventory
-
-        return inventoryIndex >= 1 && inventoryIndex <= 3;
+        return slot.getContainerSlot();
     }
 }
