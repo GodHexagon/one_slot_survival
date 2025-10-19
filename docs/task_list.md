@@ -59,9 +59,11 @@
    4. 完了✅|インベントリの見た目を４スロット分にする
    5. 完了✅|AbstractContainerMenu.clickedインジェクション＆roledPlayerDoClickで本来の処理をトレース＆ClickTypeが何を意味するかをデバッグログ出力で確認
    6. 完了✅|isRoleSlot(int)を持つインターフェイスを定義・AbstractContainerMenu以下全てに実装＆isRoleSlotが正しいかをデバッグ出力で確認
-   7. RoledPlayerDoClickをカスタマイズ
-   8. ゲーム中にオフハンドからロールスロットへの移動を制限する
-   9. スロットバリアを消してもよさそうか考える
+   7. 完了✅|RoledPlayerDoClickをカスタマイズし、ロールスロットに特定アイテム種類のみ配置可能に制限
+   8. 毎ティックスロットバリア配布処理がされる問題を修正する
+   9. ゲーム中にオフハンドからロールスロットへの移動を制限する
+   10. 拾得制限の別の方式を探る
+   11. スロットバリアを消してもよさそうか考える
 1. RestrictedInventoryScreenをリファクタリング＆チェストとかも共通処理化で見た目を制御
     * CreativeModeInventoryScreenを模倣したヘルパークラスを作成する作戦
         * CreativeModeInventoryScreenの完全コピー -> ヘルパーメソッド（public化）でアクセス可能に -> いらない処理を削る・カスタマイズ

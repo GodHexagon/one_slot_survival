@@ -10,9 +10,9 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 # 進捗
 
-直前の成果！: isRoleSlot(int)を持つインターフェイスを定義・AbstractContainerMenu以下全てに実装＆isRoleSlotが正しいかをデバッグ出力で確認 of プレイヤーはロールスロットを利用できるようにする
+直前の成果！: RoledPlayerDoClickをカスタマイズし、ロールスロットに特定アイテム種類のみ配置可能に制限 of プレイヤーはロールスロットを利用できるようにする
 
-実行中: RoledPlayerDoClickをカスタマイズ of プレイヤーはロールスロットを利用できるようにする
+実行中: 毎ティックスロットバリア配布処理がされる問題を修正する of プレイヤーはロールスロットを利用できるようにする
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
