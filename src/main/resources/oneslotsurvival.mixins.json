@@ -6,7 +6,11 @@
   "minVersion": "0.8",
   "client": [
     "client.GuiMixin",
-    "client.AbstractContainerScreenMixin"
+    "client.AbstractContainerScreenMixin",
+    "world.InventoryMixin"
+  ],
+  "server": [
+    "world.InventoryMixin"
   ],
   "injectors": {
     "defaultRequire": 1
