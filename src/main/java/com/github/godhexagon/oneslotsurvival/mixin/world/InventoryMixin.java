@@ -528,7 +528,7 @@ public abstract class InventoryMixin {
         }
     }
 /*
-    === index指定なので無視 ===
+    === ここはAbstractContainerMenu.doClick挿入で制御 ===
     @Override
     public void setItem(int p_35999_, ItemStack p_36000_) {
         // ⚠️ CONCERN: this.items.set()を直接呼び出している
@@ -600,25 +600,18 @@ public abstract class InventoryMixin {
             cir.setReturnValue(true);
         }
     }
+/*
 
-    @Inject(method = "getItem", at = @At("HEAD"), cancellable = true)
-    private void onGetItem(int p_35991_, CallbackInfoReturnable<ItemStack> cir) {
-        if (PlayerModValidity.isEffective(this.player)) {
-            cir.cancel();
-
-            if (p_35991_ < this.items.size()) {
-                if (one_slot_survival$shouldSkipSlot(p_35991_)) {
-                    cir.setReturnValue(ItemStack.EMPTY);
-                } else {
-                    cir.setReturnValue(this.items.get(p_35991_));
-                }
-            } else {
-                net.minecraft.world.entity.EquipmentSlot equipmentslot = Inventory.EQUIPMENT_SLOT_MAPPING.get(p_35991_);
-                cir.setReturnValue(equipmentslot != null ? this.equipment.get(equipmentslot) : ItemStack.EMPTY);
-            }
+    === ここはAbstractContainerMenu.doClick挿入で制御 ===
+    @Override
+    public ItemStack getItem(int p_35991_) {
+        if (p_35991_ < this.items.size()) {
+            return this.items.get(p_35991_);
+        } else {
+            EquipmentSlot equipmentslot = EQUIPMENT_SLOT_MAPPING.get(p_35991_);
+            return equipmentslot != null ? this.equipment.get(equipmentslot) : ItemStack.EMPTY;
         }
     }
-/*
 
     === this.itemsに直接アクセスしない ===
     @Override
