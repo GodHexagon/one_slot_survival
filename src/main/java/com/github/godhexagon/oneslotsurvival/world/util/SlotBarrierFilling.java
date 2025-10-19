@@ -13,27 +13,27 @@ public class SlotBarrierFilling {
         Inventory inventory = player.getInventory();
 
         for (int i = 0; i < inventory.getContainerSize(); i++) {
-            boolean exceptedBarrier = shouldHaveBarrier(i);
-            boolean foundBarrier = inventory.getItem(i).is(ModItems.SLOT_BARRIER.get());
+            ItemStack item = inventory.getItem(i);
 
-            if (exceptedBarrier) {
-                player.drop(inventory.getItem(i), false);
+            // 無効化スロットにはスロットバリアを入れるべき
+            if (InventoryDefinition.isDisableSlot(i)) {
+                player.drop(item, false);
                 inventory.setItem(i, new ItemStack(ModItems.SLOT_BARRIER.get()));
                 continue;
             }
 
-            if (foundBarrier) {
+            // ロールスロットは基本的に何もしなくていいが、不適切アイテムだっときは空にすべき
+            if (InventoryDefinition.isRoleSlot(i) && !ItemType.isPickAxe(item)) {
+                player.drop(item, false);
+                inventory.setItem(i, ItemStack.EMPTY);
+                continue;
+            }
+
+            // それ以外の場合にスロットバリアがあったら消す
+            if (item.is(ModItems.SLOT_BARRIER.get())) {
                 inventory.setItem(i, ItemStack.EMPTY);
             }
         }
-    }
-
-    /**
-     * スロットにバリアアイテムが必要かどうかをチェック
-     * スロット 1-35 は禁止（ホットバー 1-8 とインベントリ 9-35）
-     */
-    public static boolean shouldHaveBarrier(int slotId) {
-        return slotId >= 4 && slotId <= 35;
     }
 
     public static void clean(ServerPlayer player) {
