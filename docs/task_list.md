@@ -55,6 +55,7 @@
         * オフハンドからつるはし以外をFキーで直接入れようしても、なにも起こらない。
    1. 完了✅|スロットバリア、ホットバーの見た目、ホットバー選択制御を４スロット分にする
    2. Inventory挿入で拾得制限＆その他（バニラのメソッド全部レビュー）
+       * 死んでもスロットバリアが残るかテスト
    3. インベントリの見た目を４スロット分にする
    5. AbstractContainerMenu.clickedインジェクション＆roledPlayerDoClickで本来の処理をトレース＆ClickTypeが何を意味するかをデバッグログ出力で確認
    6. isRoleSlot(int)を持つインターフェイスを定義・AbstractContainerMenu以下全てに実装＆isRoleSlotが正しいかをデバッグ出力で確認
