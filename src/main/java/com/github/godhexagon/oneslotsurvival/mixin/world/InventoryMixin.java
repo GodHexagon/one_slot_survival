@@ -729,8 +729,6 @@ public abstract class InventoryMixin {
         this.items.clear();
         this.equipment.clear();
     }
-
-    TODO: Inject
 */
     @Inject(method = "fillStackedContents", at = @At("HEAD"), cancellable = true)
     private void onFillStackedContents(net.minecraft.world.entity.player.StackedItemContents p_364670_, CallbackInfo ci) {
