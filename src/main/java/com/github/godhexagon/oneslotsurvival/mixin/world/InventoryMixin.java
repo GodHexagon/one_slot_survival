@@ -33,6 +33,24 @@ public abstract class InventoryMixin {
         throw new AssertionError();
     }
 
+    /**
+     * 指定されたスロットインデックスがロールスロット無視対象かどうかを判定する
+     *
+     * @param slotIndex チェックするスロットインデックス
+     * @return true: スロットをスキップすべき, false: スロットを処理すべき
+     */
+    private boolean shouldSkipSlot(int slotIndex) {
+        // ロールスロットでなおかつ空の場合は無視される
+        if (InventoryDefinition.isRoleSlot(slotIndex) && this.items.get(slotIndex).isEmpty()) {
+            return true;
+        }
+        // 正常な制限スロットは無視される
+        if (InventoryDefinition.isDisableSlot(slotIndex) && this.items.get(slotIndex).is(ModItems.SLOT_BARRIER.get())) {
+            return true;
+        }
+        return false;
+    }
+
     /*
 
     === ClientEvent.enforceMainHandSelectionで改変しているため不要 ===
@@ -89,12 +107,7 @@ public abstract class InventoryMixin {
             cir.cancel();
 
             for (int i = 0; i < this.items.size(); i++) {
-                // ロールスロットでなおかつ空の場合は無視される
-                if (InventoryDefinition.isRoleSlot(i) && this.items.get(i).isEmpty()) {
-                    continue;
-                }
-                // 正常な制限スロットは無視される
-                if (InventoryDefinition.isDisableSlot(i) && this.items.get(i).is(ModItems.SLOT_BARRIER.get())) {
+                if (shouldSkipSlot(i)) {
                     continue;
                 }
 
@@ -150,12 +163,7 @@ public abstract class InventoryMixin {
             cir.cancel();
 
             for (int i = 0; i < this.items.size(); i++) {
-                // ロールスロットでなおかつ空の場合は無視される
-                if (InventoryDefinition.isRoleSlot(i) && this.items.get(i).isEmpty()) {
-                    continue;
-                }
-                // 正常な制限スロットは無視される
-                if (InventoryDefinition.isDisableSlot(i) && this.items.get(i).is(ModItems.SLOT_BARRIER.get())) {
+                if (shouldSkipSlot(i)) {
                     continue;
                 }
 
@@ -185,12 +193,7 @@ public abstract class InventoryMixin {
             cir.cancel();
 
             for (int i = 0; i < this.items.size(); i++) {
-                // ロールスロットでなおかつ空の場合は無視される
-                if (InventoryDefinition.isRoleSlot(i) && this.items.get(i).isEmpty()) {
-                    continue;
-                }
-                // 正常な制限スロットは無視される
-                if (InventoryDefinition.isDisableSlot(i) && this.items.get(i).is(ModItems.SLOT_BARRIER.get())) {
+                if (shouldSkipSlot(i)) {
                     continue;
                 }
 
@@ -219,12 +222,7 @@ public abstract class InventoryMixin {
 
             for (int i = 0; i < 9; i++) {
                 int j = (this.selected + i) % 9;
-                // ロールスロットでなおかつ空の場合は無視される
-                if (InventoryDefinition.isRoleSlot(j) && this.items.get(j).isEmpty()) {
-                    continue;
-                }
-                // 正常な制限スロットは無視される
-                if (InventoryDefinition.isDisableSlot(j) && this.items.get(j).is(ModItems.SLOT_BARRIER.get())) {
+                if (shouldSkipSlot(j)) {
                     continue;
                 }
 
@@ -237,12 +235,7 @@ public abstract class InventoryMixin {
 
             for (int k = 0; k < 9; k++) {
                 int l = (this.selected + k) % 9;
-                // ロールスロットでなおかつ空の場合は無視される
-                if (InventoryDefinition.isRoleSlot(l) && this.items.get(l).isEmpty()) {
-                    continue;
-                }
-                // 正常な制限スロットは無視される
-                if (InventoryDefinition.isDisableSlot(l) && this.items.get(l).is(ModItems.SLOT_BARRIER.get())) {
+                if (shouldSkipSlot(l)) {
                     continue;
                 }
 
@@ -326,12 +319,7 @@ public abstract class InventoryMixin {
                 return;
             } else {
                 for (int i = 0; i < this.items.size(); i++) {
-                    // ロールスロットでなおかつ空の場合は無視される
-                    if (InventoryDefinition.isRoleSlot(i) && this.items.get(i).isEmpty()) {
-                        continue;
-                    }
-                    // 正常な制限スロットは無視される
-                    if (InventoryDefinition.isDisableSlot(i) && this.items.get(i).is(ModItems.SLOT_BARRIER.get())) {
+                    if (shouldSkipSlot(i)) {
                         continue;
                     }
 
