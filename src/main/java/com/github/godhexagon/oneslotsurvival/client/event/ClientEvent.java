@@ -33,30 +33,36 @@ public class ClientEvent {
         enforceMainHandSelection();
     }
 
+    private static final int MAX_SLOT_INDEX = 8;
+
     /**
-     * クライアントティック中にホットバー選択をスロット 0（メインハンド）に固定
+     * クライアントティック中にホットバー選択を正しい範囲に制限
      */
-    private static void enforceMainHandSelection() {
+    public static void enforceMainHandSelection() {
+        enforceMainHandSelection(4);
+    }
+
+    public static void enforceMainHandSelection(int exclusiveEnd) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.level == null) {
             return;
         }
 
-        // ローカルプレイヤーが制限されている場合のみ選択を強制
-        if (PlayerModValidity.isEffective(mc.player)) {
-            // リフレクションを使用してプライベート selected フィールドにアクセス
-            try {
-                var inventory = mc.player.getInventory();
-                var selectedField = inventory.getClass().getDeclaredField("selected");
-                selectedField.setAccessible(true);
-                int currentSelected = selectedField.getInt(inventory);
+        // Use reflection to access private selected field if available
+        try {
+            var inventory = mc.player.getInventory();
+            var selectedField = inventory.getClass().getDeclaredField("selected");
+            selectedField.setAccessible(true);
+            int currentSelected = selectedField.getInt(inventory);
 
-                if (currentSelected != 0) {
-                    selectedField.setInt(inventory, 0);
-                }
-            } catch (Exception e) {
-                // リフレクション失敗時は黙って無視
+            int threshold = Math.floorDiv(MAX_SLOT_INDEX + exclusiveEnd, 2);
+            if (threshold < currentSelected) {
+                selectedField.setInt(inventory, exclusiveEnd - MAX_SLOT_INDEX -1 + currentSelected);
+            } else if (exclusiveEnd <= currentSelected) {
+                selectedField.setInt(inventory, currentSelected - exclusiveEnd);
             }
+        } catch (Exception e) {
+            // Reflection failed, silently ignore
         }
     }
 
