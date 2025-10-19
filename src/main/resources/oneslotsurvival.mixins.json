@@ -4,13 +4,14 @@
   "compatibilityLevel": "JAVA_21",
   "refmap": "oneslotsurvival.refmap.json",
   "minVersion": "0.8",
+  "mixins": [
+    "accessor.SlotAccessor",
+    "world.InventoryMixin",
+    "world.AbstractContainerMenuMixin"
+  ],
   "client": [
     "client.GuiMixin",
-    "client.AbstractContainerScreenMixin",
-    "world.InventoryMixin"
-  ],
-  "server": [
-    "world.InventoryMixin"
+    "client.AbstractContainerScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
