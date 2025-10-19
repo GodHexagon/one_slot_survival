@@ -5,8 +5,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -49,17 +47,7 @@ public abstract class InventoryMixin {
      */
     @Unique
     private boolean one_slot_survival$isRestrictedSlot(int index) {
-        // インベントリスロット（9-35）を制限
-        if (index >= 9 && index <= 35) {
-            return true;
-        }
-
-        // ホットバーの範囲を制限
-        if (index >= 1 && index <= 8) {
-            return true;
-        }
-
-        // その他のスロット（クラフト、防具、オフハンド、メインハンド）は制限しない
-        return false;
+        // メインハンドスロット（index=0）のみ許可
+        return 1 <= index && index <= 35;
     }
 }
