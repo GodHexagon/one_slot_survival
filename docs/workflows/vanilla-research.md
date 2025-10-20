@@ -25,27 +25,12 @@
 
 ### 基本手順
 
-**1. 環境検出**
+**1. JAR抽出（Windowsパス形式）**
 ```bash
-pwd
-# /c/Users/...        → Windows Git Bash
-# /mnt/c/Users/...    → WSL
-# /home/...           → Linux
-```
-
-**2. JAR抽出**
-```bash
-# Windows Git Bash
 jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.21.8-58.1.0_mapped_official_1.21.8\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/client/gui/screens/inventory/AbstractContainerScreen.java
-
-# WSL
-jar -xf "/mnt/c/Users/godhe/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.21.8-58.1.0_mapped_official_1.21.8/forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/client/gui/screens/inventory/AbstractContainerScreen.java
-
-# Linux
-jar -xf ~/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.21.8-58.1.0_mapped_official_1.21.8/forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar net/minecraft/client/gui/screens/inventory/AbstractContainerScreen.java
 ```
 
-**3. Readツールで確認**
+**2. Readツールで確認**
 ```
 # Readツールで抽出したファイルを読む
 net/minecraft/client/gui/screens/inventory/AbstractContainerScreen.java
@@ -370,30 +355,26 @@ public abstract class AbstractContainerScreen<T extends AbstractContainerMenu>
    - バニラコードの調査が必要になったら、**まずこのドキュメントを読む**
    - Web検索やTask toolを使う前に、**jar -xf コマンドで直接ソースを抽出する**
 
-2. **環境を必ず検出する**
-   - **必ず最初に `pwd` を実行**して環境を判定する
-   - 判定結果に応じて適切なパス形式を使用
+2. **Windowsパス形式を使用**
+   - `C:\Users\godhe\...` 形式で指定
 
 3. **効率的な調査順序**
    ```
    1. このドキュメント（vanilla-research.md）を読む
       ↓
-   2. pwd を実行して環境を検出
+   2. Windowsパス形式で jar -xf を実行
       ↓
-   3. 環境に応じたパス形式で jar -xf を実行
+   3. Readツールで抽出したファイルを読む
       ↓
-   4. Readツールで抽出したファイルを読む
+   4. 関連クラスも必要なら追加で抽出
       ↓
-   5. 関連クラスも必要なら追加で抽出
-      ↓
-   6. 分析結果をユーザーに報告
+   5. 分析結果をユーザーに報告
    ```
 
 ### やってはいけないこと
 
 - ❌ Web検索で古いドキュメントを探す（時間の無駄）
 - ❌ Task tool で general-purpose agent を起動する（JAR抽出で十分）
-- ❌ 環境検出をせずに決め打ちでパスを指定する
 - ❌ cd でディレクトリ移動してから jar -xf を実行する
 
 ### 抽出後のクリーンアップ

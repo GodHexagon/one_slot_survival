@@ -138,13 +138,10 @@ import net.minecraft.world.level.saveddata.SavedDataType;
 ### 基本手順
 
 ```bash
-# 1. 環境検出
-pwd
-
-# 2. JAR抽出（環境に応じたパス）
+# 1. JAR抽出（Windowsパス形式）
 jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.21.8-58.1.0_mapped_official_1.21.8\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/world/level/saveddata/SavedDataType.java
 
-# 3. Readツールで確認
+# 2. Readツールで確認
 ```
 
 **詳細:** [technical/source-extraction.md](../technical/source-extraction.md)
@@ -377,7 +374,7 @@ public void onScreenOpen(ScreenEvent.Opening event) { ... }
       ↓
    3. テストクラス作成 → コンパイル → エラー解析
       ↓
-   4. JAR抽出で完全理解（必要時）
+   4. JAR抽出で完全理解（必要時、Windowsパス形式）
       ↓
    5. 実装完成
    ```
@@ -388,6 +385,7 @@ public void onScreenOpen(ScreenEvent.Opening event) { ... }
 - ❌ Web検索だけで解決しようとする
 - ❌ コンパイルエラーを無視する
 - ❌ 長時間試行錯誤する（適切なガイドを読めば解決する）
+- ❌ cd でディレクトリ移動してから jar -xf を実行する
 
 ---
 

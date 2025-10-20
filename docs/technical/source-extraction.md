@@ -11,26 +11,13 @@
 
 ---
 
-## 環境検出（必須）
+## 環境情報
 
-このプロジェクトはWindows/WSL/Linux環境で動作する可能性があります。
+**このプロジェクトはWindows環境で動作します。**
 
-### ステップ1: 環境を検出
+### パス指定
 
-```bash
-pwd
-```
-
-**出力例と判定:**
-- `/c/Users/...` → **Windows Git Bash**
-- `/mnt/c/Users/...` → **WSL**
-- `/home/...` → **Linux**
-
-### ステップ2: 環境別パス指定
-
-#### Windows Git Bash環境
-
-`pwd` が `/c/Users/...` を返す場合
+**Windowsパス形式を使用:**
 
 ```bash
 jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.21.8-58.1.0_mapped_official_1.21.8\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/client/gui/screens/inventory/AbstractContainerScreen.java
@@ -40,30 +27,6 @@ jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\mine
 - Windowsパス形式 (`C:\...`) を使用
 - バックスラッシュ区切り
 - ダブルクォートで囲む
-
-#### WSL環境
-
-`pwd` が `/mnt/c/Users/...` を返す場合
-
-```bash
-jar -xf "/mnt/c/Users/godhe/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.21.8-58.1.0_mapped_official_1.21.8/forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/client/gui/screens/inventory/AbstractContainerScreen.java
-```
-
-**ポイント:**
-- UNIXパス形式 (`/mnt/c/...`)
-- スラッシュ区切り
-
-#### Linux環境
-
-`pwd` が `/home/...` を返す場合
-
-```bash
-jar -xf ~/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.21.8-58.1.0_mapped_official_1.21.8/forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar net/minecraft/client/gui/screens/inventory/AbstractContainerScreen.java
-```
-
-**ポイント:**
-- ホームディレクトリ (`~/.gradle`)
-- UNIXパス形式
 
 ---
 
@@ -108,14 +71,10 @@ jar -tf forge-sources.jar | grep "inventory.*Screen"
 ### 例1: AbstractContainerScreenの調査
 
 ```bash
-# 1. 環境検出
-pwd
-# → /c/Users/user/IdeaProjects/one_slot_survival
-
-# 2. 抽出（Windows Git Bash）
+# 1. 抽出
 jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.21.8-58.1.0_mapped_official_1.21.8\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/client/gui/screens/inventory/AbstractContainerScreen.java
 
-# 3. 確認
+# 2. 確認
 ls net/minecraft/client/gui/screens/inventory/
 # → AbstractContainerScreen.java
 ```
@@ -251,11 +210,7 @@ javac -version
 
 ### エラー: ファイルが見つかりません
 
-**原因1:** パス形式が環境に合っていない
-
-**解決策:** `pwd` で環境を再確認し、適切なパス形式を使用
-
-**原因2:** Gradleキャッシュが存在しない
+**原因:** Gradleキャッシュが存在しない
 
 **解決策:**
 ```bash
@@ -263,18 +218,18 @@ javac -version
 ./gradlew build
 
 # キャッシュ場所の確認
-find ~/.gradle/caches/forge_gradle -name "*sources.jar" 2>/dev/null
+ls "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge"
 ```
 
 ### 抽出したファイルが見つからない
 
 **原因:** cd でディレクトリ移動した
 
-**解決策:** 作業ディレクトリに戻る、または絶対パスで指定
+**解決策:** 作業ディレクトリに戻る
 
 ```bash
 # 作業ディレクトリに戻る
-cd /c/Users/user/IdeaProjects/one_slot_survival
+cd C:\Users\user\IdeaProjects\one_slot_survival
 
 # 確認
 ls net/minecraft/
@@ -286,14 +241,12 @@ ls net/minecraft/
 
 ### 必ず守るべきルール
 
-1. **環境検出を最優先** - `pwd` を実行して環境を判定
-2. **適切なパス形式を使用** - 判定結果に基づいて選択
-3. **JAR抽出を最優先** - Web検索やTask toolの前に実行
-4. **Readツールで確認** - 抽出後は必ずReadツールで内容確認
+1. **Windowsパス形式を使用** - `C:\Users\godhe\...` 形式
+2. **JAR抽出を最優先** - Web検索やTask toolの前に実行
+3. **Readツールで確認** - 抽出後は必ずReadツールで内容確認
 
 ### やってはいけないこと
 
-- ❌ 環境検出をせずに決め打ちでパスを指定
 - ❌ cd でディレクトリ移動してから jar -xf を実行
 - ❌ Web検索で古いソースコードを探す
 - ❌ Task tool で general-purpose agent を起動（不要）
@@ -303,15 +256,13 @@ ls net/minecraft/
 ```
 1. このドキュメント（source-extraction.md）を読む
    ↓
-2. pwd を実行して環境を検出
+2. Windowsパス形式で jar -xf を実行
    ↓
-3. 環境に応じたパス形式で jar -xf を実行
+3. Readツールで抽出したファイルを読む
    ↓
-4. Readツールで抽出したファイルを読む
+4. 必要に応じて関連クラスも抽出
    ↓
-5. 必要に応じて関連クラスも抽出
-   ↓
-6. 分析結果をユーザーに報告
+5. 分析結果をユーザーに報告
 ```
 
 ---

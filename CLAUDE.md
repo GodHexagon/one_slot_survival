@@ -43,39 +43,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Extract source code directly from JAR
 
-**環境検出（必須）:**
-```bash
-# 現在のパスを確認
-pwd
-# /c/Users/...        → Windows Git Bash
-# /mnt/c/Users/...    → WSL
-# /home/...           → Linux
-```
+**このプロジェクトはWindows環境で動作します。**
 
 **抽出実行:**
-
-Windows Git Bash (`pwd` → `/c/Users/...`):
 ```bash
 jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.21.8-58.1.0_mapped_official_1.21.8\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/client/gui/screens/inventory/AbstractRecipeBookScreen.java
-```
-
-WSL/Linux (`pwd` → `/mnt/c/...` or `/home/...`):
-```bash
-# WSLの場合
-jar -xf "/mnt/c/Users/godhe/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.21.8-58.1.0_mapped_official_1.21.8/forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/client/gui/screens/inventory/AbstractRecipeBookScreen.java
-
-# Linuxネイティブの場合
-jar -xf ~/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.21.8-58.1.0_mapped_official_1.21.8/forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar net/minecraft/client/gui/screens/inventory/AbstractRecipeBookScreen.java
 ```
 
 **JAR内容の探索:**
 ```bash
 # ファイル一覧表示
-jar -tf forge-sources.jar | grep SavedData
+jar -tf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.21.8-58.1.0_mapped_official_1.21.8\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" | grep SavedData
 
 # パッケージ配下を全抽出
-jar -xf forge-sources.jar net/minecraft/world/level/saveddata/
+jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.21.8-58.1.0_mapped_official_1.21.8\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/world/level/saveddata/
 ```
+
+**詳細:** [JAR抽出ガイド](./docs/technical/source-extraction.md)
 
 # Claudeエージェントの方針
 

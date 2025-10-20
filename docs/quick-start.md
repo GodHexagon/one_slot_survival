@@ -133,30 +133,14 @@ ClassNotFoundException / NoSuchMethodError
 
 ---
 
-## 環境固有の注意事項
+## 環境情報
 
-### JAR抽出の環境検出
+**このプロジェクトはWindows環境で動作します。**
 
-このプロジェクトはWindows/WSL/Linux環境で動作する可能性があります。
+### JAR抽出のパス指定
 
-**必ず最初に実行:**
 ```bash
-pwd
-# /c/Users/...        → Windows Git Bash
-# /mnt/c/Users/...    → WSL
-# /home/...           → Linux
-```
-
-**環境別パス指定:**
-```bash
-# Windows Git Bash
-jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\...\sources.jar" net/minecraft/...
-
-# WSL
-jar -xf "/mnt/c/Users/godhe/.gradle/caches/forge_gradle/.../sources.jar" net/minecraft/...
-
-# Linux
-jar -xf ~/.gradle/caches/forge_gradle/.../sources.jar net/minecraft/...
+jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.21.8-58.1.0_mapped_official_1.21.8\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/...
 ```
 
 **詳細:** [technical/source-extraction.md](./technical/source-extraction.md)
