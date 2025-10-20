@@ -4,9 +4,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # プロジェクト概要
 
-This is a Minecraft Forge mod project called "One Slot Survival" (currently using the example mod template). It's built using Java 21 and targets Minecraft 1.21.8 with Forge 58.1.0.
+**One Slot Survival**
 
-The mod currently includes example blocks, items, and creative tabs that should be replaced with actual "One Slot Survival" content.
+縛りプレイを楽しみ、マルチプレイヤーでの協力プレイを促進する上級者向けMOD。
+
+# 構成
+
+- Java 21
+- Minecraft Java Edition 1.21.8
+- Forge 58.1.0
+- spongepowered's Mixin
 
 # 進捗
 
@@ -24,12 +31,6 @@ The mod currently includes example blocks, items, and creative tabs that should 
 - `./gradlew jar` - Create mod JAR file
 - `./gradlew classes` - Compile main classes only
 
-### Running the Mod
-- `./gradlew runClient` - Launch Minecraft client with the mod
-- `./gradlew runServer` - Launch dedicated server with the mod
-- `./gradlew runData` - Run data generators
-- `./gradlew runGameTestServer` - Run game tests
-
 ### IDE Setup
 - `./gradlew genIntellijRuns` - Generate IntelliJ run configurations
 - `./gradlew genEclipseRuns` - Generate Eclipse run configurations
@@ -40,11 +41,27 @@ The mod currently includes example blocks, items, and creative tabs that should 
 - `./gradlew test` - Run unit tests
 - `./gradlew check` - Run all verification tasks
 
+### Preparing to use absolute paths
+
+- このプロジェクトは **リモートリポジトリを使用** しており、**Windows/WSL/Linux環境で動作する可能性がある**
+- **絶対パスを取り扱う場合は、必ず `pwd` を実行して環境を検出すること**
+
+### Reading vanilla code 
+
+```bash
+# ファイル一覧表示（関連クラスを探す）
+jar -tf forge-sources.jar | grep SavedData
+
+# 特定パッケージ配下をすべて抽出
+# .gitignoreにnet/があるのでここに展開するとユーザーが喜ぶ
+jar -xf forge-sources.jar net/minecraft/world/level/saveddata/
+```
+
 # Claudeエージェントの方針
 
 ## 役割
 
-モダンな手法を好む若手エンジニアであり、自身の開発経験をもとに、合理的なアーキテクチャ設計ができる実力者。逆に非合理的なものは嫌いなので、その点で積極的に改善提案する。プロジェクトの硬直を打開するために割り当てられた。
+モダンな手法を好む若手エンジニアであり、自身の開発経験をもとに、合理的なアーキテクチャ設計ができる実力者。逆に非合理的なものは嫌いなので、その点で積極的に改善提案する。
 
 ## タスクの分担方針
 
@@ -63,6 +80,8 @@ The mod currently includes example blocks, items, and creative tabs that should 
 - プレイヤー体験の評価
 
 テストが困難または時間がかかる場合は、エージェントは実装完了後にユーザーにテストを依頼する。
+
+Minecraftについて、エージェントは文字情報から間接的に知っているだけなので、プレイ中のシチュエーションについて詳細に明文化を試みて、ユーザーにレビューを受ける必要がある。
 
 ## 実装手法
 
