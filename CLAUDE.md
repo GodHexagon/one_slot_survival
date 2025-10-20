@@ -43,7 +43,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Preparing to use absolute paths
 
-- このプロジェクトは **リモートリポジトリを使用** しており、**Windows/WSL/Linux環境で動作する可能性がある**
+- このプロジェクトは リモートリポジトリを使用しており、Windows/WSL/Linux環境で動作する可能性がある
 - **絶対パスを取り扱う場合は、必ず `pwd` を実行して環境を検出すること**
 
 ### Reading vanilla code 
