@@ -30,7 +30,7 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * Mixin to restrict item placement in role slots.
+ * Mixin to restrict item placement in inventory slots.
  * Prevents non-pickaxe items from being placed in role slots (indices 1-3).
  */
 @Mixin(AbstractContainerMenu.class)
@@ -107,8 +107,7 @@ public abstract class AbstractContainerMenuMixin {
     }
 
     /**
-     * Inject into clicked() to intercept ClickType.PICKUP on role slots.
-     * This prevents non-pickaxe items from being placed in role slots.
+     * プライベートメソッド"doClick"を置き換えるために、パブリックメソッド"clicked"を改変します。
      */
     @Inject(method = "clicked", at = @At("HEAD"), cancellable = true)
     private void onClicked(int slotId, int button, ClickType clickType, Player player, CallbackInfo ci) {
@@ -136,6 +135,10 @@ public abstract class AbstractContainerMenuMixin {
         }
     }
 
+    /**
+     * MODが有効なプレイヤー専用のdoClickメソッドです。バニラの`AbstractContainerMenu.doClick`の処理をそのまま持って来て、これを一部改変しています。詳細はバニラコードを確認してください。
+     * 現在は、one_slot_survival$isEligibleItemTypeForRoledPlayerを用いることで、適切でない入れ替えを判定・拒否しています。
+     */
     @Unique
     private void one_slot_survival$roledPlayerDoClick(int slotId, int button, ClickType clickType, Player player) {
         Inventory inventory = player.getInventory();
