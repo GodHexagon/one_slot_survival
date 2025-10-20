@@ -14,10 +14,7 @@ public class SlotBarrierFilling {
         Inventory inventory = player.getInventory();
 
         for (int i = 0; i < inventory.getContainerSize(); i++) {
-            boolean exceptedBarrier = InventoryDefinition.isDisableSlot(i);
-            boolean foundBarrier = inventory.getItem(i).is(ModItems.SLOT_BARRIER.get());
-            boolean foundIllegalItemType = ItemType.isPickaxe(inventory.getItem(i));
-            if ((!exceptedBarrier && foundBarrier) || (exceptedBarrier && !foundBarrier) || foundIllegalItemType) {
+            if (!ItemType.isEligibleItemForRoledPlayer(inventory.getItem(i), i, player)) {
                 return true;
             }
         }

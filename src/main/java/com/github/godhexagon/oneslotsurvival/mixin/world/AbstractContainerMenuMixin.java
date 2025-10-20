@@ -1,7 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.mixin.world;
 
 import com.github.godhexagon.oneslotsurvival.mixin.accessor.SlotAccessor;
-import com.github.godhexagon.oneslotsurvival.world.util.InventoryDefinition;
 import com.github.godhexagon.oneslotsurvival.world.util.ItemType;
 import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
 import net.minecraft.CrashReport;
@@ -382,18 +381,8 @@ public abstract class AbstractContainerMenuMixin {
      */
     @Unique
     private boolean one_slot_survival$isEligibleItemTypeForRoledPlayer(ItemStack item, int slotId) {
-        int inventoryIndex = one_slot_survival$getInventoryIndex(slotId);
-
-        if (InventoryDefinition.isDisableSlot(inventoryIndex)) {
-            return false;
-        }
-
-        if (InventoryDefinition.isRoleSlot(inventoryIndex) && this.slots.get(slotId).container instanceof Inventory inventory) {
-            // 将来的に使用します。
-            Player player = inventory.player;
-            int roleSlotIndex = inventoryIndex - 1;
-
-            return ItemType.isPickaxe(item) || item.isEmpty();
+        if (one_slot_survival$isInventorySlot(slotId) && this.slots.get(slotId).container instanceof Inventory inventory) {
+            return ItemType.isEligibleItemForRoledPlayer(item, one_slot_survival$getInventoryIndex(slotId), inventory.player);
         }
 
         return true;
