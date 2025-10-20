@@ -107,8 +107,29 @@ Minecraftについて、エージェントは文字情報から間接的に知�
 
 ## 実装手法
 
-**シチュエーション別ガイド：**
-- [バニラコード調査](./docs/vanilla-code-research.md) - バニラMinecraftの内部実装を理解したいとき
-- [Forge API調査](./docs/forge-api-research.md) - Forge APIの使い方を調査したいとき、公式ドキュメントが古い・不完全なとき
-- [Mixin実装](./docs/mixin-implementation.md) - Forgeイベントでは対応できない深いレベルでの動作変更が必要なとき
-- [Web検索・トラブルシューティング](./docs/research-troubleshooting.md) - API調査で詰まったとき、エラーが解決できないとき
+### 開発ドキュメント体系
+
+**【重要】新しいタスクを開始するとき:**
+- **必ず [Quick Start Guide](./docs/quick-start.md) を読む**
+- タスクの性質を判断（バニラ調査/Forge API/Mixin/トラブル解決）
+- 該当する詳細ガイドを参照
+
+**困ったとき:**
+- **まず [Quick Start Guide](./docs/quick-start.md) に戻る**
+- フローチャートで再確認
+- 該当する詳細ガイドを読む
+- 解決できない場合はユーザーに質問
+
+### ドキュメント一覧
+
+**クイックスタート:**
+- [Quick Start Guide](./docs/quick-start.md) - タスク開始時・困ったときに読む判断フローチャート
+
+**ワークフロー:**
+- [バニラコード調査](./docs/workflows/vanilla-research.md) - バニラMinecraftの内部実装を理解したいとき
+- [Forge API調査](./docs/workflows/forge-api-research.md) - Forge APIの使い方を調査したいとき
+
+**技術詳細:**
+- [JAR抽出ガイド](./docs/technical/source-extraction.md) - ソースコード抽出の完全ガイド
+- [Mixin実装ガイド](./docs/technical/mixin-guide.md) - Forgeイベントでは対応できない深いレベルでの動作変更
+- [トラブルシューティング](./docs/technical/troubleshooting.md) - エラー解決・問題解決戦略
