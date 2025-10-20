@@ -14,7 +14,7 @@ public class SlotBarrierFilling {
         Inventory inventory = player.getInventory();
 
         for (int i = 0; i < inventory.getContainerSize(); i++) {
-            if (!ItemType.isEligibleItemForRoledPlayer(inventory.getItem(i), i, player)) {
+            if (!RoleSlot.isEligibleItemForRoledPlayer(inventory.getItem(i), i, player)) {
                 return true;
             }
         }
@@ -36,7 +36,7 @@ public class SlotBarrierFilling {
             }
 
             // ロールスロットは基本的に何もしなくていいが、不適切アイテムだっときは空にすべき
-            if (InventoryDefinition.isRoleSlot(i) && !ItemType.isPickaxe(item)) {
+            if (InventoryDefinition.isRoleSlot(i) && !RoleSlot.isPickaxe(item)) {
                 player.drop(item, false);
                 inventory.setItem(i, ItemStack.EMPTY);
                 continue;
