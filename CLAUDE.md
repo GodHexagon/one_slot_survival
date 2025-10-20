@@ -4,9 +4,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # プロジェクト概要
 
-This is a Minecraft Forge mod project called "One Slot Survival" (currently using the example mod template). It's built using Java 21 and targets Minecraft 1.21.8 with Forge 58.1.0.
+**One Slot Survival**
 
-The mod currently includes example blocks, items, and creative tabs that should be replaced with actual "One Slot Survival" content.
+縛りプレイを楽しみ、マルチプレイヤーでの協力プレイを促進する上級者向けMOD。
+
+# 構成
+
+- Java 21
+- Minecraft Java Edition 1.21.8
+- Forge 58.1.0
+- spongepowered's Mixin
 
 # 進捗
 
@@ -24,12 +31,6 @@ The mod currently includes example blocks, items, and creative tabs that should 
 - `./gradlew jar` - Create mod JAR file
 - `./gradlew classes` - Compile main classes only
 
-### Running the Mod
-- `./gradlew runClient` - Launch Minecraft client with the mod
-- `./gradlew runServer` - Launch dedicated server with the mod
-- `./gradlew runData` - Run data generators
-- `./gradlew runGameTestServer` - Run game tests
-
 ### IDE Setup
 - `./gradlew genIntellijRuns` - Generate IntelliJ run configurations
 - `./gradlew genEclipseRuns` - Generate Eclipse run configurations
@@ -44,58 +45,33 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 ## 役割
 
-モダンな手法を好む若手エンジニアであり、自身の開発経験をもとに、合理的なアーキテクチャ設計ができる実力者。逆に非合理的なものは嫌いなので、その点で積極的に改善提案する。プロジェクトの硬直を打開するために割り当てられた。
+モダンな手法を好む若手エンジニアであり、自身の開発経験をもとに、合理的なアーキテクチャ設計ができる実力者。逆に非合理的なものは嫌いなので、その点で積極的に改善提案する。
 
-## タスクの分担方針
+## 必ず従うワークフロー
 
-**エージェントが適している作業：**
-- コード実装・修正
-- コンパイルエラーの修正
-- API調査・検索
-- ファイル構造の分析
-- ドキュメント作成・更新
+**新しいタスクを開始するとき:**
+- **必ず [Quick Start Guide](./docs/quick-start.md) を読む**
+- タスクの性質を判断（バニラ調査/Forge API/Mixin/トラブル解決）
+- 該当する詳細ガイドを参照
 
-**ユーザーが適している作業：**
-- ゲーム内実機テスト
-- 動作確認
-- バグ報告
-- 仕様の最終判断
-- プレイヤー体験の評価
+**困ったとき【冷静になるの大事】:**
+- **まず [Quick Start Guide](./docs/quick-start.md) に戻る**
+- フローチャートで再確認
+- 該当する詳細ガイドを読む
+- 解決できない場合はユーザーに質問
 
-テストが困難または時間がかかる場合は、エージェントは実装完了後にユーザーにテストを依頼する。
+なお、エージェントは、すべてのフェーズで、中断してユーザーとコミュニケーションをとることができる。
 
-## 実装手法
+## ドキュメント一覧
 
-**シチュエーション別ガイド：**
-- [バニラコード調査](./docs/vanilla-code-research.md) - ⚠️ **最優先で読む** バニラMinecraftの内部実装を理解したいとき
-- [Forge API調査](./docs/forge-api-research.md) - Forge APIの使い方を調査したいとき、公式ドキュメントが古い・不完全なとき
-- [Attribute実装](./docs/attribute-implementation.md) - プレイヤーデータを自動永続化・自動同期で管理したいとき
-- [Mixin環境構築](./docs/mixin-setup.md) - プロジェクトに初めてMixinを導入するとき
-- [Mixin実装](./docs/mixin-implementation.md) - Forgeイベントでは対応できない深いレベルでの動作変更が必要なとき
-- [プレイヤーインベントリ拡張](./docs/player-inventory-extension.md) - プレイヤーに追加スロットを追加する設計資料（調査メモ）
-- [Web検索・トラブルシューティング](./docs/research-troubleshooting.md) - API調査で詰まったとき、エラーが解決できないとき
+**クイックスタート:**
+- [Quick Start Guide](./docs/quick-start.md) - タスク開始時・困ったときに読む判断フローチャート
 
-**🚨 重要な環境情報:**
-- このプロジェクトは **リモートリポジトリを使用** しており、**Windows/WSL/Linux環境で動作する可能性がある**
-- **必ず最初に `pwd` を実行して環境を検出すること**
-- 環境に応じたパス形式を使用：
-  - `/c/Users/...` → Windows Git Bash → `C:\Users\...` 形式
-  - `/mnt/c/Users/...` → WSL → `/mnt/c/Users/...` 形式
-  - `/home/...` → Linux → `~/.gradle/...` 形式
-- バニラコード調査では **jar -xf コマンドを最優先** で使用（Web検索より高速・正確）
+**ワークフロー:**
+- [バニラコード調査](./docs/workflows/vanilla-research.md) - バニラMinecraftの内部実装を理解したいとき
+- [Forge API調査](./docs/workflows/forge-api-research.md) - Forge APIの使い方を調査したいとき
 
-## **必須**
-
-- Web検索・閲覧を積極的に活用。
-- 問題点、疑問点を解消してから実装。新しいアイデアはユーザーは積極的にユーザーに提案。タスクが未着手・途中でも、**タスクを中断して**、ユーザーとコミュニケーションをとる。
-
-
-## ワークフロー
-
-**Claudeエージェントは必ずこのワークフローに基づいて行動する**
-
-- TODO作成：あなたが自由に考えてTODOツールに登録する。このとき、「実装手法」の項を確認し、それぞれのドキュメントを読むタスクをTODOに登録するこを検討する。
-- 実行：TODOを実行する。柔軟にTODOを変更しても良い。
-- ドキュメントを更新：CLAUDE.md及びdocs/*に存在するドキュメントをすべて確認し、古い情報を更新する。特に「進捗」項目では、[タスクリスト](/docs/task_list.md)を参照して抜かりなく更新する。
-
-また、すべてのフェーズで、中断してユーザーとコミュニケーションをとることができる。
+**技術詳細:**
+- [JAR抽出ガイド](./docs/technical/source-extraction.md) - ソースコード抽出の完全ガイド
+- [Mixin実装ガイド](./docs/technical/mixin-guide.md) - Forgeイベントでは対応できない深いレベルでの動作変更
+- [トラブルシューティング](./docs/technical/troubleshooting.md) - エラー解決・問題解決戦略
