@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.server.command;
+package com.github.godhexagon.oneslotsurvival.world.command;
 
 import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
 import com.mojang.brigadier.CommandDispatcher;

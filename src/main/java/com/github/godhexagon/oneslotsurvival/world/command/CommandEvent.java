@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.server.command;
+package com.github.godhexagon.oneslotsurvival.world.command;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
 import net.minecraftforge.event.RegisterCommandsEvent;
