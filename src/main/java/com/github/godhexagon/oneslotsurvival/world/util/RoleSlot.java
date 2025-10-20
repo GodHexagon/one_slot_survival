@@ -5,7 +5,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-public class ItemType {
+public class RoleSlot {
     /**
      * ロールスロットルールにおいて、新しいアイテムの割り当てとして適切か判定します。
      *
@@ -23,7 +23,7 @@ public class ItemType {
             // 将来的に使用します。
             int roleSlotIndex = inventoryIndex - 1;
 
-            return ItemType.isPickaxe(item) || item.isEmpty();
+            return RoleSlot.isPickaxe(item) || item.isEmpty();
         }
 
         return !item.is(ModItems.SLOT_BARRIER.get());
