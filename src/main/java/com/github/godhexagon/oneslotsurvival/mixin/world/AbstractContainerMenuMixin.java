@@ -19,8 +19,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -38,8 +36,6 @@ import java.util.Set;
  */
 @Mixin(AbstractContainerMenu.class)
 public abstract class AbstractContainerMenuMixin {
-    private static final Logger LOGGER = LoggerFactory.getLogger("OneSlotSurvival/AbstractContainerMenuMixin");
-
     @Shadow
     @Final
     public NonNullList<Slot> slots;
@@ -143,9 +139,6 @@ public abstract class AbstractContainerMenuMixin {
 
     @Unique
     private void one_slot_survival$roledPlayerDoClick(int slotId, int button, ClickType clickType, Player player) {
-        LOGGER.debug("Clicked slot is inventory slot: {}", one_slot_survival$isInventorySlot(slotId));
-        LOGGER.debug("Clicked slot is eligible for empty: {}", one_slot_survival$isEligibleItemTypeForRoledPlayer(ItemStack.EMPTY, slotId));
-
         Inventory inventory = player.getInventory();
         if (clickType == ClickType.QUICK_CRAFT) {
             int i = this.quickcraftStatus;
