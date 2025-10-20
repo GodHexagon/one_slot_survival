@@ -41,19 +41,39 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `./gradlew test` - Run unit tests
 - `./gradlew check` - Run all verification tasks
 
-### Preparing to use absolute paths
+### Extract source code directly from JAR
 
-- このプロジェクトは リモートリポジトリを使用しており、Windows/WSL/Linux環境で動作する可能性がある
-- **絶対パスを取り扱う場合は、必ず `pwd` を実行して環境を検出すること**
-
-### Reading vanilla code 
-
+**環境検出（必須）:**
 ```bash
-# ファイル一覧表示（関連クラスを探す）
+# 現在のパスを確認
+pwd
+# /c/Users/...        → Windows Git Bash
+# /mnt/c/Users/...    → WSL
+# /home/...           → Linux
+```
+
+**抽出実行:**
+
+Windows Git Bash (`pwd` → `/c/Users/...`):
+```bash
+jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.21.8-58.1.0_mapped_official_1.21.8\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/client/gui/screens/inventory/AbstractRecipeBookScreen.java
+```
+
+WSL/Linux (`pwd` → `/mnt/c/...` or `/home/...`):
+```bash
+# WSLの場合
+jar -xf "/mnt/c/Users/godhe/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.21.8-58.1.0_mapped_official_1.21.8/forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/client/gui/screens/inventory/AbstractRecipeBookScreen.java
+
+# Linuxネイティブの場合
+jar -xf ~/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.21.8-58.1.0_mapped_official_1.21.8/forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar net/minecraft/client/gui/screens/inventory/AbstractRecipeBookScreen.java
+```
+
+**JAR内容の探索:**
+```bash
+# ファイル一覧表示
 jar -tf forge-sources.jar | grep SavedData
 
-# 特定パッケージ配下をすべて抽出
-# .gitignoreにnet/があるのでここに展開するとユーザーが喜ぶ
+# パッケージ配下を全抽出
 jar -xf forge-sources.jar net/minecraft/world/level/saveddata/
 ```
 
