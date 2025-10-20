@@ -1,6 +1,5 @@
 package com.github.godhexagon.oneslotsurvival.mixin.world;
 
-import com.github.godhexagon.oneslotsurvival.mixin.accessor.SlotAccessor;
 import com.github.godhexagon.oneslotsurvival.world.util.ItemType;
 import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
 import net.minecraft.CrashReport;

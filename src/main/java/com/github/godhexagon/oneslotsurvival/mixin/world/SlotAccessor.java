@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.mixin.accessor;
+package com.github.godhexagon.oneslotsurvival.mixin.world;
 
 import net.minecraft.world.inventory.Slot;
 import org.spongepowered.asm.mixin.Mixin;
