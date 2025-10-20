@@ -41,26 +41,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `./gradlew test` - Run unit tests
 - `./gradlew check` - Run all verification tasks
 
-### Extract source code directly from JAR
-
-**このプロジェクトはWindows環境で動作します。**
-
-**抽出実行:**
-```bash
-jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.21.8-58.1.0_mapped_official_1.21.8\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/client/gui/screens/inventory/AbstractRecipeBookScreen.java
-```
-
-**JAR内容の探索:**
-```bash
-# ファイル一覧表示
-jar -tf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.21.8-58.1.0_mapped_official_1.21.8\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" | grep SavedData
-
-# パッケージ配下を全抽出
-jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.21.8-58.1.0_mapped_official_1.21.8\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/world/level/saveddata/
-```
-
-**詳細:** [JAR抽出ガイド](./docs/technical/source-extraction.md)
-
 # Claudeエージェントの方針
 
 ## 役割
@@ -89,22 +69,20 @@ Minecraftについて、エージェントは文字情報から間接的に知�
 
 なお、エージェントは、すべてのフェーズで、中断してユーザーとコミュニケーションをとることができる。
 
-## 実装手法
+## 必ず従うワークフロー
 
-### 開発ドキュメント体系
-
-**【重要】新しいタスクを開始するとき:**
+**新しいタスクを開始するとき:**
 - **必ず [Quick Start Guide](./docs/quick-start.md) を読む**
 - タスクの性質を判断（バニラ調査/Forge API/Mixin/トラブル解決）
 - 該当する詳細ガイドを参照
 
-**困ったとき:**
+**困ったとき【冷静になるの大事】:**
 - **まず [Quick Start Guide](./docs/quick-start.md) に戻る**
 - フローチャートで再確認
 - 該当する詳細ガイドを読む
 - 解決できない場合はユーザーに質問
 
-### ドキュメント一覧
+## ドキュメント一覧
 
 **クイックスタート:**
 - [Quick Start Guide](./docs/quick-start.md) - タスク開始時・困ったときに読む判断フローチャート
