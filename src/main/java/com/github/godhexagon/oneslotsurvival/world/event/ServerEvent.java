@@ -3,6 +3,7 @@ package com.github.godhexagon.oneslotsurvival.world.event;
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
 import com.github.godhexagon.oneslotsurvival.world.util.RoleSlot;
 import com.github.godhexagon.oneslotsurvival.world.util.SlotBarrierFilling;
+import com.github.godhexagon.oneslotsurvival.world.util.InventoryDefinition;
 import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -56,11 +57,16 @@ public class ServerEvent {
             return false;
         }
 
+        // ロールスロットに対する入れ替えだけ制御
+        if (!InventoryDefinition.isRoleSlot(player.getInventory().getSelectedSlot())) {
+            return false;
+        }
+
         // オフハンド → メインハンドへ移動される予定のアイテム
         ItemStack offhandItem = event.getItemSwappedToMainHand();
 
-        // つるはしの場合、ロールスロット専用なので直接移動を禁止
-        if (!offhandItem.isEmpty() && RoleSlot.isPickaxe(offhandItem)) {
+        // つるはし以外のアイテムは移動をキャンセル
+        if (!offhandItem.isEmpty() && !RoleSlot.isPickaxe(offhandItem)) {
             return true; // キャンセル
         }
 
