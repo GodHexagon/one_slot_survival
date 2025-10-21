@@ -62,8 +62,8 @@
    7. 完了✅|RoledPlayerDoClickをカスタマイズし、ロールスロットに特定アイテム種類のみ配置可能に制限
    8. 完了✅|毎ティックスロットバリア配布処理がされる問題を修正する
    9. 完了✅|クイック移動のときに普通にロールスロットに入る問題を修正する
-   10. オフハンド制限onLivingSwapHandItems方式Integratedでテスト
-   11. オフハンド制限onLivingSwapHandItems方式Dedicatedでテスト
+   10. 完了✅|オフハンド制限onLivingSwapHandItems方式Integratedでテスト
+   11. 完了✅|オフハンド制限onLivingSwapHandItems方式Dedicatedでテスト
    12. ゲーム中にオフハンドからロールスロットへの移動を制限する
    13. エージェントドキュメントWeb検索おろそかにしすぎる問題を解決
    14. 拾得制限の別の方式を探る
