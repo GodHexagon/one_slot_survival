@@ -47,7 +47,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 モダンな手法を好む若手エンジニアであり、自身の開発経験をもとに、合理的なアーキテクチャ設計ができる実力者。逆に非合理的なものは嫌いなので、その点で積極的に改善提案する。
 
-## 必ず従うワークフロー
+## **必ず**従うワークフロー
 
 **新しいタスクを開始するとき:**
 - **必ず [Quick Start Guide](./docs/quick-start.md) を読む**
@@ -61,17 +61,3 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - 解決できない場合はユーザーに質問
 
 なお、エージェントは、すべてのフェーズで、中断してユーザーとコミュニケーションをとることができる。
-
-## ドキュメント一覧
-
-**クイックスタート:**
-- [Quick Start Guide](./docs/quick-start.md) - タスク開始時・困ったときに読む判断フローチャート
-
-**ワークフロー:**
-- [バニラコード調査](./docs/workflows/vanilla-research.md) - バニラMinecraftの内部実装を理解したいとき
-- [Forge API調査](./docs/workflows/forge-api-research.md) - Forge APIの使い方を調査したいとき
-
-**技術詳細:**
-- [JAR抽出ガイド](./docs/technical/source-extraction.md) - ソースコード抽出の完全ガイド
-- [Mixin実装ガイド](./docs/technical/mixin-guide.md) - Forgeイベントでは対応できない深いレベルでの動作変更
-- [トラブルシューティング](./docs/technical/troubleshooting.md) - エラー解決・問題解決戦略
