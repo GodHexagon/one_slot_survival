@@ -17,9 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # 進捗
 
-直前の成果！: 拾得制限の別の方式を探る of プレイヤーはロールスロットを利用できるようにする
+直前の成果！: プレイヤーはロールスロットを利用できるようにする
 
-実行中: スロットバリアを消してもよさそうか考える of プレイヤーはロールスロットを利用できるようにする
+実行中: RestrictedInventoryScreenをリファクタリング＆チェストとかも共通処理化で見た目を制御
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
