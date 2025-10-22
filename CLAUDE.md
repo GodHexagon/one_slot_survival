@@ -17,9 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # 進捗
 
-直前の成果！: プレイヤーはロールスロットを利用できるようにする
+直前の成果！: インベントリとホットバーの見た目を良くする。
 
-実行中: インベントリとホットバーの見た目を良くする。
+実行中: ロールスロットを強化する
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
