@@ -96,31 +96,6 @@ jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\mine
 
 ---
 
-## Mixin Implementation
-
-**シチュエーション:**
-- Forgeイベントが存在しない処理を変更したい
-- GUI操作の根本的な制御が必要
-- パフォーマンスが重要な箇所
-
-**基本パターン:**
-```java
-@Mixin(TargetClass.class)
-public class TargetClassMixin {
-    @Inject(method = "targetMethod", at = @At("HEAD"), cancellable = true)
-    private void onTargetMethod(CallbackInfo ci) {
-        if (shouldIntercept()) {
-            // カスタム処理
-            ci.cancel();  // バニラ処理をキャンセル
-        }
-    }
-}
-```
-
-**詳細ガイド:** [technical/mixin-guide.md](./docs/technical/mixin-guide.md)
-
----
-
 ## Troubleshooting
 
 **よくある問題:**
@@ -193,20 +168,11 @@ jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\mine
 
 **重要:** Minecraftについて、エージェントは文字情報から間接的に知っているだけなので、プレイ中のシチュエーションについて詳細に明文化を試みて、ユーザーにレビューを受ける必要がある。
 
-## エージェント向けガイドライン
-
-### 困ったときの行動
+## 困ったときの行動
 
 1. **まずこのドキュメントに戻る** - フローチャートで再確認
 2. **該当する詳細ガイドを読む** - 具体的な手順を確認
 3. **ユーザーに質問する** - 情報が不足している場合
-
-### やってはいけないこと
-
-- ❌ エラー解決やAPI調査でWeb検索を優先する（JAR抽出が最優先）
-- ❌ Task tool で general-purpose agent を起動する（ほとんどの場合不要）
-- ❌ 環境検出をせずに決め打ちでパスを指定する
-- ❌ 長時間試行錯誤する（適切なガイドを読めば解決する）
 
 ## **必ず**従うワークフロー
 
@@ -221,9 +187,6 @@ jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\mine
     NO  ↓
 Forge APIの使い方を調査？
     YES → [Forge API Research Workflow](#forge-api-research-workflow)
-    NO  ↓
-Forgeイベントでは対応できない？
-    YES → [Mixin Implementation](#mixin-implementation)
     NO  ↓
 エラーや問題が発生？
     YES → [Troubleshooting](#troubleshooting)
