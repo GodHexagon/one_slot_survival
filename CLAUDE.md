@@ -174,7 +174,7 @@ jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\mine
 2. **該当する詳細ガイドを読む** - 具体的な手順を確認
 3. **ユーザーに質問する** - 情報が不足している場合
 
-## **必ず**従うワークフロー
+## **Claudeエージェントは必ずこのワークフローに基づいて行動する**
 
 ```
 タスク開始
