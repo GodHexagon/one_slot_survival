@@ -1,6 +1,5 @@
 package com.github.godhexagon.oneslotsurvival.world.util;
 
-import com.github.godhexagon.oneslotsurvival.world.item.ModItems;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -16,7 +15,7 @@ public class RoleSlot {
      */
     public static boolean isEligibleItemForRoledPlayer(ItemStack item, int inventoryIndex, Player player) {
         if (InventoryDefinition.isDisableSlot(inventoryIndex)) {
-            return item.is(ModItems.SLOT_BARRIER.get());
+            return item.isEmpty();
         }
 
         if (InventoryDefinition.isRoleSlot(inventoryIndex)) {
@@ -26,7 +25,7 @@ public class RoleSlot {
             return RoleSlot.isPickaxe(item) || item.isEmpty();
         }
 
-        return !item.is(ModItems.SLOT_BARRIER.get());
+        return true;
     }
     /**
      * つるはしかどうかを判定

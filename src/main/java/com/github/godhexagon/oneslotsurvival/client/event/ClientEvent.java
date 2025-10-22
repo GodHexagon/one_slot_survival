@@ -2,7 +2,6 @@ package com.github.godhexagon.oneslotsurvival.client.event;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
 import com.github.godhexagon.oneslotsurvival.client.gui.RestrictedInventoryScreen;
-import com.github.godhexagon.oneslotsurvival.world.item.ModItems;
 import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -10,10 +9,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Forge API用クライアント側イベントハンドラ。
@@ -89,20 +86,6 @@ public class ClientEvent {
                 // バニラの InventoryScreen を RestrictedInventoryScreen に置き換え
                 event.setNewScreen(new RestrictedInventoryScreen(minecraft.player));
             }
-        }
-    }
-
-    /**
-     * バリアアイテムのツールチップを無効化する。
-     *
-     * @param event *Forge API
-     */
-    @SubscribeEvent
-    public static void onItemTooltip(ItemTooltipEvent event) {
-        @Nullable Player player = event.getEntity();
-
-        if (player != null && PlayerModValidity.isEffective(player) && event.getItemStack().is(ModItems.SLOT_BARRIER.get())) {
-            event.getToolTip().clear();
         }
     }
 }

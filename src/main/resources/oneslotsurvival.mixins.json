@@ -9,8 +9,7 @@
     "world.InventoryMixin"
   ],
   "client": [
-    "client.GuiMixin",
-    "client.AbstractContainerScreenMixin"
+    "client.GuiMixin"
   ],
   "injectors": {
     "defaultRequire": 1

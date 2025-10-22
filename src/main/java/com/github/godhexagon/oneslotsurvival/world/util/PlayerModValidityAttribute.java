@@ -61,11 +61,5 @@ public class PlayerModValidityAttribute {
 
         // 基本値を設定: 有効の場合は 1.0、無効の場合は 0.0
         attribute.setBaseValue(enabled ? 1.0 : 0.0);
-
-        if (enabled) {
-            SlotBarrierFilling.fillUp(player);
-        } else {
-            SlotBarrierFilling.clean(player);
-        }
     }
 }

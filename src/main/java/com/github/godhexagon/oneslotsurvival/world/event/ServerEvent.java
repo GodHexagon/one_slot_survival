@@ -33,8 +33,6 @@ public class ServerEvent {
         if (PlayerModValidity.isEffective(serverPlayer) && SlotBarrierFilling.shouldBeFilledUp(serverPlayer)) {
             // スロットバリアで埋める
             SlotBarrierFilling.fillUp(serverPlayer);
-        } else if (!PlayerModValidity.isEffective(serverPlayer) && SlotBarrierFilling.shouldBeClean(serverPlayer)) {
-            SlotBarrierFilling.clean(serverPlayer);
         }
     }
 

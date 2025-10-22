@@ -50,13 +50,6 @@ public class PlayerModValidity {
     public static void setEnabled(ServerPlayer player, boolean enabled) {
         // 設定を永続化
         PlayerModValidityAttribute.updateEnabled(player, enabled);
-
-        // 設定変更時の副作用
-        if (enabled) {
-            SlotBarrierFilling.fillUp(player);
-        } else {
-            SlotBarrierFilling.clean(player);
-        }
     }
 
     /**
