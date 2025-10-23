@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.world.util;
+package com.github.godhexagon.oneslotsurvival.world.util.inventory;
 
 import java.util.List;
 import com.github.godhexagon.oneslotsurvival.world.item.ModItems;

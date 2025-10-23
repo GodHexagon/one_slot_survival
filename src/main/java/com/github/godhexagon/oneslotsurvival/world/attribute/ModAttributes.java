@@ -27,4 +27,18 @@ public class ModAttributes {
             1.0   // 最大値
         ).setSyncable(true)  // 自動的にクライアントと同期
     );
+
+    /**
+     * プレイヤーのメインロールIDを表す Attribute
+     * 値: ロールID（整数値）、-1.0 = 未割り当て
+     */
+    public static final RegistryObject<Attribute> MAIN_ROLE_ID = ATTRIBUTES.register(
+        "main_role_id",
+        () -> new RangedAttribute(
+            "attribute.oneslotsurvival.main_role_id",
+            0,  // デフォルト: 未割り当て
+            -1.0,  // 最小値
+            Double.MAX_VALUE  // 最大値（ロールIDの上限）
+        ).setSyncable(true)  // 自動的にクライアントと同期
+    );
 }

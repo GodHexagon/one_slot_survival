@@ -1,9 +1,10 @@
 package com.github.godhexagon.oneslotsurvival.world.event;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
-import com.github.godhexagon.oneslotsurvival.world.util.RoleSlot;
-import com.github.godhexagon.oneslotsurvival.world.util.SlotBarrierFilling;
-import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
+import com.github.godhexagon.oneslotsurvival.world.util.inventory.RoleSlot;
+import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotBarrierFilling;
+import com.github.godhexagon.oneslotsurvival.world.util.player.PlayerModValidity;
+
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.TickEvent;

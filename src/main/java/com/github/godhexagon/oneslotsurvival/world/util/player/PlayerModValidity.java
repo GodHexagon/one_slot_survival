@@ -1,4 +1,6 @@
-package com.github.godhexagon.oneslotsurvival.world.util;
+package com.github.godhexagon.oneslotsurvival.world.util.player;
+
+import com.github.godhexagon.oneslotsurvival.world.util.attribute.ModEnabled;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -19,7 +21,7 @@ public class PlayerModValidity {
      * @throws IllegalStateException MOD_ENABLED Attribute が登録されていない場合
      */
     public static boolean isEnabled(Player player) {
-        return PlayerModValidityAttribute.getEnabled(player);
+        return ModEnabled.getEnabled(player);
     }
 
     /**
@@ -49,14 +51,7 @@ public class PlayerModValidity {
      */
     public static void setEnabled(ServerPlayer player, boolean enabled) {
         // 設定を永続化
-        PlayerModValidityAttribute.updateEnabled(player, enabled);
-
-        // 設定変更時の副作用
-        if (enabled) {
-            SlotBarrierFilling.fillUp(player);
-        } else {
-            SlotBarrierFilling.clean(player);
-        }
+        ModEnabled.updateEnabled(player, enabled);
     }
 
     /**

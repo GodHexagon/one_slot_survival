@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.world.util;
+package com.github.godhexagon.oneslotsurvival.world.util.inventory;
 
 import com.github.godhexagon.oneslotsurvival.world.item.ModItems;
 import net.minecraft.server.level.ServerPlayer;
