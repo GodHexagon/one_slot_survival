@@ -12,7 +12,11 @@
       "Read(//c/Users/godhe/.gradle/caches/**)",
       "Bash(javap:*)",
       "Bash(.gradlew.bat compileJava)",
-      "Bash(gradlew.bat compileJava:*)"
+      "Bash(gradlew.bat compileJava:*)",
+      "Bash(./gradlew.bat compileJava:*)",
+      "Bash(dir /B \"c:\\Users\\godhe\\git\\one_slot_survival\\src\\main\\java\\com\\github\\godhexagon\\oneslotsurvival\\world\")",
+      "Bash(dir /s /b \"c:\\Users\\godhe\\git\\one_slot_survival\\src\\main\\java\\com\\github\\godhexagon\\oneslotsurvival\\world\\util\")",
+      "Bash(dir /s /b \"c:\\Users\\godhe\\git\\one_slot_survival\\src\\main\\resources\")"
     ],
     "deny": [],
     "ask": []
