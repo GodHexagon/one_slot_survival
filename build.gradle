@@ -74,6 +74,7 @@ minecraft {
             property 'eventbus.api.strictRuntimeChecks', 'true'
 
             arg "-mixin.config=${mod_id}.mixins.json"
+            arg "-mixin.config=${mod_id}-server.mixins.json"
         }
 
         client {
@@ -115,6 +116,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 mixin {
     add sourceSets.main, "oneslotsurvival.refmap.json"
     config "oneslotsurvival.mixins.json"
+    config "oneslotsurvival-server.mixins.json"
 }
 
 repositories {
@@ -209,7 +211,7 @@ tasks.named('jar', Jar) {
                 'Implementation-Version'  : project.jar.archiveVersion,
                 'Implementation-Vendor'   : mod_authors
         ])
-        attributes['MixinConfigs'] = "${mod_id}.mixins.json"
+        attributes['MixinConfigs'] = "${mod_id}.mixins.json,${mod_id}-server.mixins.json"
     }
 }
 

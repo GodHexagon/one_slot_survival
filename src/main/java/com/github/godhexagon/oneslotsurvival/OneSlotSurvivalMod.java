@@ -1,5 +1,8 @@
 package com.github.godhexagon.oneslotsurvival;
 
+import com.github.godhexagon.oneslotsurvival.world.attribute.ModAttributes;
+import com.github.godhexagon.oneslotsurvival.world.attribute.PlayerAttributeHandler;
+import com.github.godhexagon.oneslotsurvival.world.item.ModItems;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -19,6 +22,13 @@ public final class OneSlotSurvivalMod {
 
         // Register deferred registries
         ModItems.ITEMS.register(modBusGroup);
+
+        // Register attributes
+        ModAttributes.ATTRIBUTES.register(modBusGroup);
+
+        // Register attribute handler (EntityAttributeModificationEvent is on mod bus)
+        net.minecraftforge.event.entity.EntityAttributeModificationEvent.getBus(modBusGroup)
+            .addListener(PlayerAttributeHandler::onEntityAttributeModification);
 
         // Register the commonSetup method for modloading
         FMLCommonSetupEvent.getBus(modBusGroup).addListener(this::commonSetup);

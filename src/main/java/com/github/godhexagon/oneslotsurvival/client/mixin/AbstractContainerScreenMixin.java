@@ -1,11 +1,9 @@
-package com.github.godhexagon.oneslotsurvival.mixin;
+package com.github.godhexagon.oneslotsurvival.client.mixin;
 
-import com.github.godhexagon.oneslotsurvival.BarrierItem;
-import com.github.godhexagon.oneslotsurvival.OneSlotClientManager;
+import com.github.godhexagon.oneslotsurvival.world.item.ModItems;
+import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import org.spongepowered.asm.mixin.Mixin;
@@ -34,29 +32,24 @@ public class AbstractContainerScreenMixin {
      */
     @Inject(method = "slotClicked", at = @At("HEAD"), cancellable = true)
     private void onSlotClicked(Slot slot, int slotId, int mouseButton, ClickType type, CallbackInfo ci) {
-        // Only intercept if the player is restricted
-        if (!OneSlotClientManager.isLocalPlayerRestricted()) {
-            return;
-        }
-
         // Allow null slots (clicking outside inventory)
         if (slot == null) {
             return;
         }
 
-        // Only restrict player inventory slots, not container slots
+        // クライアントのプレイヤーインスタンスを取得
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null) {
             return;
         }
 
-        // Check if this slot belongs to the player's inventory
-        if (!(slot.container instanceof Inventory)) {
-            return; // Allow clicks on container slots (chest, furnace, etc.)
+        // 対象プレイヤー以外は除外
+        if (!PlayerModValidity.isEffective(mc.player)) {
+            return;
         }
 
-        // Check if this is a prohibited player inventory slot (1-35)
-        if (BarrierItem.shouldHaveBarrier(slot.getSlotIndex())) {
+        // バリアアイテムは触れない
+        if (slot.getItem().is(ModItems.SLOT_BARRIER.get())) {
             // Cancel the slot click by cancelling the callback
             ci.cancel();
         }

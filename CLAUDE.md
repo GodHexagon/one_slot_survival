@@ -10,11 +10,11 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 # 進捗
 
-直前の成果！: Gradle Daemon有効化とJVMメモリ最適化によりrunClient起動時間を短縮した。
+直前の成果！: プレイヤーのホットバーは１スロットだけ（これをメインハンドと定義する）になり、それ以外のインベントリとホットバー計３５スロットを使用禁止する。
 
-実行中: なし
+実行中: インベントリからアクセス可能なロールスロット of 実現可能性を探る
 
-すべての進捗: [タスクリスト](/docs/task_list.md)
+すべての進捗: [タスクリスト](./docs/task_list.md)
 
 # 開発コマンド
 
@@ -67,10 +67,22 @@ The mod currently includes example blocks, items, and creative tabs that should 
 ## 実装手法
 
 **シチュエーション別ガイド：**
-- [バニラコード調査](/docs/vanilla-code-research.md) - バニラMinecraftの内部実装を理解したいとき
-- [Mixin環境構築](/docs/mixin-setup.md) - プロジェクトに初めてMixinを導入するとき
-- [Mixin実装](/docs/mixin-implementation.md) - Forgeイベントでは対応できない深いレベルでの動作変更が必要なとき
-- [Web検索・トラブルシューティング](/docs/research-troubleshooting.md) - API調査で詰まったとき、エラーが解決できないとき
+- [バニラコード調査](./docs/vanilla-code-research.md) - ⚠️ **最優先で読む** バニラMinecraftの内部実装を理解したいとき
+- [Forge API調査](./docs/forge-api-research.md) - Forge APIの使い方を調査したいとき、公式ドキュメントが古い・不完全なとき
+- [Attribute実装](./docs/attribute-implementation.md) - プレイヤーデータを自動永続化・自動同期で管理したいとき
+- [Mixin環境構築](./docs/mixin-setup.md) - プロジェクトに初めてMixinを導入するとき
+- [Mixin実装](./docs/mixin-implementation.md) - Forgeイベントでは対応できない深いレベルでの動作変更が必要なとき
+- [プレイヤーインベントリ拡張](./docs/player-inventory-extension.md) - プレイヤーに追加スロットを追加する設計資料（調査メモ）
+- [Web検索・トラブルシューティング](./docs/research-troubleshooting.md) - API調査で詰まったとき、エラーが解決できないとき
+
+**🚨 重要な環境情報:**
+- このプロジェクトは **リモートリポジトリを使用** しており、**Windows/WSL/Linux環境で動作する可能性がある**
+- **必ず最初に `pwd` を実行して環境を検出すること**
+- 環境に応じたパス形式を使用：
+  - `/c/Users/...` → Windows Git Bash → `C:\Users\...` 形式
+  - `/mnt/c/Users/...` → WSL → `/mnt/c/Users/...` 形式
+  - `/home/...` → Linux → `~/.gradle/...` 形式
+- バニラコード調査では **jar -xf コマンドを最優先** で使用（Web検索より高速・正確）
 
 ## **必須**
 

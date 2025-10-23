@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival;
+package com.github.godhexagon.oneslotsurvival.world.item;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -7,19 +7,20 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.item.ItemEntity;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Custom barrier item that blocks inventory slots.
  * This item is invisible to players and cannot be used normally.
  */
-public class SlotBarrierItem extends Item {
+public class SlotBarrier extends Item {
 
-    public SlotBarrierItem(Properties properties) {
+    public SlotBarrier(Properties properties) {
         super(properties);
     }
 
     @Override
-    public InteractionResult use(Level level, Player player, InteractionHand hand) {
+    public @NotNull InteractionResult use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
         // Prevent players from using this item
         return InteractionResult.FAIL;
     }
