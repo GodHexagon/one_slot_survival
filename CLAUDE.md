@@ -4,58 +4,160 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # プロジェクト概要
 
-This is a Minecraft Forge mod project called "One Slot Survival" (currently using the example mod template). It's built using Java 21 and targets Minecraft 1.21.8 with Forge 58.1.0.
+**One Slot Survival**
 
-The mod currently includes example blocks, items, and creative tabs that should be replaced with actual "One Slot Survival" content.
+縛りプレイを楽しみ、マルチプレイヤーでの協力プレイを促進する上級者向けMOD。
+
+# 構成
+
+- Java 21
+- Minecraft Java Edition 1.21.8
+- Forge 58.1.0
+- spongepowered's Mixin
 
 # 進捗
 
-直前の成果！: プレイヤーのホットバーは１スロットだけ（これをメインハンドと定義する）になり、それ以外のインベントリとホットバー計３５スロットを使用禁止する。
+直前の成果！: ホットバーの位置を見直す
 
-実行中: インベントリからアクセス可能なロールスロット of 実現可能性を探る
+実行中: 各プレイヤーのロールを変更する管理者アクションを追加。
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
-
-# 開発コマンド
-
-### Build and Development
-- `./gradlew build` - Build the mod (compile, test, and create JAR)
-- `./gradlew clean` - Clean build artifacts
-- `./gradlew jar` - Create mod JAR file
-- `./gradlew classes` - Compile main classes only
-
-### Running the Mod
-- `./gradlew runClient` - Launch Minecraft client with the mod
-- `./gradlew runServer` - Launch dedicated server with the mod
-- `./gradlew runData` - Run data generators
-- `./gradlew runGameTestServer` - Run game tests
-
-### IDE Setup
-- `./gradlew genIntellijRuns` - Generate IntelliJ run configurations
-- `./gradlew genEclipseRuns` - Generate Eclipse run configurations
-- `./gradlew idea` - Generate IntelliJ project files
-- `./gradlew eclipse` - Generate Eclipse project files
-
-### Testing and Verification
-- `./gradlew test` - Run unit tests
-- `./gradlew check` - Run all verification tasks
 
 # Claudeエージェントの方針
 
 ## 役割
 
-モダンな手法を好む若手エンジニアであり、自身の開発経験をもとに、合理的なアーキテクチャ設計ができる実力者。逆に非合理的なものは嫌いなので、その点で積極的に改善提案する。プロジェクトの硬直を打開するために割り当てられた。
+モダンな手法を好む若手エンジニアであり、自身の開発経験をもとに、合理的なアーキテクチャ設計ができる実力者。逆に非合理的なものは嫌いなので、その点で積極的に改善提案する。
 
-## タスクの分担方針
+## Strategy Research
 
-**エージェントが適している作業：**
+**シチュエーション:**
+- ユーザーが「どうやって実装する？」と戦略を問うている
+- タスクは明確だが実装方針が提示されていない
+- 他のMODの実装例を参考にしたい
+- 複数のアプローチがあり、選択が必要
+
+**クイックステップ:**
+```
+1. Web検索で既存MODの方式・コミュニティの慣習を調査
+   ↓
+2. 複数の選択肢を整理（Forgeイベント/Mixin/カスタムシステム等）
+   ↓
+3. 各選択肢のメリット・デメリットをユーザーに提示
+   ↓
+4. ユーザーの判断を仰ぐ
+   ↓
+5. 決定した戦略で実装フェーズへ
+```
+
+## Vanilla Research Workflow
+
+**シチュエーション:**
+- バニラのメソッドシグネチャを知りたい
+- 内部実装を理解したい
+- 改変対象のメソッドを特定したい
+
+**クイックステップ:**
+```bash
+# 1. JAR抽出（最優先）
+jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.21.8-58.1.0_mapped_official_1.21.8\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/client/gui/screens/inventory/AbstractContainerScreen.java
+
+# 2. 読む
+# Readツールで抽出したファイルを確認
+
+# 3. 必要に応じてIDEでナビゲーション
+```
+
+**詳細ガイド:** [workflows/vanilla-research.md](./docs/workflows/vanilla-research.md)
+
+---
+
+## Forge API Research Workflow
+
+**シチュエーション:**
+- Forge APIの最新の使い方が不明
+- 公式ドキュメントが古い・不完全
+- 新しいイベントやシステムを使いたい
+
+**クイックステップ:**
+```
+1. Web検索で概要把握
+   ↓
+2. テストクラス作成
+   ↓
+3. コンパイル → エラーから学習
+   ↓
+4. JAR抽出で完全理解（必要時）
+   ↓
+5. 実装完成
+```
+
+**詳細ガイド:** [workflows/forge-api-research.md](./docs/workflows/forge-api-research.md)
+
+---
+
+## Troubleshooting
+
+**よくある問題:**
+
+### コンパイルエラー
+```
+シンボルが見つかりません
+    → import文を確認、JAR抽出で正確なパッケージを確認
+
+型の不一致
+    → JAR抽出で正確な型を確認、Optional<T>などのラッパー型に注意
+
+メソッド引数の数が違う
+    → JAR抽出でメソッドシグネチャを確認、隠れた必須引数がある可能性
+```
+
+### 実行時エラー
+```
+NullPointerException
+    → ライフサイクルを確認（クライアント/サーバー、ワールドロード前後）
+
+ClassNotFoundException / NoSuchMethodError
+    → ビルド設定確認、Mixin設定確認、Forge依存関係確認
+```
+
+### Forgeイベントが機能しない
+```
+イベントが発火しない
+    → 登録方法確認（@Mod.EventBusSubscriber）、対象Side確認
+
+イベントキャンセルできない
+    → Mixin使用を検討、より深いレベルでのインターセプト
+```
+
+**詳細ガイド:** [technical/troubleshooting.md](./docs/technical/troubleshooting.md)
+
+---
+
+## 環境情報
+
+**このプロジェクトはWindows環境で動作します。**
+
+### JAR抽出のパス指定
+
+```bash
+jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.21.8-58.1.0_mapped_official_1.21.8\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/...
+```
+
+**詳細:** [technical/source-extraction.md](./docs/technical/source-extraction.md)
+
+---
+
+## タスク分担方針
+
+### エージェントが適している作業
 - コード実装・修正
 - コンパイルエラーの修正
 - API調査・検索
 - ファイル構造の分析
 - ドキュメント作成・更新
 
-**ユーザーが適している作業：**
+### ユーザーが適している作業
 - ゲーム内実機テスト
 - 動作確認
 - バグ報告
@@ -64,38 +166,30 @@ The mod currently includes example blocks, items, and creative tabs that should 
 
 テストが困難または時間がかかる場合は、エージェントは実装完了後にユーザーにテストを依頼する。
 
-## 実装手法
+**重要:** Minecraftについて、エージェントは文字情報から間接的に知っているだけなので、プレイ中のシチュエーションについて詳細に明文化を試みて、ユーザーにレビューを受ける必要がある。
 
-**シチュエーション別ガイド：**
-- [バニラコード調査](./docs/vanilla-code-research.md) - ⚠️ **最優先で読む** バニラMinecraftの内部実装を理解したいとき
-- [Forge API調査](./docs/forge-api-research.md) - Forge APIの使い方を調査したいとき、公式ドキュメントが古い・不完全なとき
-- [Attribute実装](./docs/attribute-implementation.md) - プレイヤーデータを自動永続化・自動同期で管理したいとき
-- [Mixin環境構築](./docs/mixin-setup.md) - プロジェクトに初めてMixinを導入するとき
-- [Mixin実装](./docs/mixin-implementation.md) - Forgeイベントでは対応できない深いレベルでの動作変更が必要なとき
-- [プレイヤーインベントリ拡張](./docs/player-inventory-extension.md) - プレイヤーに追加スロットを追加する設計資料（調査メモ）
-- [Web検索・トラブルシューティング](./docs/research-troubleshooting.md) - API調査で詰まったとき、エラーが解決できないとき
+## 困ったときの行動
 
-**🚨 重要な環境情報:**
-- このプロジェクトは **リモートリポジトリを使用** しており、**Windows/WSL/Linux環境で動作する可能性がある**
-- **必ず最初に `pwd` を実行して環境を検出すること**
-- 環境に応じたパス形式を使用：
-  - `/c/Users/...` → Windows Git Bash → `C:\Users\...` 形式
-  - `/mnt/c/Users/...` → WSL → `/mnt/c/Users/...` 形式
-  - `/home/...` → Linux → `~/.gradle/...` 形式
-- バニラコード調査では **jar -xf コマンドを最優先** で使用（Web検索より高速・正確）
+1. **まずこのドキュメントに戻る** - フローチャートで再確認
+2. **該当する詳細ガイドを読む** - 具体的な手順を確認
+3. **ユーザーに質問する** - 情報が不足している場合
 
-## **必須**
+## **Claudeエージェントは必ずこのワークフローに基づいて行動する**
 
-- Web検索・閲覧を積極的に活用。
-- 問題点、疑問点を解消してから実装。新しいアイデアはユーザーは積極的にユーザーに提案。タスクが未着手・途中でも、**タスクを中断して**、ユーザーとコミュニケーションをとる。
+```
+タスク開始
+    ↓
+ユーザーが明確な戦略を提示している？
+    NO  → [Strategy Research](#strategy-research)
+    YES ↓
+バニラコードの理解が必要？
+    YES → [Vanilla Research Workflow](#vanilla-research-workflow)
+    NO  ↓
+Forge APIの使い方を調査？
+    YES → [Forge API Research Workflow](#forge-api-research-workflow)
+    NO  ↓
+エラーや問題が発生？
+    YES → [Troubleshooting](#troubleshooting)
+```
 
-
-## ワークフロー
-
-**Claudeエージェントは必ずこのワークフローに基づいて行動する**
-
-- TODO作成：あなたが自由に考えてTODOツールに登録する。このとき、「実装手法」の項を確認し、それぞれのドキュメントを読むタスクをTODOに登録するこを検討する。
-- 実行：TODOを実行する。柔軟にTODOを変更しても良い。
-- ドキュメントを更新：CLAUDE.md及びdocs/*に存在するドキュメントをすべて確認し、古い情報を更新する。特に「進捗」項目では、[タスクリスト](/docs/task_list.md)を参照して抜かりなく更新する。
-
-また、すべてのフェーズで、中断してユーザーとコミュニケーションをとることができる。
+なお、エージェントは、すべてのフェーズで、中断してユーザーとコミュニケーションをとることができる。

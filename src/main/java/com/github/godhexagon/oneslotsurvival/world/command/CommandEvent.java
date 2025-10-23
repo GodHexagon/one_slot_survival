@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.server.command;
+package com.github.godhexagon.oneslotsurvival.world.command;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -6,8 +6,8 @@ import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 /**
- * Event handler for One Slot Survival mod.
- * Handles command registration and other game events.
+ * One Slot Survival mod のコマンドのイベントハンドラ
+ * コマンド登録を処理
  */
 @Mod.EventBusSubscriber(modid = OneSlotSurvivalMod.MODID)
 public class CommandEvent {

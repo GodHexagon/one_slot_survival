@@ -1,18 +1,20 @@
-package com.github.godhexagon.oneslotsurvival.server.service;
+package com.github.godhexagon.oneslotsurvival.world.util;
 
 import com.github.godhexagon.oneslotsurvival.world.item.ModItems;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
+/**
+ * スロットバリアをプレイヤーに配布する処理の集合。
+ */
 public class SlotBarrierFilling {
     public static boolean shouldBeFilledUp(Player player) {
         Inventory inventory = player.getInventory();
 
         for (int i = 0; i < inventory.getContainerSize(); i++) {
-            boolean exceptedBarrier = shouldHaveBarrier(i);
-            boolean foundBarrier = inventory.getItem(i).is(ModItems.SLOT_BARRIER.get());
-            if ((!exceptedBarrier && foundBarrier) || (exceptedBarrier && !foundBarrier)) {
+            if (!RoleSlot.isEligibleItemForRoledPlayer(inventory.getItem(i), i, player)) {
                 return true;
             }
         }
@@ -20,31 +22,32 @@ public class SlotBarrierFilling {
         return false;
     }
 
-    public static void fillUp(Player player) {
+    public static void fillUp(ServerPlayer player) {
         Inventory inventory = player.getInventory();
 
         for (int i = 0; i < inventory.getContainerSize(); i++) {
-            boolean exceptedBarrier = shouldHaveBarrier(i);
-            boolean foundBarrier = inventory.getItem(i).is(ModItems.SLOT_BARRIER.get());
+            ItemStack item = inventory.getItem(i);
 
-            if (exceptedBarrier) {
-                player.drop(inventory.getItem(i), false);
-                inventory.setItem(i, new ItemStack(ModItems.SLOT_BARRIER.get()));
-                continue;
-            }
+            // まず変更が必要なスロットかどうかを判定
+            if (!RoleSlot.isEligibleItemForRoledPlayer(item, i, player)) {
+                // 無効化スロットにはスロットバリアを入れるべき
+                if (InventoryDefinition.isDisableSlot(i)) {
+                    player.drop(item, false);
+                    inventory.setItem(i, new ItemStack(ModItems.SLOT_BARRIER.get()));
+                    continue;
+                }
 
-            if (foundBarrier) {
+                // ロールスロットは空にすべき
+                if (InventoryDefinition.isRoleSlot(i)) {
+                    player.drop(item, false);
+                    inventory.setItem(i, ItemStack.EMPTY);
+                    continue;
+                }
+                
+                // それ以外の場合はスロットバリアのはずなので、消去
                 inventory.setItem(i, ItemStack.EMPTY);
             }
         }
-    }
-
-    /**
-     * Check if a slot should have a barrier item
-     * Slots 1-35 are prohibited (hotbar 1-8 and inventory 9-35)
-     */
-    public static boolean shouldHaveBarrier(int slotId) {
-        return slotId >= 1 && slotId <= 35;
     }
 
     public static boolean shouldBeClean(Player player) {
@@ -59,7 +62,7 @@ public class SlotBarrierFilling {
         return false;
     }
 
-    public static void clean(Player player) {
+    public static void clean(ServerPlayer player) {
         Inventory inventory = player.getInventory();
 
         for (int i = 0; i < inventory.getContainerSize(); i++) {

@@ -93,19 +93,17 @@ public class RestrictedInventoryScreen extends InventoryScreen {
             Slot originalSlot = this.originalSlots.get(i);
             int x = originalSlot.x;
             int y = originalSlot.y;
-            boolean restricted = false;
 
             // 制限対象のスロットを判定（menu.slots内のインデックス i を使用）
             if (isRestrictedSlot(i)) {
                 // 画面外に配置
                 x = -2000;
                 y = -2000;
-                restricted = true;
             }
 
             // RestrictedSlotWrapperでラップして追加
             // 重要: スロットのindexには i を渡す（menu.slots内の位置）
-            RestrictedSlotWrapper wrapper = new RestrictedSlotWrapper(originalSlot, i, x, y, restricted);
+            RestrictedSlotWrapper wrapper = new RestrictedSlotWrapper(originalSlot, i, x, y);
             this.menu.slots.add(wrapper);
         }
     }
@@ -131,7 +129,7 @@ public class RestrictedInventoryScreen extends InventoryScreen {
         }
 
         // ホットバースロット（37-44、メインハンド36以外）を制限
-        if (index >= 37 && index <= 44) {
+        if (index >= 40 && index <= 44) {
             return true;
         }
 

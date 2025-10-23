@@ -12,7 +12,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, OneSlotSurvivalMod.MODID);
 
-    // Invisible barrier item for slot blocking
+    // スロットブロック用のバリアアイテム
     public static final RegistryObject<Item> SLOT_BARRIER = ITEMS.register("slot_barrier",
             () -> new SlotBarrier(new Item.Properties()
                     .setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(OneSlotSurvivalMod.MODID, "slot_barrier")))

@@ -4,16 +4,16 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 
 /**
- * Event handler for adding custom attributes to players.
+ * プレイヤーにカスタム Attribute を追加するためのイベントハンドラ
  */
 public class PlayerAttributeHandler {
 
     /**
-     * Add our custom attributes to the player entity.
-     * This event is fired on the mod event bus during startup.
+     * プレイヤーエンティティにカスタム Attribute を追加
+     * このイベントは起動時に mod イベントバスで発火される
      *
-     * @param event the entity attribute modification event
-     * @throws IllegalStateException if the MOD_ENABLED attribute is not registered
+     * @param event エンティティ Attribute 変更イベント
+     * @throws IllegalStateException MOD_ENABLED Attribute が登録されていない場合
      */
     public static void onEntityAttributeModification(EntityAttributeModificationEvent event) {
         event.add(

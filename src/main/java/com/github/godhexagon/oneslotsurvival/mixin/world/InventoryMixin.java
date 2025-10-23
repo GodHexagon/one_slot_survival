@@ -1,0 +1,195 @@
+package com.github.godhexagon.oneslotsurvival.mixin.world;
+
+import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
+import com.github.godhexagon.oneslotsurvival.world.util.RoleSlot;
+import net.minecraft.CrashReport;
+import net.minecraft.CrashReportCategory;
+import net.minecraft.ReportedException;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+/**
+ * Inventoryクラスにロールスロット拾得制限機能を追加するMixin
+ */
+@Mixin(Inventory.class)
+public abstract class InventoryMixin {
+    @Shadow
+    @Final
+    private NonNullList<ItemStack> items;
+
+    @Shadow
+    @Final
+    public Player player;
+
+    @Shadow
+    public abstract ItemStack getItem(int slot);
+    
+    @Shadow
+    private int selected;
+    
+    @Shadow
+    private boolean hasRemainingSpaceForItem(ItemStack p_36015_, ItemStack p_36016_) {
+        throw new AssertionError();
+    }
+    
+    @Shadow
+    private int addResource(int p_36048_, ItemStack p_36049_) {
+        throw new AssertionError();
+    }
+
+    /**
+     * アイテム拾得などで呼ばれる add(int, ItemStack) をインターセプトし、
+     * ロールスロット制限を適用します。
+     *
+     * add(ItemStack)はこのメソッドを呼び出すだけなので、
+     * より本質的なこちらのメソッドをインターセプトします。
+     */
+    @Inject(method = "add(ILnet/minecraft/world/item/ItemStack;)Z", at = @At("HEAD"), cancellable = true)
+    private void onAdd(int slot, ItemStack itemStack, CallbackInfoReturnable<Boolean> cir) {
+        if (PlayerModValidity.isEffective(this.player)) {
+            cir.cancel();
+
+            boolean result = one_slot_survival$roledPlayerAdd(slot, itemStack);
+            cir.setReturnValue(result);
+        }
+    }
+
+    /**
+     * MODが有効なプレイヤー専用のaddメソッド。
+     * バニラの Inventory.add(int, ItemStack) の完全コピー + ★マークで改変箇所を明示。
+     * 詳細はバニラコードを確認してください。
+     * 現在は、RoleSlot.isEligibleItemForRoledPlayer を用いることで、適切でない配置を判定・拒否しています。
+     */
+    @Unique
+    private boolean one_slot_survival$roledPlayerAdd(int slot, ItemStack itemStack) {
+        if (itemStack.isEmpty()) {
+            return false;
+        } else {
+            try {
+                if (itemStack.isDamaged()) {
+                    if (slot == -1) {
+                        // ★耐久アイテム×探索モードの拒否
+                        slot = this.one_slot_survival$getFreeSlot(itemStack);
+                    }
+
+                    if (slot >= 0) {
+                        // ★耐久アイテム×指定モードの拒否
+                        if (!RoleSlot.isEligibleItemForRoledPlayer(itemStack, slot, this.player)) {
+                            return false;
+                        }
+
+                        this.items.set(slot, itemStack.copyAndClear());
+                        this.items.get(slot).setPopTime(5);
+                        return true;
+                    } else if (this.player.hasInfiniteMaterials()) {
+                        itemStack.setCount(0);
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    int i;
+                    do {
+                        i = itemStack.getCount();
+                        if (slot == -1) {
+                            // ★スタック可能アイテム×探索モードの拒否
+                            itemStack.setCount(this.one_slot_survival$roledPlayerAddResource(itemStack));
+                        } else {
+                            // ★スタック可能アイテム×指定モードの拒否
+                            if (!RoleSlot.isEligibleItemForRoledPlayer(itemStack, slot, this.player)) {
+                                return false;
+                            }
+
+                            itemStack.setCount(this.addResource(slot, itemStack));
+                        }
+                    } while (!itemStack.isEmpty() && itemStack.getCount() < i);
+
+                    if (itemStack.getCount() == i && this.player.hasInfiniteMaterials()) {
+                        itemStack.setCount(0);
+                        return true;
+                    } else {
+                        return itemStack.getCount() < i;
+                    }
+                }
+            } catch (Throwable throwable) {
+                CrashReport crashreport = CrashReport.forThrowable(throwable, "Adding item to inventory");
+                CrashReportCategory crashreportcategory = crashreport.addCategory("Item being added");
+                crashreportcategory.setDetail("Registry Name", () -> String.valueOf(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(itemStack.getItem())));
+                crashreportcategory.setDetail("Item Class", () -> itemStack.getItem().getClass().getName());
+                crashreportcategory.setDetail("Item ID", Item.getId(itemStack.getItem()));
+                crashreportcategory.setDetail("Item data", itemStack.getDamageValue());
+                crashreportcategory.setDetail("Item name", () -> itemStack.getHoverName().getString());
+                throw new ReportedException(crashreport);
+            }
+        }
+    }
+    
+    /**
+     * バニラの addResource(ItemStack) のコピーですが、代替でロールスロット対応メソッドを呼び出す変更がされています。
+     * スタック可能なアイテムをインベントリに追加する際、既存スタックに追加可能か、
+     * または新しいスロットに配置できるかを判定します。
+     *
+     * @param itemStack 追加するアイテム
+     * @return 追加後のアイテムのカウント（追加できなかった分）
+     */
+    @Unique
+    private int one_slot_survival$roledPlayerAddResource(ItemStack itemStack) {
+        int i = this.one_slot_survival$getSlotWithRemainingSpace(itemStack);
+        if (i == -1) {
+            i = this.one_slot_survival$getFreeSlot(itemStack);
+        }
+
+        return i == -1 ? itemStack.getCount() : this.addResource(i, itemStack);
+    }
+
+    /**
+     * バニラの getSlotWithRemainingSpace の完全コピー + ロールスロット対応版。
+     * アイテムをスタックできる余地があるスロットを探します。
+     * 優先順位: 1) 選択中のスロット、2) オフハンドスロット(40)、3) その他のスロット
+     *
+     * @param item スタックを探すアイテム
+     * @return スタック可能なスロット番号、見つからない場合は-1
+     */
+    @Unique
+    public int one_slot_survival$getSlotWithRemainingSpace(ItemStack item) {
+        if (this.hasRemainingSpaceForItem(this.getItem(this.selected), item) && RoleSlot.isEligibleItemForRoledPlayer(item, this.selected, this.player)) {
+            return this.selected;
+        } else if (this.hasRemainingSpaceForItem(this.getItem(40), item) && RoleSlot.isEligibleItemForRoledPlayer(item, 40, this.player)) {
+            return 40;
+        } else {
+            for (int i = 0; i < this.items.size(); i++) {
+                if (this.hasRemainingSpaceForItem(this.items.get(i), item) && RoleSlot.isEligibleItemForRoledPlayer(item, i, this.player)) {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+    }
+
+    /**
+     * バニラの getFreeSlot の完全コピー + ロールスロット対応版。
+     * 空いているスロットを探します。
+     * ロールスロット制限により、アイテムが配置可能なスロットのみを返します。
+     *
+     * @param asItem 配置するアイテム
+     * @return 空いているスロット番号、見つからない場合は-1
+     */
+    @Unique
+    public int one_slot_survival$getFreeSlot(ItemStack asItem) {
+        for (int i = 0; i < this.items.size(); i++) {
+            if (this.items.get(i).isEmpty() && RoleSlot.isEligibleItemForRoledPlayer(asItem, i, this.player)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+}
