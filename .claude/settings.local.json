@@ -11,7 +11,8 @@
       "Read(//c/Users/godhe/.gradle/caches/forge_gradle/**)",
       "Read(//c/Users/godhe/.gradle/caches/**)",
       "Bash(javap:*)",
-      "Bash(.gradlew.bat compileJava)"
+      "Bash(.gradlew.bat compileJava)",
+      "Bash(gradlew.bat compileJava:*)"
     ],
     "deny": [],
     "ask": []
