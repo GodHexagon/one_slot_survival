@@ -85,9 +85,10 @@ public abstract class GuiMixin {
         int centerX = guiGraphics.guiWidth() / 2;
         int bottomY = guiGraphics.guiHeight() - 22;
 
-        // スロット 0（左端）が中央に表示されるようにホットバーを右に 80 ピクセルシフト
-        // 各スロットの幅は 20 ピクセル、4 スロット右にシフト = 80 ピクセル
-        int offsetX = 80;
+        // スロット 1 と 2 の境目が画面中央に来るように調整
+        // バニラ９スロットが４スロットになるので、５スロットの差。半分にすると２．５スロット。スロット１個は20px。
+        // 2.5 * 20 = 50
+        int offsetX = 50;
         int hotbarX = centerX - 91 + offsetX;
 
         // カスタムホットバー背景（幅 182 ピクセル）を右にシフトしてレンダリング
