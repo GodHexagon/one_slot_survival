@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
  * Forge API用サーバー側（Dedicated/Integrated）イベントハンドラー
  */
 @Mod.EventBusSubscriber(modid = OneSlotSurvivalMod.MODID)
-public class ServerEvent {
+public class WorldEvent {
     /**
      * ここでは、プレイヤーに配布されるスロットバリアを常に適切な状態に保つ処理を行っている。
      *
