@@ -28,22 +28,23 @@ public class SlotBarrierFilling {
         for (int i = 0; i < inventory.getContainerSize(); i++) {
             ItemStack item = inventory.getItem(i);
 
-            // 無効化スロットにはスロットバリアを入れるべき
-            if (InventoryDefinition.isDisableSlot(i)) {
-                player.drop(item, false);
-                inventory.setItem(i, new ItemStack(ModItems.SLOT_BARRIER.get()));
-                continue;
-            }
+            // まず変更が必要なスロットかどうかを判定
+            if (!RoleSlot.isEligibleItemForRoledPlayer(item, i, player)) {
+                // 無効化スロットにはスロットバリアを入れるべき
+                if (InventoryDefinition.isDisableSlot(i)) {
+                    player.drop(item, false);
+                    inventory.setItem(i, new ItemStack(ModItems.SLOT_BARRIER.get()));
+                    continue;
+                }
 
-            // ロールスロットは基本的に何もしなくていいが、不適切アイテムだっときは空にすべき
-            if (InventoryDefinition.isRoleSlot(i) && !RoleSlot.isPickaxe(item)) {
-                player.drop(item, false);
-                inventory.setItem(i, ItemStack.EMPTY);
-                continue;
-            }
-
-            // それ以外の場合にスロットバリアがあったら消す
-            if (item.is(ModItems.SLOT_BARRIER.get())) {
+                // ロールスロットは空にすべき
+                if (InventoryDefinition.isRoleSlot(i)) {
+                    player.drop(item, false);
+                    inventory.setItem(i, ItemStack.EMPTY);
+                    continue;
+                }
+                
+                // それ以外の場合はスロットバリアのはずなので、消去
                 inventory.setItem(i, ItemStack.EMPTY);
             }
         }

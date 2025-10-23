@@ -1,11 +1,20 @@
 package com.github.godhexagon.oneslotsurvival.world.util;
 
+import java.util.List;
 import com.github.godhexagon.oneslotsurvival.world.item.ModItems;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class RoleSlot {
+    public static final List<TagKey<Item>> SPECIALTY_ITEM_LINEUP = List.of(
+        ItemTags.PICKAXES,
+        ItemTags.AXES,
+        ItemTags.SHOVELS
+    );
+
     /**
      * ロールスロットルールにおいて、新しいアイテムの割り当てとして適切か判定します。
      *
@@ -20,24 +29,10 @@ public class RoleSlot {
         }
 
         if (InventoryDefinition.isRoleSlot(inventoryIndex)) {
-            // 将来的に使用します。
-            int roleSlotIndex = inventoryIndex - 1;
 
-            return RoleSlot.isPickaxe(item) || item.isEmpty();
+            return item.is(SPECIALTY_ITEM_LINEUP.get(InventoryDefinition.getRoleSlotIndex(inventoryIndex))) || item.isEmpty();
         }
 
         return !item.is(ModItems.SLOT_BARRIER.get());
-    }
-    /**
-     * つるはしかどうかを判定
-     *
-     * @param item 判定対象のアイテムスタック
-     * @return true の場合、つるはし
-     */
-    public static boolean isPickaxe(ItemStack item) {
-        if (item.isEmpty()) {
-            return false;
-        }
-        return item.is(ItemTags.PICKAXES);
     }
 }

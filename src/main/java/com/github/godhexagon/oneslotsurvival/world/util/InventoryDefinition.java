@@ -16,4 +16,8 @@ public class InventoryDefinition {
     public static boolean isRestrictedSlot(int index) {
         return isDisableSlot(index) || isRoleSlot(index);
     }
+
+    public static int getRoleSlotIndex(int index) {
+        return index -1;
+    }
 }
