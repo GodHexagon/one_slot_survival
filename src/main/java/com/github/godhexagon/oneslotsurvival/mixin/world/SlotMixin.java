@@ -1,7 +1,8 @@
 package com.github.godhexagon.oneslotsurvival.mixin.world;
 
-import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
-import com.github.godhexagon.oneslotsurvival.world.util.RoleSlot;
+import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotRestriction;
+import com.github.godhexagon.oneslotsurvival.world.util.player.PlayerModValidity;
+
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -40,7 +41,7 @@ public abstract class SlotMixin {
                 int inventoryIndex = this.getContainerSlot();
 
                 // Check if the item is eligible for this slot
-                if (!RoleSlot.isEligibleItemForRoledPlayer(stack, inventoryIndex, inventory.player)) {
+                if (!SlotRestriction.isEligibleItemForRoledPlayer(stack, inventoryIndex, inventory.player)) {
                     cir.setReturnValue(false);
                 }
             }

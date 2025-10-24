@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.world.util;
+package com.github.godhexagon.oneslotsurvival.world.util.inventory;
 
 /**
  * Inventory indexについて、そのスロットがMODゲームルール上の定義を参照する。

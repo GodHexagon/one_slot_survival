@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.world.util;
+package com.github.godhexagon.oneslotsurvival.world.util.attribute;
 
 import com.github.godhexagon.oneslotsurvival.world.attribute.ModAttributes;
 import net.minecraft.core.Holder;
@@ -7,7 +7,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 
-public class PlayerModValidityAttribute {
+public class ModEnabled {
     /**
      * Attribute Holder を安全に取得し、登録されていない場合は明確な例外をスロー
      *
@@ -61,11 +61,5 @@ public class PlayerModValidityAttribute {
 
         // 基本値を設定: 有効の場合は 1.0、無効の場合は 0.0
         attribute.setBaseValue(enabled ? 1.0 : 0.0);
-
-        if (enabled) {
-            SlotBarrierFilling.fillUp(player);
-        } else {
-            SlotBarrierFilling.clean(player);
-        }
     }
 }

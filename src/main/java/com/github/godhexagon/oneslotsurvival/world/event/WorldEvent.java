@@ -1,9 +1,10 @@
 package com.github.godhexagon.oneslotsurvival.world.event;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
-import com.github.godhexagon.oneslotsurvival.world.util.RoleSlot;
-import com.github.godhexagon.oneslotsurvival.world.util.SlotBarrierFilling;
-import com.github.godhexagon.oneslotsurvival.world.util.PlayerModValidity;
+import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotRestriction;
+import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotBarrierFilling;
+import com.github.godhexagon.oneslotsurvival.world.util.player.PlayerModValidity;
+
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
@@ -62,7 +63,7 @@ public class WorldEvent {
         int inventoryIndex = player.getInventory().getSelectedSlot();
 
         // ロールスロットルールにおいても許可されるなら大丈夫
-        if (RoleSlot.isEligibleItemForRoledPlayer(offhandItem, inventoryIndex, player)) {
+        if (SlotRestriction.isEligibleItemForRoledPlayer(offhandItem, inventoryIndex, player)) {
             return false;
         }
 
