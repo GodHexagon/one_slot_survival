@@ -1,6 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.mixin.world;
 
-import com.github.godhexagon.oneslotsurvival.world.util.inventory.RoleSlot;
+import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotRestriction;
 import com.github.godhexagon.oneslotsurvival.world.util.player.PlayerModValidity;
 
 import net.minecraft.CrashReport;
@@ -82,7 +82,7 @@ public abstract class InventoryMixin {
 
                     if (slot >= 0) {
                         // ★耐久アイテム×指定モードの拒否
-                        if (!RoleSlot.isEligibleItemForRoledPlayer(itemStack, slot, this.player)) {
+                        if (!SlotRestriction.isEligibleItemForRoledPlayer(itemStack, slot, this.player)) {
                             return false;
                         }
 
@@ -104,7 +104,7 @@ public abstract class InventoryMixin {
                             itemStack.setCount(this.one_slot_survival$roledPlayerAddResource(itemStack));
                         } else {
                             // ★スタック可能アイテム×指定モードの拒否
-                            if (!RoleSlot.isEligibleItemForRoledPlayer(itemStack, slot, this.player)) {
+                            if (!SlotRestriction.isEligibleItemForRoledPlayer(itemStack, slot, this.player)) {
                                 return false;
                             }
 
@@ -160,13 +160,13 @@ public abstract class InventoryMixin {
      */
     @Unique
     public int one_slot_survival$getSlotWithRemainingSpace(ItemStack item) {
-        if (this.hasRemainingSpaceForItem(this.getItem(this.selected), item) && RoleSlot.isEligibleItemForRoledPlayer(item, this.selected, this.player)) {
+        if (this.hasRemainingSpaceForItem(this.getItem(this.selected), item) && SlotRestriction.isEligibleItemForRoledPlayer(item, this.selected, this.player)) {
             return this.selected;
-        } else if (this.hasRemainingSpaceForItem(this.getItem(40), item) && RoleSlot.isEligibleItemForRoledPlayer(item, 40, this.player)) {
+        } else if (this.hasRemainingSpaceForItem(this.getItem(40), item) && SlotRestriction.isEligibleItemForRoledPlayer(item, 40, this.player)) {
             return 40;
         } else {
             for (int i = 0; i < this.items.size(); i++) {
-                if (this.hasRemainingSpaceForItem(this.items.get(i), item) && RoleSlot.isEligibleItemForRoledPlayer(item, i, this.player)) {
+                if (this.hasRemainingSpaceForItem(this.items.get(i), item) && SlotRestriction.isEligibleItemForRoledPlayer(item, i, this.player)) {
                     return i;
                 }
             }
@@ -186,7 +186,7 @@ public abstract class InventoryMixin {
     @Unique
     public int one_slot_survival$getFreeSlot(ItemStack asItem) {
         for (int i = 0; i < this.items.size(); i++) {
-            if (this.items.get(i).isEmpty() && RoleSlot.isEligibleItemForRoledPlayer(asItem, i, this.player)) {
+            if (this.items.get(i).isEmpty() && SlotRestriction.isEligibleItemForRoledPlayer(asItem, i, this.player)) {
                 return i;
             }
         }

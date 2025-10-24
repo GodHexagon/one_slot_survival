@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-public class RoleSlot {
+public class SlotRestriction {
     public static final List<TagKey<Item>> SPECIALTY_ITEM_LINEUP = List.of(
         ItemTags.PICKAXES,
         ItemTags.AXES,
