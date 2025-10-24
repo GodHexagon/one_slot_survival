@@ -1,7 +1,13 @@
 package com.github.godhexagon.oneslotsurvival.world.util.inventory;
 
 import java.util.List;
+import java.util.Map;
+
 import com.github.godhexagon.oneslotsurvival.world.item.ModItems;
+import com.github.godhexagon.oneslotsurvival.world.item.ModTags;
+import com.github.godhexagon.oneslotsurvival.world.util.role.MainRole;
+import com.github.godhexagon.oneslotsurvival.world.util.role.RoleManager;
+
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
@@ -9,10 +15,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class SlotRestriction {
-    public static final List<TagKey<Item>> SPECIALTY_ITEM_LINEUP = List.of(
-        ItemTags.PICKAXES,
-        ItemTags.AXES,
-        ItemTags.SHOVELS
+    private static final Map<MainRole, List<TagKey<Item>>> SPECIALTY_ITEM_LINEUP = Map.of(
+        MainRole.MINER, List.of(ItemTags.PICKAXES, ItemTags.SHOVELS, ItemTags.AXES),
+        MainRole.WARRIOR, List.of(ItemTags.SWORDS, ModTags.Items.WARRIOR_DEFENSIVE, ModTags.Items.WARRIOR_SPECIAL_WEAPONS)
     );
 
     /**
@@ -29,8 +34,13 @@ public class SlotRestriction {
         }
 
         if (InventoryDefinition.isRoleSlot(inventoryIndex)) {
-
-            return item.is(SPECIALTY_ITEM_LINEUP.get(InventoryDefinition.getRoleSlotIndex(inventoryIndex))) || item.isEmpty();
+            if (RoleManager.hasRole(player)) {
+                MainRole role = RoleManager.getRole(player);
+                int roleIndex = InventoryDefinition.getRoleSlotIndex(inventoryIndex);
+                return item.isEmpty() || item.is(SPECIALTY_ITEM_LINEUP.get(role).get(roleIndex));
+            } else {
+                return item.isEmpty();
+            }
         }
 
         return !item.is(ModItems.SLOT_BARRIER.get());
