@@ -2,9 +2,16 @@ package com.github.godhexagon.oneslotsurvival.world.util.level;
 
 import com.github.godhexagon.oneslotsurvival.world.util.attribute.MainRoleLevel;
 import com.github.godhexagon.oneslotsurvival.world.util.attribute.MainRoleRemainingExp;
+import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotRestriction;
+import com.github.godhexagon.oneslotsurvival.world.util.role.MainRole;
+import com.github.godhexagon.oneslotsurvival.world.util.role.RoleManager;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 
 /**
  * メインロールの経験値を管理するユーティリティクラス
@@ -52,8 +59,36 @@ public class Exp {
 
         // レベルアップ処理
         if (remaining < 0) {
-            MainRoleLevel.setLevel(player, MainRoleLevel.getLevel(player) + 1);
+            int newLevel = MainRoleLevel.getLevel(player) + 1;
+            MainRoleLevel.setLevel(player, newLevel);
             remaining += LEVEL_EXP;
+
+            // WARN: この実装は臨時実装。真似してはいけない
+            MainRole role = RoleManager.getRole(player);
+            // WARN: SPECIALTY_ITEM_LINEUPにないロールはレベルアップシステムに参加しない。これらはそもそも経験値は増やさなくてよい。ただその実装は大変なので出力時にはじく。
+            if (SlotRestriction.SPECIALTY_ITEM_LINEUP.containsKey(role)) {
+                // レベルアップ祝福メッセージ
+                Component congratsMessage = Component.literal("Congratulations! ")
+                        .withStyle(ChatFormatting.GOLD)
+                        .append(Component.literal("You've reached Level " + newLevel + "!")
+                                .withStyle(ChatFormatting.YELLOW));
+                player.sendSystemMessage(congratsMessage);
+
+                // 解放されたアイテムタグの通知
+                int roleSlotIndex = newLevel - 2;
+                if (roleSlotIndex >= 0 && roleSlotIndex < SlotRestriction.SPECIALTY_ITEM_LINEUP.get(role).size()) {
+                    TagKey<Item> capableItemTag = SlotRestriction.SPECIALTY_ITEM_LINEUP.get(role).get(roleSlotIndex);
+
+                    String tagName = capableItemTag.location().toString();
+                    Component rewardMessage = Component.literal("Reward: ")
+                            .withStyle(ChatFormatting.GREEN)
+                            .append(Component.literal("New role slot unlocked! ")
+                                    .withStyle(ChatFormatting.WHITE))
+                            .append(Component.literal("[" + tagName + "]")
+                                    .withStyle(ChatFormatting.AQUA));
+                    player.sendSystemMessage(rewardMessage);
+                }
+            }
         }
 
         MainRoleRemainingExp.setRemainingExp(player, remaining - amount);

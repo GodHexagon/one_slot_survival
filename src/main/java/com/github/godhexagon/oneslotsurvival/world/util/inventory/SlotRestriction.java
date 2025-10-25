@@ -16,7 +16,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class SlotRestriction {
-    private static final Map<MainRole, List<TagKey<Item>>> SPECIALTY_ITEM_LINEUP = Map.of(
+    // WARN: これがpublicなのやばいと思うのでいつか直す
+    public static final Map<MainRole, List<TagKey<Item>>> SPECIALTY_ITEM_LINEUP = Map.of(
         MainRole.MINER, List.of(ItemTags.PICKAXES, ItemTags.SHOVELS, ItemTags.AXES),
         MainRole.WARRIOR, List.of(ItemTags.SWORDS, ModTags.Items.WARRIOR_DEFENSIVE, ModTags.Items.WARRIOR_SPECIAL_WEAPONS)
     );
@@ -37,7 +38,7 @@ public class SlotRestriction {
 
         // ロールスロット
         if (InventoryDefinition.isRoleSlot(inventoryIndex)) {
-                MainRole role = RoleManager.getRole(player);
+            MainRole role = RoleManager.getRole(player);
             // プレイヤーのロールが適切かどうか
             if (SPECIALTY_ITEM_LINEUP.containsKey(role)) {
                 int roleIndex = InventoryDefinition.getRoleSlotIndex(inventoryIndex);
