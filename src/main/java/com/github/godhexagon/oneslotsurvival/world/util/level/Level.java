@@ -9,6 +9,9 @@ import net.minecraft.world.entity.player.Player;
  * 永続化レイヤーを隠し、レベルのルールを提供する。
  */
 public class Level {
+    public static final double LEVEL_UP_EXP = 2000.0;
+    public static final int UNDEFINED_LEVEL = 0;
+    
     /**
      * プレイヤーのメインロールのレベルを取得する。
      * 
@@ -25,6 +28,6 @@ public class Level {
      * @param player プレイヤー。
      */
     public static void reset(ServerPlayer player) {
-        MainRoleLevel.setLevel(player, 0);
+        MainRoleLevel.setLevel(player, UNDEFINED_LEVEL);
     }
 }

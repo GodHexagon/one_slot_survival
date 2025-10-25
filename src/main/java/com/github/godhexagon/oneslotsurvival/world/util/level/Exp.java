@@ -10,6 +10,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 
 /**
@@ -26,7 +27,20 @@ import net.minecraft.world.item.Item;
  * </ul>
  */
 public class Exp {
-    private static final double LEVEL_EXP = 2000;
+    /**
+     * プレイヤーの経験値の蓄積を返す。
+     * 
+     * @param player プレイヤー。
+     * @return 次のレベルアップまでの残り経験値。
+     */
+    public static double getMain(Player player) {
+        // まだレベルシステムに参加していないプレイヤーは、最初の経験値を設定
+        if (MainRoleLevel.getLevel(player) <= Level.UNDEFINED_LEVEL) {
+            return Level.LEVEL_UP_EXP;
+        }
+
+        return MainRoleRemainingExp.getRemainingExp(player);
+    }
 
     /**
      * メインロールの経験値を加算します（残り経験値を減算します）
@@ -48,9 +62,9 @@ public class Exp {
      */
     public static void addMain(ServerPlayer player, double amount) {
         // まだレベルシステムに参加していないプレイヤーは、最初の経験値を設定
-        if (MainRoleLevel.getLevel(player) <= 0) {
+        if (MainRoleLevel.getLevel(player) <= Level.UNDEFINED_LEVEL) {
             MainRoleLevel.setLevel(player, 1);
-            MainRoleRemainingExp.setRemainingExp(player, LEVEL_EXP - amount);
+            MainRoleRemainingExp.setRemainingExp(player, Level.LEVEL_UP_EXP - amount);
             return;
         }
 
@@ -60,7 +74,7 @@ public class Exp {
         if (remaining < 0) {
             int newLevel = MainRoleLevel.getLevel(player) + 1;
             MainRoleLevel.setLevel(player, newLevel);
-            remaining += LEVEL_EXP;
+            remaining += Level.LEVEL_UP_EXP;
 
             // WARN: この実装は臨時実装。真似してはいけない
             MainRole role = RoleManager.getRole(player);
@@ -99,6 +113,6 @@ public class Exp {
      * @param player プレイヤー。
      */
     public static void clear(ServerPlayer player) {
-        MainRoleRemainingExp.setRemainingExp(player, LEVEL_EXP);
+        MainRoleRemainingExp.setRemainingExp(player, Level.LEVEL_UP_EXP);
     }
 }
