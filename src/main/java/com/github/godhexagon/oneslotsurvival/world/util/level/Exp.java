@@ -10,7 +10,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 
 /**
@@ -95,12 +94,11 @@ public class Exp {
     }
 
     /**
-     * プレイヤーのメインロールのレベルを取得する。
+     * プレイヤーの経験値を初期化する
      * 
      * @param player
-     * @return レベル。
      */
-    public static int getMainLevel(Player player) {
-        return Math.max(1, MainRoleLevel.getLevel(player));
+    public static void clear(ServerPlayer player) {
+        MainRoleRemainingExp.setRemainingExp(player, LEVEL_EXP);
     }
 }

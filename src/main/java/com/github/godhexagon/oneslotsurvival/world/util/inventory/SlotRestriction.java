@@ -5,9 +5,9 @@ import java.util.Map;
 
 import com.github.godhexagon.oneslotsurvival.world.item.ModItems;
 import com.github.godhexagon.oneslotsurvival.world.item.ModTags;
-import com.github.godhexagon.oneslotsurvival.world.util.level.Exp;
 import com.github.godhexagon.oneslotsurvival.world.util.role.MainRole;
 import com.github.godhexagon.oneslotsurvival.world.util.role.RoleManager;
+import com.github.godhexagon.oneslotsurvival.world.util.level.Level;
 
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -44,7 +44,7 @@ public class SlotRestriction {
                 int roleIndex = InventoryDefinition.getRoleSlotIndex(inventoryIndex);
 
                 // すでに解放済みのスロットかどうか
-                if (roleIndex < Exp.getMainLevel(player) - 1) {
+                if (roleIndex < Level.getMain(player) - 1) {
                     return item.isEmpty() || item.is(SPECIALTY_ITEM_LINEUP.get(role).get(roleIndex));
                 } else {
                     return item.isEmpty();
