@@ -2,6 +2,8 @@ package com.github.godhexagon.oneslotsurvival.world.command;
 
 import com.github.godhexagon.oneslotsurvival.world.util.attribute.MainRoleRemainingExp;
 import com.github.godhexagon.oneslotsurvival.world.util.level.Level;
+import com.github.godhexagon.oneslotsurvival.world.util.role.MainRole;
+import com.github.godhexagon.oneslotsurvival.world.util.role.RoleManager;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.ChatFormatting;
@@ -15,16 +17,11 @@ import net.minecraft.server.level.ServerPlayer;
  * /oneslot level - 自分のレベルと残り経験値を表示
  * /oneslot exp - level のエイリアス
  */
-public class LevelCommand {
-
-    public static LiteralArgumentBuilder<CommandSourceStack> build() {
-        return Commands.literal("level")
-            .executes(LevelCommand::showStatus);
-    }
+public class ShowStatus {
 
     public static LiteralArgumentBuilder<CommandSourceStack> buildAlias(String aliasName) {
         return Commands.literal(aliasName)
-            .executes(LevelCommand::showStatus);
+            .executes(ShowStatus::showStatus);
     }
 
     private static int showStatus(CommandContext<CommandSourceStack> context) {
@@ -37,6 +34,7 @@ public class LevelCommand {
                 return 0;
             }
 
+            MainRole role = RoleManager.getRole(player);
             int level = Level.getMain(player);
             double remaining = MainRoleRemainingExp.getRemainingExp(player);
 
@@ -52,6 +50,13 @@ public class LevelCommand {
                 )
             );
             player.sendSystemMessage(Component.literal(""));
+            player.sendSystemMessage(
+                Component.literal("  Role: ")
+                    .withStyle(ChatFormatting.AQUA)
+                    .append(role.getDisplayName()
+                        .copy()
+                        .withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD))
+            );
             player.sendSystemMessage(
                 Component.literal("  Level: ")
                     .withStyle(ChatFormatting.AQUA)

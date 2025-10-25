@@ -14,8 +14,10 @@ public class CommandRegisterer {
         dispatcher.register(
             Commands.literal("oneslot")
                 // 一般プレイヤー向けコマンド（権限不要）
-                .then(LevelCommand.build())  // level コマンド
-                .then(LevelCommand.buildAlias("exp"))  // exp は level のエイリアス
+                .then(ShowStatus.buildAlias("status"))
+                .then(ShowStatus.buildAlias("role"))
+                .then(ShowStatus.buildAlias("level"))
+                .then(ShowStatus.buildAlias("exp"))
                 // 管理者向けコマンド（OP権限必要）
                 .then(Commands.literal("admin")
                     .requires(source -> source.hasPermission(2)) // OP レベル 2 が必要
