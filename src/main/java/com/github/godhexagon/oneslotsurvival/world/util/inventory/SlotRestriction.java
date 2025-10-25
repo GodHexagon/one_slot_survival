@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.github.godhexagon.oneslotsurvival.world.item.ModItems;
 import com.github.godhexagon.oneslotsurvival.world.item.ModTags;
+import com.github.godhexagon.oneslotsurvival.world.util.level.Exp;
 import com.github.godhexagon.oneslotsurvival.world.util.role.MainRole;
 import com.github.godhexagon.oneslotsurvival.world.util.role.RoleManager;
 
@@ -29,20 +30,30 @@ public class SlotRestriction {
      * @return trueのとき適切（配置可能）。
      */
     public static boolean isEligibleItemForRoledPlayer(ItemStack item, int inventoryIndex, Player player) {
+        // 禁止スロット（スロットバリアが入っているべき）
         if (InventoryDefinition.isDisableSlot(inventoryIndex)) {
             return item.is(ModItems.SLOT_BARRIER.get());
         }
 
+        // ロールスロット
         if (InventoryDefinition.isRoleSlot(inventoryIndex)) {
+            // プレイヤーがロール無しの状態かどうか
             if (RoleManager.hasRole(player)) {
                 MainRole role = RoleManager.getRole(player);
                 int roleIndex = InventoryDefinition.getRoleSlotIndex(inventoryIndex);
-                return item.isEmpty() || item.is(SPECIALTY_ITEM_LINEUP.get(role).get(roleIndex));
+
+                // すでに解放済みのスロットかどうか
+                if (roleIndex < Exp.getMainLevel(player) - 1) {
+                    return item.isEmpty() || item.is(SPECIALTY_ITEM_LINEUP.get(role).get(roleIndex));
+                } else {
+                    return item.isEmpty();
+                }
             } else {
                 return item.isEmpty();
             }
         }
 
+        // 特に制限がないスロット
         return !item.is(ModItems.SLOT_BARRIER.get());
     }
 }

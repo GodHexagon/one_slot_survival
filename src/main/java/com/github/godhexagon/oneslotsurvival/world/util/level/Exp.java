@@ -4,6 +4,7 @@ import com.github.godhexagon.oneslotsurvival.world.util.attribute.MainRoleLevel;
 import com.github.godhexagon.oneslotsurvival.world.util.attribute.MainRoleRemainingExp;
 
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * メインロールの経験値を管理するユーティリティクラス
@@ -56,5 +57,15 @@ public class Exp {
         }
 
         MainRoleRemainingExp.setRemainingExp(player, remaining - amount);
+    }
+
+    /**
+     * プレイヤーのメインロールのレベルを取得する。
+     * 
+     * @param player
+     * @return レベル。
+     */
+    public static int getMainLevel(Player player) {
+        return Math.max(1, MainRoleLevel.getLevel(player));
     }
 }
