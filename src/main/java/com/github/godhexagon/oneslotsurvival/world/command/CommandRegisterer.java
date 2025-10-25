@@ -1,5 +1,10 @@
 package com.github.godhexagon.oneslotsurvival.world.command;
 
+import com.github.godhexagon.oneslotsurvival.world.command.admin.LevelCommands;
+import com.github.godhexagon.oneslotsurvival.world.command.admin.RoleCommands;
+import com.github.godhexagon.oneslotsurvival.world.command.admin.ValidityCommands;
+import com.github.godhexagon.oneslotsurvival.world.command.admin.XpCommands;
+import com.github.godhexagon.oneslotsurvival.world.command.general.ShowStatus;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;

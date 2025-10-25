@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.world.command;
+package com.github.godhexagon.oneslotsurvival.world.command.general;
 
 import com.github.godhexagon.oneslotsurvival.world.util.level.Exp;
 import com.github.godhexagon.oneslotsurvival.world.util.level.Level;

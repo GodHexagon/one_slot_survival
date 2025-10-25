@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.world.command;
+package com.github.godhexagon.oneslotsurvival.world.command.admin;
 
 import com.github.godhexagon.oneslotsurvival.world.util.level.Level;
 import com.github.godhexagon.oneslotsurvival.world.util.role.MainRole;
@@ -12,9 +12,9 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
-import java.util.Collection;
+import static com.github.godhexagon.oneslotsurvival.world.command.util.CommandUtils.getDefaultPlayers;
 
-import static com.github.godhexagon.oneslotsurvival.world.command.CommandUtils.getDefaultPlayers;
+import java.util.Collection;
 
 /**
  * ロール管理コマンド

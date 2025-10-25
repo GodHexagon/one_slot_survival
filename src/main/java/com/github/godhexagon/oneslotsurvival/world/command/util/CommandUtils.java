@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.world.command;
+package com.github.godhexagon.oneslotsurvival.world.command.util;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
