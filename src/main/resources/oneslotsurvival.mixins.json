@@ -6,7 +6,9 @@
   "minVersion": "0.8",
   "mixins": [
     "world.SlotMixin",
-    "world.InventoryMixin"
+    "world.InventoryMixin",
+    "world.ServerPlayerMixin",
+    "world.ItemStackMixin"
   ],
   "client": [
     "client.GuiMixin",
