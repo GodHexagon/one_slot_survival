@@ -36,7 +36,7 @@ public class MainRoleLevel {
         if (attribute == null) {
             // フォールバック処理
             // このプレイヤーエンティティに Attribute が存在しない（EntityAttributeModificationEvent 後は発生しないはず）
-            return 1;
+            return 0;
         }
         return (int) attribute.getBaseValue();
     }

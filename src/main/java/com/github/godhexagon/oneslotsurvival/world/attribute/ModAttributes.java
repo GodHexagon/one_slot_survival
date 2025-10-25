@@ -50,8 +50,8 @@ public class ModAttributes {
         "main_role_level",
         () -> new RangedAttribute(
             "attribute.oneslotsurvival.main_role_level",
-            1,  // デフォルト: レベル1
-            1.0,  // 最小値
+            0,  // デフォルト: レベル0（内部処理用で、まだレベルシステムに参加していないプレイヤーを表す）
+            0.0,  // 最小値
             Double.MAX_VALUE  // 最大値（レベル上限）
         ).setSyncable(true)  // 自動的にクライアントと同期
     );
