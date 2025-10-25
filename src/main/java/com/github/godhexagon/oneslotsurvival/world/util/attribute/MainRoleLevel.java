@@ -51,11 +51,6 @@ public class MainRoleLevel {
      * @throws IllegalArgumentException レベルが1未満の場合
      */
     public static void setLevel(ServerPlayer player, int level) {
-        if (level < 1) {
-            throw new IllegalArgumentException(
-                    "Level must be at least 1, but was: " + level
-            );
-        }
 
         AttributeInstance attribute = player.getAttribute(getAttributeHolder());
         if (attribute == null) {
@@ -65,6 +60,10 @@ public class MainRoleLevel {
             );
         }
 
-        attribute.setBaseValue(level);
+        if (level > -1) {
+            attribute.setBaseValue(level);
+        } else {
+            attribute.setBaseValue(0);
+        }
     }
 }

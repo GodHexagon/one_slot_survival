@@ -54,11 +54,6 @@ public class MainRoleRemainingExp {
      * @throws IllegalArgumentException 残り経験値が0未満の場合
      */
     public static void setRemainingExp(ServerPlayer player, double remainingExp) {
-        if (remainingExp < 0.0) {
-            throw new IllegalArgumentException(
-                    "Remaining experience must be at least 0.0, but was: " + remainingExp
-            );
-        }
 
         AttributeInstance attribute = player.getAttribute(getAttributeHolder());
         if (attribute == null) {
@@ -68,6 +63,6 @@ public class MainRoleRemainingExp {
             );
         }
 
-        attribute.setBaseValue(remainingExp);
+        setRemainingExp(player, remainingExp);
     }
 }
