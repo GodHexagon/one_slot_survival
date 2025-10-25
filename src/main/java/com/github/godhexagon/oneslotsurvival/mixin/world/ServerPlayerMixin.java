@@ -1,5 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.mixin.world;
 
+import com.github.godhexagon.oneslotsurvival.config.ExpConfig;
 import com.github.godhexagon.oneslotsurvival.world.util.level.Exp;
 import com.github.godhexagon.oneslotsurvival.world.util.player.PlayerModValidity;
 import net.minecraft.server.level.ServerPlayer;
@@ -57,8 +58,8 @@ public abstract class ServerPlayerMixin {
             return;
         }
 
-        // バニラの経験値1ポイント = メインロールの経験値1.0として加算
-        Exp.addMain(player, (double) experiencePoints);
+        // バニラの経験値1ポイント = メインロールの経験値として加算（倍率はconfigで設定可能）
+        Exp.addMain(player, experiencePoints * ExpConfig.Other.vanillaExpPoints);
     }
 
     /**
@@ -79,34 +80,34 @@ public abstract class ServerPlayerMixin {
 
         double expToAdd = 0.0;
 
-        // 統計情報に応じて経験値を計算
+        // 統計情報に応じて経験値を計算（倍率はconfigから取得）
         if (stat == Stats.CUSTOM.get(Stats.WALK_ONE_CM)) {
             // amountの意味: 歩行距離(cm単位)。100cm = 1ブロック
-            expToAdd = amount * 0.0001;
+            expToAdd = amount * ExpConfig.Stats.walkOneCm;
 
         } else if (stat == Stats.CUSTOM.get(Stats.SPRINT_ONE_CM)) {
             // amountの意味: 走行距離(cm単位)。100cm = 1ブロック
-            expToAdd = amount * 0.0001;
+            expToAdd = amount * ExpConfig.Stats.sprintOneCm;
 
         } else if (stat == Stats.CUSTOM.get(Stats.CROUCH_ONE_CM)) {
             // amountの意味: しゃがみ歩行距離(cm単位)。100cm = 1ブロック
-            expToAdd = amount * 0.0002;
+            expToAdd = amount * ExpConfig.Stats.crouchOneCm;
 
         } else if (stat == Stats.CUSTOM.get(Stats.FLY_ONE_CM)) {
             // amountの意味: 空中移動距離(cm単位)。100cm = 1ブロック
-            expToAdd = amount * 0.0001;
+            expToAdd = amount * ExpConfig.Stats.flyOneCm;
 
         } else if (stat == Stats.CUSTOM.get(Stats.DAMAGE_DEALT)) {
             // amountの意味: 与えたダメージ量の10倍 (例: 5.0ダメージ = amount 50)
-            expToAdd = amount * 0.002;
+            expToAdd = amount * ExpConfig.Stats.damageDealt;
 
         } else if (stat == Stats.CUSTOM.get(Stats.DAMAGE_TAKEN)) {
             // amountの意味: 受けたダメージ量の10倍 (例: 5.0ダメージ = amount 50)
-            expToAdd = amount * 0.05;
+            expToAdd = amount * ExpConfig.Stats.damageTaken;
 
         } else if (stat == Stats.CUSTOM.get(Stats.DAMAGE_BLOCKED_BY_SHIELD)) {
             // amountの意味: 盾で防いだダメージ量の10倍 (例: 5.0ダメージ = amount 50)
-            expToAdd = amount * 0.05;
+            expToAdd = amount * ExpConfig.Stats.damageBlockedByShield;
         }
 
         // 経験値を加算

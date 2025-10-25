@@ -1,5 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.mixin.world;
 
+import com.github.godhexagon.oneslotsurvival.config.ExpConfig;
 import com.github.godhexagon.oneslotsurvival.world.util.level.Exp;
 import com.github.godhexagon.oneslotsurvival.world.util.player.PlayerModValidity;
 import net.minecraft.server.level.ServerLevel;
@@ -82,9 +83,15 @@ public abstract class ItemStackMixin {
             return;
         }
 
-        // 特定のアイテムだけに限定
-        if (this.is(ItemTags.SWORDS) || this.is(ItemTags.PICKAXES) || this.is(ItemTags.AXES)) {
-            double expToAdd = damage * 0.5;
+        // 特定のアイテムだけに限定（倍率はconfigから取得）
+        if (this.is(ItemTags.SWORDS)) {
+            double expToAdd = damage * ExpConfig.ItemDurability.swords;
+            Exp.addMain(player, expToAdd);
+        } else if (this.is(ItemTags.PICKAXES)) {
+            double expToAdd = damage * ExpConfig.ItemDurability.pickaxes;
+            Exp.addMain(player, expToAdd);
+        } else if (this.is(ItemTags.AXES)) {
+            double expToAdd = damage * ExpConfig.ItemDurability.axes;
             Exp.addMain(player, expToAdd);
         }
     }

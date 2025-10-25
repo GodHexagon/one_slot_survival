@@ -9,7 +9,6 @@ import net.minecraft.world.entity.player.Player;
  * 永続化レイヤーを隠し、レベルのルールを提供する。
  */
 public class Level {
-    public static final double LEVEL_UP_EXP = 200.0;
     public static final int UNDEFINED_LEVEL = 0;
     
     /**

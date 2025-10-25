@@ -1,5 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.world.util.level;
 
+import com.github.godhexagon.oneslotsurvival.config.ExpConfig;
 import com.github.godhexagon.oneslotsurvival.world.util.attribute.MainRoleLevel;
 import com.github.godhexagon.oneslotsurvival.world.util.attribute.MainRoleRemainingExp;
 import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotRestriction;
@@ -36,7 +37,7 @@ public class Exp {
     public static double getMain(Player player) {
         // まだレベルシステムに参加していないプレイヤーは、最初の経験値を設定
         if (MainRoleLevel.getLevel(player) <= Level.UNDEFINED_LEVEL) {
-            return Level.LEVEL_UP_EXP;
+            return ExpConfig.levelUpExp;
         }
 
         return MainRoleRemainingExp.getRemainingExp(player);
@@ -64,7 +65,7 @@ public class Exp {
         // まだレベルシステムに参加していないプレイヤーは、最初の経験値を設定
         if (MainRoleLevel.getLevel(player) <= Level.UNDEFINED_LEVEL) {
             MainRoleLevel.setLevel(player, 1);
-            MainRoleRemainingExp.setRemainingExp(player, Level.LEVEL_UP_EXP - amount);
+            MainRoleRemainingExp.setRemainingExp(player, ExpConfig.levelUpExp - amount);
             return;
         }
 
@@ -74,7 +75,7 @@ public class Exp {
         if (remaining < 0) {
             int newLevel = MainRoleLevel.getLevel(player) + 1;
             MainRoleLevel.setLevel(player, newLevel);
-            remaining += Level.LEVEL_UP_EXP;
+            remaining += ExpConfig.levelUpExp;
 
             // WARN: この実装は臨時実装。真似してはいけない
             MainRole role = RoleManager.getRole(player);
@@ -109,10 +110,10 @@ public class Exp {
 
     /**
      * プレイヤーの経験値を初期化する
-     * 
+     *
      * @param player プレイヤー。
      */
     public static void clear(ServerPlayer player) {
-        MainRoleRemainingExp.setRemainingExp(player, Level.LEVEL_UP_EXP);
+        MainRoleRemainingExp.setRemainingExp(player, ExpConfig.levelUpExp);
     }
 }
