@@ -13,7 +13,7 @@ public class PlayerAttributeHandler {
      * このイベントは起動時に mod イベントバスで発火される
      *
      * @param event エンティティ Attribute 変更イベント
-     * @throws IllegalStateException MOD_ENABLED または MAIN_ROLE_ID Attribute が登録されていない場合
+     * @throws IllegalStateException カスタム Attribute が登録されていない場合
      */
     public static void onEntityAttributeModification(EntityAttributeModificationEvent event) {
         event.add(
@@ -30,6 +30,24 @@ public class PlayerAttributeHandler {
             ModAttributes.MAIN_ROLE_ID.getHolder().orElseThrow(
                 () -> new IllegalStateException(
                     "MAIN_ROLE_ID attribute is not registered. " +
+                    "This indicates an issue with DeferredRegister initialization."
+                )
+            )
+        );
+        event.add(
+            EntityType.PLAYER,
+            ModAttributes.MAIN_ROLE_LEVEL.getHolder().orElseThrow(
+                () -> new IllegalStateException(
+                    "MAIN_ROLE_LEVEL attribute is not registered. " +
+                    "This indicates an issue with DeferredRegister initialization."
+                )
+            )
+        );
+        event.add(
+            EntityType.PLAYER,
+            ModAttributes.MAIN_ROLE_EXP.getHolder().orElseThrow(
+                () -> new IllegalStateException(
+                    "MAIN_ROLE_EXP attribute is not registered. " +
                     "This indicates an issue with DeferredRegister initialization."
                 )
             )
