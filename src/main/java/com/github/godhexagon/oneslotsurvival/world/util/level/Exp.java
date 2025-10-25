@@ -1,5 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.world.util.level;
 
+import com.github.godhexagon.oneslotsurvival.world.util.attribute.MainRoleLevel;
 import com.github.godhexagon.oneslotsurvival.world.util.attribute.MainRoleRemainingExp;
 
 import net.minecraft.server.level.ServerPlayer;
@@ -18,6 +19,8 @@ import net.minecraft.server.level.ServerPlayer;
  * </ul>
  */
 public class Exp {
+    private static final double LEVEL_EXP = 2000;
+
     /**
      * メインロールの経験値を加算します（残り経験値を減算します）
      *
@@ -37,7 +40,21 @@ public class Exp {
      * @param amount 付与する経験値量（正の数）
      */
     public static void addMain(ServerPlayer player, double amount) {
+        // まだレベルシステムに参加していないプレイヤーは、最初の経験値を設定
+        if (MainRoleLevel.getLevel(player) <= 0) {
+            MainRoleLevel.setLevel(player, 1);
+            MainRoleRemainingExp.setRemainingExp(player, LEVEL_EXP - amount);
+            return;
+        }
+
         double remaining = MainRoleRemainingExp.getRemainingExp(player);
+
+        // レベルアップ処理
+        if (remaining < 0) {
+            MainRoleLevel.setLevel(player, MainRoleLevel.getLevel(player) + 1);
+            remaining += LEVEL_EXP;
+        }
+
         MainRoleRemainingExp.setRemainingExp(player, remaining - amount);
     }
 }
