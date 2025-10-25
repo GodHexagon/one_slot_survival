@@ -56,9 +56,20 @@ public class CommandRegisterer {
                                 .executes(context -> getRoleStatus(context, EntityArgument.getPlayers(context, "players")))))
                         .then(Commands.literal("set")
                             .then(Commands.argument("roleName", StringArgumentType.word())
-                                .executes(context -> setRole(context, getDefaultPlayers(context)))
+                                .executes(context -> setRole(context, getDefaultPlayers(context), true))
                                 .then(Commands.argument("players", EntityArgument.players())
-                                    .executes(context -> setRole(context, EntityArgument.getPlayers(context, "players"))))))
+                                    .executes(context -> setRole(context, EntityArgument.getPlayers(context, "players"), true)))))
+
+
+                                    
+                        .then(Commands.literal("setNoClear")
+                            .then(Commands.argument("roleName", StringArgumentType.word())
+                                .executes(context -> setRole(context, getDefaultPlayers(context), false))
+                                .then(Commands.argument("players", EntityArgument.players())
+                                    .executes(context -> setRole(context, EntityArgument.getPlayers(context, "players"), false)))))
+
+
+
                         .then(Commands.literal("clear")
                             .executes(context -> clearRole(context, getDefaultPlayers(context)))
                             .then(Commands.argument("players", EntityArgument.players())
@@ -73,7 +84,7 @@ public class CommandRegisterer {
                                 .executes(context -> setLevel(context, getDefaultPlayers(context), true))
                                 .then(Commands.argument("players", EntityArgument.players())
                                     .executes(context -> setLevel(context, EntityArgument.getPlayers(context, "players"), true)))))
-                        .then(Commands.literal("setNoReset")
+                        .then(Commands.literal("setNoClear")
                             .then(Commands.argument("level", IntegerArgumentType.integer(1))
                                 .executes(context -> setLevel(context, getDefaultPlayers(context), false))
                                 .then(Commands.argument("players", EntityArgument.players())
@@ -206,7 +217,7 @@ public class CommandRegisterer {
         }
     }
 
-    private static int setRole(CommandContext<CommandSourceStack> context, Collection<ServerPlayer> players) {
+    private static int setRole(CommandContext<CommandSourceStack> context, Collection<ServerPlayer> players, boolean resetProgress) {
         try {
             String roleName = StringArgumentType.getString(context, "roleName");
             MainRole role = MainRole.fromCommandName(roleName);
@@ -220,6 +231,11 @@ public class CommandRegisterer {
 
             for (ServerPlayer player : players) {
                 RoleManager.setRole(player, role);
+
+                // setNoClearでないとき
+                if (resetProgress) {
+                    Level.reset(player);
+                }
 
                 String roleCommandName = role.getCommandName();
                 Component roleDisplayName = role.getDisplayName();
