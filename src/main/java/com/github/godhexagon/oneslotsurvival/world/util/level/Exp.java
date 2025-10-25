@@ -13,7 +13,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
 /**
- * メインロールの経験値を管理するユーティリティクラス
+ * 永続化レイヤーを隠し、経験値のルールを提供する。
  *
  * <p>このクラスは、プレイヤーのメインロール経験値を操作するための静的メソッドを提供します。
  * 経験値は「残り経験値」として管理されており、経験値を獲得すると残り経験値が減少します。</p>
@@ -21,7 +21,7 @@ import net.minecraft.world.item.Item;
  * <h2>経験値システムの仕様</h2>
  * <ul>
  *   <li>経験値獲得 = 残り経験値を減算</li>
- *   <li>残り経験値が0以下になると、レベルアップが発生する（別システムで管理）</li>
+ *   <li>残り経験値が0以下になると、レベルアップが発生する</li>
  *   <li>経験値の単位は実数（double）で管理</li>
  * </ul>
  */
@@ -96,7 +96,7 @@ public class Exp {
     /**
      * プレイヤーの経験値を初期化する
      * 
-     * @param player
+     * @param player プレイヤー。
      */
     public static void clear(ServerPlayer player) {
         MainRoleRemainingExp.setRemainingExp(player, LEVEL_EXP);
