@@ -17,14 +17,14 @@ public class CommandRegisterer {
                 .then(ShowStatus.buildAlias("status"))
                 .then(ShowStatus.buildAlias("role"))
                 .then(ShowStatus.buildAlias("level"))
-                .then(ShowStatus.buildAlias("exp"))
+                .then(ShowStatus.buildAlias("xp"))
                 // 管理者向けコマンド（OP権限必要）
                 .then(Commands.literal("admin")
                     .requires(source -> source.hasPermission(2)) // OP レベル 2 が必要
                     .then(ValidityCommands.build())
                     .then(RoleCommands.build())
                     .then(LevelCommands.build())
-                    .then(ExpCommands.build()))
+                    .then(XpCommands.build()))
         );
     }
 }

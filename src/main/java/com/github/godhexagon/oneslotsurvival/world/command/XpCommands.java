@@ -19,10 +19,10 @@ import static com.github.godhexagon.oneslotsurvival.world.command.CommandUtils.g
  * 経験値管理コマンド
  * /oneslot admin exp サブコマンド群
  */
-public class ExpCommands {
+public class XpCommands {
 
     public static LiteralArgumentBuilder<CommandSourceStack> build() {
-        return Commands.literal("exp")
+        return Commands.literal("xp")
             .then(Commands.literal("getRemaining")
                 .executes(context -> getExpStatus(context, getDefaultPlayers(context)))
                 .then(Commands.argument("players", EntityArgument.players())
