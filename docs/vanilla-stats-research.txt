@@ -1,0 +1,229 @@
+
+バニラの統計情報システムを参考にした経験値蓄積の実装方式を調査します。
+Update Todos
+
+バニラの統計情報収集システムを調査する
+
+実装方式の選択肢を整理する
+
+各方式のメリット・デメリットを分析する
+まず、バニラの統計情報システムの実装を調査します。
+Bash
+⎿
+Extract Stats.java from sources JAR
+IN
+jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.21.8-58.1.0_mapped_official_1.21.8\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/stats/Stats.java
+OUT
+0
+Bash
+⎿
+Extract StatsCounter.java from sources JAR
+IN
+jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.21.8-58.1.0_mapped_official_1.21.8\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/stats/StatsCounter.java
+OUT
+0
+Bash
+⎿
+Extract Player.java from sources JAR
+IN
+jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.21.8-58.1.0_mapped_official_1.21.8\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/world/entity/player/Player.java
+OUT
+0
+Read c:\Users\godhe\git\one_slot_survival\net\minecraft\stats\Stats.java, c:\Users\godhe\git\one_slot_survival\net\minecraft\stats\StatsCounter.java
+Read c:\Users\godhe\git\one_slot_survival\net\minecraft\world\entity\player\Player.java (lines 1-200)
+次に、統計情報がどのように更新されているか、具体的なコードを探します。
+Bash
+⎿
+Extract LivingEntity.java from sources JAR
+IN
+jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.21.8-58.1.0_mapped_official_1.21.8\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/world/entity/LivingEntity.java
+OUT
+0
+Grep "awardStat" (in c:\Users\godhe\git\one_slot_survival\net\minecraft\world\entity\player\Player.java)
+⎿
+86 lines of output
+Grep "updateWalkAnimation|travel" (in c:\Users\godhe\git\one_slot_survival\net\minecraft\world\entity\player\Player.java)
+⎿
+28 lines of output
+LivingEntityクラスで移動距離を統計情報に記録している箇所を見つけます。
+Grep "WALK_ONE_CM|SPRINT_ONE_CM|JUMP" (in c:\Users\godhe\git\one_slot_survival\net\minecraft\world\entity)
+⎿
+48 lines of output
+Grep "protected void updateWalkAnimation" (in c:\Users\godhe\git\one_slot_survival\net\minecraft\world\entity)
+⎿
+31 lines of output
+ServerPlayerで統計情報がどう記録されているか確認します。
+Bash
+⎿
+Extract ServerPlayer.java from sources JAR
+IN
+jar -xf "C:\Users\godhe\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.21.8-58.1.0_mapped_official_1.21.8\forge-1.21.8-58.1.0_mapped_official_1.21.8-sources.jar" net/minecraft/server/level/ServerPlayer.java
+OUT
+0
+Grep "awardStat" (in c:\Users\godhe\git\one_slot_survival\net\minecraft\server\level\ServerPlayer.java)
+⎿
+130 lines of output
+次に、Forgeのイベントシステムについて調べます。
+WebSearch
+IN
+{
+  "query": "Minecraft Forge 1.21 player movement events block break place jump attack"
+}
+OUT
+Web search results for query: "Minecraft Forge 1.21 player movement events block break place jump attack"
+
+Links: [{"title":"Block events in forge? (BlockBreak, BlockPlace, Explosions etc) - Modder Support - Forge Forums","url":"https://forums.minecraftforge.net/topic/4664-block-events-in-forge-blockbreak-blockplace-explosions-etc/"},{"title":"Jabelar's Minecraft Forge Modding Tutorials: Minecraft Modding: Event Handling","url":"http://jabelarminecraft.blogspot.com/p/minecraft-forge-172-event-handling.html"},{"title":"Block Interaction - Forge Community Wiki","url":"https://forge.gemwire.uk/wiki/Block_Interaction"},{"title":"Interaction - Forge Documentation","url":"https://docs.minecraftforge.net/en/1.17.x/blocks/interaction/"},{"title":"[Forge][1.7.2] Prevent block breaking [SOLVED] - Modification Development - Minecraft Mods - Mapping and Modding: Java Edition - Minecraft Forum - Minecraft Forum","url":"https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/modification-development/2105049-forge-1-7-2-prevent-block-breaking-solved"},{"title":"Movement - Minecraft Modding with Forge [Book]","url":"https://www.oreilly.com/library/view/minecraft-modding-with/9781491918883/ch05.html"},{"title":"[1.14.4] Block break event? - Modder Support - Forge Forums","url":"https://forums.minecraftforge.net/topic/74989-1144-block-break-event/"},{"title":"Block break event - Modder Support - Forge Forums","url":"https://forums.minecraftforge.net/topic/27274-block-break-event/"},{"title":"How to break blocks as player - Modder Support - Forge Forums","url":"https://forums.minecraftforge.net/topic/74637-how-to-break-blocks-as-player/"},{"title":"Break and Place Blocks as a Player - Modder Support - Forge Forums","url":"https://forums.minecraftforge.net/topic/35679-break-and-place-blocks-as-a-player/"}]
+
+I found information about Minecraft Forge player movement events and block interactions. Here's what the search revealed:
+
+## Player Events in Forge
+
+Forge provides events for various player actions including attacking entities, interacting with blocks and items, entity deaths, and player jumps.
+
+### Jump Events
+The LivingJumpEvent can be used to detect when a player jumps, which fires on both client and server side.
+
+### Block Break Events
+For detecting block breaking, you can use BlockEvent.BreakEvent which provides access to the block state and the player. Block break events are registered with MinecraftForge.EVENT_BUS.register().
+
+### Block Place Events
+The search results mention block placement events exist alongside break events for tracking when players place blocks.
+
+### Attack/Click Events
+For player attacks on blocks, the attack() method is called when a player left-clicks on a block. For entity attacks, you can subscribe to the AttackEntityEvent and check the entity type.
+
+### Movement
+Player movement can be modified through Forge modding, though the search results focused more on tutorials about modifying movement mechanics rather than specific movement detection events.
+
+The results primarily cover older Forge versions (1.7.2-1.17.x). For Minecraft 1.21 specifically, you may need to check the latest Forge documentation as event names and registration methods may have changed.
+Update Todos
+
+バニラの統計情報収集システムを調査する
+
+実装方式の選択肢を整理する
+
+各方式のメリット・デメリットを分析する
+バニラの統計情報システムの調査結果をまとめ、実装方式の選択肢を整理します。
+調査結果
+バニラの統計情報システムは以下のように実装されています:
+バニラの統計情報収集の仕組み
+統計情報の定義 (Stats.java)
+WALK_ONE_CM, SPRINT_ONE_CM, JUMP, BLOCK_MINED, ITEM_USED, MOB_KILLS, DAMAGE_BLOCKED_BY_SHIELD など、多数の統計情報が定義されている
+これらは ResourceLocation または StatType<T> として登録される
+統計情報の記録 (ServerPlayer.java)
+awardStat(Stat<?> stat, int amount) メソッドで統計情報を加算
+以下の箇所で自動的に記録:
+移動距離 (1338-1383行目): doServerTick() で毎tick呼ばれ、移動方式(walk/sprint/crouch/swim/fly等)を判定して記録
+ジャンプ (1448行目): jumpFromGround() をオーバーライドして記録
+ブロック破壊: バニラコードでは直接確認できなかったが、イベント経由
+攻撃/キル (889-896行目): awardKillScore() で記録
+盾で防ぐ: バニラの詳細は未確認だが、統計情報 DAMAGE_BLOCKED_BY_SHIELD が存在
+実装方式の選択肢
+Update Todos
+
+バニラの統計情報収集システムを調査する
+
+実装方式の選択肢を整理する
+
+各方式のメリット・デメリットを分析する
+方式1: Forgeイベントベース
+プレイヤーのアクションを Forge の各種イベントでフックして経験値を付与する。 対応イベント:
+歩行/走行/ジャンプ: LivingEvent.LivingTickEvent または PlayerTickEvent で移動距離を計算
+ブロック破壊: BlockEvent.BreakEvent
+ブロック設置: BlockEvent.EntityPlaceEvent
+アイテム使用: LivingEntityUseItemEvent.Finish
+攻撃: AttackEntityEvent
+キル: LivingDeathEvent (死亡原因がプレイヤーか判定)
+盾で防ぐ: LivingDamageEvent または LivingAttackEvent (盾でブロックしたか判定)
+メリット:
+Forgeの標準的な手法
+MOD間の互換性が高い
+バニラコードに手を加えない
+デメリット:
+イベントごとに個別実装が必要
+移動距離の計算は毎tick呼ばれるため、パフォーマンスに注意が必要
+一部のアクション(盾で防ぐ等)は複雑な条件判定が必要
+方式2: Mixin による awardStat のフック
+バニラの ServerPlayer#awardStat メソッドをMixinでフックし、統計情報の更新を検知して経験値を付与する。 実装概要:
+@Mixin(ServerPlayer.class)
+public class ServerPlayerMixin {
+    @Inject(method = "awardStat", at = @At("TAIL"))
+    private void onAwardStat(Stat<?> stat, int amount, CallbackInfo ci) {
+        // statの種類に応じて経験値を付与
+        if (stat == Stats.WALK_ONE_CM) {
+            // 歩行の経験値付与
+        } else if (stat == Stats.JUMP) {
+            // ジャンプの経験値付与
+        }
+        // ... 他の統計情報も同様
+    }
+}
+メリット:
+バニラの統計システムを再利用できる
+すべてのアクションを一箇所で管理できる
+バニラがすでに実装している判定ロジック(走行/歩行/泳ぎの区別等)をそのまま利用できる
+コード量が少ない
+デメリット:
+Mixinへの依存(すでにプロジェクトで使用中なので問題なし)
+バニラの統計システムに依存するため、バニラの変更に影響を受ける可能性
+方式3: ハイブリッド方式
+一部のアクションはForgeイベント、一部はMixinで実装する。 使い分けの例:
+Forgeイベント: ブロック破壊、ブロック設置、アイテム使用、攻撃、キル
+Mixin: 移動、ジャンプ、盾で防ぐ(バニラの統計を再利用)
+メリット:
+それぞれの手法の利点を活かせる
+Forgeイベントがある場合は標準的な手法で実装できる
+複雑な判定が必要な場合はバニラの実装を再利用できる
+デメリット:
+実装が分散する
+どちらを使うか判断基準が必要
+Update Todos
+
+バニラの統計情報収集システムを調査する
+
+実装方式の選択肢を整理する
+
+各方式のメリット・デメリットを分析する
+推奨方式と判断基準
+推奨: 方式2 (Mixin による awardStat のフック)
+以下の理由から、Mixinによる実装を推奨します:
+実装の簡潔さ: すべてのアクションを一箇所で管理できる
+バニラの実装の再利用: 複雑な判定(走行/歩行/泳ぎ/しゃがみ歩き等の区別)をバニラのロジックに任せられる
+保守性: 新しいアクションを追加する場合も、統計情報の種類を追加するだけで済む
+プロジェクトとの親和性: すでにMixinを使用しているため、新たな依存関係が不要
+パフォーマンス: バニラの統計更新のタイミングで動作するため、余分な処理が発生しない
+実装イメージ
+@Mixin(ServerPlayer.class)
+public class ServerPlayerMixin {
+    @Inject(method = "awardStat", at = @At("TAIL"))
+    private void onAwardStat(Stat<?> stat, int amount, CallbackInfo ci) {
+        ServerPlayer player = (ServerPlayer)(Object)this;
+        
+        // 統計情報に応じて経験値を付与
+        if (stat == Stats.WALK_ONE_CM) {
+            // 歩行距離 100cm = 1ブロック毎に経験値
+            ExperienceManager.addExperience(player, amount / 100.0);
+        } else if (stat == Stats.SPRINT_ONE_CM) {
+            // 走行はより多くの経験値
+            ExperienceManager.addExperience(player, amount / 100.0 * 1.5);
+        } else if (stat == Stats.JUMP) {
+            // ジャンプ1回毎に経験値
+            ExperienceManager.addExperience(player, 1.0);
+        } else if (stat.getType() == Stats.BLOCK_MINED) {
+            // ブロック破壊
+            ExperienceManager.addExperience(player, 5.0);
+        } else if (stat.getType() == Stats.ITEM_USED) {
+            // アイテム使用
+            ExperienceManager.addExperience(player, 2.0);
+        } else if (stat == Stats.MOB_KILLS) {
+            // モブキル
+            ExperienceManager.addExperience(player, 10.0);
+        } else if (stat == Stats.DAMAGE_BLOCKED_BY_SHIELD) {
+            // 盾で防いだダメージ量に応じて
+            ExperienceManager.addExperience(player, amount / 10.0);
+        }
+        // ... 他の統計情報も同様
+    }
+}
+次のステップ
+どの方式で進めるか決めていただければ、実装を開始できます。推奨は**方式2 (Mixin)**ですが、他の方式やハイブリッドでも実装可能です。どの方式で進めますか?
