@@ -64,7 +64,7 @@ public class ShowStatus {
                         .withStyle(ChatFormatting.YELLOW, ChatFormatting.BOLD))
             );
             player.sendSystemMessage(
-                Component.literal("  Remaining EXP: ")
+                Component.literal("  Remaining EXP until the next level: ")
                     .withStyle(ChatFormatting.AQUA)
                     .append(Component.literal(String.format("%.1f", remaining))
                         .withStyle(ChatFormatting.GREEN, ChatFormatting.BOLD))
