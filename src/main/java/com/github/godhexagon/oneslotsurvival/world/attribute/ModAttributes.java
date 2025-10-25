@@ -57,14 +57,14 @@ public class ModAttributes {
     );
 
     /**
-     * プレイヤーのメインロール経験値を表す Attribute
-     * 値: 経験値（double値）、デフォルト = 0.0
+     * プレイヤーのメインロールレベルアップに必要な残り経験値を表す Attribute
+     * 値: 残り経験値（double値）、デフォルト = 0.0
      */
-    public static final RegistryObject<Attribute> MAIN_ROLE_EXP = ATTRIBUTES.register(
-        "main_role_exp",
+    public static final RegistryObject<Attribute> MAIN_ROLE_REMAINING_EXP = ATTRIBUTES.register(
+        "main_role_remaining_exp",
         () -> new RangedAttribute(
-            "attribute.oneslotsurvival.main_role_exp",
-            0.0,  // デフォルト: 経験値0
+            "attribute.oneslotsurvival.main_role_remaining_exp",
+            0.0,  // デフォルト: 残り経験値0
             0.0,  // 最小値
             Double.MAX_VALUE  // 最大値
         ).setSyncable(true)  // 自動的にクライアントと同期

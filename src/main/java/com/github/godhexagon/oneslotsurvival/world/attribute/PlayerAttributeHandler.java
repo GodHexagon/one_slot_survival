@@ -45,9 +45,9 @@ public class PlayerAttributeHandler {
         );
         event.add(
             EntityType.PLAYER,
-            ModAttributes.MAIN_ROLE_EXP.getHolder().orElseThrow(
+            ModAttributes.MAIN_ROLE_REMAINING_EXP.getHolder().orElseThrow(
                 () -> new IllegalStateException(
-                    "MAIN_ROLE_EXP attribute is not registered. " +
+                    "MAIN_ROLE_REMAINING_EXP attribute is not registered. " +
                     "This indicates an issue with DeferredRegister initialization."
                 )
             )
