@@ -49,9 +49,8 @@ public class MainRoleRemainingExp {
      * 自動的に永続化され、クライアントと同期される
      *
      * @param player 変更するプレイヤー
-     * @param remainingExp 設定する残り経験値（0以上）
+     * @param remainingExp 設定する残り経験値
      * @throws IllegalStateException MAIN_ROLE_REMAINING_EXP Attribute が登録されていないか、プレイヤーに存在しない場合
-     * @throws IllegalArgumentException 残り経験値が0未満の場合
      */
     public static void setRemainingExp(ServerPlayer player, double remainingExp) {
 
@@ -63,6 +62,6 @@ public class MainRoleRemainingExp {
             );
         }
 
-        setRemainingExp(player, remainingExp);
+        attribute.setBaseValue(remainingExp);
     }
 }
