@@ -37,9 +37,9 @@ public class SlotRestriction {
 
         // ロールスロット
         if (InventoryDefinition.isRoleSlot(inventoryIndex)) {
-            // プレイヤーがロール無しの状態かどうか
-            if (RoleManager.hasRole(player)) {
                 MainRole role = RoleManager.getRole(player);
+            // プレイヤーのロールが適切かどうか
+            if (SPECIALTY_ITEM_LINEUP.containsKey(role)) {
                 int roleIndex = InventoryDefinition.getRoleSlotIndex(inventoryIndex);
 
                 // すでに解放済みのスロットかどうか
