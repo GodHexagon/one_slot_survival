@@ -1,6 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.world.command;
 
-import com.github.godhexagon.oneslotsurvival.world.util.attribute.MainRoleRemainingExp;
+import com.github.godhexagon.oneslotsurvival.world.util.level.Exp;
 import com.github.godhexagon.oneslotsurvival.world.util.level.Level;
 import com.github.godhexagon.oneslotsurvival.world.util.role.MainRole;
 import com.github.godhexagon.oneslotsurvival.world.util.role.RoleManager;
@@ -36,7 +36,7 @@ public class ShowStatus {
 
             MainRole role = RoleManager.getRole(player);
             int level = Level.getMain(player);
-            double remaining = MainRoleRemainingExp.getRemainingExp(player);
+            double remaining = Exp.getMain(player);
 
             // デザインされたメッセージを送信
             player.sendSystemMessage(

@@ -1,6 +1,5 @@
 package com.github.godhexagon.oneslotsurvival.world.command;
 
-import com.github.godhexagon.oneslotsurvival.world.util.attribute.MainRoleRemainingExp;
 import com.github.godhexagon.oneslotsurvival.world.util.level.Exp;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -41,7 +40,7 @@ public class XpCommands {
     private static int getExpStatus(CommandContext<CommandSourceStack> context, Collection<ServerPlayer> players) {
         try {
             for (ServerPlayer player : players) {
-                double remaining = MainRoleRemainingExp.getRemainingExp(player);
+                double remaining = Exp.getMain(player);
                 context.getSource().sendSuccess(
                     () -> Component.literal("Remaining exp for " + player.getName().getString() + ": " + remaining),
                     false
