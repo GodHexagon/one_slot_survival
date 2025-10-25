@@ -32,82 +32,104 @@ public class CommandRegisterer {
             Commands.literal("oneslot")
                 .then(Commands.literal("admin")
                     .requires(source -> source.hasPermission(2)) // OP レベル 2 が必要
-                    .then(Commands.literal("validity")
-                        .then(Commands.literal("get")
-                            .executes(context -> getOneSlotStatus(context, getDefaultPlayers(context)))
-                            .then(Commands.argument("players", EntityArgument.players())
-                                .executes(context -> getOneSlotStatus(context, EntityArgument.getPlayers(context, "players")))))
-                        .then(Commands.literal("enable")
-                            .executes(context -> setOneSlotMode(context, getDefaultPlayers(context), true))
-                            .then(Commands.argument("players", EntityArgument.players())
-                                .executes(context -> setOneSlotMode(context, EntityArgument.getPlayers(context, "players"), true))))
-                        .then(Commands.literal("disable")
-                            .executes(context -> setOneSlotMode(context, getDefaultPlayers(context), false))
-                            .then(Commands.argument("players", EntityArgument.players())
-                                .executes(context -> setOneSlotMode(context, EntityArgument.getPlayers(context, "players"), false))))
-                        .then(Commands.literal("toggle")
-                            .executes(context -> toggleOneSlotMode(context, getDefaultPlayers(context)))
-                            .then(Commands.argument("players", EntityArgument.players())
-                                .executes(context -> toggleOneSlotMode(context, EntityArgument.getPlayers(context, "players"))))))
-                    .then(Commands.literal("role")
-                        .then(Commands.literal("get")
-                            .executes(context -> getRoleStatus(context, getDefaultPlayers(context)))
-                            .then(Commands.argument("players", EntityArgument.players())
-                                .executes(context -> getRoleStatus(context, EntityArgument.getPlayers(context, "players")))))
-                        .then(Commands.literal("set")
-                            .then(Commands.argument("roleName", StringArgumentType.word())
-                                .executes(context -> setRole(context, getDefaultPlayers(context), true))
-                                .then(Commands.argument("players", EntityArgument.players())
-                                    .executes(context -> setRole(context, EntityArgument.getPlayers(context, "players"), true)))))
-
-
-                                    
-                        .then(Commands.literal("setNoClear")
-                            .then(Commands.argument("roleName", StringArgumentType.word())
-                                .executes(context -> setRole(context, getDefaultPlayers(context), false))
-                                .then(Commands.argument("players", EntityArgument.players())
-                                    .executes(context -> setRole(context, EntityArgument.getPlayers(context, "players"), false)))))
-
-
-
-                        .then(Commands.literal("clear")
-                            .executes(context -> clearRole(context, getDefaultPlayers(context)))
-                            .then(Commands.argument("players", EntityArgument.players())
-                                .executes(context -> clearRole(context, EntityArgument.getPlayers(context, "players"))))))
-                    .then(Commands.literal("level")
-                        .then(Commands.literal("get")
-                            .executes(context -> getLevelStatus(context, getDefaultPlayers(context)))
-                            .then(Commands.argument("players", EntityArgument.players())
-                                .executes(context -> getLevelStatus(context, EntityArgument.getPlayers(context, "players")))))
-                        .then(Commands.literal("set")
-                            .then(Commands.argument("level", IntegerArgumentType.integer(1))
-                                .executes(context -> setLevel(context, getDefaultPlayers(context), true))
-                                .then(Commands.argument("players", EntityArgument.players())
-                                    .executes(context -> setLevel(context, EntityArgument.getPlayers(context, "players"), true)))))
-                        .then(Commands.literal("setNoClear")
-                            .then(Commands.argument("level", IntegerArgumentType.integer(1))
-                                .executes(context -> setLevel(context, getDefaultPlayers(context), false))
-                                .then(Commands.argument("players", EntityArgument.players())
-                                    .executes(context -> setLevel(context, EntityArgument.getPlayers(context, "players"), false)))))
-                        .then(Commands.literal("clear")
-                            .executes(context -> clearLevel(context, getDefaultPlayers(context)))
-                            .then(Commands.argument("players", EntityArgument.players())
-                                .executes(context -> clearLevel(context, EntityArgument.getPlayers(context, "players"))))))
-                    .then(Commands.literal("exp")
-                        .then(Commands.literal("getRemaining")
-                            .executes(context -> getExpStatus(context, getDefaultPlayers(context)))
-                            .then(Commands.argument("players", EntityArgument.players())
-                                .executes(context -> getExpStatus(context, EntityArgument.getPlayers(context, "players")))))
-                        .then(Commands.literal("add")
-                            .then(Commands.argument("amount", DoubleArgumentType.doubleArg(0.0))
-                                .executes(context -> addExp(context, getDefaultPlayers(context)))
-                                .then(Commands.argument("players", EntityArgument.players())
-                                    .executes(context -> addExp(context, EntityArgument.getPlayers(context, "players"))))))
-                        .then(Commands.literal("clear")
-                            .executes(context -> clearExp(context, getDefaultPlayers(context)))
-                            .then(Commands.argument("players", EntityArgument.players())
-                                .executes(context -> clearExp(context, EntityArgument.getPlayers(context, "players")))))))
+                    .then(buildValidityCommands())
+                    .then(buildRoleCommands())
+                    .then(buildLevelCommands())
+                    .then(buildExpCommands()))
         );
+    }
+
+    /**
+     * validity サブコマンド群を構築
+     */
+    private static com.mojang.brigadier.builder.LiteralArgumentBuilder<CommandSourceStack> buildValidityCommands() {
+        return Commands.literal("validity")
+            .then(Commands.literal("get")
+                .executes(context -> getOneSlotStatus(context, getDefaultPlayers(context)))
+                .then(Commands.argument("players", EntityArgument.players())
+                    .executes(context -> getOneSlotStatus(context, EntityArgument.getPlayers(context, "players")))))
+            .then(Commands.literal("enable")
+                .executes(context -> setOneSlotMode(context, getDefaultPlayers(context), true))
+                .then(Commands.argument("players", EntityArgument.players())
+                    .executes(context -> setOneSlotMode(context, EntityArgument.getPlayers(context, "players"), true))))
+            .then(Commands.literal("disable")
+                .executes(context -> setOneSlotMode(context, getDefaultPlayers(context), false))
+                .then(Commands.argument("players", EntityArgument.players())
+                    .executes(context -> setOneSlotMode(context, EntityArgument.getPlayers(context, "players"), false))))
+            .then(Commands.literal("toggle")
+                .executes(context -> toggleOneSlotMode(context, getDefaultPlayers(context)))
+                .then(Commands.argument("players", EntityArgument.players())
+                    .executes(context -> toggleOneSlotMode(context, EntityArgument.getPlayers(context, "players")))));
+    }
+
+    /**
+     * role サブコマンド群を構築
+     */
+    private static com.mojang.brigadier.builder.LiteralArgumentBuilder<CommandSourceStack> buildRoleCommands() {
+        return Commands.literal("role")
+            .then(Commands.literal("get")
+                .executes(context -> getRoleStatus(context, getDefaultPlayers(context)))
+                .then(Commands.argument("players", EntityArgument.players())
+                    .executes(context -> getRoleStatus(context, EntityArgument.getPlayers(context, "players")))))
+            .then(Commands.literal("set")
+                .then(Commands.argument("roleName", StringArgumentType.word())
+                    .executes(context -> setRole(context, getDefaultPlayers(context), true))
+                    .then(Commands.argument("players", EntityArgument.players())
+                        .executes(context -> setRole(context, EntityArgument.getPlayers(context, "players"), true)))))
+            .then(Commands.literal("setNoClear")
+                .then(Commands.argument("roleName", StringArgumentType.word())
+                    .executes(context -> setRole(context, getDefaultPlayers(context), false))
+                    .then(Commands.argument("players", EntityArgument.players())
+                        .executes(context -> setRole(context, EntityArgument.getPlayers(context, "players"), false)))))
+            .then(Commands.literal("clear")
+                .executes(context -> clearRole(context, getDefaultPlayers(context)))
+                .then(Commands.argument("players", EntityArgument.players())
+                    .executes(context -> clearRole(context, EntityArgument.getPlayers(context, "players")))));
+    }
+
+    /**
+     * level サブコマンド群を構築
+     */
+    private static com.mojang.brigadier.builder.LiteralArgumentBuilder<CommandSourceStack> buildLevelCommands() {
+        return Commands.literal("level")
+            .then(Commands.literal("get")
+                .executes(context -> getLevelStatus(context, getDefaultPlayers(context)))
+                .then(Commands.argument("players", EntityArgument.players())
+                    .executes(context -> getLevelStatus(context, EntityArgument.getPlayers(context, "players")))))
+            .then(Commands.literal("set")
+                .then(Commands.argument("level", IntegerArgumentType.integer(1))
+                    .executes(context -> setLevel(context, getDefaultPlayers(context), true))
+                    .then(Commands.argument("players", EntityArgument.players())
+                        .executes(context -> setLevel(context, EntityArgument.getPlayers(context, "players"), true)))))
+            .then(Commands.literal("setNoClear")
+                .then(Commands.argument("level", IntegerArgumentType.integer(1))
+                    .executes(context -> setLevel(context, getDefaultPlayers(context), false))
+                    .then(Commands.argument("players", EntityArgument.players())
+                        .executes(context -> setLevel(context, EntityArgument.getPlayers(context, "players"), false)))))
+            .then(Commands.literal("clear")
+                .executes(context -> clearLevel(context, getDefaultPlayers(context)))
+                .then(Commands.argument("players", EntityArgument.players())
+                    .executes(context -> clearLevel(context, EntityArgument.getPlayers(context, "players")))));
+    }
+
+    /**
+     * exp サブコマンド群を構築
+     */
+    private static com.mojang.brigadier.builder.LiteralArgumentBuilder<CommandSourceStack> buildExpCommands() {
+        return Commands.literal("exp")
+            .then(Commands.literal("getRemaining")
+                .executes(context -> getExpStatus(context, getDefaultPlayers(context)))
+                .then(Commands.argument("players", EntityArgument.players())
+                    .executes(context -> getExpStatus(context, EntityArgument.getPlayers(context, "players")))))
+            .then(Commands.literal("add")
+                .then(Commands.argument("amount", DoubleArgumentType.doubleArg(0.0))
+                    .executes(context -> addExp(context, getDefaultPlayers(context)))
+                    .then(Commands.argument("players", EntityArgument.players())
+                        .executes(context -> addExp(context, EntityArgument.getPlayers(context, "players"))))))
+            .then(Commands.literal("clear")
+                .executes(context -> clearExp(context, getDefaultPlayers(context)))
+                .then(Commands.argument("players", EntityArgument.players())
+                    .executes(context -> clearExp(context, EntityArgument.getPlayers(context, "players")))));
     }
 
     /**
