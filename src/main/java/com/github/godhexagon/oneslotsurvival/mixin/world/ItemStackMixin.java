@@ -84,7 +84,7 @@ public abstract class ItemStackMixin {
 
         // 特定のアイテムだけに限定
         if (this.is(ItemTags.SWORDS) || this.is(ItemTags.PICKAXES) || this.is(ItemTags.AXES)) {
-            double expToAdd = damage * 1;
+            double expToAdd = damage * 0.5;
             Exp.addMain(player, expToAdd);
         }
     }

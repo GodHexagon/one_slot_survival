@@ -82,34 +82,31 @@ public abstract class ServerPlayerMixin {
         // 統計情報に応じて経験値を計算
         if (stat == Stats.CUSTOM.get(Stats.WALK_ONE_CM)) {
             // amountの意味: 歩行距離(cm単位)。100cm = 1ブロック
-            expToAdd = amount * 0.0005;
+            expToAdd = amount * 0.0001;
 
         } else if (stat == Stats.CUSTOM.get(Stats.SPRINT_ONE_CM)) {
             // amountの意味: 走行距離(cm単位)。100cm = 1ブロック
-            expToAdd = amount * 0.0005;
+            expToAdd = amount * 0.0001;
 
         } else if (stat == Stats.CUSTOM.get(Stats.CROUCH_ONE_CM)) {
             // amountの意味: しゃがみ歩行距離(cm単位)。100cm = 1ブロック
-            expToAdd = amount * 0.001;
+            expToAdd = amount * 0.0002;
 
         } else if (stat == Stats.CUSTOM.get(Stats.FLY_ONE_CM)) {
             // amountの意味: 空中移動距離(cm単位)。100cm = 1ブロック
-            // 経験値: 1ブロック移動 = 0.05経験値 → 1cm = 0.0005経験値
-            expToAdd = amount * 0.0005;
+            expToAdd = amount * 0.0001;
 
         } else if (stat == Stats.CUSTOM.get(Stats.DAMAGE_DEALT)) {
             // amountの意味: 与えたダメージ量の10倍 (例: 5.0ダメージ = amount 50)
-            // １０分の１
-            expToAdd = amount * 0.01;
+            expToAdd = amount * 0.002;
 
         } else if (stat == Stats.CUSTOM.get(Stats.DAMAGE_TAKEN)) {
             // amountの意味: 受けたダメージ量の10倍 (例: 5.0ダメージ = amount 50)
-            // 経験値: 1ダメージ受ける = 1.0経験値 → amount 10 = 1.0経験値
-            expToAdd = amount * 0.1;
+            expToAdd = amount * 0.05;
 
         } else if (stat == Stats.CUSTOM.get(Stats.DAMAGE_BLOCKED_BY_SHIELD)) {
             // amountの意味: 盾で防いだダメージ量の10倍 (例: 5.0ダメージ = amount 50)
-            expToAdd = amount * 0.1;
+            expToAdd = amount * 0.05;
         }
 
         // 経験値を加算
