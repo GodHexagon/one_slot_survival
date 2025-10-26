@@ -12,7 +12,8 @@
   ],
   "client": [
     "client.GuiMixin",
-    "client.AbstractContainerScreenMixin"
+    "client.AbstractContainerScreenMixin",
+    "client.ScrollWheelHandlerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
