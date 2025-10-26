@@ -35,6 +35,8 @@ public abstract class GuiMixin {
     // スプライト定数 - ほとんどはバニラを使用、ホットバー背景のみカスタム
     @Unique
     private static final ResourceLocation CUSTOM_HOTBAR_SPRITE = ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "hud/hotbar");
+    @Unique    
+    private static final ResourceLocation HOTBAR_END_SPRITE = ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "hud/hotbar_end");
     @Shadow
     @Final
     private static ResourceLocation HOTBAR_SELECTION_SPRITE;
@@ -154,6 +156,10 @@ public abstract class GuiMixin {
             bottomY, bottomY + 22,
             u0, u1, v0, v1
         );
+
+        // ホットバーの右側の輪郭線がないので、これを上書きで表示
+        // HOTBAR_END_SPRITEは横幅が3px、高さがホットバー背景と同じ
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, HOTBAR_END_SPRITE, hotbarX + bgWidth - 3, bottomY, 3, 22);
 
         // 選択スロットのオーバーレイを描画（選択されたスロットが解放済みの場合のみ）
         int selectedSlot = player.getInventory().getSelectedSlot();
