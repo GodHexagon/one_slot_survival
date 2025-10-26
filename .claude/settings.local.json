@@ -19,13 +19,12 @@
       "Bash(dir /s /b \"c:\\Users\\godhe\\git\\one_slot_survival\\src\\main\\resources\")",
       "Bash(move IForgeItemMixin.java ItemStackMixin.java)",
       "Bash(move \"c:\\Users\\godhe\\git\\one_slot_survival\\src\\main\\java\\com\\github\\godhexagon\\oneslotsurvival\\mixin\\world\\IForgeItemMixin.java\" \"c:\\Users\\godhe\\git\\one_slot_survival\\src\\main\\java\\com\\github\\godhexagon\\oneslotsurvival\\mixin\\world\\ItemStackMixin.java\")",
-      "Bash(cmd /c move:*)",
-      "Bash(dir:*)",
       "Bash(findstr:*)",
       "Bash(cmd /c del \"c:\\Users\\godhe\\git\\one_slot_survival\\src\\main\\java\\com\\github\\godhexagon\\oneslotsurvival\\mixin\\world\\IForgeItemMixin.java\")",
       "Bash(cmd /c \"dir /s /b c:\\Users\\godhe\\git\\one_slot_survival\\src\\main\\java\\com\\github\\godhexagon\\oneslotsurvival\\mixin\\world\")",
       "Bash(./gradlew.bat:*)",
-      "Bash(cmd /c del \"c:\\Users\\godhe\\git\\one_slot_survival\\src\\main\\java\\com\\github\\godhexagon\\oneslotsurvival\\world\\command\\ExpCommand.java\")"
+      "Bash(cmd /c del \"c:\\Users\\godhe\\git\\one_slot_survival\\src\\main\\java\\com\\github\\godhexagon\\oneslotsurvival\\world\\command\\ExpCommand.java\")",
+      "Bash(cmd /c \"dir /s /b net\\minecraftforge\\fml\\ModLoadingContext.java\")"
     ],
     "deny": [],
     "ask": []
