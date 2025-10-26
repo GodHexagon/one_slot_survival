@@ -1,5 +1,6 @@
 package com.github.godhexagon.oneslotsurvival;
 
+import com.github.godhexagon.oneslotsurvival.config.ExpConfig;
 import com.github.godhexagon.oneslotsurvival.world.attribute.ModAttributes;
 import com.github.godhexagon.oneslotsurvival.world.attribute.PlayerAttributeHandler;
 import com.github.godhexagon.oneslotsurvival.world.item.ModItems;
@@ -7,7 +8,10 @@ import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
@@ -29,6 +33,13 @@ public final class OneSlotSurvivalMod {
         // Attribute ハンドラを登録（EntityAttributeModificationEvent は mod bus で発火）
         net.minecraftforge.event.entity.EntityAttributeModificationEvent.getBus(modBusGroup)
             .addListener(PlayerAttributeHandler::onEntityAttributeModification);
+
+        // Config を登録
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ExpConfig.SERVER_SPEC);
+
+        // Config イベントハンドラを登録
+        ModConfigEvent.Loading.getBus(modBusGroup).addListener(ExpConfig::onModConfigEvent);
+        ModConfigEvent.Reloading.getBus(modBusGroup).addListener(ExpConfig::onModConfigEvent);
 
         // mod ローディング用の共通セットアップメソッドを登録
         FMLCommonSetupEvent.getBus(modBusGroup).addListener(this::commonSetup);

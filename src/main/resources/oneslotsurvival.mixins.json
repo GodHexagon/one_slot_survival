@@ -6,11 +6,14 @@
   "minVersion": "0.8",
   "mixins": [
     "world.SlotMixin",
-    "world.InventoryMixin"
+    "world.InventoryMixin",
+    "world.ServerPlayerMixin",
+    "world.ItemStackMixin"
   ],
   "client": [
     "client.GuiMixin",
-    "client.AbstractContainerScreenMixin"
+    "client.AbstractContainerScreenMixin",
+    "client.ScrollWheelHandlerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

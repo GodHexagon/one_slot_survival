@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
@@ -17,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotRestriction;
 import com.github.godhexagon.oneslotsurvival.world.util.player.PlayerModValidity;
 
 /**
@@ -33,6 +35,8 @@ public abstract class GuiMixin {
     // スプライト定数 - ほとんどはバニラを使用、ホットバー背景のみカスタム
     @Unique
     private static final ResourceLocation CUSTOM_HOTBAR_SPRITE = ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "hud/hotbar");
+    @Unique    
+    private static final ResourceLocation HOTBAR_END_SPRITE = ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "hud/hotbar_end");
     @Shadow
     @Final
     private static ResourceLocation HOTBAR_SELECTION_SPRITE;
@@ -49,6 +53,43 @@ public abstract class GuiMixin {
     @Shadow
     @javax.annotation.Nullable
     public abstract Player getCameraPlayer();
+
+    /**
+     * GuiGraphicsのinnerBlitメソッドにアクセスするためのヘルパー
+     * GuiGraphicsは直接Mixinできないため、リフレクションを使用
+     */
+    @Unique
+    private void one_slot_survival$innerBlit(
+        GuiGraphics guiGraphics,
+        ResourceLocation texture,
+        int x0, int x1,
+        int y0, int y1,
+        float u0, float u1,
+        float v0, float v1
+    ) {
+        try {
+            // GuiGraphics.innerBlit()を呼び出す
+            java.lang.reflect.Method method = GuiGraphics.class.getDeclaredMethod(
+                "innerBlit",
+                com.mojang.blaze3d.pipeline.RenderPipeline.class,
+                ResourceLocation.class,
+                int.class, int.class, int.class, int.class,
+                float.class, float.class, float.class, float.class,
+                int.class
+            );
+            method.setAccessible(true);
+            method.invoke(
+                guiGraphics,
+                RenderPipelines.GUI_TEXTURED,
+                texture,
+                x0, x1, y0, y1,
+                u0, u1, v0, v1,
+                -1 // 白色（色調整なし）
+            );
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to call GuiGraphics.innerBlit()", e);
+        }
+    }
 
     /**
      * mod が有効な場合、バニラのホットバーレンダリングをカスタムの単一スロットホットバーに置き換え
@@ -86,49 +127,71 @@ public abstract class GuiMixin {
         int centerX = guiGraphics.guiWidth() / 2;
         int bottomY = guiGraphics.guiHeight() - 22;
 
-        // スロット 1 と 2 の境目が画面中央に来るように調整
-        // バニラ９スロットが４スロットになるので、５スロットの差。半分にすると２．５スロット。スロット１個は20px。
-        // 2.5 * 20 = 50
-        int offsetX = 50;
-        int hotbarX = centerX - 91 + offsetX;
+        // 解放されたスロット数をカウント
+        int slot_count = 1; // 最初のスロットはメインハンドスロットだから必ずある
+        for (int i = 1; i <= 3; i++) { // ロールスロットがレベルによって解放されているか判定
+            if (SlotRestriction.unlockedRoleSlot(i, player)) {
+                slot_count++;
+            }
+        }
 
-        // カスタムホットバー背景（幅 182 ピクセル）を右にシフトしてレンダリング
-        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, CUSTOM_HOTBAR_SPRITE, hotbarX, bottomY, 182, 22);
+        // 背景幅を動的計算: 左右輪郭1px + スロット20px * slot_count + 右輪郭1px = 2 + 20 * slot_count
+        int bgWidth = 2 + 20 * slot_count;
 
-        // Render vanilla selection overlay based on selected slot (0-3)
-        // Selection sprite is -1 from hotbar position and moves 20px per slot
+        // 中央揃え: 背景の中心が画面中央に来るように配置
+        int hotbarX = centerX - bgWidth / 2;
+
+        // カスタムホットバー背景を部分描画（左側のみトリミング）
+        TextureAtlasSprite sprite = this.minecraft.getGuiSprites().getSprite(CUSTOM_HOTBAR_SPRITE);
+        float u0 = sprite.getU0();
+        float u1 = sprite.getU0() + (sprite.getU1() - sprite.getU0()) * bgWidth / 182.0f; // 182pxが元の幅
+        float v0 = sprite.getV0();
+        float v1 = sprite.getV1();
+
+        // innerBlitを使って部分描画
+        this.one_slot_survival$innerBlit(
+            guiGraphics,
+            sprite.atlasLocation(),
+            hotbarX, hotbarX + bgWidth,
+            bottomY, bottomY + 22,
+            u0, u1, v0, v1
+        );
+
+        // ホットバーの右側の輪郭線がないので、これを上書きで表示
+        // HOTBAR_END_SPRITEは横幅が3px、高さがホットバー背景と同じ
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, HOTBAR_END_SPRITE, hotbarX + bgWidth - 3, bottomY, 3, 22);
+
+        // 選択スロットのオーバーレイを描画（選択されたスロットが解放済みの場合のみ）
         int selectedSlot = player.getInventory().getSelectedSlot();
-        if (selectedSlot >= 0 && selectedSlot <= 3) {
+        if (selectedSlot >= 0 && selectedSlot < slot_count) {
             int selectionX = hotbarX - 1 + selectedSlot * 20;
             guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, HOTBAR_SELECTION_SPRITE, selectionX, bottomY - 1, 24, 23);
         }
 
-        // Render vanilla offhand slot if present
+        // オフハンドスロットの背景を描画（アイテムがある場合のみ）
         if (!itemstack.isEmpty()) {
             if (humanoidarm == HumanoidArm.LEFT) {
                 guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, HOTBAR_OFFHAND_LEFT_SPRITE, hotbarX - 29, bottomY - 1, 29, 24);
             } else {
-                guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, HOTBAR_OFFHAND_RIGHT_SPRITE, hotbarX + 182, bottomY - 1, 29, 24);
+                guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, HOTBAR_OFFHAND_RIGHT_SPRITE, hotbarX + bgWidth, bottomY - 1, 29, 24);
             }
         }
 
-        // Render items (0-3)
-        // Using vanilla spacing: each slot is 20 pixels apart with +2 base offset
+        // 解放されたスロットのアイテムのみ描画
         int itemY = guiGraphics.guiHeight() - 16 - 3;
-        // 常に0 ~ 3を表示
-        for (int i = 0; i <= 3; i++) {
-            int itemX = hotbarX + i * 20 + 3; // Vanilla spacing: 20px per slot
+        for (int i = 0; i < slot_count; i++) {
+            int itemX = hotbarX + i * 20 + 3; // バニラの間隔: 20px per slot
             ItemStack selectedItem = player.getInventory().getItem(i);
             this.renderSlot(guiGraphics, itemX, itemY, deltaTracker, player, selectedItem, 1);
         }
 
-        // オフハンドアイテムが存在する場合はレンダリング
+        // オフハンドアイテムを描画（存在する場合）
         if (!itemstack.isEmpty()) {
             int offhandY = guiGraphics.guiHeight() - 16 - 3;
             if (humanoidarm == HumanoidArm.LEFT) {
                 this.renderSlot(guiGraphics, hotbarX - 26, offhandY, deltaTracker, player, itemstack, 2);
             } else {
-                this.renderSlot(guiGraphics, hotbarX + 182 + 10, offhandY, deltaTracker, player, itemstack, 2);
+                this.renderSlot(guiGraphics, hotbarX + bgWidth + 10, offhandY, deltaTracker, player, itemstack, 2);
             }
         }
     }
