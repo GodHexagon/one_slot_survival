@@ -17,9 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # 進捗
 
-直前の成果！: コマンドのエイリアス追加する of レベルアップでロールスロットが自動で解放されるようにする
+直前の成果！: レベルアップでロールスロットが自動で解放されるようにする
 
-実行中: バージョン番号を更新する of レベルアップでロールスロットが自動で解放されるようにする
+実行中: リファクタリング＆UI整備
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
