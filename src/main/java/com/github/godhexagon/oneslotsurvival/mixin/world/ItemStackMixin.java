@@ -83,15 +83,30 @@ public abstract class ItemStackMixin {
             return;
         }
 
-        // 特定のアイテムだけに限定（倍率はconfigから取得）
+        // アイテムタイプごとに経験値倍率を適用
+        double multiplier = 0.0;
+
         if (this.is(ItemTags.SWORDS)) {
-            double expToAdd = damage * ExpConfig.ItemDurability.swords;
-            Exp.addMain(player, expToAdd);
+            multiplier = ExpConfig.ItemDurability.swords;
         } else if (this.is(ItemTags.PICKAXES)) {
-            double expToAdd = damage * ExpConfig.ItemDurability.pickaxes;
-            Exp.addMain(player, expToAdd);
+            multiplier = ExpConfig.ItemDurability.pickaxes;
         } else if (this.is(ItemTags.AXES)) {
-            double expToAdd = damage * ExpConfig.ItemDurability.axes;
+            multiplier = ExpConfig.ItemDurability.axes;
+        } else if (this.is(ItemTags.SHOVELS)) {
+            multiplier = ExpConfig.ItemDurability.shovels;
+        } else if (this.is(ItemTags.HOES)) {
+            multiplier = ExpConfig.ItemDurability.hoes;
+        } else if (this.is(ItemTags.FOOT_ARMOR) || this.is(ItemTags.LEG_ARMOR) ||
+                   this.is(ItemTags.CHEST_ARMOR) || this.is(ItemTags.HEAD_ARMOR)) {
+            multiplier = ExpConfig.ItemDurability.armor;
+        } else {
+            // その他の耐久値を持つアイテム（盾、釣り竿、ハサミなど）
+            multiplier = ExpConfig.ItemDurability.other;
+        }
+
+        // 経験値を付与（倍率が0より大きい場合のみ）
+        if (multiplier > 0.0) {
+            double expToAdd = damage * multiplier;
             Exp.addMain(player, expToAdd);
         }
     }

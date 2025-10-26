@@ -54,6 +54,11 @@ public class ExpConfig {
         public static double swords;
         public static double pickaxes;
         public static double axes;
+        public static double shovels;
+        public static double hoes;
+        public static double armor;
+        public static double shields;
+        public static double other;
     }
 
     /**
@@ -90,6 +95,11 @@ public class ExpConfig {
         ItemDurability.swords = SERVER.itemDurability.swords.get();
         ItemDurability.pickaxes = SERVER.itemDurability.pickaxes.get();
         ItemDurability.axes = SERVER.itemDurability.axes.get();
+        ItemDurability.shovels = SERVER.itemDurability.shovels.get();
+        ItemDurability.hoes = SERVER.itemDurability.hoes.get();
+        ItemDurability.armor = SERVER.itemDurability.armor.get();
+        ItemDurability.shields = SERVER.itemDurability.shields.get();
+        ItemDurability.other = SERVER.itemDurability.other.get();
 
         Other.vanillaExpPoints = SERVER.other.vanillaExpPoints.get();
     }
@@ -174,6 +184,11 @@ public class ExpConfig {
         public final ForgeConfigSpec.DoubleValue swords;
         public final ForgeConfigSpec.DoubleValue pickaxes;
         public final ForgeConfigSpec.DoubleValue axes;
+        public final ForgeConfigSpec.DoubleValue shovels;
+        public final ForgeConfigSpec.DoubleValue hoes;
+        public final ForgeConfigSpec.DoubleValue armor;
+        public final ForgeConfigSpec.DoubleValue shields;
+        public final ForgeConfigSpec.DoubleValue other;
 
         public ItemDurabilityConfig(ForgeConfigSpec.Builder builder) {
             builder.comment("Experience gain rates for item durability loss")
@@ -190,6 +205,26 @@ public class ExpConfig {
             axes = builder
                 .comment("Experience rate per durability point lost on axes")
                 .defineInRange("axes", 0.5, 0.0, 10.0);
+
+            shovels = builder
+                .comment("Experience rate per durability point lost on shovels")
+                .defineInRange("shovels", 0.1, 0.0, 10.0);
+
+            hoes = builder
+                .comment("Experience rate per durability point lost on hoes")
+                .defineInRange("hoes", 0.1, 0.0, 10.0);
+
+            armor = builder
+                .comment("Experience rate per durability point lost on armor pieces")
+                .defineInRange("armor", 0.1, 0.0, 10.0);
+
+            shields = builder
+                .comment("Experience rate per durability point lost on shields")
+                .defineInRange("shields", 0.0, 0.0, 10.0);
+
+            other = builder
+                .comment("Experience rate per durability point lost on other damageable items")
+                .defineInRange("other", 0.1, 0.0, 10.0);
 
             builder.pop();
         }
