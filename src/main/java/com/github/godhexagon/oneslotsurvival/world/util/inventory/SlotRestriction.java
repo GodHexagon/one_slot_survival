@@ -23,6 +23,17 @@ public class SlotRestriction {
     );
 
     /**
+     * プレイヤーのレベルをもとにそのスロットがアンロックされたロールするっとかどうかを返します。
+     * 
+     * @param inventoryIndex inventory index。
+     * @param player インベントリーの所有者。
+     * @return ロールスロットのうち、アンロックされたものであるとき、true。
+     */
+    public static boolean unlockedRoleSlot(int inventoryIndex, Player player) {
+        return InventoryDefinition.isRoleSlot(inventoryIndex) && InventoryDefinition.getRoleSlotIndex(inventoryIndex) < Level.getMain(player) - 1;
+    }
+
+    /**
      * ロールスロットルールにおいて、新しいアイテムの割り当てとして適切か判定します。
      *
      * @param item 新しいアイテム。
@@ -44,7 +55,7 @@ public class SlotRestriction {
                 int roleIndex = InventoryDefinition.getRoleSlotIndex(inventoryIndex);
 
                 // すでに解放済みのスロットかどうか
-                if (roleIndex < Level.getMain(player) - 1) {
+                if (unlockedRoleSlot(inventoryIndex, player)) {
                     return item.isEmpty() || item.is(SPECIALTY_ITEM_LINEUP.get(role).get(roleIndex));
                 } else {
                     return item.isEmpty();
