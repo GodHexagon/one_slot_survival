@@ -1,0 +1,65 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "runClient",
+      "request": "launch",
+      "mainClass": "net.minecraftforge.bootstrap.ForgeBootstrap",
+      "projectName": "one_slot_survival",
+      "cwd": "${workspaceFolder}\\run",
+      "vmArgs": "-Dforge.logging.console.level\u003ddebug -Dnet.minecraftforge.gradle.GradleStart.srg.srg-mcp\u003dC:\\Users\\godhe\\git\\one_slot_survival\\build\\createSrgToMcp\\output.srg -Dmixin.env.remapRefMap\u003dtrue -Dmixin.env.refMapRemappingFile\u003dC:\\Users\\godhe\\git\\one_slot_survival\\build\\createSrgToMcp\\output.srg -Deventbus.api.strictRuntimeChecks\u003dtrue -Dforge.enabledGameTestNamespaces\u003doneslotsurvival -Dforge.enableGameTest\u003dtrue -Djava.net.preferIPv6Addresses\u003dsystem -Xms4G -Xmx4G -XX:+UnlockExperimentalVMOptions -XX:+UseG1GC -XX:G1NewSizePercent\u003d20 -XX:G1ReservePercent\u003d20 -XX:MaxGCPauseMillis\u003d50 -XX:G1HeapRegionSize\u003d16M -XX:HeapDumpPath\u003dMojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump",
+      "args": "--launchTarget forge_userdev_client --version MOD_DEV --assetIndex 26 --assetsDir C:\\Users\\godhe\\.gradle\\caches\\forge_gradle\\assets --gameDir . -mixin.config\u003doneslotsurvival.mixins.json --mixin.config oneslotsurvival.mixins.json",
+      "env": {
+        "MOD_CLASSES": "${workspaceFolder}\\build\\sourcesSets\\main",
+        "MCP_MAPPINGS": "official_1.21.8"
+      },
+      "preLaunchTask": "prepareRunClientCompile"
+    },
+    {
+      "type": "java",
+      "name": "runData",
+      "request": "launch",
+      "mainClass": "net.minecraftforge.bootstrap.ForgeBootstrap",
+      "projectName": "one_slot_survival",
+      "cwd": "${workspaceFolder}\\run-data",
+      "vmArgs": "-Dforge.logging.console.level\u003ddebug -Dnet.minecraftforge.gradle.GradleStart.srg.srg-mcp\u003dC:\\Users\\godhe\\git\\one_slot_survival\\build\\createSrgToMcp\\output.srg -Dmixin.env.remapRefMap\u003dtrue -Dmixin.env.refMapRemappingFile\u003dC:\\Users\\godhe\\git\\one_slot_survival\\build\\createSrgToMcp\\output.srg -Deventbus.api.strictRuntimeChecks\u003dtrue -Djava.net.preferIPv6Addresses\u003dsystem",
+      "args": "--launchTarget forge_userdev_data --assetIndex 26 --assetsDir C:\\Users\\godhe\\.gradle\\caches\\forge_gradle\\assets --gameDir . -mixin.config\u003doneslotsurvival.mixins.json --mod oneslotsurvival --all --output C:\\Users\\godhe\\git\\one_slot_survival\\src\\generated\\resources --existing C:\\Users\\godhe\\git\\one_slot_survival\\src\\main\\resources --mixin.config oneslotsurvival.mixins.json",
+      "env": {
+        "MOD_CLASSES": "${workspaceFolder}\\build\\sourcesSets\\main",
+        "MCP_MAPPINGS": "official_1.21.8"
+      },
+      "preLaunchTask": "prepareRunDataCompile"
+    },
+    {
+      "type": "java",
+      "name": "runGameTestServer",
+      "request": "launch",
+      "mainClass": "net.minecraftforge.bootstrap.ForgeBootstrap",
+      "projectName": "one_slot_survival",
+      "cwd": "${workspaceFolder}\\run",
+      "vmArgs": "-Dforge.logging.console.level\u003ddebug -Dnet.minecraftforge.gradle.GradleStart.srg.srg-mcp\u003dC:\\Users\\godhe\\git\\one_slot_survival\\build\\createSrgToMcp\\output.srg -Dmixin.env.remapRefMap\u003dtrue -Dmixin.env.refMapRemappingFile\u003dC:\\Users\\godhe\\git\\one_slot_survival\\build\\createSrgToMcp\\output.srg -Deventbus.api.strictRuntimeChecks\u003dtrue -Dforge.enabledGameTestNamespaces\u003doneslotsurvival -Djava.net.preferIPv6Addresses\u003dsystem",
+      "args": "--launchTarget forge_userdev_server_gametest --gameDir . -mixin.config\u003doneslotsurvival.mixins.json --mixin.config oneslotsurvival.mixins.json",
+      "env": {
+        "MOD_CLASSES": "${workspaceFolder}\\build\\sourcesSets\\main",
+        "MCP_MAPPINGS": "official_1.21.8"
+      },
+      "preLaunchTask": "prepareRunGameTestServerCompile"
+    },
+    {
+      "type": "java",
+      "name": "runServer",
+      "request": "launch",
+      "mainClass": "net.minecraftforge.bootstrap.ForgeBootstrap",
+      "projectName": "one_slot_survival",
+      "cwd": "${workspaceFolder}\\run",
+      "vmArgs": "-Dforge.logging.console.level\u003ddebug -Dnet.minecraftforge.gradle.GradleStart.srg.srg-mcp\u003dC:\\Users\\godhe\\git\\one_slot_survival\\build\\createSrgToMcp\\output.srg -Dmixin.env.remapRefMap\u003dtrue -Dmixin.env.refMapRemappingFile\u003dC:\\Users\\godhe\\git\\one_slot_survival\\build\\createSrgToMcp\\output.srg -Deventbus.api.strictRuntimeChecks\u003dtrue -Dforge.enabledGameTestNamespaces\u003doneslotsurvival -Dforge.enableGameTest\u003dtrue -Djava.net.preferIPv6Addresses\u003dsystem",
+      "args": "--launchTarget forge_userdev_server --gameDir . -mixin.config\u003doneslotsurvival.mixins.json --nogui --mixin.config oneslotsurvival.mixins.json",
+      "env": {
+        "MOD_CLASSES": "${workspaceFolder}\\build\\sourcesSets\\main",
+        "MCP_MAPPINGS": "official_1.21.8"
+      },
+      "preLaunchTask": "prepareRunServerCompile"
+    }
+  ]
+}
