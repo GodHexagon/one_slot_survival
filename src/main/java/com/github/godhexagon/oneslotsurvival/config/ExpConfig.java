@@ -167,7 +167,7 @@ public class ExpConfig {
 
             damageTaken = builder
                 .comment("Experience rate per 10 damage taken (e.g., 5.0 damage = 50 units)")
-                .defineInRange("damage_taken", 0.05, 0.0, 10.0);
+                .defineInRange("damage_taken", 0.02, 0.0, 10.0);
 
             damageBlockedByShield = builder
                 .comment("Experience rate per 10 damage blocked by shield (e.g., 5.0 damage = 50 units)")
@@ -216,7 +216,7 @@ public class ExpConfig {
 
             armor = builder
                 .comment("Experience rate per durability point lost on armor pieces")
-                .defineInRange("armor", 0.1, 0.0, 10.0);
+                .defineInRange("armor", 0.2, 0.0, 10.0);
 
             shields = builder
                 .comment("Experience rate per durability point lost on shields")
