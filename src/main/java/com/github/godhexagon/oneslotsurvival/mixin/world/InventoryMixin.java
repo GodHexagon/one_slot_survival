@@ -48,6 +48,12 @@ public abstract class InventoryMixin {
         throw new AssertionError();
     }
 
+    @Shadow
+    public abstract int getSuitableHotbarSlot();
+
+    @Shadow
+    public abstract void setSelectedSlot(int slot);
+
     /**
      * アイテム拾得などで呼ばれる add(int, ItemStack) をインターセプトし、
      * ロールスロット制限を適用します。
@@ -264,5 +270,42 @@ public abstract class InventoryMixin {
                 serverplayer.connection.send(inventory.createInventoryUpdatePacket(i));
             }
         }
+    }
+
+    /**
+     * バニラの addAndPickItem メソッドをインターセプトします。
+     * MODが有効なプレイヤーに対しては、処理をキャンセルして独自の処理を実行します。
+     * getFreeSlot() の代わりに one_slot_survival$getFreeSlot を使用することで、
+     * ロールスロット制限に対応した空きスロット探索を行います。
+     */
+    @Inject(method = "addAndPickItem", at = @At("HEAD"), cancellable = true)
+    private void onAddAndPickItem(ItemStack itemStack, CallbackInfo ci) {
+        if (PlayerModValidity.isEffective(this.player)) {
+            ci.cancel();
+            one_slot_survival$roledPlayerAddAndPickItem(itemStack);
+        }
+    }
+
+    /**
+     * バニラの addAndPickItem の完全コピー + ロールスロット対応版。
+     * クリエイティブモードでアイテムを中クリックした際などに、
+     * アイテムをホットバーに追加し、そのスロットを選択します。
+     * ロールスロット制限に対応した空きスロット探索を使用します。
+     *
+     * @param itemStack 追加するアイテム
+     */
+    @Unique
+    private void one_slot_survival$roledPlayerAddAndPickItem(ItemStack itemStack) {
+        Inventory inventory = (Inventory)(Object)this;
+        inventory.setSelectedSlot(inventory.getSuitableHotbarSlot());
+        if (!this.items.get(this.selected).isEmpty()) {
+            // ★ロールスロット対応版を使用
+            int i = this.one_slot_survival$getFreeSlot(itemStack);
+            if (i != -1) {
+                this.items.set(i, this.items.get(this.selected));
+            }
+        }
+
+        this.items.set(this.selected, itemStack);
     }
 }
