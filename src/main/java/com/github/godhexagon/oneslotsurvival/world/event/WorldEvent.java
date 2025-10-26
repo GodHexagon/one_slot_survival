@@ -4,19 +4,26 @@ import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
 import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotRestriction;
 import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotBarrierFilling;
 import com.github.godhexagon.oneslotsurvival.world.util.player.PlayerModValidity;
+import com.github.godhexagon.oneslotsurvival.world.util.role.MainRole;
+import com.github.godhexagon.oneslotsurvival.world.util.role.RoleManager;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingSwapItemsEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.slf4j.Logger;
 
 /**
  * Forge API用サーバー側（Dedicated/Integrated）イベントハンドラー
  */
 @Mod.EventBusSubscriber(modid = OneSlotSurvivalMod.MODID)
 public class WorldEvent {
+    private static final Logger LOGGER = LogUtils.getLogger();
     /**
      * ここでは、プレイヤーに配布されるスロットバリアを常に適切な状態に保つ処理を行っている。
      *
@@ -68,5 +75,45 @@ public class WorldEvent {
         }
 
         return true; // キャンセル
+    }
+
+    /**
+     * プレイヤーのログイン時に、ワールド新規参加者にデフォルトロールを設定する。
+     * <p>
+     * 判定基準: バニラ統計データ PLAY_TIME が 0 の場合、このワールドに初めて参加したと判定
+     * </p>
+     * <p>
+     * この方式により以下の要件を満たす:
+     * <ul>
+     *   <li>ワールドに新規で参加するとき: デフォルト設定を適用 ○</li>
+     *   <li>ディメンション移動: このイベントは発火しない ✖</li>
+     *   <li>既存ワールドに新しくMODを導入したとき: PLAY_TIME > 0 なので適用されない ✖</li>
+     * </ul>
+     * </p>
+     *
+     * @param event Forge API
+     */
+    @SubscribeEvent
+    public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+        // サーバー側のみ処理
+        if (!(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+
+        // PLAY_TIME統計を取得（ティック単位）
+        int playTime = player.getStats().getValue(Stats.CUSTOM.get(Stats.PLAY_TIME));
+
+        // プレイ時間が非常に少ない = このワールドに初めて参加
+        if (playTime < 5) {
+            // ロールが未割り当ての場合のみ設定（念のため二重設定を防ぐ）
+            MainRole currentRoleId = RoleManager.getRole(player);
+            if (currentRoleId == MainRole.UNASSIGNED) {
+                // デフォルトロールとして MINER を設定
+                RoleManager.setRole(player, MainRole.MINER);
+                // デフォルトは有効
+                PlayerModValidity.setEnabled(player, true);                
+                LOGGER.info("Set default values to new player: {}", player.getName().getString());
+            }
+        }
     }
 }
