@@ -19,7 +19,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 直前の成果！: ロール未割当でもホットバーが拡張されているように見える問題を修正する
 
-実行中: リファクタリング＆UI整備
+実行中: 新規ログイン時にデフォルト設定を割り当てるようにする
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
