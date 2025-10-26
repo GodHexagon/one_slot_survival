@@ -17,9 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # 進捗
 
-直前の成果！: Inventoryデバッグ
+直前の成果！: ロール未割当でもホットバーが拡張されているように見える問題を修正する
 
-実行中: ロール未割当でもホットバーが拡張されているように見える問題を修正する
+実行中: リファクタリング＆UI整備
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
