@@ -6,6 +6,8 @@ import com.github.godhexagon.oneslotsurvival.world.command.admin.ValidityCommand
 import com.github.godhexagon.oneslotsurvival.world.command.admin.XpCommands;
 import com.github.godhexagon.oneslotsurvival.world.command.general.ShowStatus;
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 
@@ -17,19 +19,29 @@ public class CommandRegisterer {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
-            Commands.literal("oneslot")
-                // 一般プレイヤー向けコマンド（権限不要）
-                .then(ShowStatus.buildAlias("status"))
-                .then(ShowStatus.buildAlias("role"))
-                .then(ShowStatus.buildAlias("level"))
-                .then(ShowStatus.buildAlias("xp"))
-                // 管理者向けコマンド（OP権限必要）
-                .then(Commands.literal("admin")
-                    .requires(source -> source.hasPermission(2)) // OP レベル 2 が必要
-                    .then(ValidityCommands.build())
-                    .then(RoleCommands.build())
-                    .then(LevelCommands.build())
-                    .then(XpCommands.build()))
+            buildGeneral("oneslot")
+                .then(buildAdmin("admin"))
         );
+        dispatcher.register(buildGeneral("oss"));
+        dispatcher.register(buildAdmin("osa"));
+    }
+
+    private static LiteralArgumentBuilder<CommandSourceStack> buildGeneral(String aliasName) {
+        return Commands.literal(aliasName)
+            // 一般プレイヤー向けコマンド（権限不要）
+            .then(ShowStatus.buildAlias("status"))
+            .then(ShowStatus.buildAlias("role"))
+            .then(ShowStatus.buildAlias("level"))
+            .then(ShowStatus.buildAlias("xp"));
+    }
+    
+    private static LiteralArgumentBuilder<CommandSourceStack> buildAdmin(String aliasName) {
+        return Commands.literal(aliasName)
+            // 管理者向けコマンド（OP権限必要）
+            .requires(source -> source.hasPermission(2)) // OP レベル 2 が必要
+            .then(ValidityCommands.build())
+            .then(RoleCommands.build())
+            .then(LevelCommands.build())
+            .then(XpCommands.build());
     }
 }
