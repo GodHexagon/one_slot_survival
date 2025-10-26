@@ -75,12 +75,13 @@ public class Exp {
         }
 
         double remaining = MainRoleRemainingExp.getRemainingExp(player);
+        double newRemaining = remaining - amount;
 
         // レベルアップ処理
-        if (remaining < 0) {
+        if (newRemaining < 0) {
             int newLevel = MainRoleLevel.getLevel(player) + 1;
             MainRoleLevel.setLevel(player, newLevel);
-            remaining += ExpConfig.levelUpExp;
+            newRemaining += ExpConfig.levelUpExp;
 
             // WARN: この実装は臨時実装。真似してはいけない
             MainRole role = RoleManager.getRole(player);
@@ -110,7 +111,7 @@ public class Exp {
             }
         }
 
-        MainRoleRemainingExp.setRemainingExp(player, remaining - amount);
+        MainRoleRemainingExp.setRemainingExp(player, newRemaining);
     }
 
     /**
