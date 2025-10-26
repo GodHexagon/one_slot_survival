@@ -1,5 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.mixin.world;
 
+import com.github.godhexagon.oneslotsurvival.world.util.inventory.InventoryDefinition;
 import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotRestriction;
 import com.github.godhexagon.oneslotsurvival.world.util.player.PlayerModValidity;
 
@@ -190,6 +191,27 @@ public abstract class InventoryMixin {
                 }
                 cir.setReturnValue(-1);
             }
+        }
+    }
+
+    /**
+     * バニラの getFreeSlot メソッドをインターセプトします。
+     * MODが有効なプレイヤーに対しては、処理をキャンセルして独自の処理を実行します。
+     * 外部から呼ばれた場合、何のアイテムに対しての探索なのかわからないので、仕方なくロールスロットも含めて制限します。
+     */
+    @Inject(method = "getFreeSlot", at = @At("HEAD"), cancellable = true)
+    private void onGetFreeSlot(CallbackInfoReturnable<Integer> cir) {
+        if (PlayerModValidity.isEffective(this.player)) {
+            cir.cancel();
+                
+            for (int i = 0; i < this.items.size(); i++) {
+                if (this.items.get(i).isEmpty() && InventoryDefinition.isRestrictedSlot(i)) {
+                    cir.setReturnValue(i);
+                    return;
+                }
+            }
+
+            cir.setReturnValue(-1);
         }
     }
 
