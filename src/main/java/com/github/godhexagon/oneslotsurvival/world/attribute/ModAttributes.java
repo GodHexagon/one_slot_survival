@@ -22,7 +22,7 @@ public class ModAttributes {
         "mod_enabled",
         () -> new RangedAttribute(
             "attribute.oneslotsurvival.mod_enabled",
-            1.0,  // TODO: 途中でMOD導入することを想定して、デフォルトは無効にする。現在はデバッグを楽にするために有効状態がデフォルト
+            0,  // デフォルトは無効
             0.0,  // 最小値
             1.0   // 最大値
         ).setSyncable(true)  // 自動的にクライアントと同期
