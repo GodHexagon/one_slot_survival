@@ -48,12 +48,6 @@ public abstract class InventoryMixin {
         throw new AssertionError();
     }
 
-    @Shadow
-    public abstract int getSuitableHotbarSlot();
-
-    @Shadow
-    public abstract void setSelectedSlot(int slot);
-
     /**
      * アイテム拾得などで呼ばれる add(int, ItemStack) をインターセプトし、
      * ロールスロット制限を適用します。
