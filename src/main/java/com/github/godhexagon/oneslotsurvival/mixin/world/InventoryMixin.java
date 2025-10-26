@@ -11,9 +11,11 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.server.level.ServerPlayer;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
@@ -59,6 +61,18 @@ public abstract class InventoryMixin {
 
             boolean result = one_slot_survival$roledPlayerAdd(slot, itemStack);
             cir.setReturnValue(result);
+        }
+    }
+
+    /**
+     * インベントリを閉じた際にマウスに保持していたアイテムをインベントリに戻す処理をインターセプト。
+     * ロールスロット制限に対応したメソッドを使用します。
+     */
+    @Inject(method = "placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;Z)V", at = @At("HEAD"), cancellable = true)
+    private void onPlaceItemBackInInventory(ItemStack itemStack, boolean sendPacket, CallbackInfo ci) {
+        if (PlayerModValidity.isEffective(this.player)) {
+            ci.cancel();
+            one_slot_survival$roledPlayerPlaceItemBackInInventory(itemStack, sendPacket);
         }
     }
 
@@ -192,5 +206,36 @@ public abstract class InventoryMixin {
         }
 
         return -1;
+    }
+
+    /**
+     * バニラの placeItemBackInInventory(ItemStack, boolean) のコピー + ロールスロット対応版。
+     * インベントリを閉じた際などに、マウスに保持していたアイテムをインベントリに戻す処理です。
+     * ロールスロット制限に対応したメソッドを使用して、適切なスロットにのみ配置します。
+     * 配置できない場合は、アイテムをドロップします。
+     *
+     * @param itemStack インベントリに戻すアイテム
+     * @param sendPacket クライアントに更新パケットを送信するかどうか
+     */
+    @Unique
+    private void one_slot_survival$roledPlayerPlaceItemBackInInventory(ItemStack itemStack, boolean sendPacket) {
+        while (!itemStack.isEmpty()) {
+            // ロールスロット対応版のメソッドを使用
+            int i = this.one_slot_survival$getSlotWithRemainingSpace(itemStack);
+            if (i == -1) {
+                i = this.one_slot_survival$getFreeSlot(itemStack);
+            }
+
+            if (i == -1) {
+                // 配置できるスロットがない場合はドロップ
+                this.player.drop(itemStack, false);
+                break;
+            }
+
+            int j = itemStack.getMaxStackSize() - this.getItem(i).getCount();
+            if (this.one_slot_survival$roledPlayerAdd(i, itemStack.split(j)) && sendPacket && this.player instanceof ServerPlayer serverplayer) {
+                serverplayer.connection.send(((Inventory)(Object)this).createInventoryUpdatePacket(i));
+            }
+        }
     }
 }
