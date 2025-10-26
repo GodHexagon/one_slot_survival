@@ -62,6 +62,11 @@ public class Exp {
      * @param amount 付与する経験値量（正の数）
      */
     public static void addMain(ServerPlayer player, double amount) {
+        // ロールスロットが許可されていないプレイヤーをはじく
+        if (!RoleManager.hasRole(player)) {
+            return;
+        }
+
         // まだレベルシステムに参加していないプレイヤーは、最初の経験値を設定
         if (MainRoleLevel.getLevel(player) <= Level.UNDEFINED_LEVEL) {
             MainRoleLevel.setLevel(player, 1);
@@ -79,7 +84,7 @@ public class Exp {
 
             // WARN: この実装は臨時実装。真似してはいけない
             MainRole role = RoleManager.getRole(player);
-            // WARN: SPECIALTY_ITEM_LINEUPにないロールはレベルアップシステムに参加しない。これらはそもそも経験値は増やさなくてよい。ただその実装は大変なので出力時にはじく。
+            // SPECIALTY_ITEM_LINEUPにないロールはRoleManager.hasRole(player)がFalseになるはずだけど、一応判定
             if (SlotRestriction.SPECIALTY_ITEM_LINEUP.containsKey(role)) {
                 // レベルアップ祝福メッセージ
                 Component congratsMessage = Component.literal("Congratulations! ")

@@ -1,5 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.mixin.world;
 
+import com.github.godhexagon.oneslotsurvival.world.util.inventory.InventoryDefinition;
 import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotRestriction;
 import com.github.godhexagon.oneslotsurvival.world.util.player.PlayerModValidity;
 
@@ -156,7 +157,8 @@ public abstract class InventoryMixin {
      */
     @Unique
     private int one_slot_survival$roledPlayerAddResource(ItemStack itemStack) {
-        int i = this.one_slot_survival$getSlotWithRemainingSpace(itemStack);
+        Inventory inventory = (Inventory)(Object)this;
+        int i = inventory.getSlotWithRemainingSpace(itemStack);
         if (i == -1) {
             i = this.one_slot_survival$getFreeSlot(itemStack);
         }
@@ -165,27 +167,51 @@ public abstract class InventoryMixin {
     }
 
     /**
-     * バニラの getSlotWithRemainingSpace の完全コピー + ロールスロット対応版。
+     * バニラの getSlotWithRemainingSpace にロールスロット制限を追加します。
      * アイテムをスタックできる余地があるスロットを探します。
      * 優先順位: 1) 選択中のスロット、2) オフハンドスロット(40)、3) その他のスロット
+     * 各スロットがロールスロット制限に適合しているかもチェックします。
      *
      * @param item スタックを探すアイテム
-     * @return スタック可能なスロット番号、見つからない場合は-1
+     * @param cir コールバック情報（戻り値を設定）
      */
-    @Unique
-    public int one_slot_survival$getSlotWithRemainingSpace(ItemStack item) {
-        if (this.hasRemainingSpaceForItem(this.getItem(this.selected), item) && SlotRestriction.isEligibleItemForRoledPlayer(item, this.selected, this.player)) {
-            return this.selected;
-        } else if (this.hasRemainingSpaceForItem(this.getItem(40), item) && SlotRestriction.isEligibleItemForRoledPlayer(item, 40, this.player)) {
-            return 40;
-        } else {
+    @Inject(method = "getSlotWithRemainingSpace", at = @At("HEAD"), cancellable = true)
+    private void onGetSlotWithRemainingSpace(ItemStack item, CallbackInfoReturnable<Integer> cir) {
+        if (PlayerModValidity.isEffective(this.player)) {
+            if (this.hasRemainingSpaceForItem(this.getItem(this.selected), item) && SlotRestriction.isEligibleItemForRoledPlayer(item, this.selected, this.player)) {
+                cir.setReturnValue(this.selected);
+            } else if (this.hasRemainingSpaceForItem(this.getItem(40), item) && SlotRestriction.isEligibleItemForRoledPlayer(item, 40, this.player)) {
+                cir.setReturnValue(40);
+            } else {
+                for (int i = 0; i < this.items.size(); i++) {
+                    if (this.hasRemainingSpaceForItem(this.items.get(i), item) && SlotRestriction.isEligibleItemForRoledPlayer(item, i, this.player)) {
+                        cir.setReturnValue(i);
+                        return;
+                    }
+                }
+                cir.setReturnValue(-1);
+            }
+        }
+    }
+
+    /**
+     * バニラの getFreeSlot メソッドをインターセプトします。
+     * MODが有効なプレイヤーに対しては、処理をキャンセルして独自の処理を実行します。
+     * 外部から呼ばれた場合、何のアイテムに対しての探索なのかわからないので、仕方なくロールスロットも含めて制限します。
+     */
+    @Inject(method = "getFreeSlot", at = @At("HEAD"), cancellable = true)
+    private void onGetFreeSlot(CallbackInfoReturnable<Integer> cir) {
+        if (PlayerModValidity.isEffective(this.player)) {
+            cir.cancel();
+                
             for (int i = 0; i < this.items.size(); i++) {
-                if (this.hasRemainingSpaceForItem(this.items.get(i), item) && SlotRestriction.isEligibleItemForRoledPlayer(item, i, this.player)) {
-                    return i;
+                if (this.items.get(i).isEmpty() && InventoryDefinition.isRestrictedSlot(i)) {
+                    cir.setReturnValue(i);
+                    return;
                 }
             }
 
-            return -1;
+            cir.setReturnValue(-1);
         }
     }
 
@@ -219,9 +245,10 @@ public abstract class InventoryMixin {
      */
     @Unique
     private void one_slot_survival$roledPlayerPlaceItemBackInInventory(ItemStack itemStack, boolean sendPacket) {
+        Inventory inventory = (Inventory)(Object)this;
         while (!itemStack.isEmpty()) {
             // ロールスロット対応版のメソッドを使用
-            int i = this.one_slot_survival$getSlotWithRemainingSpace(itemStack);
+            int i = inventory.getSlotWithRemainingSpace(itemStack);
             if (i == -1) {
                 i = this.one_slot_survival$getFreeSlot(itemStack);
             }
@@ -234,8 +261,45 @@ public abstract class InventoryMixin {
 
             int j = itemStack.getMaxStackSize() - this.getItem(i).getCount();
             if (this.one_slot_survival$roledPlayerAdd(i, itemStack.split(j)) && sendPacket && this.player instanceof ServerPlayer serverplayer) {
-                serverplayer.connection.send(((Inventory)(Object)this).createInventoryUpdatePacket(i));
+                serverplayer.connection.send(inventory.createInventoryUpdatePacket(i));
             }
         }
+    }
+
+    /**
+     * バニラの addAndPickItem メソッドをインターセプトします。
+     * MODが有効なプレイヤーに対しては、処理をキャンセルして独自の処理を実行します。
+     * getFreeSlot() の代わりに one_slot_survival$getFreeSlot を使用することで、
+     * ロールスロット制限に対応した空きスロット探索を行います。
+     */
+    @Inject(method = "addAndPickItem", at = @At("HEAD"), cancellable = true)
+    private void onAddAndPickItem(ItemStack itemStack, CallbackInfo ci) {
+        if (PlayerModValidity.isEffective(this.player)) {
+            ci.cancel();
+            one_slot_survival$roledPlayerAddAndPickItem(itemStack);
+        }
+    }
+
+    /**
+     * バニラの addAndPickItem の完全コピー + ロールスロット対応版。
+     * クリエイティブモードでアイテムを中クリックした際などに、
+     * アイテムをホットバーに追加し、そのスロットを選択します。
+     * ロールスロット制限に対応した空きスロット探索を使用します。
+     *
+     * @param itemStack 追加するアイテム
+     */
+    @Unique
+    private void one_slot_survival$roledPlayerAddAndPickItem(ItemStack itemStack) {
+        Inventory inventory = (Inventory)(Object)this;
+        inventory.setSelectedSlot(inventory.getSuitableHotbarSlot());
+        if (!this.items.get(this.selected).isEmpty()) {
+            // ★ロールスロット対応版を使用
+            int i = this.one_slot_survival$getFreeSlot(itemStack);
+            if (i != -1) {
+                this.items.set(i, this.items.get(this.selected));
+            }
+        }
+
+        this.items.set(this.selected, itemStack);
     }
 }
