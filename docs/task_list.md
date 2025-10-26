@@ -94,6 +94,10 @@
     1. 完了✅|ホットバー選択制限
     1. 完了✅|コマンドのエイリアス追加する
     1. 完了✅|バージョン番号を更新する
+1. Inventoryデバッグ
+    1. getSlotWithRemainingSpaceをインジェクション化
+    1. getFreeSlotを代替用途でインジェクション化
+    1. one_slot_survival$getFreeSlotはone_slot_survival$roledPlayerGetFreeSlotとして、Inventoryで呼び出されるすべてのか所で呼び出すよう変更
 1. リファクタリング＆UI整備
     1. パッケージの依存関係を図表化
     1. パッケージの役割表を作成
