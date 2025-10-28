@@ -79,9 +79,13 @@ public class Exp {
 
         // レベルアップ処理
         if (newRemaining < 0) {
+            // レベルインクリメント
             int newLevel = MainRoleLevel.getLevel(player) + 1;
             MainRoleLevel.setLevel(player, newLevel);
-            newRemaining += ExpConfig.levelUpExp;
+            // 次のレベルは現在のレベルよりたくさんの経験値が必要
+            double nextLevelExp = ExpConfig.levelUpExp * Math.pow(ExpConfig.levelUpIncreaseMultiplier, newLevel - 1);
+            // 今回の経験値増分を考慮して足し算
+            newRemaining += nextLevelExp;
 
             // WARN: この実装は臨時実装。真似してはいけない
             MainRole role = RoleManager.getRole(player);

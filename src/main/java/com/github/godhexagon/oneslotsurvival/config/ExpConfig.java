@@ -33,6 +33,7 @@ public class ExpConfig {
 
     // キャッシュされた値（高速アクセス用）
     public static double levelUpExp;
+    public static double levelUpIncreaseMultiplier;
 
     /**
      * 統計情報ベースの経験値倍率
@@ -83,6 +84,7 @@ public class ExpConfig {
      */
     private static void bakeConfig() {
         levelUpExp = SERVER.levelUpExp.get();
+        levelUpIncreaseMultiplier = SERVER.levelUpIncreaseMultiplier.get();
 
         Stats.walkOneCm = SERVER.stats.walkOneCm.get();
         Stats.sprintOneCm = SERVER.stats.sprintOneCm.get();
@@ -109,6 +111,7 @@ public class ExpConfig {
      */
     public static class ServerConfig {
         public final ForgeConfigSpec.DoubleValue levelUpExp;
+        public final ForgeConfigSpec.DoubleValue levelUpIncreaseMultiplier;
         public final StatsConfig stats;
         public final ItemDurabilityConfig itemDurability;
         public final OtherConfig other;
@@ -119,7 +122,11 @@ public class ExpConfig {
 
             levelUpExp = builder
                 .comment("Experience points required to level up")
-                .defineInRange("level_up_exp", 200.0, 1.0, 100000.0);
+                .defineInRange("level_up_exp", 150.0, 1.0, 100000.0);
+
+            levelUpIncreaseMultiplier = builder
+                .comment("Multiplier for experience required per level (e.g., 1.1 = 10% increase per level)")
+                .defineInRange("level_up_increase_multiplier", 1.3, 1.0, 2.0);
 
             stats = new StatsConfig(builder);
             itemDurability = new ItemDurabilityConfig(builder);
