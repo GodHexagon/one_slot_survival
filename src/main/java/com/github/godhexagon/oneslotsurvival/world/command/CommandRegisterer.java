@@ -19,20 +19,11 @@ public class CommandRegisterer {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
-            buildGeneral("oneslot")
+            ShowStatus.buildAlias("oneslot")
+                .then(ShowStatus.buildAlias("status"))
                 .then(buildAdmin("admin"))
         );
-        dispatcher.register(buildGeneral("oss"));
         dispatcher.register(buildAdmin("osa"));
-    }
-
-    private static LiteralArgumentBuilder<CommandSourceStack> buildGeneral(String aliasName) {
-        return Commands.literal(aliasName)
-            // 一般プレイヤー向けコマンド（権限不要）
-            .then(ShowStatus.buildAlias("status"))
-            .then(ShowStatus.buildAlias("role"))
-            .then(ShowStatus.buildAlias("level"))
-            .then(ShowStatus.buildAlias("xp"));
     }
     
     private static LiteralArgumentBuilder<CommandSourceStack> buildAdmin(String aliasName) {
