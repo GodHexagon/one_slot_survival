@@ -17,9 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # 進捗
 
-直前の成果！: 状態表示コマンドを"oneslot status"及び"oneslot"に変更する
+直前の成果！: コマンドによる経験値初期化がレベルによる変化に適応していない問題を修正する
 
-実行中: コマンドによる経験値初期化がレベルによる変化に適応していない問題を修正する
+実行中: バンドルが使用できない問題を修正する
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
