@@ -5,6 +5,7 @@ import com.github.godhexagon.oneslotsurvival.world.util.player.PlayerModValidity
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.ScrollWheelHandler;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,6 +27,11 @@ public class ScrollWheelHandlerMixin {
     private static void onGetNextScrollWheelSelection(double scrollDelta, int currentSlot, int selectionSize, CallbackInfoReturnable<Integer> cir) {
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
+
+        // インベントリ画面を開いている場合は制限を適用しない
+        if (mc.screen instanceof AbstractContainerScreen) {
+            return;
+        }
 
         if (player != null && PlayerModValidity.isEffective(player)) {
             // 解放されたスロット数をカウント
