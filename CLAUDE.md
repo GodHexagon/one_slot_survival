@@ -19,7 +19,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 直前の成果！: バンドルが使用できない問題を修正する
 
-実行中: 一般プレイヤーによって自身のロールを変更できるようにする
+実行中: RestrictedInventoryScreenをロールスロットに適応させる
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 

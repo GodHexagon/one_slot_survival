@@ -105,6 +105,9 @@
 1. 完了✅|状態表示コマンドを"oneslot status"及び"oneslot"に変更する
 1. 完了✅|コマンドによる経験値初期化がレベルによる変化に適応していない問題を修正する
 1. 完了✅|バンドルが使用できない問題を修正する
+1. RestrictedInventoryScreenをロールスロットに適応させる
+    * リファクタリング
+    * アイテム枠とアイテム表示が変化する
 1. 一般プレイヤーによって自身のロールを変更できるようにする
     * ワールドのロール変更可能性オプションを変更する管理者アクションを追加。
     * 一般プレイヤーコマンド`oneslot changerole to <Role> from <Current Role>`
@@ -130,6 +133,7 @@
 1. それ以外の管理者アクションを追加
 1. 管理者アクションをGUI操作できるようにする。
 1. RestrictedInventoryScreenのリファクタリング＆そのほかすべてのインベントリ画面の表示をカスタム
+    * スロットバリアを削除する
     * 方式案: RestrictedInventoryScreenをリファクタリング＆チェストとかも共通処理化で見た目を制御
         * CreativeModeInventoryScreenを模倣したヘルパークラスを作成する作戦
             * CreativeModeInventoryScreenの完全コピー -> ヘルパーメソッド（public化）でアクセス可能に -> いらない処理を削る・カスタマイズ
