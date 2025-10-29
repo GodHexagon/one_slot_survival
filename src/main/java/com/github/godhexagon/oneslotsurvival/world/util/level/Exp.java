@@ -83,7 +83,7 @@ public class Exp {
             int newLevel = MainRoleLevel.getLevel(player) + 1;
             MainRoleLevel.setLevel(player, newLevel);
             // 次のレベルは現在のレベルよりたくさんの経験値が必要
-            double nextLevelExp = ExpConfig.levelUpExp * Math.pow(ExpConfig.levelUpIncreaseMultiplier, newLevel - 1);
+            double nextLevelExp = getNextLevelExp(newLevel);
             // 今回の経験値増分を考慮して足し算
             newRemaining += nextLevelExp;
 
@@ -124,6 +124,16 @@ public class Exp {
      * @param player プレイヤー。
      */
     public static void clear(ServerPlayer player) {
-        MainRoleRemainingExp.setRemainingExp(player, ExpConfig.levelUpExp);
+        MainRoleRemainingExp.setRemainingExp(player, getNextLevelExp(MainRoleLevel.getLevel(player)));
+    }
+
+    /**
+     * 次のレベルに達するのに必要な経験値量を計算する
+     * 
+     * @param level 現在のレベル
+     * @return 現在のレベルになったばかりの場合、次のレベルになるのに必要な経験値
+     */
+    private static double getNextLevelExp(int level) {
+        return ExpConfig.levelUpExp * Math.pow(ExpConfig.levelUpIncreaseMultiplier, level - 1);
     }
 }
