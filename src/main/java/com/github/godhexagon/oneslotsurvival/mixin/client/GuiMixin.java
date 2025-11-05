@@ -18,8 +18,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotRestriction;
-import com.github.godhexagon.oneslotsurvival.world.util.player.PlayerModValidity;
+import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotRestriction;
+import com.github.godhexagon.oneslotsurvival.rule.player.PlayerModValidity;
 
 /**
  * ここでは、ホットバーレンダリングを改変する

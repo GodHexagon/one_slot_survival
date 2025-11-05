@@ -1,7 +1,7 @@
 package com.github.godhexagon.oneslotsurvival.client.gui;
 
-import com.github.godhexagon.oneslotsurvival.world.util.inventory.InventoryDefinition;
-import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotRestriction;
+import com.github.godhexagon.oneslotsurvival.rule.inventory.InventoryDefinition;
+import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotRestriction;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;

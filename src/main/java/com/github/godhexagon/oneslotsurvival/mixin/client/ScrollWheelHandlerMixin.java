@@ -1,8 +1,5 @@
 package com.github.godhexagon.oneslotsurvival.mixin.client;
 
-import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotRestriction;
-import com.github.godhexagon.oneslotsurvival.world.util.player.PlayerModValidity;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.ScrollWheelHandler;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -11,6 +8,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotRestriction;
+import com.github.godhexagon.oneslotsurvival.rule.player.PlayerModValidity;
 
 /**
  * ScrollWheelHandlerにロールスロット制限を適用するMixin。

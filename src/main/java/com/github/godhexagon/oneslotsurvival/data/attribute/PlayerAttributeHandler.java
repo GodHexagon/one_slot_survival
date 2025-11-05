@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.world.attribute;
+package com.github.godhexagon.oneslotsurvival.data.attribute;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;

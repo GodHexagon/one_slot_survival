@@ -1,11 +1,11 @@
-package com.github.godhexagon.oneslotsurvival.world.util.level;
+package com.github.godhexagon.oneslotsurvival.rule.level;
 
-import com.github.godhexagon.oneslotsurvival.config.ExpConfig;
-import com.github.godhexagon.oneslotsurvival.world.util.attribute.MainRoleLevel;
-import com.github.godhexagon.oneslotsurvival.world.util.attribute.MainRoleRemainingExp;
-import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotRestriction;
-import com.github.godhexagon.oneslotsurvival.world.util.role.MainRole;
-import com.github.godhexagon.oneslotsurvival.world.util.role.RoleManager;
+import com.github.godhexagon.oneslotsurvival.data.config.ExpConfig;
+import com.github.godhexagon.oneslotsurvival.rule.attribute.MainRoleLevel;
+import com.github.godhexagon.oneslotsurvival.rule.attribute.MainRoleRemainingExp;
+import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotRestriction;
+import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
+import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

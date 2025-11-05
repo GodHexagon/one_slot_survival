@@ -1,13 +1,13 @@
-package com.github.godhexagon.oneslotsurvival.world.util.inventory;
+package com.github.godhexagon.oneslotsurvival.rule.inventory;
 
 import java.util.List;
 import java.util.Map;
 
-import com.github.godhexagon.oneslotsurvival.world.item.ModItems;
-import com.github.godhexagon.oneslotsurvival.world.item.ModTags;
-import com.github.godhexagon.oneslotsurvival.world.util.role.MainRole;
-import com.github.godhexagon.oneslotsurvival.world.util.role.RoleManager;
-import com.github.godhexagon.oneslotsurvival.world.util.level.Level;
+import com.github.godhexagon.oneslotsurvival.object.item.ModItems;
+import com.github.godhexagon.oneslotsurvival.object.item.ModTags;
+import com.github.godhexagon.oneslotsurvival.rule.level.Level;
+import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
+import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
 
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;

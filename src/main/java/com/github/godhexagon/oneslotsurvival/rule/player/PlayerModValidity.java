@@ -1,6 +1,6 @@
-package com.github.godhexagon.oneslotsurvival.world.util.player;
+package com.github.godhexagon.oneslotsurvival.rule.player;
 
-import com.github.godhexagon.oneslotsurvival.world.util.attribute.ModEnabled;
+import com.github.godhexagon.oneslotsurvival.rule.attribute.ModEnabled;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;

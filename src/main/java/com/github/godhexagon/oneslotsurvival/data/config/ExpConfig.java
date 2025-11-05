@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.config;
+package com.github.godhexagon.oneslotsurvival.data.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.event.config.ModConfigEvent;

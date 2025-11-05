@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.world.util.role;
+package com.github.godhexagon.oneslotsurvival.rule.role;
 
 import net.minecraft.network.chat.Component;
 

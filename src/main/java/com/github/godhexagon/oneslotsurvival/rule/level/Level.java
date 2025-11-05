@@ -1,6 +1,6 @@
-package com.github.godhexagon.oneslotsurvival.world.util.level;
+package com.github.godhexagon.oneslotsurvival.rule.level;
 
-import com.github.godhexagon.oneslotsurvival.world.util.attribute.MainRoleLevel;
+import com.github.godhexagon.oneslotsurvival.rule.attribute.MainRoleLevel;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;

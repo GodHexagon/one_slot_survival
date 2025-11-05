@@ -1,6 +1,7 @@
-package com.github.godhexagon.oneslotsurvival.world.util.inventory;
+package com.github.godhexagon.oneslotsurvival.rule.inventory;
 
-import com.github.godhexagon.oneslotsurvival.world.item.ModItems;
+import com.github.godhexagon.oneslotsurvival.object.item.ModItems;
+
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
