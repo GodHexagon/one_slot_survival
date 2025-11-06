@@ -26,7 +26,9 @@
       "Bash(cmd /c del \"c:\\Users\\godhe\\git\\one_slot_survival\\src\\main\\java\\com\\github\\godhexagon\\oneslotsurvival\\world\\command\\ExpCommand.java\")",
       "Bash(cmd /c \"dir /s /b net\\minecraftforge\\fml\\ModLoadingContext.java\")",
       "Bash(cmd /c \"cd /d c:\\Users\\godhe\\git\\one_slot_survival && gradlew.bat compileJava\")",
-      "Bash(c:Usersgodhegitone_slot_survivalgradlew.bat compileJava)"
+      "Bash(c:Usersgodhegitone_slot_survivalgradlew.bat compileJava)",
+      "Bash(dir /s /b \"c:\\Users\\godhe\\git\\one_slot_survival\\src\\main\\java\\com\\github\\godhexagon\\oneslotsurvival\")",
+      "Bash(cmd /c \"dir /s /b c:\\Users\\godhe\\git\\one_slot_survival\\src\\main\\java\\com\\github\\godhexagon\\oneslotsurvival\")"
     ],
     "deny": [],
     "ask": []
