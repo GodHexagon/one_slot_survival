@@ -1,6 +1,7 @@
-package com.github.godhexagon.oneslotsurvival.world.util.inventory;
+package com.github.godhexagon.oneslotsurvival.rule.inventory;
 
-import com.github.godhexagon.oneslotsurvival.world.item.ModItems;
+import com.github.godhexagon.oneslotsurvival.object.item.ModItems;
+
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -44,8 +45,10 @@ public class SlotBarrierFilling {
                     continue;
                 }
                 
-                // それ以外の場合はスロットバリアのはずなので、消去
-                inventory.setItem(i, ItemStack.EMPTY);
+                // それ以外の場合は、不適切なスロットバリアの場合のはずだけど、念のため検証してから削除
+                if (item.is(ModItems.SLOT_BARRIER.get())) {
+                    inventory.setItem(i, ItemStack.EMPTY);
+                }
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.world.item;
+package com.github.godhexagon.oneslotsurvival.object.item;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

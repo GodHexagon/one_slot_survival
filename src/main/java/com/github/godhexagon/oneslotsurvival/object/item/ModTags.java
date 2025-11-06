@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.world.item;
+package com.github.godhexagon.oneslotsurvival.object.item;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;

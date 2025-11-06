@@ -1,8 +1,8 @@
 package com.github.godhexagon.oneslotsurvival.world.command.admin;
 
-import com.github.godhexagon.oneslotsurvival.world.util.attribute.MainRoleLevel;
-import com.github.godhexagon.oneslotsurvival.world.util.level.Exp;
-import com.github.godhexagon.oneslotsurvival.world.util.level.Level;
+import com.github.godhexagon.oneslotsurvival.rule.attribute.MainRoleLevel;
+import com.github.godhexagon.oneslotsurvival.rule.level.Exp;
+import com.github.godhexagon.oneslotsurvival.rule.level.Level;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;

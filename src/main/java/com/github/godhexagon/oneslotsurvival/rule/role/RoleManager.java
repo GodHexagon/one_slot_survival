@@ -1,6 +1,7 @@
-package com.github.godhexagon.oneslotsurvival.world.util.role;
+package com.github.godhexagon.oneslotsurvival.rule.role;
 
-import com.github.godhexagon.oneslotsurvival.world.util.attribute.MainRoleId;
+import com.github.godhexagon.oneslotsurvival.rule.attribute.MainRoleId;
+
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
@@ -24,7 +25,7 @@ public class RoleManager {
      * @throws IllegalStateException MAIN_ROLE_ID Attributeが登録されていないか、プレイヤーに存在しない場合
      */
     public static void setRole(ServerPlayer player, MainRole role) {
-        MainRoleId.setRoleId(player, role.getAtttributeId());
+        MainRoleId.setRoleId(player, role.getAttributeId());
     }
 
     /**

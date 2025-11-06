@@ -1,18 +1,13 @@
-package com.github.godhexagon.oneslotsurvival.world.util.level;
+package com.github.godhexagon.oneslotsurvival.rule.level;
 
-import com.github.godhexagon.oneslotsurvival.config.ExpConfig;
-import com.github.godhexagon.oneslotsurvival.world.util.attribute.MainRoleLevel;
-import com.github.godhexagon.oneslotsurvival.world.util.attribute.MainRoleRemainingExp;
-import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotRestriction;
-import com.github.godhexagon.oneslotsurvival.world.util.role.MainRole;
-import com.github.godhexagon.oneslotsurvival.world.util.role.RoleManager;
+import com.github.godhexagon.oneslotsurvival.data.config.ExpConfig;
+import com.github.godhexagon.oneslotsurvival.rule.attribute.MainRoleLevel;
+import com.github.godhexagon.oneslotsurvival.rule.attribute.MainRoleRemainingExp;
+import com.github.godhexagon.oneslotsurvival.rule.role.LevelRewardRegistry;
+import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
 
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 
 /**
  * 永続化レイヤーを隠し、経験値のルールを提供する。
@@ -87,32 +82,8 @@ public class Exp {
             // 今回の経験値増分を考慮して足し算
             newRemaining += nextLevelExp;
 
-            // WARN: この実装は臨時実装。真似してはいけない
-            MainRole role = RoleManager.getRole(player);
-            // SPECIALTY_ITEM_LINEUPにないロールはRoleManager.hasRole(player)がFalseになるはずだけど、一応判定
-            if (SlotRestriction.SPECIALTY_ITEM_LINEUP.containsKey(role)) {
-                // レベルアップ祝福メッセージ
-                Component congratsMessage = Component.literal("Congratulations! ")
-                        .withStyle(ChatFormatting.GOLD)
-                        .append(Component.literal("You've reached Level " + newLevel + "!")
-                                .withStyle(ChatFormatting.YELLOW));
-                player.sendSystemMessage(congratsMessage);
-
-                // 解放されたアイテムタグの通知
-                int roleSlotIndex = newLevel - 2;
-                if (roleSlotIndex >= 0 && roleSlotIndex < SlotRestriction.SPECIALTY_ITEM_LINEUP.get(role).size()) {
-                    TagKey<Item> capableItemTag = SlotRestriction.SPECIALTY_ITEM_LINEUP.get(role).get(roleSlotIndex);
-
-                    String tagName = capableItemTag.location().toString();
-                    Component rewardMessage = Component.literal("Reward: ")
-                            .withStyle(ChatFormatting.GREEN)
-                            .append(Component.literal("New role slot unlocked! ")
-                                    .withStyle(ChatFormatting.WHITE))
-                            .append(Component.literal("[" + tagName + "]")
-                                    .withStyle(ChatFormatting.AQUA));
-                    player.sendSystemMessage(rewardMessage);
-                }
-            }
+            // レベルアップ報酬を付与（LevelRewardRegistryに委譲）
+            LevelRewardRegistry.grantLevelUpReward(player, newLevel);
         }
 
         MainRoleRemainingExp.setRemainingExp(player, newRemaining);

@@ -1,9 +1,9 @@
 package com.github.godhexagon.oneslotsurvival;
 
-import com.github.godhexagon.oneslotsurvival.config.ExpConfig;
-import com.github.godhexagon.oneslotsurvival.world.attribute.ModAttributes;
-import com.github.godhexagon.oneslotsurvival.world.attribute.PlayerAttributeHandler;
-import com.github.godhexagon.oneslotsurvival.world.item.ModItems;
+import com.github.godhexagon.oneslotsurvival.data.attribute.ModAttributes;
+import com.github.godhexagon.oneslotsurvival.data.attribute.PlayerAttributeHandler;
+import com.github.godhexagon.oneslotsurvival.data.config.ExpConfig;
+import com.github.godhexagon.oneslotsurvival.object.item.ModItems;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;

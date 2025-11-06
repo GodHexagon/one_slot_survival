@@ -1,12 +1,11 @@
 package com.github.godhexagon.oneslotsurvival.world.event;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
-import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotRestriction;
-import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotBarrierFilling;
-import com.github.godhexagon.oneslotsurvival.world.util.player.PlayerModValidity;
-import com.github.godhexagon.oneslotsurvival.world.util.role.MainRole;
-import com.github.godhexagon.oneslotsurvival.world.util.role.RoleManager;
-
+import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotBarrierFilling;
+import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotRestriction;
+import com.github.godhexagon.oneslotsurvival.rule.player.PlayerModValidity;
+import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
+import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
 import com.mojang.logging.LogUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;

@@ -1,9 +1,9 @@
 package com.github.godhexagon.oneslotsurvival.world.command.general;
 
-import com.github.godhexagon.oneslotsurvival.world.util.level.Exp;
-import com.github.godhexagon.oneslotsurvival.world.util.level.Level;
-import com.github.godhexagon.oneslotsurvival.world.util.role.MainRole;
-import com.github.godhexagon.oneslotsurvival.world.util.role.RoleManager;
+import com.github.godhexagon.oneslotsurvival.rule.level.Exp;
+import com.github.godhexagon.oneslotsurvival.rule.level.Level;
+import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
+import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.ChatFormatting;

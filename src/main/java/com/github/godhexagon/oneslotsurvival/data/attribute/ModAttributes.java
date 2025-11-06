@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.world.attribute;
+package com.github.godhexagon.oneslotsurvival.data.attribute;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
 import net.minecraft.core.registries.Registries;

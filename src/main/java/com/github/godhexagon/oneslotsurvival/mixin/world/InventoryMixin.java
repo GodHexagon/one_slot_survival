@@ -1,9 +1,5 @@
 package com.github.godhexagon.oneslotsurvival.mixin.world;
 
-import com.github.godhexagon.oneslotsurvival.world.util.inventory.InventoryDefinition;
-import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotRestriction;
-import com.github.godhexagon.oneslotsurvival.world.util.player.PlayerModValidity;
-
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
@@ -18,6 +14,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import com.github.godhexagon.oneslotsurvival.rule.inventory.InventoryDefinition;
+import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotRestriction;
+import com.github.godhexagon.oneslotsurvival.rule.player.PlayerModValidity;
 
 /**
  * Inventoryクラスにロールスロット拾得制限機能を追加するMixin

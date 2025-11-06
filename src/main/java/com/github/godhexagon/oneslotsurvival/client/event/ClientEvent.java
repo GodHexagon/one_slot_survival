@@ -2,8 +2,8 @@ package com.github.godhexagon.oneslotsurvival.client.event;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
 import com.github.godhexagon.oneslotsurvival.client.gui.RestrictedInventoryScreen;
-import com.github.godhexagon.oneslotsurvival.world.item.ModItems;
-import com.github.godhexagon.oneslotsurvival.world.util.player.PlayerModValidity;
+import com.github.godhexagon.oneslotsurvival.object.item.ModItems;
+import com.github.godhexagon.oneslotsurvival.rule.player.PlayerModValidity;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;

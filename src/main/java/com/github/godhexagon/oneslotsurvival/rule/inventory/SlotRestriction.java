@@ -1,26 +1,17 @@
-package com.github.godhexagon.oneslotsurvival.world.util.inventory;
+package com.github.godhexagon.oneslotsurvival.rule.inventory;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
-import com.github.godhexagon.oneslotsurvival.world.item.ModItems;
-import com.github.godhexagon.oneslotsurvival.world.item.ModTags;
-import com.github.godhexagon.oneslotsurvival.world.util.role.MainRole;
-import com.github.godhexagon.oneslotsurvival.world.util.role.RoleManager;
-import com.github.godhexagon.oneslotsurvival.world.util.level.Level;
+import com.github.godhexagon.oneslotsurvival.object.item.ModItems;
+import com.github.godhexagon.oneslotsurvival.rule.level.Level;
+import com.github.godhexagon.oneslotsurvival.rule.role.SlotRegistry;
 
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class SlotRestriction {
-    // WARN: これがpublicなのやばいと思うのでいつか直す
-    public static final Map<MainRole, List<TagKey<Item>>> SPECIALTY_ITEM_LINEUP = Map.of(
-        MainRole.MINER, List.of(ItemTags.PICKAXES, ItemTags.SHOVELS, ItemTags.AXES),
-        MainRole.WARRIOR, List.of(ItemTags.SWORDS, ModTags.Items.WARRIOR_DEFENSIVE, ModTags.Items.WARRIOR_SPECIAL_WEAPONS)
-    );
 
     /**
      * プレイヤーのレベルをもとにそのスロットがアンロックされたロールするっとかどうかを返します。
@@ -49,18 +40,21 @@ public class SlotRestriction {
 
         // ロールスロット
         if (InventoryDefinition.isRoleSlot(inventoryIndex)) {
-            MainRole role = RoleManager.getRole(player);
-            // プレイヤーのロールが適切かどうか
-            if (SPECIALTY_ITEM_LINEUP.containsKey(role)) {
-                int roleIndex = InventoryDefinition.getRoleSlotIndex(inventoryIndex);
+            int roleSlotIndex = InventoryDefinition.getRoleSlotIndex(inventoryIndex);
 
-                // すでに解放済みのスロットかどうか
-                if (unlockedRoleSlot(inventoryIndex, player)) {
-                    return item.isEmpty() || item.is(SPECIALTY_ITEM_LINEUP.get(role).get(roleIndex));
+            // すでに解放済みのスロットかどうか
+            if (unlockedRoleSlot(inventoryIndex, player)) {
+                // 新しいSlotRegistryを使用してアイテムタグを取得
+                Optional<TagKey<Item>> allowedTag = SlotRegistry.getAllowedItemTag(player, roleSlotIndex);
+
+                if (allowedTag.isPresent()) {
+                    return item.isEmpty() || item.is(allowedTag.get());
                 } else {
+                    // ロールスロットを持たないロールの場合は空のみ許可
                     return item.isEmpty();
                 }
             } else {
+                // 未解放スロットは空のみ許可
                 return item.isEmpty();
             }
         }
