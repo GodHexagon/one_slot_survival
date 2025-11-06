@@ -1,6 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.mixin.world;
 
-import com.github.godhexagon.oneslotsurvival.data.config.ExpConfig;
+import com.github.godhexagon.oneslotsurvival.object.config.ExpConfig;
 import com.github.godhexagon.oneslotsurvival.rule.level.Exp;
 import com.github.godhexagon.oneslotsurvival.rule.player.PlayerModValidity;
 

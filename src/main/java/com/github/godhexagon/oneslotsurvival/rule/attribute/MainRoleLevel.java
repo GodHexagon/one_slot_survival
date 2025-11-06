@@ -1,6 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.rule.attribute;
 
-import com.github.godhexagon.oneslotsurvival.data.attribute.ModAttributes;
+import com.github.godhexagon.oneslotsurvival.object.attribute.ModAttributes;
 
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;

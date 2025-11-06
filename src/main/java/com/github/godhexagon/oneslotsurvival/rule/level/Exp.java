@@ -1,6 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.rule.level;
 
-import com.github.godhexagon.oneslotsurvival.data.config.ExpConfig;
+import com.github.godhexagon.oneslotsurvival.object.config.ExpConfig;
 import com.github.godhexagon.oneslotsurvival.rule.attribute.MainRoleLevel;
 import com.github.godhexagon.oneslotsurvival.rule.attribute.MainRoleRemainingExp;
 import com.github.godhexagon.oneslotsurvival.rule.role.LevelRewardRegistry;
