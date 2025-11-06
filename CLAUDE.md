@@ -17,9 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # 進捗
 
-直前の成果！: RestrictedInventoryScreenをロールスロットに適応させる
+直前の成果！: ロール変更可能性設定コマンドを実装 of 一般プレイヤーによって自身のロールを変更できるようにする
 
-実行中: 一般プレイヤーによって自身のロールを変更できるようにする
+実行中: ワールド設定をデフォルトに戻すコマンドを実装 of 一般プレイヤーによって自身のロールを変更できるようにする
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
