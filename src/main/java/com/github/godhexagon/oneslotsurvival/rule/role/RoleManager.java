@@ -25,7 +25,7 @@ public class RoleManager {
      * @throws IllegalStateException MAIN_ROLE_ID Attributeが登録されていないか、プレイヤーに存在しない場合
      */
     public static void setRole(ServerPlayer player, MainRole role) {
-        MainRoleId.setRoleId(player, role.getAtttributeId());
+        MainRoleId.setRoleId(player, role.getAttributeId());
     }
 
     /**
