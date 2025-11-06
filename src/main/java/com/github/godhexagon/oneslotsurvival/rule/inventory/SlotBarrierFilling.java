@@ -45,8 +45,10 @@ public class SlotBarrierFilling {
                     continue;
                 }
                 
-                // それ以外の場合はスロットバリアのはずなので、消去
-                inventory.setItem(i, ItemStack.EMPTY);
+                // それ以外の場合は、不適切なスロットバリアの場合のはずだけど、念のため検証してから削除
+                if (item.is(ModItems.SLOT_BARRIER.get())) {
+                    inventory.setItem(i, ItemStack.EMPTY);
+                }
             }
         }
     }
