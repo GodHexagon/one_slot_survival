@@ -1,8 +1,8 @@
 package com.github.godhexagon.oneslotsurvival.world.command.admin;
 
-import com.github.godhexagon.oneslotsurvival.rule.level.Level;
 import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
 import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
+import com.github.godhexagon.oneslotsurvival.rule.rolechanging.RoleChanging;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
@@ -95,11 +95,11 @@ public class RoleCommands {
             }
 
             for (ServerPlayer player : players) {
-                RoleManager.setRole(player, role);
-
                 // setNoClearでないとき
                 if (resetProgress) {
-                    Level.reset(player);
+                    RoleChanging.change(player, role);
+                } else {
+                    RoleManager.setRole(player, role);
                 }
 
                 String roleCommandName = role.getCommandName();

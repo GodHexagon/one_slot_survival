@@ -3,6 +3,7 @@ package com.github.godhexagon.oneslotsurvival.world.command.admin;
 import com.github.godhexagon.oneslotsurvival.rule.attribute.LevelAttribute;
 import com.github.godhexagon.oneslotsurvival.rule.level.Exp;
 import com.github.godhexagon.oneslotsurvival.rule.level.Level;
+import com.github.godhexagon.oneslotsurvival.rule.level.RoleLeveledUpTimes;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
@@ -95,7 +96,9 @@ public class LevelCommands {
     private static int clearLevel(CommandContext<CommandSourceStack> context, Collection<ServerPlayer> players) {
         try {
             for (ServerPlayer player : players) {
-                Level.reset(player);
+                LevelAttribute.setLevel(player, 1);
+                Exp.clear(player);
+                RoleLeveledUpTimes.resetMain(player);
 
                 context.getSource().sendSuccess(
                     () -> Component.literal("Cleared level for " + player.getName().getString()),

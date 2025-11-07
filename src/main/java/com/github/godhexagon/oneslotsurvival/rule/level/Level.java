@@ -2,7 +2,6 @@ package com.github.godhexagon.oneslotsurvival.rule.level;
 
 import com.github.godhexagon.oneslotsurvival.rule.attribute.LevelAttribute;
 
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -19,15 +18,5 @@ public class Level {
      */
     public static int get(Player player) {
         return Math.max(1, LevelAttribute.getLevel(player));
-    }
-
-    /**
-     * プレイヤーのレベルと経験値の両方を初期化する。
-     * 
-     * @param player プレイヤー。
-     */
-    public static void reset(ServerPlayer player) {
-        LevelAttribute.setLevel(player, UNDEFINED_LEVEL);
-        RoleLeveledUpTimes.resetMain(player);
     }
 }
