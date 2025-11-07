@@ -69,4 +69,18 @@ public class ModAttributes {
             Double.MAX_VALUE  // 最大値
         ).setSyncable(true)  // 自動的にクライアントと同期
     );
+    
+    /**
+     * プレイヤーのメインロールレベルを表す Attribute
+     * 値: レベル（整数値）、デフォルト = 1
+     */
+    public static final RegistryObject<Attribute> MAIN_ROLE_STARTED_LEVEL = ATTRIBUTES.register(
+        "main_role_started_level",
+        () -> new RangedAttribute(
+            "attribute.oneslotsurvival.main_role_started_level",
+            1,  // デフォルト
+            1.0,  // 最小値
+            Double.MAX_VALUE  // 最大値（レベル上限）
+        ).setSyncable(true)  // 自動的にクライアントと同期
+    );
 }
