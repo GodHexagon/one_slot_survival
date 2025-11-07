@@ -49,7 +49,6 @@ public class MainRoleStartedLevel {
      * @param player 変更するプレイヤー
      * @param level 設定するレベル（1以上）
      * @throws IllegalStateException MAIN_ROLE_LEVEL Attribute が登録されていないか、プレイヤーに存在しない場合
-     * @throws IllegalArgumentException レベルが1未満の場合
      */
     public static void set(ServerPlayer player, int level) {
 
@@ -61,10 +60,6 @@ public class MainRoleStartedLevel {
             );
         }
 
-        if (level > 0) {
-            attribute.setBaseValue(level);
-        } else {
-            attribute.setBaseValue(1);
-        }
+        attribute.setBaseValue(level);
     }
 }

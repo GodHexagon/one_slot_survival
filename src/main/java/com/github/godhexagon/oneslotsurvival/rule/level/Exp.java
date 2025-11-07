@@ -66,6 +66,7 @@ public class Exp {
         if (LevelAttribute.getLevel(player) <= Level.UNDEFINED_LEVEL) {
             LevelAttribute.setLevel(player, 1);
             RemainingExpAttribute.setRemainingExp(player, ExpConfig.levelUpExp - amount);
+            // TODO: MainRoleStartedLevelを操作してレベル1を記録
             return;
         }
 

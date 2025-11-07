@@ -2,6 +2,7 @@ package com.github.godhexagon.oneslotsurvival.world.command;
 
 import com.github.godhexagon.oneslotsurvival.world.command.admin.LevelCommands;
 import com.github.godhexagon.oneslotsurvival.world.command.admin.RoleCommands;
+import com.github.godhexagon.oneslotsurvival.world.command.admin.RoleLeveledUpTimesCommands;
 import com.github.godhexagon.oneslotsurvival.world.command.admin.ValidityCommands;
 import com.github.godhexagon.oneslotsurvival.world.command.admin.XpCommands;
 import com.github.godhexagon.oneslotsurvival.world.command.general.ShowStatus;
@@ -33,6 +34,7 @@ public class CommandRegisterer {
             .then(ValidityCommands.build())
             .then(RoleCommands.build())
             .then(LevelCommands.build())
-            .then(XpCommands.build());
+            .then(XpCommands.build())
+            .then(RoleLeveledUpTimesCommands.build());
     }
 }
