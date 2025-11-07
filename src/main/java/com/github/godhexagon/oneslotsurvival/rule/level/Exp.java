@@ -29,7 +29,7 @@ public class Exp {
      * @param player プレイヤー。
      * @return 次のレベルアップまでの残り経験値。
      */
-    public static double getMain(Player player) {
+    public static double get(Player player) {
         // まだレベルシステムに参加していないプレイヤーは、最初の経験値を設定
         if (LevelAttribute.getLevel(player) <= Level.UNDEFINED_LEVEL) {
             return ExpConfig.levelUpExp;
@@ -56,7 +56,7 @@ public class Exp {
      * @param player 経験値を付与するプレイヤー
      * @param amount 付与する経験値量（正の数）
      */
-    public static void addMain(ServerPlayer player, double amount) {
+    public static void add(ServerPlayer player, double amount) {
         // ロールスロットが許可されていないプレイヤーをはじく
         if (!RoleManager.hasRole(player)) {
             return;

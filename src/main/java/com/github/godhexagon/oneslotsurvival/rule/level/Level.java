@@ -17,7 +17,7 @@ public class Level {
      * @param player プレイヤー。
      * @return レベル。
      */
-    public static int getMain(Player player) {
+    public static int get(Player player) {
         return Math.max(1, LevelAttribute.getLevel(player));
     }
 

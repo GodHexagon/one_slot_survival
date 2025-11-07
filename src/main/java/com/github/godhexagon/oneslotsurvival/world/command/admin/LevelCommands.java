@@ -47,7 +47,7 @@ public class LevelCommands {
     private static int getLevelStatus(CommandContext<CommandSourceStack> context, Collection<ServerPlayer> players) {
         try {
             for (ServerPlayer player : players) {
-                int level = Level.getMain(player);
+                int level = Level.get(player);
                 context.getSource().sendSuccess(
                     () -> Component.literal("Level for " + player.getName().getString() + ": " + level),
                     false

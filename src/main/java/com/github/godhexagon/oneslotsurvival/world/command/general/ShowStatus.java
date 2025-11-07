@@ -35,8 +35,8 @@ public class ShowStatus {
             }
 
             MainRole role = RoleManager.getRole(player);
-            int level = Level.getMain(player);
-            double remaining = Exp.getMain(player);
+            int level = Level.get(player);
+            double remaining = Exp.get(player);
 
             // デザインされたメッセージを送信
             player.sendSystemMessage(

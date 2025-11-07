@@ -60,7 +60,7 @@ public abstract class ServerPlayerMixin {
         }
 
         // バニラの経験値1ポイント = メインロールの経験値として加算（倍率はconfigで設定可能）
-        Exp.addMain(player, experiencePoints * ExpConfig.Other.vanillaExpPoints);
+        Exp.add(player, experiencePoints * ExpConfig.Other.vanillaExpPoints);
     }
 
     /**
@@ -113,7 +113,7 @@ public abstract class ServerPlayerMixin {
 
         // 経験値を加算
         if (expToAdd > 0) {
-            Exp.addMain(player, expToAdd);
+            Exp.add(player, expToAdd);
         }
     }
 }

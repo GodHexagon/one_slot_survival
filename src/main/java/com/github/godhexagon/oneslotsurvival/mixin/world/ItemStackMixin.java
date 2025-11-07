@@ -108,7 +108,7 @@ public abstract class ItemStackMixin {
         // 経験値を付与（倍率が0より大きい場合のみ）
         if (multiplier > 0.0) {
             double expToAdd = damage * multiplier;
-            Exp.addMain(player, expToAdd);
+            Exp.add(player, expToAdd);
         }
     }
 }
