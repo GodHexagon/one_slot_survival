@@ -116,7 +116,8 @@
     1. 完了✅|スロット解放状況の効果を実装
     1. 完了✅|ロール変更共通ロジックを実装＆role setコマンドに適用
     1. 完了✅|プレイヤー初期化処理系を整理する
-    1. ロール変更一般プレイヤーコマンドを実装: `oneslot changerole to <Role> from <Current Role>`
+    1. ロール変更一般プレイヤーコマンドを実装: `oneslot changerole <Role>`
+    1. changeroleコマンドは2回実行しないと実行できないように変更する
     1. `oneslot status`コマンドの表示を見直し
     1. 情報閲覧一般コマンド作成
         - `role list`: ロール一覧
