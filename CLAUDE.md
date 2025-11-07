@@ -19,7 +19,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 直前の成果！: スロット解放状況の効果を実装 of 一般プレイヤーによって自身のロールを変更できるようにする
 
-実行中: ロール変更一般プレイヤーコマンドを実装 of 一般プレイヤーによって自身のロールを変更できるようにする
+実行中: ロール変更共通ロジックを実装＆role setコマンドに適用 of 一般プレイヤーによって自身のロールを変更できるようにする
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
