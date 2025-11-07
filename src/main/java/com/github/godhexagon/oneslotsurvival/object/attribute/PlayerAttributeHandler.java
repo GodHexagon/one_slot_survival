@@ -36,7 +36,7 @@ public class PlayerAttributeHandler {
         );
         event.add(
             EntityType.PLAYER,
-            ModAttributes.MAIN_ROLE_LEVEL.getHolder().orElseThrow(
+            ModAttributes.LEVEL.getHolder().orElseThrow(
                 () -> new IllegalStateException(
                     "MAIN_ROLE_LEVEL attribute is not registered. " +
                     "This indicates an issue with DeferredRegister initialization."
@@ -45,7 +45,7 @@ public class PlayerAttributeHandler {
         );
         event.add(
             EntityType.PLAYER,
-            ModAttributes.MAIN_ROLE_REMAINING_EXP.getHolder().orElseThrow(
+            ModAttributes.REMAINING_EXP.getHolder().orElseThrow(
                 () -> new IllegalStateException(
                     "MAIN_ROLE_REMAINING_EXP attribute is not registered. " +
                     "This indicates an issue with DeferredRegister initialization."

@@ -1,6 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.world.command.admin;
 
-import com.github.godhexagon.oneslotsurvival.rule.attribute.MainRoleLevel;
+import com.github.godhexagon.oneslotsurvival.rule.attribute.LevelAttribute;
 import com.github.godhexagon.oneslotsurvival.rule.level.Exp;
 import com.github.godhexagon.oneslotsurvival.rule.level.Level;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -66,7 +66,7 @@ public class LevelCommands {
             int level = IntegerArgumentType.getInteger(context, "level");
 
             for (ServerPlayer player : players) {
-                MainRoleLevel.setLevel(player, level);
+                LevelAttribute.setLevel(player, level);
                 if (resetExp) {
                     Exp.clear(player);
                 }

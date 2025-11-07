@@ -1,8 +1,8 @@
 package com.github.godhexagon.oneslotsurvival.rule.level;
 
 import com.github.godhexagon.oneslotsurvival.object.config.ExpConfig;
-import com.github.godhexagon.oneslotsurvival.rule.attribute.MainRoleLevel;
-import com.github.godhexagon.oneslotsurvival.rule.attribute.MainRoleRemainingExp;
+import com.github.godhexagon.oneslotsurvival.rule.attribute.LevelAttribute;
+import com.github.godhexagon.oneslotsurvival.rule.attribute.RemainingExpAttribute;
 import com.github.godhexagon.oneslotsurvival.rule.role.LevelRewardRegistry;
 import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
 
@@ -31,11 +31,11 @@ public class Exp {
      */
     public static double getMain(Player player) {
         // まだレベルシステムに参加していないプレイヤーは、最初の経験値を設定
-        if (MainRoleLevel.getLevel(player) <= Level.UNDEFINED_LEVEL) {
+        if (LevelAttribute.getLevel(player) <= Level.UNDEFINED_LEVEL) {
             return ExpConfig.levelUpExp;
         }
 
-        return MainRoleRemainingExp.getRemainingExp(player);
+        return RemainingExpAttribute.getRemainingExp(player);
     }
 
     /**
@@ -63,20 +63,20 @@ public class Exp {
         }
 
         // まだレベルシステムに参加していないプレイヤーは、最初の経験値を設定
-        if (MainRoleLevel.getLevel(player) <= Level.UNDEFINED_LEVEL) {
-            MainRoleLevel.setLevel(player, 1);
-            MainRoleRemainingExp.setRemainingExp(player, ExpConfig.levelUpExp - amount);
+        if (LevelAttribute.getLevel(player) <= Level.UNDEFINED_LEVEL) {
+            LevelAttribute.setLevel(player, 1);
+            RemainingExpAttribute.setRemainingExp(player, ExpConfig.levelUpExp - amount);
             return;
         }
 
-        double remaining = MainRoleRemainingExp.getRemainingExp(player);
+        double remaining = RemainingExpAttribute.getRemainingExp(player);
         double newRemaining = remaining - amount;
 
         // レベルアップ処理
         if (newRemaining < 0) {
             // レベルインクリメント
-            int newLevel = MainRoleLevel.getLevel(player) + 1;
-            MainRoleLevel.setLevel(player, newLevel);
+            int newLevel = LevelAttribute.getLevel(player) + 1;
+            LevelAttribute.setLevel(player, newLevel);
             // 次のレベルは現在のレベルよりたくさんの経験値が必要
             double nextLevelExp = getNextLevelExp(newLevel);
             // 今回の経験値増分を考慮して足し算
@@ -86,7 +86,7 @@ public class Exp {
             LevelRewardRegistry.grantLevelUpReward(player, newLevel);
         }
 
-        MainRoleRemainingExp.setRemainingExp(player, newRemaining);
+        RemainingExpAttribute.setRemainingExp(player, newRemaining);
     }
 
     /**
@@ -95,7 +95,7 @@ public class Exp {
      * @param player プレイヤー。
      */
     public static void clear(ServerPlayer player) {
-        MainRoleRemainingExp.setRemainingExp(player, getNextLevelExp(MainRoleLevel.getLevel(player)));
+        RemainingExpAttribute.setRemainingExp(player, getNextLevelExp(LevelAttribute.getLevel(player)));
     }
 
     /**

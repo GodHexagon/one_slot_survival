@@ -1,6 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.rule.level;
 
-import com.github.godhexagon.oneslotsurvival.rule.attribute.MainRoleLevel;
+import com.github.godhexagon.oneslotsurvival.rule.attribute.LevelAttribute;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -18,7 +18,7 @@ public class Level {
      * @return レベル。
      */
     public static int getMain(Player player) {
-        return Math.max(1, MainRoleLevel.getLevel(player));
+        return Math.max(1, LevelAttribute.getLevel(player));
     }
 
     /**
@@ -27,6 +27,6 @@ public class Level {
      * @param player プレイヤー。
      */
     public static void reset(ServerPlayer player) {
-        MainRoleLevel.setLevel(player, UNDEFINED_LEVEL);
+        LevelAttribute.setLevel(player, UNDEFINED_LEVEL);
     }
 }
