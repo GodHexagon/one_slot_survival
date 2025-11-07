@@ -3,7 +3,7 @@ package com.github.godhexagon.oneslotsurvival.rule.inventory;
 import java.util.Optional;
 
 import com.github.godhexagon.oneslotsurvival.object.item.ModItems;
-import com.github.godhexagon.oneslotsurvival.rule.level.Level;
+import com.github.godhexagon.oneslotsurvival.rule.level.RoleLeveledUpTimes;
 import com.github.godhexagon.oneslotsurvival.rule.role.SlotRegistry;
 
 import net.minecraft.tags.TagKey;
@@ -21,7 +21,7 @@ public class SlotRestriction {
      * @return ロールスロットのうち、アンロックされたものであるとき、true。
      */
     public static boolean unlockedRoleSlot(int inventoryIndex, Player player) {
-        return InventoryDefinition.isRoleSlot(inventoryIndex) && InventoryDefinition.getRoleSlotIndex(inventoryIndex) < Level.getMain(player) - 1;
+        return InventoryDefinition.isRoleSlot(inventoryIndex) && InventoryDefinition.getRoleSlotIndex(inventoryIndex) < RoleLeveledUpTimes.getMain(player);
     }
 
     /**

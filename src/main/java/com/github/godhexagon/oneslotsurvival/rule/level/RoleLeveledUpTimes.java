@@ -33,6 +33,6 @@ public class RoleLeveledUpTimes {
      * @param player プレイヤー。
      */
     public static void resetMain(ServerPlayer player) {
-        LevelAttribute.setLevel(player, LevelAttribute.getLevel(player));
+        MainRoleStartedLevel.set(player, LevelAttribute.getLevel(player));
     }
 }

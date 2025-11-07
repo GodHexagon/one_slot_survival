@@ -65,8 +65,8 @@ public class Exp {
         // まだレベルシステムに参加していないプレイヤーは、最初の経験値を設定
         if (LevelAttribute.getLevel(player) <= Level.UNDEFINED_LEVEL) {
             LevelAttribute.setLevel(player, 1);
+            RoleLeveledUpTimes.resetMain(player);
             RemainingExpAttribute.setRemainingExp(player, ExpConfig.levelUpExp - amount);
-            // TODO: MainRoleStartedLevelを操作してレベル1を記録
             return;
         }
 

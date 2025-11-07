@@ -28,5 +28,6 @@ public class Level {
      */
     public static void reset(ServerPlayer player) {
         LevelAttribute.setLevel(player, UNDEFINED_LEVEL);
+        RoleLeveledUpTimes.resetMain(player);
     }
 }
