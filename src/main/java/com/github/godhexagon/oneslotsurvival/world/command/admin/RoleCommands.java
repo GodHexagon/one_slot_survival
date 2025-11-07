@@ -6,6 +6,7 @@ import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -22,6 +23,19 @@ import java.util.Collection;
  */
 public class RoleCommands {
 
+    /**
+     * ロール名の補完候補を提供するサジェスチョンプロバイダー
+     */
+    private static final SuggestionProvider<CommandSourceStack> ROLE_SUGGESTIONS = (context, builder) -> {
+        // ERRORを除く全てのロールのコマンド名を補完候補として提供
+        for (MainRole role : MainRole.values()) {
+            if (role != MainRole.ERROR) {
+                builder.suggest(role.getCommandName());
+            }
+        }
+        return builder.buildFuture();
+    };
+
     public static LiteralArgumentBuilder<CommandSourceStack> build() {
         return Commands.literal("role")
             .then(Commands.literal("get")
@@ -30,11 +44,13 @@ public class RoleCommands {
                     .executes(context -> getRoleStatus(context, EntityArgument.getPlayers(context, "players")))))
             .then(Commands.literal("set")
                 .then(Commands.argument("roleName", StringArgumentType.word())
+                    .suggests(ROLE_SUGGESTIONS)
                     .executes(context -> setRole(context, getDefaultPlayers(context), true))
                     .then(Commands.argument("players", EntityArgument.players())
                         .executes(context -> setRole(context, EntityArgument.getPlayers(context, "players"), true)))))
             .then(Commands.literal("setNoClear")
                 .then(Commands.argument("roleName", StringArgumentType.word())
+                    .suggests(ROLE_SUGGESTIONS)
                     .executes(context -> setRole(context, getDefaultPlayers(context), false))
                     .then(Commands.argument("players", EntityArgument.players())
                         .executes(context -> setRole(context, EntityArgument.getPlayers(context, "players"), false)))))
