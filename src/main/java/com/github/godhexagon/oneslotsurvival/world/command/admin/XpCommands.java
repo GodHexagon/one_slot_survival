@@ -1,6 +1,7 @@
 package com.github.godhexagon.oneslotsurvival.world.command.admin;
 
 import com.github.godhexagon.oneslotsurvival.rule.level.Exp;
+import com.github.godhexagon.oneslotsurvival.world.util.PlayerProgress;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
@@ -59,7 +60,7 @@ public class XpCommands {
             double amount = DoubleArgumentType.getDouble(context, "amount");
 
             for (ServerPlayer player : players) {
-                Exp.add(player, amount);
+                PlayerProgress.recieveExp(player, amount);
 
                 context.getSource().sendSuccess(
                     () -> Component.literal("Added " + amount + " exp to " + player.getName().getString()),

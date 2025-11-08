@@ -1,97 +1,115 @@
 package com.github.godhexagon.oneslotsurvival.rule.role;
 
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import com.github.godhexagon.oneslotsurvival.rule.level.RoleLeveledUpTimes;
+
 /**
- * レベルアップ報酬の管理を担当するレジストリ
+ * レベルアップ報酬のデータ管理を担当するレジストリ
  * <p>
- * このクラスは、レベルアップ時のメッセージ送信やスロット解放の通知など、
- * レベルアップに関連する報酬処理を一元管理します。
+ * このクラスは、レベルアップ報酬のデータ提供のみを担当します。
+ * UI表示やメッセージ送信は、UI層（LevelRewardNotifier等）が担当します。
+ * データ層とUI層を分離することで、単一責任の原則に従い、保守性を向上させます。
  * </p>
  */
 public class LevelRewardRegistry {
 
     /**
-     * レベルアップ時の報酬を付与
+     * 指定されたロールスロットで許可されるアイテムタグを取得
      * <p>
-     * プレイヤーがレベルアップした際に、祝福メッセージと
-     * 解放されたスロットの情報を送信します。
+     * プレイヤーのロールとスロットインデックスから、そのスロットで使用可能な
+     * アイテムタグを返します。
      * </p>
      *
-     * @param player レベルアップしたプレイヤー
-     * @param newLevel 到達した新しいレベル
+     * @param player プレイヤー
+     * @param roleSlotIndex ロールスロットのインデックス（0から始まる）
+     * @return 許可されるアイテムタグ。ロールがスロットを持たない、またはロールが未開放の場合は空
      */
-    public static void grantLevelUpReward(ServerPlayer player, int newLevel) {
+    public static Optional<TagKey<Item>> getAllowedItemTag(Player player, int roleSlotIndex) {
         MainRole role = RoleManager.getRole(player);
-
-        // ロールがない場合は何もしない
-        if (!RoleManager.hasRole(player)) {
-            return;
-        }
-
-        // レベルアップメッセージを送信
-        sendLevelUpMessage(player, newLevel);
-
-        // スロット解放通知（該当する場合）
-        notifySlotUnlock(player, role, newLevel);
+        int levelUpTimes = RoleLeveledUpTimes.getMain(player);
+        return getAllowedItemTag(role, levelUpTimes, roleSlotIndex);
     }
 
     /**
-     * レベルアップメッセージを送信
-     *
-     * @param player プレイヤー
-     * @param newLevel 新しいレベル
-     */
-    private static void sendLevelUpMessage(ServerPlayer player, int newLevel) {
-        Component congratsMessage = Component.literal("Congratulations! ")
-                .withStyle(ChatFormatting.GOLD)
-                .append(Component.literal("You've reached Level " + newLevel + "!")
-                        .withStyle(ChatFormatting.YELLOW));
-        player.sendSystemMessage(congratsMessage);
-    }
-
-    /**
-     * スロット解放通知を送信
+     * 指定されたロールとスロットインデックスで許可されるアイテムタグを取得
      * <p>
-     * レベルアップによって新しいロールスロットが解放された場合、
-     * そのスロットで使用可能なアイテムタグを通知します。
+     * ロールのアイテムタグリストから、指定されたインデックスのタグを返します。
      * </p>
      *
-     * @param player プレイヤー
-     * @param role プレイヤーのロール
-     * @param newLevel 新しいレベル
+     * @param role ロール
+     * @param levelUpTimesInRole このロールで経験したレベルアップ回数
+     * @param roleSlotIndex ロールスロットのインデックス（0から始まる）
+     * @return 許可されるアイテムタグ。ロールがスロットを持たない、またはロールが未開放の場合は空
      */
-    private static void notifySlotUnlock(ServerPlayer player, MainRole role, int newLevel) {
-        // レベル → ロールスロットインデックスへの変換
-        // レベル2で最初のスロット解放、レベル3で2番目...
-        int roleSlotIndex = newLevel - 2;
-
-        // スロットが解放されていない場合は何もしない
-        if (roleSlotIndex < 0) {
-            return;
+    public static Optional<TagKey<Item>> getAllowedItemTag(MainRole role, int levelUpTimesInRole, int roleSlotIndex) {
+        // ロールスロットを持たないロールか
+        if (!role.hasRoleSlots()) {
+            return Optional.empty();
         }
 
-        // このレベルで解放されるアイテムタグを取得
-        Optional<TagKey<Item>> tagOpt = SlotRegistry.getAllowedItemTag(role, roleSlotIndex);
-        if (tagOpt.isEmpty()) {
-            return;
+        // ルールにあるロールスロットか
+        var tags = role.getSlotItemTags();
+        if (roleSlotIndex < 0 || roleSlotIndex >= tags.size()) {
+            return Optional.empty();
+        }
+        
+        // 解放済みのロールか
+        if (levelUpTimesInRole > roleSlotIndex) {
+            return Optional.of(tags.get(roleSlotIndex));
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * 指定されたロールの全レベル報酬を取得
+     * <p>
+     * このメソッドは、ロールの全レベルで得られる報酬のリストを返します。
+     * コマンド表示などで使用され、報酬システムの変更が自動的に反映されます。
+     * </p>
+     *
+     * @param role 対象のロール
+     * @return レベル報酬のリスト（レベル順）
+     */
+    public static List<LevelReward> getAllRewards(MainRole role) {
+        List<LevelReward> rewards = new ArrayList<>();
+
+        // ロールスロットを持たない場合は空リスト
+        if (!role.hasRoleSlots()) {
+            return rewards;
         }
 
-        TagKey<Item> capableItemTag = tagOpt.get();
-        String tagName = capableItemTag.location().toString();
+        // 各スロットをレベル報酬として登録
+        List<TagKey<Item>> slotTags = role.getSlotItemTags();
+        for (int i = 0; i < slotTags.size(); i++) {
+            int level = i + 1; // 0-based → 1-based
+            TagKey<Item> tag = slotTags.get(i);
+            rewards.add(new LevelReward.UnlockSlot(level, i, tag));
+        }
 
-        Component rewardMessage = Component.literal("Reward: ")
-                .withStyle(ChatFormatting.GREEN)
-                .append(Component.literal("New role slot unlocked! ")
-                        .withStyle(ChatFormatting.WHITE))
-                .append(Component.literal("[" + tagName + "]")
-                        .withStyle(ChatFormatting.AQUA));
-        player.sendSystemMessage(rewardMessage);
+        return rewards;
+    }
+
+    /**
+     * 指定されたレベルアップ回数の報酬を取得
+     * <p>
+     * 特定のレベルアップ回数で得られる報酬を取得します。
+     * </p>
+     *
+     * @param role 対象のロール
+     * @param levelUpTimesInRole ロール内でのレベルアップ回数（1-based）
+     * @return レベル報酬（存在しない場合は空）
+     */
+    public static Optional<LevelReward> getRewardForLevelUpTimesInRole(MainRole role, int levelUpTimesInRole) {
+        return getAllRewards(role).stream()
+            .filter(reward -> reward.levelUpTimesInRole() == levelUpTimesInRole)
+            .findFirst();
     }
 }

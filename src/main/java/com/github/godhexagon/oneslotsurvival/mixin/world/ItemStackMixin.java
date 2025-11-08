@@ -1,8 +1,8 @@
 package com.github.godhexagon.oneslotsurvival.mixin.world;
 
 import com.github.godhexagon.oneslotsurvival.object.config.ExpConfig;
-import com.github.godhexagon.oneslotsurvival.rule.level.Exp;
 import com.github.godhexagon.oneslotsurvival.rule.player.PlayerModValidity;
+import com.github.godhexagon.oneslotsurvival.world.util.PlayerProgress;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -108,7 +108,7 @@ public abstract class ItemStackMixin {
         // 経験値を付与（倍率が0より大きい場合のみ）
         if (multiplier > 0.0) {
             double expToAdd = damage * multiplier;
-            Exp.add(player, expToAdd);
+            PlayerProgress.recieveExp(player, expToAdd);
         }
     }
 }

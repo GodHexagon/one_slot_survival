@@ -2,6 +2,7 @@ package com.github.godhexagon.oneslotsurvival.world.command.general;
 
 import com.github.godhexagon.oneslotsurvival.rule.level.Exp;
 import com.github.godhexagon.oneslotsurvival.rule.level.Level;
+import com.github.godhexagon.oneslotsurvival.rule.level.RoleLeveledUpTimes;
 import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
 import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -9,7 +10,9 @@ import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.server.level.ServerPlayer;
 
 /**
@@ -50,12 +53,24 @@ public class ShowStatus {
                 )
             );
             player.sendSystemMessage(Component.literal(""));
+
+            int leveledUpTimes = RoleLeveledUpTimes.getMain(player);
+            String detailCommand = "/oneslot role detail " + role.getCommandName();
             player.sendSystemMessage(
                 Component.literal("  Role: ")
                     .withStyle(ChatFormatting.AQUA)
-                    .append(role.getDisplayName()
-                        .copy()
-                        .withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD))
+                    .append(Component.literal("")
+                        .append(role.getDisplayName().copy()
+                            .withStyle(ChatFormatting.BOLD))
+                        .append(" (Level up ")
+                        .append(Component.literal("" + leveledUpTimes)
+                            .withStyle(ChatFormatting.BOLD))
+                        .append(" time(s))")
+                        .withStyle(style -> style
+                            .withColor(ChatFormatting.LIGHT_PURPLE)
+                            .withClickEvent(new ClickEvent.SuggestCommand(detailCommand))
+                            .withHoverEvent(new HoverEvent.ShowText(
+                                Component.literal("Click to view details").withStyle(ChatFormatting.YELLOW)))))
             );
             player.sendSystemMessage(
                 Component.literal("  Level: ")
@@ -64,11 +79,12 @@ public class ShowStatus {
                         .withStyle(ChatFormatting.YELLOW, ChatFormatting.BOLD))
             );
             player.sendSystemMessage(
-                Component.literal("  Remaining EXP until the next level: ")
+                Component.literal("  Exp to reach the next level: ")
                     .withStyle(ChatFormatting.AQUA)
                     .append(Component.literal(String.format("%.1f", remaining))
                         .withStyle(ChatFormatting.GREEN, ChatFormatting.BOLD))
             );
+            player.sendSystemMessage(Component.literal(""));
             player.sendSystemMessage(
                 Component.literal("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
                     .withStyle(ChatFormatting.GRAY)

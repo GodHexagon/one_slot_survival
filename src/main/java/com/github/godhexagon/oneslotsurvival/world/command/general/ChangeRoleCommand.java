@@ -2,9 +2,10 @@ package com.github.godhexagon.oneslotsurvival.world.command.general;
 
 import com.github.godhexagon.oneslotsurvival.object.gamerule.ModGameRules;
 import com.github.godhexagon.oneslotsurvival.rule.level.Exp;
+import com.github.godhexagon.oneslotsurvival.rule.level.RoleLeveledUpTimes;
 import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
 import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
-import com.github.godhexagon.oneslotsurvival.rule.rolechanging.RoleChanging;
+import com.github.godhexagon.oneslotsurvival.world.util.PlayerProgress;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
@@ -86,7 +87,6 @@ public class ChangeRoleCommand {
 
             // 現在のロールと変更先のロール
             MainRole currentRole = RoleManager.getRole(player);
-            Component currentRoleDisplayName = currentRole.getDisplayName();
             Component roleDisplayName = role.getDisplayName();
             
             // 現在のロールと同じかチェック
@@ -124,11 +124,19 @@ public class ChangeRoleCommand {
                 Component.literal("  Progress that will be lost:")
                     .withStyle(ChatFormatting.RED, ChatFormatting.BOLD)
             );
+            
+            int leveledUpTimes = RoleLeveledUpTimes.getMain(player);
             player.sendSystemMessage(
                 Component.literal("    • Progress of role ")
                     .withStyle(ChatFormatting.YELLOW)
-                    .append(currentRoleDisplayName.copy().withStyle(ChatFormatting.WHITE)
-                        .withStyle(ChatFormatting.WHITE, ChatFormatting.BOLD))
+                    .append(Component.literal("")
+                        .withStyle(ChatFormatting.WHITE)
+                        .append(currentRole.getDisplayName().copy()
+                            .withStyle(ChatFormatting.BOLD))
+                        .append(" (Level up ")
+                        .append(Component.literal("" + leveledUpTimes)
+                            .withStyle(ChatFormatting.BOLD))
+                        .append(" time(s))"))
             );
             player.sendSystemMessage(
                 Component.literal("    • Experience points: ")
@@ -213,7 +221,7 @@ public class ChangeRoleCommand {
             }
 
             // ロール変更実行
-            RoleChanging.change(player, role);
+            PlayerProgress.changeRole(player, role);
 
             String roleCommandName = role.getCommandName();
             Component roleDisplayName = role.getDisplayName();
