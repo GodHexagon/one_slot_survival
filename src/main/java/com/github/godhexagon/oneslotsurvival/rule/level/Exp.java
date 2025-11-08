@@ -98,6 +98,16 @@ public class Exp {
     public static void clear(ServerPlayer player) {
         RemainingExpAttribute.setRemainingExp(player, getNextLevelExp(LevelAttribute.getLevel(player)));
     }
+    
+    /**
+     * 仮にプレイヤーの経験値を初期化した場合、失われると考えられる、今までに取得した経験値量を計算する。
+     * 
+     * @param player プレイヤー。
+     * @return 経験値量。
+     */
+    public static double getExpMayBeLostToClear(Player player) {
+        return getNextLevelExp(Level.get(player)) - get(player);
+    }
 
     /**
      * 次のレベルに達するのに必要な経験値量を計算する
