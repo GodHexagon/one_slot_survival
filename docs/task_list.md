@@ -122,7 +122,7 @@
         - `role list`: ロール一覧
         - `role detail [<Role>]`: 特定のロールの情報
         - `slot detail <Slot> [role <Role>]`: 特定のスロットの情報
-    1. `oneslot status`コマンドの表示を見直し
+    1. 完了✅|`oneslot status`コマンドの表示を見直し
     1. ロールスロットツールチップを実装
 1. サブロールを追加する
 1. メインロールの種類を増やす

@@ -17,9 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # 進捗
 
-直前の成果！: 情報閲覧一般コマンド作成 of 一般プレイヤーによって自身のロールを変更できるようにする
+直前の成果！: `oneslot status`コマンドの表示を見直し of 一般プレイヤーによって自身のロールを変更できるようにする
 
-実行中: `oneslot status`コマンドの表示を見直し of 一般プレイヤーによって自身のロールを変更できるようにする
+実行中: ロールスロットツールチップを実装 of 一般プレイヤーによって自身のロールを変更できるようにする
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
