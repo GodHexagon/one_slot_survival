@@ -2,10 +2,14 @@ package com.github.godhexagon.oneslotsurvival.client.gui;
 
 import com.github.godhexagon.oneslotsurvival.rule.inventory.InventoryDefinition;
 import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotRestriction;
+import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
+import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
 import com.google.common.collect.ImmutableList;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -15,6 +19,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -177,5 +182,99 @@ public class RestrictedInventoryScreen extends InventoryScreen {
 
         // プレイヤーのレンダリング（バニラと同じ位置）
         renderEntityInInventoryFollowsMouse(graphics, x + 26, y + 8, x + 75, y + 78, 30, 0.0625F, mouseX, mouseY, this.minecraft.player);
+    }
+
+    @Override
+    protected void renderTooltip(@Nonnull GuiGraphics graphics, int mouseX, int mouseY) {
+        // 空の解放済みロールスロットにホバーした時のカスタムツールチップ
+        if (this.hoveredSlot != null && !this.hoveredSlot.hasItem() && this.minecraft != null && this.minecraft.player != null) {
+            // ロールスロットの場合のみ処理
+            if (this.hoveredSlot.container instanceof Inventory) {
+                int inventoryIndex = this.hoveredSlot.getContainerSlot();
+
+                // 解放済みロールスロットかチェック
+                if (SlotRestriction.unlockedRoleSlot(inventoryIndex, this.minecraft.player)) {
+                    // ツールチップを生成して表示
+                    List<Component> tooltip = createRoleSlotTooltip(inventoryIndex, this.minecraft.player);
+                    graphics.renderComponentTooltip(this.font, tooltip, mouseX, mouseY, net.minecraft.world.item.ItemStack.EMPTY);
+                    return;
+                }
+            }
+        }
+
+        // デフォルトの動作（アイテムがある場合のツールチップ）
+        super.renderTooltip(graphics, mouseX, mouseY);
+    }
+
+    /**
+     * ロールスロットのツールチップを生成
+     *
+     * @param inventoryIndex インベントリインデックス
+     * @param player プレイヤー
+     * @return ツールチップの行リスト
+     */
+    private List<Component> createRoleSlotTooltip(int inventoryIndex, Player player) {
+        List<Component> tooltip = new ArrayList<>();
+
+        // ロールスロットインデックスを取得（0-based）
+        int roleSlotIndex = InventoryDefinition.getRoleSlotIndex(inventoryIndex);
+
+        // プレイヤーのロールを取得
+        MainRole role = RoleManager.getRole(player);
+
+        // スロット名の翻訳キー
+        String slotNameKey = "slot.oneslotsurvival." + role.getCommandName() + "." + roleSlotIndex + ".name";
+
+        // スロット名を追加
+        tooltip.add(Component.translatable(slotNameKey).withStyle(ChatFormatting.GOLD));
+
+        // 説明の翻訳キー
+        String descriptionKey = "slot.oneslotsurvival." + role.getCommandName() + "." + roleSlotIndex + ".description";
+        Component description = Component.translatable(descriptionKey);
+
+        // 説明文を取得して単語単位で分割
+        String descriptionText = description.getString();
+        List<String> wrappedLines = wrapText(descriptionText, 20); // 1行あたり約20文字で改行
+
+        // 分割された各行をツールチップに追加
+        for (String line : wrappedLines) {
+            tooltip.add(Component.literal(line).withStyle(ChatFormatting.GRAY));
+        }
+
+        return tooltip;
+    }
+
+    /**
+     * テキストを指定した文字数で単語単位で改行する
+     *
+     * @param text 改行対象のテキスト
+     * @param maxLength 1行あたりの最大文字数
+     * @return 改行されたテキストのリスト
+     */
+    private List<String> wrapText(String text, int maxLength) {
+        List<String> lines = new ArrayList<>();
+        String[] words = text.split(" ");
+        StringBuilder currentLine = new StringBuilder();
+
+        for (String word : words) {
+            // 現在の行に単語を追加すると最大文字数を超える場合
+            if (currentLine.length() > 0 && currentLine.length() + 1 + word.length() > maxLength) {
+                lines.add(currentLine.toString());
+                currentLine = new StringBuilder();
+            }
+
+            // 現在の行に単語を追加
+            if (currentLine.length() > 0) {
+                currentLine.append(" ");
+            }
+            currentLine.append(word);
+        }
+
+        // 最後の行を追加
+        if (currentLine.length() > 0) {
+            lines.add(currentLine.toString());
+        }
+
+        return lines;
     }
 }
