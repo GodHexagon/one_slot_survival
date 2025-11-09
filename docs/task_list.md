@@ -125,6 +125,15 @@
     1. 完了✅|`oneslot status`コマンドの表示を見直し
     1. 完了✅|ロールスロットツールチップを実装
 1. サブロールを追加する
+    1. サブロールIDアトリビュート整合性
+    1. `admin role clear sub`と`admin role clear main`
+    1. そのほか管理者コマンド
+    1. サブロールFisherとArcherを定義
+    1. サブロールスロットにインベントリからアクセスできるようにする
+    1. サブロールスロットをホットバー選択できるようにする
+    1. ゲームルールsubRoleChanging
+    1. changeroleコマンド
+    1. そのほかの一般コマンド、CUI
 1. メインロールの種類を増やす
     * Miner, Warriorのロールスロットを見直し
     * Survivor, Builderを追加
