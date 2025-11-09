@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.data.attribute;
+package com.github.godhexagon.oneslotsurvival.object.attribute;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
@@ -36,18 +36,27 @@ public class PlayerAttributeHandler {
         );
         event.add(
             EntityType.PLAYER,
-            ModAttributes.MAIN_ROLE_LEVEL.getHolder().orElseThrow(
+            ModAttributes.LEVEL.getHolder().orElseThrow(
                 () -> new IllegalStateException(
-                    "MAIN_ROLE_LEVEL attribute is not registered. " +
+                    "LEVEL attribute is not registered. " +
                     "This indicates an issue with DeferredRegister initialization."
                 )
             )
         );
         event.add(
             EntityType.PLAYER,
-            ModAttributes.MAIN_ROLE_REMAINING_EXP.getHolder().orElseThrow(
+            ModAttributes.REMAINING_EXP.getHolder().orElseThrow(
                 () -> new IllegalStateException(
-                    "MAIN_ROLE_REMAINING_EXP attribute is not registered. " +
+                    "REMAINING_EXP attribute is not registered. " +
+                    "This indicates an issue with DeferredRegister initialization."
+                )
+            )
+        );
+        event.add(
+            EntityType.PLAYER,
+            ModAttributes.MAIN_ROLE_STARTED_LEVEL.getHolder().orElseThrow(
+                () -> new IllegalStateException(
+                    "MAIN_ROLE_STARTED_LEVEL attribute is not registered. " +
                     "This indicates an issue with DeferredRegister initialization."
                 )
             )

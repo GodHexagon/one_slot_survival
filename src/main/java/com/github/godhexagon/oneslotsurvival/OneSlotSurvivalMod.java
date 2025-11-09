@@ -1,14 +1,14 @@
 package com.github.godhexagon.oneslotsurvival;
 
-import com.github.godhexagon.oneslotsurvival.data.attribute.ModAttributes;
-import com.github.godhexagon.oneslotsurvival.data.attribute.PlayerAttributeHandler;
-import com.github.godhexagon.oneslotsurvival.data.config.ExpConfig;
+import com.github.godhexagon.oneslotsurvival.object.attribute.ModAttributes;
+import com.github.godhexagon.oneslotsurvival.object.attribute.PlayerAttributeHandler;
+import com.github.godhexagon.oneslotsurvival.object.config.ExpConfig;
+import com.github.godhexagon.oneslotsurvival.object.gamerule.ModGameRules;
 import com.github.godhexagon.oneslotsurvival.object.item.ModItems;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
@@ -35,7 +35,7 @@ public final class OneSlotSurvivalMod {
             .addListener(PlayerAttributeHandler::onEntityAttributeModification);
 
         // Config を登録
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ExpConfig.SERVER_SPEC);
+        context.registerConfig(ModConfig.Type.SERVER, ExpConfig.SERVER_SPEC);
 
         // Config イベントハンドラを登録
         ModConfigEvent.Loading.getBus(modBusGroup).addListener(ExpConfig::onModConfigEvent);
@@ -51,6 +51,10 @@ public final class OneSlotSurvivalMod {
     @SubscribeEvent
     private void commonSetup(final FMLCommonSetupEvent event) {
         LOGGER.info("One Slot Survival mod is loading...");
+
+        // カスタムGameRuleを登録
+        ModGameRules.register();
+        LOGGER.info("Custom game rules registered");
     }
 
     @SubscribeEvent

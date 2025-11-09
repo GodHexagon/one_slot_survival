@@ -2,5 +2,19 @@
   "role.oneslotsurvival.error": "Unknown Role",
   "role.oneslotsurvival.unassigned": "Unassigned",
   "role.oneslotsurvival.miner": "Miner",
-  "role.oneslotsurvival.warrior": "Warrior"
+  "role.oneslotsurvival.warrior": "Warrior",
+
+  "slot.oneslotsurvival.miner.0.name": "Miner's slot",
+  "slot.oneslotsurvival.miner.0.description": "The slot can store pickaxes made of all types of materials.",
+  "slot.oneslotsurvival.miner.1.name": "Miner's slot",
+  "slot.oneslotsurvival.miner.1.description": "The slot can store shovels made of all types of materials.",
+  "slot.oneslotsurvival.miner.2.name": "Miner's slot",
+  "slot.oneslotsurvival.miner.2.description": "The slot can store axes made of all types of materials.",
+
+  "slot.oneslotsurvival.warrior.0.name": "Warrior's slot",
+  "slot.oneslotsurvival.warrior.0.description": "The slot can store swords made of all types of materials.",
+  "slot.oneslotsurvival.warrior.1.name": "Warrior's slot",
+  "slot.oneslotsurvival.warrior.1.description": "The slot can store defensive items such as shields and flint and steel.",
+  "slot.oneslotsurvival.warrior.2.name": "Warrior's slot",
+  "slot.oneslotsurvival.warrior.2.description": "The slot can store special weapons such as tridents and maces."
 }

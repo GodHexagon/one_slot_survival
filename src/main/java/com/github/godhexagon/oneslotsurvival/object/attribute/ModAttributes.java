@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.data.attribute;
+package com.github.godhexagon.oneslotsurvival.object.attribute;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
 import net.minecraft.core.registries.Registries;
@@ -46,10 +46,10 @@ public class ModAttributes {
      * プレイヤーのメインロールレベルを表す Attribute
      * 値: レベル（整数値）、デフォルト = 1
      */
-    public static final RegistryObject<Attribute> MAIN_ROLE_LEVEL = ATTRIBUTES.register(
-        "main_role_level",
+    public static final RegistryObject<Attribute> LEVEL = ATTRIBUTES.register(
+        "level",
         () -> new RangedAttribute(
-            "attribute.oneslotsurvival.main_role_level",
+            "attribute.oneslotsurvival.level",
             0,  // デフォルト: レベル0（内部処理用で、まだレベルシステムに参加していないプレイヤーを表す）
             0.0,  // 最小値
             Double.MAX_VALUE  // 最大値（レベル上限）
@@ -60,13 +60,27 @@ public class ModAttributes {
      * プレイヤーのメインロールレベルアップに必要な残り経験値を表す Attribute
      * 値: 残り経験値（double値）、デフォルト = 0.0
      */
-    public static final RegistryObject<Attribute> MAIN_ROLE_REMAINING_EXP = ATTRIBUTES.register(
-        "main_role_remaining_exp",
+    public static final RegistryObject<Attribute> REMAINING_EXP = ATTRIBUTES.register(
+        "remaining_exp",
         () -> new RangedAttribute(
-            "attribute.oneslotsurvival.main_role_remaining_exp",
+            "attribute.oneslotsurvival.remaining_exp",
             0.0,  // デフォルト: 残り経験値0
             -Double.MAX_VALUE,  // 最小値（負の値も許可）
             Double.MAX_VALUE  // 最大値
+        ).setSyncable(true)  // 自動的にクライアントと同期
+    );
+    
+    /**
+     * プレイヤーのメインロールレベルを表す Attribute
+     * 値: レベル（整数値）、デフォルト = 1
+     */
+    public static final RegistryObject<Attribute> MAIN_ROLE_STARTED_LEVEL = ATTRIBUTES.register(
+        "main_role_started_level",
+        () -> new RangedAttribute(
+            "attribute.oneslotsurvival.main_role_started_level",
+            0,  // デフォルト
+            -Double.MAX_VALUE,  // 最小値（負の値も許可）
+            Double.MAX_VALUE  // 最大値（レベル上限）
         ).setSyncable(true)  // 自動的にクライアントと同期
     );
 }

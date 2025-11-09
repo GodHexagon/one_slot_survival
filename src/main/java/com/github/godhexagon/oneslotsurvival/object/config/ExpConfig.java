@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.data.config;
+package com.github.godhexagon.oneslotsurvival.object.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
@@ -122,11 +122,11 @@ public class ExpConfig {
 
             levelUpExp = builder
                 .comment("Experience points required to level up")
-                .defineInRange("level_up_exp", 150.0, 1.0, 100000.0);
+                .defineInRange("level_up_exp",200.0, 1.0, 100000.0);
 
             levelUpIncreaseMultiplier = builder
                 .comment("Multiplier for experience required per level (e.g., 1.1 = 10% increase per level)")
-                .defineInRange("level_up_increase_multiplier", 1.3, 1.0, 2.0);
+                .defineInRange("level_up_increase_multiplier", 1.0, 1.0, 2.0);
 
             stats = new StatsConfig(builder);
             itemDurability = new ItemDurabilityConfig(builder);

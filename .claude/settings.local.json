@@ -28,7 +28,9 @@
       "Bash(cmd /c \"cd /d c:\\Users\\godhe\\git\\one_slot_survival && gradlew.bat compileJava\")",
       "Bash(c:Usersgodhegitone_slot_survivalgradlew.bat compileJava)",
       "Bash(dir /s /b \"c:\\Users\\godhe\\git\\one_slot_survival\\src\\main\\java\\com\\github\\godhexagon\\oneslotsurvival\")",
-      "Bash(cmd /c \"dir /s /b c:\\Users\\godhe\\git\\one_slot_survival\\src\\main\\java\\com\\github\\godhexagon\\oneslotsurvival\")"
+      "Bash(cmd /c \"dir /s /b c:\\Users\\godhe\\git\\one_slot_survival\\src\\main\\java\\com\\github\\godhexagon\\oneslotsurvival\")",
+      "Bash(cmd /c del \"c:\\Users\\godhe\\git\\one_slot_survival\\src\\main\\java\\com\\github\\godhexagon\\oneslotsurvival\\world\\command\\general\\RoleListCommand.java\")",
+      "Bash(cmd /c \"c:\\Users\\godhe\\git\\one_slot_survival\\gradlew.bat compileJava\")"
     ],
     "deny": [],
     "ask": []

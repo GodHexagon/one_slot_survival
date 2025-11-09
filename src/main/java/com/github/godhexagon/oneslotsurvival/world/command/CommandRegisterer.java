@@ -2,9 +2,14 @@ package com.github.godhexagon.oneslotsurvival.world.command;
 
 import com.github.godhexagon.oneslotsurvival.world.command.admin.LevelCommands;
 import com.github.godhexagon.oneslotsurvival.world.command.admin.RoleCommands;
+import com.github.godhexagon.oneslotsurvival.world.command.admin.RoleLeveledUpTimesCommands;
 import com.github.godhexagon.oneslotsurvival.world.command.admin.ValidityCommands;
 import com.github.godhexagon.oneslotsurvival.world.command.admin.XpCommands;
+import com.github.godhexagon.oneslotsurvival.world.command.general.ChangeRoleCommand;
+import com.github.godhexagon.oneslotsurvival.world.command.general.RoleCommand;
+import com.github.godhexagon.oneslotsurvival.world.command.general.ShowNextReward;
 import com.github.godhexagon.oneslotsurvival.world.command.general.ShowStatus;
+import com.github.godhexagon.oneslotsurvival.world.command.general.SlotCommand;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
@@ -21,6 +26,10 @@ public class CommandRegisterer {
         dispatcher.register(
             ShowStatus.buildAlias("oneslot")
                 .then(ShowStatus.buildAlias("status"))
+                .then(ShowNextReward.buildAlias("next"))
+                .then(ChangeRoleCommand.build())
+                .then(RoleCommand.build())
+                .then(SlotCommand.build())
                 .then(buildAdmin("admin"))
         );
         dispatcher.register(buildAdmin("osa"));
@@ -33,6 +42,7 @@ public class CommandRegisterer {
             .then(ValidityCommands.build())
             .then(RoleCommands.build())
             .then(LevelCommands.build())
-            .then(XpCommands.build());
+            .then(XpCommands.build())
+            .then(RoleLeveledUpTimesCommands.build());
     }
 }

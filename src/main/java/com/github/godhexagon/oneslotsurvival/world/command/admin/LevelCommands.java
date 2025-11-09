@@ -1,8 +1,9 @@
 package com.github.godhexagon.oneslotsurvival.world.command.admin;
 
-import com.github.godhexagon.oneslotsurvival.rule.attribute.MainRoleLevel;
+import com.github.godhexagon.oneslotsurvival.rule.attribute.LevelAttribute;
 import com.github.godhexagon.oneslotsurvival.rule.level.Exp;
 import com.github.godhexagon.oneslotsurvival.rule.level.Level;
+import com.github.godhexagon.oneslotsurvival.rule.level.RoleLeveledUpTimes;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
@@ -47,7 +48,7 @@ public class LevelCommands {
     private static int getLevelStatus(CommandContext<CommandSourceStack> context, Collection<ServerPlayer> players) {
         try {
             for (ServerPlayer player : players) {
-                int level = Level.getMain(player);
+                int level = Level.get(player);
                 context.getSource().sendSuccess(
                     () -> Component.literal("Level for " + player.getName().getString() + ": " + level),
                     false
@@ -66,7 +67,7 @@ public class LevelCommands {
             int level = IntegerArgumentType.getInteger(context, "level");
 
             for (ServerPlayer player : players) {
-                MainRoleLevel.setLevel(player, level);
+                LevelAttribute.setLevel(player, level);
                 if (resetExp) {
                     Exp.clear(player);
                 }
@@ -95,7 +96,9 @@ public class LevelCommands {
     private static int clearLevel(CommandContext<CommandSourceStack> context, Collection<ServerPlayer> players) {
         try {
             for (ServerPlayer player : players) {
-                Level.reset(player);
+                LevelAttribute.setLevel(player, 1);
+                Exp.clear(player);
+                RoleLeveledUpTimes.resetMain(player);
 
                 context.getSource().sendSuccess(
                     () -> Component.literal("Cleared level for " + player.getName().getString()),
