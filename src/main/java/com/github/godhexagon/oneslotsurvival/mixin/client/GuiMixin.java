@@ -128,12 +128,8 @@ public abstract class GuiMixin {
         int bottomY = guiGraphics.guiHeight() - 22;
 
         // 解放されたスロット数をカウント
-        int slot_count = 1; // 最初のスロットはメインハンドスロットだから必ずある
-        for (int i = 1; i <= 3; i++) { // ロールスロットがレベルによって解放されているか判定
-            if (SlotRestriction.unlockedRoleSlot(i, player)) {
-                slot_count++;
-            }
-        }
+        // 最初のスロットはメインハンドスロットだから必ずある(1 +)
+        int slot_count = 1 + SlotRestriction.getTotalRoleSlotCount(player);
 
         // 背景幅を動的計算: 左右輪郭1px + スロット20px * slot_count + 右輪郭1px = 2 + 20 * slot_count
         int bgWidth = 2 + 20 * slot_count;

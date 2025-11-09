@@ -162,17 +162,16 @@ public class RestrictedInventoryScreen extends InventoryScreen {
             
             
             // 解放されたロールスロットの背景を描画
-            int roleSlotIndex = 0;
-            for (int i = 1; i <= 3; i++) { // ロールスロットがレベルによって解放されているか判定
-                if (SlotRestriction.unlockedRoleSlot(i, this.minecraft.player)) {
-                    // ロールスロット背景を描画（18×18、間隔0px）
-                    // 起点: (25, 141)から縦に並べる
-                    int bgX = x + 25 + (roleSlotIndex * 18);
-                    int bgY = y + 141;
-                    graphics.blit(RenderPipelines.GUI_TEXTURED, ROLE_SLOT_BG,
-                            bgX, bgY, 0.0F, 0.0F, 18, 18, 18, 18);
-                    roleSlotIndex++;
-                }
+            int inventoryIndex = InventoryDefinition.ROLE_SLOT_START_INVENTORY_INDEX;
+            // ロールスロットがレベルによって解放されているか判定し、解放されたスロットが終了するまで繰り返す。
+            while (SlotRestriction.unlockedRoleSlot(inventoryIndex, this.minecraft.player)) {
+                // ロールスロット背景を描画（18×18、間隔0px）
+                // 起点: (25, 141)から縦に並べる
+                int bgX = x + 25 + (InventoryDefinition.getRoleSlotIndex(inventoryIndex) * 18);
+                int bgY = y + 141;
+                graphics.blit(RenderPipelines.GUI_TEXTURED, ROLE_SLOT_BG,
+                        bgX, bgY, 0.0F, 0.0F, 18, 18, 18, 18);
+                inventoryIndex++;
             }
         } catch (Exception e) {
             // フォールバック: バニラの背景を使用
@@ -217,6 +216,7 @@ public class RestrictedInventoryScreen extends InventoryScreen {
         List<Component> tooltip = new ArrayList<>();
 
         // ロールスロットインデックスを取得（0-based）
+        // TODO: メインロールスロットインデックスを取得する必要がある
         int roleSlotIndex = InventoryDefinition.getRoleSlotIndex(inventoryIndex);
 
         // プレイヤーのロールを取得

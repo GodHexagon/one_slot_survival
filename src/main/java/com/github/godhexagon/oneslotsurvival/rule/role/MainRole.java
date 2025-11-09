@@ -6,8 +6,10 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * プレイヤーのメインロール定義
@@ -16,7 +18,7 @@ import java.util.List;
  * 各ロールは使用可能なアイテムタグのリストを持ち、ロールスロットの制限を定義する。
  * </p>
  */
-public enum MainRole implements Role {
+public enum MainRole implements Role, RoleSlotProvider {
     /**
      * 不明な状態
      */
@@ -90,11 +92,40 @@ public enum MainRole implements Role {
         return slotItemTags;
     }
 
+    @Override
+    public List<RoleSlot> getRoleSlots() {
+        List<RoleSlot> roleSlots = new ArrayList<>();
+        // メインロールのスロットは2レベルに１回解放される。
+        int levelUpTimes = 1;
+        for (TagKey<Item> itemTag: slotItemTags) {
+            roleSlots.add(new RoleSlot(itemTag, levelUpTimes));
+            levelUpTimes += 2;
+        }
+        return roleSlots;
+    }
+
+    @Override
+    public List<RoleSlot> getAvailableRoleSlots(int levelUpTimesInRole) {
+        return getRoleSlots().stream()
+            .filter(slot -> slot.levelUpTimesInRole() <= levelUpTimesInRole)
+            .toList();
+    }
+    
+    @Override
+    public Optional<RoleSlot> getAvailableRoleSlot(int index, int levelUpTimesInRole) {
+        if (-1 < index && index < getAvailableRoleSlots(levelUpTimesInRole).size()) {
+            return Optional.of(getAvailableRoleSlots(levelUpTimesInRole).get(index));
+        } else {
+            return Optional.empty();
+        }
+    }
+
     /**
      * このロールがロールスロットを持つかどうか
      *
      * @return ロールスロットを持つ場合 true
      */
+    @Override
     public boolean hasRoleSlots() {
         return !slotItemTags.isEmpty();
     }

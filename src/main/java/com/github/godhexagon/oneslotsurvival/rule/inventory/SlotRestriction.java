@@ -3,13 +3,41 @@ package com.github.godhexagon.oneslotsurvival.rule.inventory;
 import java.util.Optional;
 
 import com.github.godhexagon.oneslotsurvival.object.item.ModItems;
-import com.github.godhexagon.oneslotsurvival.rule.role.LevelRewardRegistry;
-import net.minecraft.tags.TagKey;
+import com.github.godhexagon.oneslotsurvival.rule.level.RoleLeveledUpTimes;
+import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
+import com.github.godhexagon.oneslotsurvival.rule.role.RoleSlot;
+
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class SlotRestriction {
+
+    /**
+     * Inventoryクラスのインデックスからメインロールの各ロールのロールスロットのインデックスに変換する
+     * 
+     * @param inventoryIndex Inventoryクラスのインデックス
+     * @return ロールスロットのインデックス
+     */
+    public static int getMainRoleSlotIndex(int inventoryIndex) {
+        return InventoryDefinition.getRoleSlotIndex(inventoryIndex);
+    }
+
+    /**
+     * Inventoryクラスのインデックスからサブロールの各ロールのロールスロットのインデックスに変換する
+     * 
+     * @param inventoryIndex Inventoryクラスのインデックス
+     * @return ロールスロットのインデックス
+     */
+    public static int getSubRoleSlotIndex(int inventoryIndex, Player player) {
+        int mainRoleSlotCount = RoleManager.getMainRole(player).getAvailableRoleSlots(RoleLeveledUpTimes.getMain(player)).size();
+        int roleSlotIndex = InventoryDefinition.getRoleSlotIndex(inventoryIndex);
+        return roleSlotIndex - mainRoleSlotCount;
+    }
+
+    public static int getTotalRoleSlotCount(Player player) {
+        return RoleManager.getMainRole(player).getAvailableRoleSlots(RoleLeveledUpTimes.getMain(player)).size() + 
+            RoleManager.getSubRole(player).getAvailableRoleSlots(RoleLeveledUpTimes.getSub(player)).size();
+    }
 
     /**
      * プレイヤーのレベルをもとにそのスロットがアンロックされたロールするっとかどうかを返します。
@@ -19,7 +47,11 @@ public class SlotRestriction {
      * @return ロールスロットのうち、アンロックされたものであるとき、true。
      */
     public static boolean unlockedRoleSlot(int inventoryIndex, Player player) {
-        return LevelRewardRegistry.getAllowedItemTag(player, InventoryDefinition.getRoleSlotIndex(inventoryIndex)).isPresent();
+        boolean unlocked = RoleManager.getMainRole(player).getAvailableRoleSlot(getMainRoleSlotIndex(inventoryIndex), RoleLeveledUpTimes.getMain(player)).isPresent();
+        if (!unlocked) {
+            unlocked = RoleManager.getSubRole(player).getAvailableRoleSlot(getSubRoleSlotIndex(inventoryIndex, player), RoleLeveledUpTimes.getSub(player)).isPresent();
+        }
+        return unlocked;
     }
 
     /**
@@ -38,17 +70,26 @@ public class SlotRestriction {
 
         // ロールスロット
         if (InventoryDefinition.isRoleSlot(inventoryIndex)) {
-            int roleSlotIndex = InventoryDefinition.getRoleSlotIndex(inventoryIndex);
+            // メインロールのアイテムタグを取得
+            int mainRoleSlotIndex = getMainRoleSlotIndex(inventoryIndex);
+            int levelUpTimes = RoleLeveledUpTimes.getMain(player);
+            Optional<RoleSlot> roleSlot = RoleManager.getMainRole(player).getAvailableRoleSlot(mainRoleSlotIndex, levelUpTimes);
 
-            // アイテムタグを取得
-            Optional<TagKey<Item>> allowedTag = LevelRewardRegistry.getAllowedItemTag(player, roleSlotIndex);
-
-            if (allowedTag.isPresent()) {
+            if (roleSlot.isPresent()) {
                 // 有効なロールスロット
-                return item.isEmpty() || item.is(allowedTag.get());
+                return item.isEmpty() || item.is(roleSlot.get().itemTag());
             } else {
-                // ロールがない、またはスロットが無効な場合、ロールスロットの場合は空のみ許可
-                return item.isEmpty();
+                // サブロールのアイテムタグを取得
+                int subRoleSlotIndex = getSubRoleSlotIndex(inventoryIndex, player);
+                roleSlot = RoleManager.getSubRole(player).getAvailableRoleSlot(subRoleSlotIndex, levelUpTimes);
+
+                if (roleSlot.isPresent()) {
+                    // 有効なロールスロット
+                    return item.isEmpty() || item.is(roleSlot.get().itemTag());
+                } else {
+                    // ロールがない、またはスロットが無効な場合、ロールスロットの場合は空のみ許可
+                    return item.isEmpty();
+                }
             }
         }
 

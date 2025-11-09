@@ -35,12 +35,7 @@ public class ScrollWheelHandlerMixin {
 
         if (player != null && PlayerModValidity.isEffective(player)) {
             // 解放されたスロット数をカウント
-            int roleSlotCount = 0;
-            for (int i = 1; i <= 3; i++) {
-                if (SlotRestriction.unlockedRoleSlot(i, player)) {
-                    roleSlotCount++;
-                }
-            }
+            int roleSlotCount = SlotRestriction.getTotalRoleSlotCount(player);
             // 解放されたスロット数（例：ロールスロット3つ → インデックス0-3が許可 → maxSlot=4）
             int maxSlot = roleSlotCount + 1;
 
