@@ -17,9 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # 進捗
 
-直前の成果！: 一般プレイヤーによって自身のロールを変更できるようにする
+直前の成果！: そのほか管理者コマンド of サブロールを追加する
 
-実行中: サブロールを追加する
+実行中: サブロールFisherとArcherを定義 of サブロールを追加する
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
