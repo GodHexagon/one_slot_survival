@@ -86,7 +86,6 @@ public enum MainRole implements Role {
      *
      * @return アイテムタグのリスト（スロット順）
      */
-    @Override
     public List<TagKey<Item>> getSlotItemTags() {
         return slotItemTags;
     }
@@ -96,7 +95,6 @@ public enum MainRole implements Role {
      *
      * @return ロールスロットを持つ場合 true
      */
-    @Override
     public boolean hasRoleSlots() {
         return !slotItemTags.isEmpty();
     }

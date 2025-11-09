@@ -5,6 +5,8 @@
   "role.oneslotsurvival.sub_role_unassigned": "未割り当て",
   "role.oneslotsurvival.miner": "採掘者",
   "role.oneslotsurvival.warrior": "戦士",
+  "role.oneslotsurvival.fisher": "釣り人",
+  "role.oneslotsurvival.archer": "射手",
 
   "slot.oneslotsurvival.miner.0.name": "採掘者のスロット",
   "slot.oneslotsurvival.miner.0.description": "全ての素材のつるはしを格納できます。",
@@ -18,5 +20,19 @@
   "slot.oneslotsurvival.warrior.1.name": "戦士のスロット",
   "slot.oneslotsurvival.warrior.1.description": "盾や火打石と打ち金などの防御的なアイテムを格納できます。",
   "slot.oneslotsurvival.warrior.2.name": "戦士のスロット",
-  "slot.oneslotsurvival.warrior.2.description": "トライデントやメイスなどの特殊武器を格納できます。"
+  "slot.oneslotsurvival.warrior.2.description": "トライデントやメイスなどの特殊武器を格納できます。",
+
+  "slot.oneslotsurvival.fisher.0.name": "釣り人のスロット",
+  "slot.oneslotsurvival.fisher.0.description": "釣り竿を格納できます。",
+  "slot.oneslotsurvival.fisher.1.name": "釣り人のスロット",
+  "slot.oneslotsurvival.fisher.1.description": "全ての種類のボートを格納できます。",
+  "slot.oneslotsurvival.fisher.2.name": "釣り人のスロット",
+  "slot.oneslotsurvival.fisher.2.description": "全ての種類のボートを格納できます。",
+
+  "slot.oneslotsurvival.archer.0.name": "射手のスロット",
+  "slot.oneslotsurvival.archer.0.description": "弓とクロスボウを格納できます。",
+  "slot.oneslotsurvival.archer.1.name": "射手のスロット",
+  "slot.oneslotsurvival.archer.1.description": "矢（通常、効果付き、光の矢）を格納できます。",
+  "slot.oneslotsurvival.archer.2.name": "射手のスロット",
+  "slot.oneslotsurvival.archer.2.description": "矢（通常、効果付き、光の矢）を格納できます。"
 }

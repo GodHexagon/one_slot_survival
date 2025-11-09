@@ -1,6 +1,8 @@
 package com.github.godhexagon.oneslotsurvival.rule.role;
 
+import com.github.godhexagon.oneslotsurvival.object.item.ModTags;
 import net.minecraft.network.chat.Component;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
@@ -24,17 +26,28 @@ public enum SubRole implements Role {
     /**
      * サブロール未割り当て状態
      */
-    UNASSIGNED(0, "sub_role_unassigned", Collections.emptyList());
+    UNASSIGNED(0, "sub_role_unassigned", Collections.emptyList()),
 
-    // TODO: 実際のサブロールを追加する
-    // 例:
-    // FARMER(1, "farmer", List.of(ItemTags.HOES, ModTags.Items.FARMING_TOOLS)),
-    // BUILDER(2, "builder", List.of(ItemTags.AXES, ModTags.Items.BUILDING_TOOLS));
+    /**
+     * 釣り特化サブロール
+     * スロット1: 釣り竿
+     * スロット2: ボート
+     * スロット3: ボート
+     */
+    FISHER(1, "fisher", List.of(ModTags.Items.FISHING_RODS, ItemTags.BOATS, ItemTags.BOATS)),
+
+    /**
+     * 弓矢特化サブロール
+     * スロット1: 弓またはクロスボウ
+     * スロット2: 矢（通常、効果付き、光の矢）
+     * スロット3: 矢（通常、効果付き、光の矢）
+     */
+    ARCHER(2, "archer", List.of(ModTags.Items.ARCHER_WEAPONS, ItemTags.ARROWS, ItemTags.ARROWS));
 
     private final int attributeId;
     private final String commandName;
     private final List<TagKey<Item>> slotItemTags;
-
+    
     SubRole(int attribute_id, String command_name, List<TagKey<Item>> slot_item_tags) {
         this.attributeId = attribute_id;
         this.commandName = command_name;
@@ -70,17 +83,17 @@ public enum SubRole implements Role {
     public Component getDisplayName() {
         return Component.translatable("role.oneslotsurvival." + commandName);
     }
-
+    
     /**
      * このロールで使用可能なアイテムタグのリストを取得
      * <p>
      * インデックスはロールスロットのインデックスに対応します。
+     * 例: index 0 = 1番目のロールスロット
      * </p>
      *
      * @return アイテムタグのリスト（スロット順）
      */
-    @Override
-    public List<TagKey<Item>> getSlotItemTags() {
+    public List<TagKey<Item>> getSubRoleSlotItemTags() {
         return slotItemTags;
     }
 
@@ -89,8 +102,7 @@ public enum SubRole implements Role {
      *
      * @return ロールスロットを持つ場合 true
      */
-    @Override
-    public boolean hasRoleSlots() {
+    public boolean hasSubRoleSlots() {
         return !slotItemTags.isEmpty();
     }
 

@@ -23,5 +23,19 @@ public class ModTags {
         public static final TagKey<Item> WARRIOR_SPECIAL_WEAPONS =
             TagKey.create(Registries.ITEM,
                 ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "warrior_special_weapons"));
+
+        /**
+         * FISHERサブロールの釣り竿。
+         */
+        public static final TagKey<Item> FISHING_RODS =
+            TagKey.create(Registries.ITEM,
+                ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "fishing_rods"));
+
+        /**
+         * ARCHERサブロールの遠距離武器（弓、クロスボウ）。
+         */
+        public static final TagKey<Item> ARCHER_WEAPONS =
+            TagKey.create(Registries.ITEM,
+                ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "ranged_weapons"));
     }
 }
