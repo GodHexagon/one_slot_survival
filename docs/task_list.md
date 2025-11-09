@@ -128,7 +128,7 @@
     1. 完了✅|サブロールIDアトリビュート整合性
     1. 完了✅|`admin role clear sub`と`admin role clear main`
     1. 完了✅|そのほか管理者コマンド
-    1. サブロールFisherとArcherを定義
+    1. 完了✅|サブロールFisherとArcherを定義
     1. サブロールスロットにインベントリからアクセスできるようにする
     1. サブロールスロットをホットバー選択できるようにする
     1. ゲームルールsubRoleChanging
