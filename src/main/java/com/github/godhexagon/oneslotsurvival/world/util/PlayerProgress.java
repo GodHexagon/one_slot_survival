@@ -6,7 +6,9 @@ import com.github.godhexagon.oneslotsurvival.rule.level.RoleLeveledUpTimes;
 import com.github.godhexagon.oneslotsurvival.rule.role.LevelReward;
 import com.github.godhexagon.oneslotsurvival.rule.role.LevelRewardRegistry;
 import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
+import com.github.godhexagon.oneslotsurvival.rule.role.Role;
 import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
+import com.github.godhexagon.oneslotsurvival.rule.role.SubRole;
 import com.github.godhexagon.oneslotsurvival.world.cui.LevelRewardFormatter;
 
 import net.minecraft.ChatFormatting;
@@ -17,8 +19,8 @@ import java.util.Optional;
 
 public class PlayerProgress {
     public static void recieveExp(ServerPlayer player, double amount) {
-        // ロールスロットが許可されていないプレイヤーをはじく
-        if (!RoleManager.hasRole(player)) {
+        // 経験値獲得が許可されていないプレイヤーをはじく
+        if (!RoleManager.isPossibleRoleProgress(player)) {
             return;
         }
 
@@ -31,8 +33,9 @@ public class PlayerProgress {
             player.sendSystemMessage(congratsMessage);
 
             // 報酬詳細表示
+            // TODO: とりあえずメインロールだけ表示する。後でサブロールも対応
             int levelUpTimes = RoleLeveledUpTimes.getMain(player);
-            MainRole role = RoleManager.getRole(player);
+            MainRole role = RoleManager.getMainRole(player);
             Optional<LevelReward> rewardOpt = LevelRewardRegistry.getRewardForLevelUpTimesInRole(role, levelUpTimes);
 
             rewardOpt.ifPresent(reward -> {
@@ -47,13 +50,24 @@ public class PlayerProgress {
      * スロット解放通知を送信
      */
     private static void notifySlotUnlock(ServerPlayer player, LevelReward.UnlockSlot unlockSlot) {
-        MainRole role = RoleManager.getRole(player);
+        MainRole role = RoleManager.getMainRole(player);
         LevelRewardFormatter.displayUnlockSlotRewardNotification(player, role, unlockSlot);
     }
     
-    public static void changeRole(ServerPlayer player, MainRole role) {
+    /**
+     * プレイヤーのロールを変更（経験値とレベルアップ回数をリセット）
+     *
+     * @param player 変更するプレイヤー
+     * @param role 設定するロール
+     */
+    public static void changeRole(ServerPlayer player, Role role) {
         Exp.clear(player);
-        RoleLeveledUpTimes.resetMain(player);
-        RoleManager.setRole(player, role);
+        if (role instanceof MainRole mainRole) {
+            RoleLeveledUpTimes.resetMain(player);
+            RoleManager.setMainRole(player, mainRole);
+        } else if (role instanceof SubRole subRole) {
+            RoleLeveledUpTimes.resetSub(player);
+            RoleManager.setSubRole(player, subRole);
+        }
     }
 }

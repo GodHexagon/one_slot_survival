@@ -1,6 +1,8 @@
 {
-  "role.oneslotsurvival.error": "Unknown Role",
-  "role.oneslotsurvival.unassigned": "Unassigned",
+  "role.oneslotsurvival.main_role_error": "Unknown Role",
+  "role.oneslotsurvival.main_role_unassigned": "Unassigned",
+  "role.oneslotsurvival.sub_role_error": "Unknown Role",
+  "role.oneslotsurvival.sub_role_unassigned": "Unassigned",
   "role.oneslotsurvival.miner": "Miner",
   "role.oneslotsurvival.warrior": "Warrior",
 

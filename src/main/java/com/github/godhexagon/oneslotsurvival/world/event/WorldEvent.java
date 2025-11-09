@@ -105,12 +105,13 @@ public class WorldEvent {
         // プレイ時間が非常に少ない = このワールドに初めて参加
         if (playTime < 5) {
             // ロールが未割り当ての場合のみ設定（念のため二重設定を防ぐ）
-            MainRole currentRoleId = RoleManager.getRole(player);
+            MainRole currentRoleId = RoleManager.getMainRole(player);
             if (currentRoleId == MainRole.UNASSIGNED) {
                 // デフォルトロールとして MINER を設定
-                RoleManager.setRole(player, MainRole.MINER);
+                RoleManager.setMainRole(player, MainRole.MINER);
+                // TODO: サブロールのデフォルトを設定必要
                 // デフォルトは有効
-                PlayerModValidity.setEnabled(player, true);                
+                PlayerModValidity.setEnabled(player, true);
                 LOGGER.info("Set default values to new player: {}", player.getName().getString());
             }
         }

@@ -32,7 +32,8 @@ public class ChangeRoleCommand {
     private static final SuggestionProvider<CommandSourceStack> ROLE_SUGGESTIONS = (context, builder) -> {
         // ERRORを除く全てのロールのコマンド名を補完候補として提供
         for (MainRole role : MainRole.values()) {
-            if (role != MainRole.ERROR) {
+            // TODO サブロールにも対応必要
+            if (role != MainRole.ERROR && role != MainRole.UNASSIGNED) {
                 builder.suggest(role.getCommandName());
             }
         }

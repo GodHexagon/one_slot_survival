@@ -1,8 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.rule.role;
 
-import com.github.godhexagon.oneslotsurvival.object.item.ModTags;
 import net.minecraft.network.chat.Component;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
@@ -10,39 +8,35 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * プレイヤーのメインロール定義
+ * プレイヤーのサブロール定義
  * <p>
+ * サブロールはメインロールと並行して使用できる追加のロールです。
  * 各ロールはユニークなIDを持ち、プレイヤーのAttributeとして永続化される。
  * 各ロールは使用可能なアイテムタグのリストを持ち、ロールスロットの制限を定義する。
  * </p>
  */
-public enum MainRole implements Role {
+public enum SubRole implements Role {
     /**
      * 不明な状態
      */
-    ERROR(-1, "main_role_error", Collections.emptyList()),
+    ERROR(-1, "sub_role_error", Collections.emptyList()),
 
     /**
-     * ロール未割り当て状態
+     * サブロール未割り当て状態
      */
-    UNASSIGNED(0, "main_role_unassigned", Collections.emptyList()),
+    UNASSIGNED(0, "sub_role_unassigned", Collections.emptyList());
 
-    /**
-     * 採掘特化ロール
-     */
-    MINER(1, "miner", List.of(ItemTags.PICKAXES, ItemTags.SHOVELS, ItemTags.AXES)),
+    // TODO: 実際のサブロールを追加する
+    // 例:
+    // FARMER(1, "farmer", List.of(ItemTags.HOES, ModTags.Items.FARMING_TOOLS)),
+    // BUILDER(2, "builder", List.of(ItemTags.AXES, ModTags.Items.BUILDING_TOOLS));
 
-    /**
-     * 戦闘特化ロール
-     */
-    WARRIOR(2, "warrior", List.of(ItemTags.SWORDS, ModTags.Items.WARRIOR_DEFENSIVE, ModTags.Items.WARRIOR_SPECIAL_WEAPONS));
-
-    private final int atttributeId;
+    private final int attributeId;
     private final String commandName;
     private final List<TagKey<Item>> slotItemTags;
 
-    MainRole(int attribute_id, String command_name, List<TagKey<Item>> slot_item_tags) {
-        this.atttributeId = attribute_id;
+    SubRole(int attribute_id, String command_name, List<TagKey<Item>> slot_item_tags) {
+        this.attributeId = attribute_id;
         this.commandName = command_name;
         this.slotItemTags = slot_item_tags;
     }
@@ -54,7 +48,7 @@ public enum MainRole implements Role {
      */
     @Override
     public int getAttributeId() {
-        return atttributeId;
+        return attributeId;
     }
 
     /**
@@ -81,7 +75,6 @@ public enum MainRole implements Role {
      * このロールで使用可能なアイテムタグのリストを取得
      * <p>
      * インデックスはロールスロットのインデックスに対応します。
-     * 例: index 0 = 1番目のロールスロット（つるはし等）
      * </p>
      *
      * @return アイテムタグのリスト（スロット順）
@@ -102,14 +95,14 @@ public enum MainRole implements Role {
     }
 
     /**
-     * IDからロールを取得
+     * IDからサブロールを取得
      *
      * @param id ロールID
-     * @return 対応するMainRole
+     * @return 対応するSubRole
      */
-    public static MainRole fromAttributeId(int id) {
-        for (MainRole role : values()) {
-            if (role.atttributeId == id) {
+    public static SubRole fromAttributeId(int id) {
+        for (SubRole role : values()) {
+            if (role.attributeId == id) {
                 return role;
             }
         }
@@ -117,13 +110,13 @@ public enum MainRole implements Role {
     }
 
     /**
-     * 名前からロールを取得（大文字小文字を区別しない）
+     * 名前からサブロールを取得（大文字小文字を区別しない）
      *
      * @param name ロール名
-     * @return 対応するMainRole
+     * @return 対応するSubRole
      */
-    public static MainRole fromCommandName(String name) {
-        for (MainRole role : values()) {
+    public static SubRole fromCommandName(String name) {
+        for (SubRole role : values()) {
             if (role.commandName.equalsIgnoreCase(name)) {
                 return role;
             }
