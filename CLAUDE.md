@@ -17,9 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # 進捗
 
-直前の成果！: サブロールスロットをホットバー選択できるようにする of サブロールを追加する
+直前の成果！: ゲームルールsubRoleChanging of サブロールを追加する
 
-実行中: ゲームルールsubRoleChanging of サブロールを追加する
+実行中: changeroleコマンド of サブロールを追加する
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
