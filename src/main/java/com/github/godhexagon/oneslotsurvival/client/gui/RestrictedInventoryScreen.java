@@ -2,7 +2,7 @@ package com.github.godhexagon.oneslotsurvival.client.gui;
 
 import com.github.godhexagon.oneslotsurvival.rule.inventory.InventoryDefinition;
 import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotRestriction;
-import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
+import com.github.godhexagon.oneslotsurvival.rule.role.Role;
 import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.ChatFormatting;
@@ -19,6 +19,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -215,12 +216,15 @@ public class RestrictedInventoryScreen extends InventoryScreen {
     private List<Component> createRoleSlotTooltip(int inventoryIndex, Player player) {
         List<Component> tooltip = new ArrayList<>();
 
-        // ロールスロットインデックスを取得（0-based）
-        // TODO: メインロールスロットインデックスを取得する必要がある
-        int roleSlotIndex = InventoryDefinition.getRoleSlotIndex(inventoryIndex);
-
-        // プレイヤーのロールを取得
-        MainRole role = RoleManager.getRole(player);
+        int roleSlotIndex = -1;
+        Role role;
+        if (SlotRestriction.unlockedMainRoleSlot(inventoryIndex, player)) {
+            roleSlotIndex = SlotRestriction.getMainRoleSlotIndex(inventoryIndex);
+            role = RoleManager.getMainRole(player);
+        } else {
+            roleSlotIndex = SlotRestriction.getSubRoleSlotIndex(inventoryIndex, player);
+            role = RoleManager.getSubRole(player);
+        }
 
         // スロット名の翻訳キー
         String slotNameKey = "slot.oneslotsurvival." + role.getCommandName() + "." + roleSlotIndex + ".name";

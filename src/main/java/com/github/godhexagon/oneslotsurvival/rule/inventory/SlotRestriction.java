@@ -39,6 +39,14 @@ public class SlotRestriction {
             RoleManager.getSubRole(player).getAvailableRoleSlots(RoleLeveledUpTimes.getSub(player)).size();
     }
 
+    public static boolean unlockedMainRoleSlot(int inventoryIndex, Player player) {
+        return RoleManager.getMainRole(player).getAvailableRoleSlot(SlotRestriction.getMainRoleSlotIndex(inventoryIndex), RoleLeveledUpTimes.getMain(player)).isPresent();
+    }
+
+    public static boolean unlockedSubRoleSlot(int inventoryIndex, Player player) {
+        return RoleManager.getSubRole(player).getAvailableRoleSlot(getSubRoleSlotIndex(inventoryIndex, player), RoleLeveledUpTimes.getSub(player)).isPresent();
+    }
+
     /**
      * プレイヤーのレベルをもとにそのスロットがアンロックされたロールするっとかどうかを返します。
      * 
@@ -47,9 +55,9 @@ public class SlotRestriction {
      * @return ロールスロットのうち、アンロックされたものであるとき、true。
      */
     public static boolean unlockedRoleSlot(int inventoryIndex, Player player) {
-        boolean unlocked = RoleManager.getMainRole(player).getAvailableRoleSlot(getMainRoleSlotIndex(inventoryIndex), RoleLeveledUpTimes.getMain(player)).isPresent();
+        boolean unlocked = unlockedMainRoleSlot(inventoryIndex, player);
         if (!unlocked) {
-            unlocked = RoleManager.getSubRole(player).getAvailableRoleSlot(getSubRoleSlotIndex(inventoryIndex, player), RoleLeveledUpTimes.getSub(player)).isPresent();
+            unlocked = unlockedSubRoleSlot(inventoryIndex, player);
         }
         return unlocked;
     }
