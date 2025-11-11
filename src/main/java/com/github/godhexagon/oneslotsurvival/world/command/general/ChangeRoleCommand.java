@@ -4,7 +4,9 @@ import com.github.godhexagon.oneslotsurvival.object.gamerule.ModGameRules;
 import com.github.godhexagon.oneslotsurvival.rule.level.Exp;
 import com.github.godhexagon.oneslotsurvival.rule.level.RoleLeveledUpTimes;
 import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
+import com.github.godhexagon.oneslotsurvival.rule.role.Role;
 import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
+import com.github.godhexagon.oneslotsurvival.rule.role.SubRole;
 import com.github.godhexagon.oneslotsurvival.world.util.PlayerProgress;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -30,10 +32,15 @@ public class ChangeRoleCommand {
      * ロール名の補完候補を提供するサジェスチョンプロバイダー
      */
     private static final SuggestionProvider<CommandSourceStack> ROLE_SUGGESTIONS = (context, builder) -> {
-        // ERRORを除く全てのロールのコマンド名を補完候補として提供
+        // ERRORとUNASSIGNEDを除く全てのメインロールのコマンド名を補完候補として提供
         for (MainRole role : MainRole.values()) {
-            // TODO サブロールにも対応必要
-            if (role != MainRole.ERROR && role != MainRole.UNASSIGNED) {
+            if (role != MainRole.ERROR) {
+                builder.suggest(role.getCommandName());
+            }
+        }
+        // ERRORとUNASSIGNEDを除く全てのサブロールのコマンド名を補完候補として提供
+        for (SubRole role : SubRole.values()) {
+            if (role != SubRole.ERROR) {
                 builder.suggest(role.getCommandName());
             }
         }
@@ -63,32 +70,39 @@ public class ChangeRoleCommand {
 
             String roleName = StringArgumentType.getString(context, "roleName");
 
-            // ゲームルールチェック
-            boolean roleChangingEnabled = player.level().getGameRules().getBoolean(ModGameRules.ROLE_CHANGING);
-            if (!roleChangingEnabled) {
-                player.sendSystemMessage(getRuleRejectionMessage());
-                // 管理者権限がある場合のみ代替コマンドを提示
-                if (source.hasPermission(2)) {
-                    player.sendSystemMessage(getAlternativeCommandMessage(roleName));
+            // メインロールとサブロールの両方から検索
+            Role role = null;
+            Role currentRole = null;
+            MainRole foundMainRole = MainRole.fromCommandName(roleName);
+            if (foundMainRole != MainRole.ERROR) {
+                boolean mainRoleChangingEnabled = player.level().getGameRules().getBoolean(ModGameRules.ROLE_CHANGING);
+                if (!mainRoleChangingEnabled) {
+                    showRuleRejectionMessages(player, source, roleName);
+                    return 0;
                 }
-                return 0;
+                role = foundMainRole;
+                currentRole = RoleManager.getMainRole(player);
+            } else {
+                SubRole foundSubRole = SubRole.fromCommandName(roleName);
+                if (foundSubRole != SubRole.ERROR) {
+                    boolean subRoleChangingEnabled = player.level().getGameRules().getBoolean(ModGameRules.SUB_ROLE_CHANGIN);
+                    if (!subRoleChangingEnabled) {
+                        showRuleRejectionMessages(player, source, roleName);
+                        return 0;
+                    }
+                    role = foundSubRole;
+                    currentRole = RoleManager.getSubRole(player);
+                }
             }
 
-            // ロール名の検証
-            MainRole role = MainRole.fromCommandName(roleName);
-
-            if (role == null || role == MainRole.ERROR) {
-                player.sendSystemMessage(
+            if (role == null) {
+                context.getSource().sendFailure(
                     Component.literal("Invalid role name: " + roleName + ".")
                 );
                 return 0;
             }
 
             double expLost = Exp.getExpMayBeLostToClear(player);
-
-            // 現在のロールと変更先のロール
-            MainRole currentRole = RoleManager.getRole(player);
-            Component roleDisplayName = role.getDisplayName();
             
             // 現在のロールと同じかチェック
             if (currentRole == role) {
@@ -116,8 +130,7 @@ public class ChangeRoleCommand {
             player.sendSystemMessage(
                 Component.literal("  Changing to: ")
                     .withStyle(ChatFormatting.AQUA)
-                    .append(roleDisplayName
-                        .copy()
+                    .append(concatRolePrefix(role).copy()
                         .withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD))
             );
             player.sendSystemMessage(Component.literal(""));
@@ -237,6 +250,19 @@ public class ChangeRoleCommand {
         } catch (Exception e) {
             context.getSource().sendFailure(Component.literal("Error: " + e.getMessage()));
             return 0;
+        }
+    }
+
+    private static Component concatRolePrefix(Role role) {
+        return Component.literal(role instanceof MainRole? "Main Role " : "Sub Role ")
+            .append(role.getDisplayName());
+    }
+    
+    private static void showRuleRejectionMessages(ServerPlayer player, CommandSourceStack source, String roleName) {
+        player.sendSystemMessage(getRuleRejectionMessage());
+        // 管理者権限がある場合のみ代替コマンドを提示
+        if (source.hasPermission(2)) {
+            player.sendSystemMessage(getAlternativeCommandMessage(roleName));
         }
     }
 
