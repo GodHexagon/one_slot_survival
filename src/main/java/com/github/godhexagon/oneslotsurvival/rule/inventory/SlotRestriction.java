@@ -10,6 +10,9 @@ import com.github.godhexagon.oneslotsurvival.rule.role.RoleSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
+/**
+ * プレイヤーのレベルとロールを考慮して、Inventoryのコンテナインデックス(Inventory Index)ごとのルールを提供する。
+ */
 public class SlotRestriction {
 
     /**
@@ -34,21 +37,41 @@ public class SlotRestriction {
         return roleSlotIndex - mainRoleSlotCount;
     }
 
+    /**
+     * プレイヤーのレベルをもとにアンロックされた総ロールスロット数を返します。
+     *
+     * @param player プレイヤー。
+     * @return メインロールとサブロールの合計ロールスロット数。
+     */
     public static int getTotalRoleSlotCount(Player player) {
-        return RoleManager.getMainRole(player).getAvailableRoleSlots(RoleLeveledUpTimes.getMain(player)).size() + 
+        return RoleManager.getMainRole(player).getAvailableRoleSlots(RoleLeveledUpTimes.getMain(player)).size() +
             RoleManager.getSubRole(player).getAvailableRoleSlots(RoleLeveledUpTimes.getSub(player)).size();
     }
 
+    /**
+     * メインロールのロールスロットがアンロックされているか判定します。
+     *
+     * @param inventoryIndex inventory index。
+     * @param player インベントリーの所有者。
+     * @return アンロックされているとき、true。
+     */
     public static boolean unlockedMainRoleSlot(int inventoryIndex, Player player) {
         return RoleManager.getMainRole(player).getAvailableRoleSlot(SlotRestriction.getMainRoleSlotIndex(inventoryIndex), RoleLeveledUpTimes.getMain(player)).isPresent();
     }
 
+    /**
+     * サブロールのロールスロットがアンロックされているか判定します。
+     *
+     * @param inventoryIndex inventory index。
+     * @param player インベントリーの所有者。
+     * @return アンロックされているとき、true。
+     */
     public static boolean unlockedSubRoleSlot(int inventoryIndex, Player player) {
         return RoleManager.getSubRole(player).getAvailableRoleSlot(getSubRoleSlotIndex(inventoryIndex, player), RoleLeveledUpTimes.getSub(player)).isPresent();
     }
 
     /**
-     * プレイヤーのレベルをもとにそのスロットがアンロックされたロールするっとかどうかを返します。
+     * プレイヤーのレベルをもとにそのスロットがアンロックされたロールスロットかどうかを返します。
      * 
      * @param inventoryIndex inventory index。
      * @param player インベントリーの所有者。
