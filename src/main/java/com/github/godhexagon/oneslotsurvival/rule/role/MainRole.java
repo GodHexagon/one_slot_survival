@@ -49,45 +49,22 @@ public enum MainRole implements Role, RoleSlotProvider {
         this.slotItemTags = slot_item_tags;
     }
 
-    /**
-     * ロールIDを取得
-     *
-     * @return ロールID
-     */
     @Override
     public int getAttributeId() {
         return atttributeId;
     }
 
-    /**
-     * コマンド名を取得
-     *
-     * @return コマンド名
-     */
     @Override
     public String getCommandName() {
         return commandName;
     }
 
-    /**
-     * 翻訳可能な表示名を取得
-     *
-     * @return 翻訳キーを含むComponent
-     */
     @Override
     public Component getDisplayName() {
         return Component.translatable("role.oneslotsurvival." + commandName);
     }
 
-    /**
-     * このロールで使用可能なアイテムタグのリストを取得
-     * <p>
-     * インデックスはロールスロットのインデックスに対応します。
-     * 例: index 0 = 1番目のロールスロット（つるはし等）
-     * </p>
-     *
-     * @return アイテムタグのリスト（スロット順）
-     */
+    @Deprecated
     public List<TagKey<Item>> getSlotItemTags() {
         return slotItemTags;
     }
@@ -119,12 +96,7 @@ public enum MainRole implements Role, RoleSlotProvider {
             return Optional.empty();
         }
     }
-
-    /**
-     * このロールがロールスロットを持つかどうか
-     *
-     * @return ロールスロットを持つ場合 true
-     */
+    
     @Override
     public boolean hasRoleSlots() {
         return !slotItemTags.isEmpty();
