@@ -77,7 +77,7 @@ public class ChangeRoleCommand {
             if (foundMainRole != MainRole.ERROR) {
                 boolean mainRoleChangingEnabled = player.level().getGameRules().getBoolean(ModGameRules.ROLE_CHANGING);
                 if (!mainRoleChangingEnabled) {
-                    showRuleRejectionMessages(player, source, roleName);
+                    showRuleRejectionMessages(player, source, roleName, false);
                     return 0;
                 }
                 role = foundMainRole;
@@ -87,7 +87,7 @@ public class ChangeRoleCommand {
                 if (foundSubRole != SubRole.ERROR) {
                     boolean subRoleChangingEnabled = player.level().getGameRules().getBoolean(ModGameRules.SUB_ROLE_CHANGIN);
                     if (!subRoleChangingEnabled) {
-                        showRuleRejectionMessages(player, source, roleName);
+                        showRuleRejectionMessages(player, source, roleName, true);
                         return 0;
                     }
                     role = foundSubRole;
@@ -207,7 +207,7 @@ public class ChangeRoleCommand {
                 player.sendSystemMessage(getRuleRejectionMessage());
                 // 管理者権限がある場合のみ代替コマンドを提示
                 if (source.hasPermission(2)) {
-                    player.sendSystemMessage(getAlternativeCommandMessage(roleName));
+                    player.sendSystemMessage(getAlternativeCommandMessage(roleName, false));// TODO: 仮実装
                 }
                 return 0;
             }
@@ -258,11 +258,11 @@ public class ChangeRoleCommand {
             .append(role.getDisplayName());
     }
     
-    private static void showRuleRejectionMessages(ServerPlayer player, CommandSourceStack source, String roleName) {
+    private static void showRuleRejectionMessages(ServerPlayer player, CommandSourceStack source, String roleName, boolean subRole) {
         player.sendSystemMessage(getRuleRejectionMessage());
         // 管理者権限がある場合のみ代替コマンドを提示
         if (source.hasPermission(2)) {
-            player.sendSystemMessage(getAlternativeCommandMessage(roleName));
+            player.sendSystemMessage(getAlternativeCommandMessage(roleName, subRole));
         }
     }
 
@@ -271,7 +271,7 @@ public class ChangeRoleCommand {
             .withStyle(ChatFormatting.RED);
     }
 
-    private static MutableComponent getAlternativeCommandMessage(String roleName) {
+    private static MutableComponent getAlternativeCommandMessage(String roleName, boolean subRole) {
         // クリック可能な管理者コマンドリンク
         Component adminCommand = Component.literal("/oneslot admin role set " + roleName)
             .withStyle(style -> style
@@ -282,10 +282,11 @@ public class ChangeRoleCommand {
             );
 
         // クリック可能なgameruleコマンドリンク
-        Component gameruleCommand = Component.literal("/gamerule roleChanging/oneslotsurvival true")
+        String commandLiteral = subRole? "/gamerule subRoleChanging/oneslotsurvival true" : "/gamerule roleChanging/oneslotsurvival true";
+        Component gameruleCommand = Component.literal(commandLiteral)
             .withStyle(style -> style
                 .withColor(ChatFormatting.GREEN)
-                .withClickEvent(new ClickEvent.SuggestCommand("/gamerule roleChanging/oneslotsurvival true"))
+                .withClickEvent(new ClickEvent.SuggestCommand(commandLiteral))
                 .withHoverEvent(new HoverEvent.ShowText(
                     Component.literal("Click to auto-fill command").withStyle(ChatFormatting.YELLOW)))
             );
