@@ -75,7 +75,7 @@ public class ChangeRoleCommand {
             Role currentRole = null;
             MainRole foundMainRole = MainRole.fromCommandName(roleName);
             if (foundMainRole != MainRole.ERROR) {
-                boolean mainRoleChangingEnabled = player.level().getGameRules().getBoolean(ModGameRules.ROLE_CHANGING);
+                boolean mainRoleChangingEnabled = player.level().getGameRules().getBoolean(ModGameRules.MAIN_ROLE_CHANGING);
                 if (!mainRoleChangingEnabled) {
                     showRuleRejectionMessages(player, source, roleName, false);
                     return 0;
@@ -202,7 +202,7 @@ public class ChangeRoleCommand {
             String roleName = StringArgumentType.getString(context, "roleName");
 
             // ゲームルールチェック
-            boolean roleChangingEnabled = player.level().getGameRules().getBoolean(ModGameRules.ROLE_CHANGING);
+            boolean roleChangingEnabled = player.level().getGameRules().getBoolean(ModGameRules.MAIN_ROLE_CHANGING);
             if (!roleChangingEnabled) {
                 player.sendSystemMessage(getRuleRejectionMessage());
                 // 管理者権限がある場合のみ代替コマンドを提示

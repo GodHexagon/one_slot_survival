@@ -28,7 +28,7 @@ public class ModGameRules {
      *   <li>カテゴリ: PLAYER</li>
      * </ul>
      */
-    public static GameRules.Key<GameRules.BooleanValue> ROLE_CHANGING;
+    public static GameRules.Key<GameRules.BooleanValue> MAIN_ROLE_CHANGING;
 
     /**
      * プレイヤーが自分のサブロールを変更できるかどうかを制御するGameRule。
@@ -46,8 +46,8 @@ public class ModGameRules {
      * <p>このメソッドはMODの初期化時に一度だけ呼ばれる必要があります。</p>
      */
     public static void register() {
-        ROLE_CHANGING = GameRules.register(
-            "roleChanging/" + OneSlotSurvivalMod.MODID,
+        MAIN_ROLE_CHANGING = GameRules.register(
+            "mainRoleChanging/" + OneSlotSurvivalMod.MODID,
             GameRules.Category.PLAYER,
             GameRules.BooleanValue.create(true)
         );
