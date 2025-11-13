@@ -47,6 +47,31 @@ public class ChangeRoleCommand {
         return builder.buildFuture();
     };
 
+    /**
+     * ロール変更の入力検証結果を保持する内部クラス
+     */
+    private static class RoleChangeValidationResult {
+        final boolean success;
+        final ServerPlayer player;
+        final Role targetRole;
+        final Role currentRole;
+
+        private RoleChangeValidationResult(boolean success, ServerPlayer player, Role targetRole, Role currentRole) {
+            this.success = success;
+            this.player = player;
+            this.targetRole = targetRole;
+            this.currentRole = currentRole;
+        }
+
+        static RoleChangeValidationResult success(ServerPlayer player, Role targetRole, Role currentRole) {
+            return new RoleChangeValidationResult(true, player, targetRole, currentRole);
+        }
+
+        static RoleChangeValidationResult failure() {
+            return new RoleChangeValidationResult(false, null, null, null);
+        }
+    }
+
     public static LiteralArgumentBuilder<CommandSourceStack> build() {
         return Commands.literal("changerole")
             .then(Commands.argument("roleName", StringArgumentType.word())
@@ -58,62 +83,83 @@ public class ChangeRoleCommand {
                 .executes(ChangeRoleCommand::showChangeInfo));
     }
 
+    /**
+     * ロール変更の入力検証を行う共通メソッド
+     * <p>検証失敗時は適切なエラーメッセージを送信し、{@code RoleChangeValidationResult.failure()}を返す。
+     * 検証成功時は必要な情報を含む{@code RoleChangeValidationResult}を返す。</p>
+     *
+     * @param context コマンドコンテキスト
+     * @return 検証結果
+     */
+    private static RoleChangeValidationResult validateRoleChange(CommandContext<CommandSourceStack> context) {
+        CommandSourceStack source = context.getSource();
+
+        // プレイヤーが発行した場合のみ動作
+        if (!(source.getEntity() instanceof ServerPlayer player)) {
+            source.sendFailure(Component.literal("This command can only be used by players"));
+            return RoleChangeValidationResult.failure();
+        }
+
+        String roleName = StringArgumentType.getString(context, "roleName");
+
+        // メインロールとサブロールの両方から検索
+        Role role = null;
+        Role currentRole = null;
+        MainRole foundMainRole = MainRole.fromCommandName(roleName);
+        if (foundMainRole != MainRole.ERROR) {
+            boolean mainRoleChangingEnabled = player.level().getGameRules().getBoolean(ModGameRules.MAIN_ROLE_CHANGING);
+            if (!mainRoleChangingEnabled) {
+                showRuleRejectionMessages(player, source, roleName, false);
+                return RoleChangeValidationResult.failure();
+            }
+            role = foundMainRole;
+            currentRole = RoleManager.getMainRole(player);
+        } else {
+            SubRole foundSubRole = SubRole.fromCommandName(roleName);
+            if (foundSubRole != SubRole.ERROR) {
+                boolean subRoleChangingEnabled = player.level().getGameRules().getBoolean(ModGameRules.SUB_ROLE_CHANGIN);
+                if (!subRoleChangingEnabled) {
+                    showRuleRejectionMessages(player, source, roleName, true);
+                    return RoleChangeValidationResult.failure();
+                }
+                role = foundSubRole;
+                currentRole = RoleManager.getSubRole(player);
+            }
+        }
+
+        if (role == null) {
+            source.sendFailure(
+                Component.literal("Invalid role name: " + roleName + ".")
+            );
+            return RoleChangeValidationResult.failure();
+        }
+
+        // 現在のロールと同じかチェック
+        if (currentRole == role) {
+            player.sendSystemMessage(
+                Component.literal("You are already ")
+                    .withStyle(ChatFormatting.YELLOW)
+                    .append(role.getDisplayName().copy().withStyle(ChatFormatting.WHITE, ChatFormatting.BOLD))
+                    .append(Component.literal(".").withStyle(ChatFormatting.YELLOW))
+            );
+            return RoleChangeValidationResult.failure();
+        }
+
+        return RoleChangeValidationResult.success(player, role, currentRole);
+    }
+
     private static int showChangeInfo(CommandContext<CommandSourceStack> context) {
         try {
-            CommandSourceStack source = context.getSource();
-
-            // プレイヤーが発行した場合のみ動作
-            if (!(source.getEntity() instanceof ServerPlayer player)) {
-                source.sendFailure(Component.literal("This command can only be used by players"));
+            // 入力検証
+            RoleChangeValidationResult validation = validateRoleChange(context);
+            if (!validation.success) {
                 return 0;
             }
 
+            ServerPlayer player = validation.player;
+            Role role = validation.targetRole;
+            Role currentRole = validation.currentRole;
             String roleName = StringArgumentType.getString(context, "roleName");
-
-            // メインロールとサブロールの両方から検索
-            Role role = null;
-            Role currentRole = null;
-            MainRole foundMainRole = MainRole.fromCommandName(roleName);
-            if (foundMainRole != MainRole.ERROR) {
-                boolean mainRoleChangingEnabled = player.level().getGameRules().getBoolean(ModGameRules.MAIN_ROLE_CHANGING);
-                if (!mainRoleChangingEnabled) {
-                    showRuleRejectionMessages(player, source, roleName, false);
-                    return 0;
-                }
-                role = foundMainRole;
-                currentRole = RoleManager.getMainRole(player);
-            } else {
-                SubRole foundSubRole = SubRole.fromCommandName(roleName);
-                if (foundSubRole != SubRole.ERROR) {
-                    boolean subRoleChangingEnabled = player.level().getGameRules().getBoolean(ModGameRules.SUB_ROLE_CHANGIN);
-                    if (!subRoleChangingEnabled) {
-                        showRuleRejectionMessages(player, source, roleName, true);
-                        return 0;
-                    }
-                    role = foundSubRole;
-                    currentRole = RoleManager.getSubRole(player);
-                }
-            }
-
-            if (role == null) {
-                context.getSource().sendFailure(
-                    Component.literal("Invalid role name: " + roleName + ".")
-                );
-                return 0;
-            }
-
-            double expLost = Exp.getExpMayBeLostToClear(player);
-            
-            // 現在のロールと同じかチェック
-            if (currentRole == role) {
-                player.sendSystemMessage(
-                    Component.literal("You are already ")
-                        .withStyle(ChatFormatting.YELLOW)
-                        .append(role.getDisplayName().copy().withStyle(ChatFormatting.WHITE, ChatFormatting.BOLD))
-                        .append(Component.literal(".").withStyle(ChatFormatting.YELLOW))
-                );
-                return 0;
-            }
 
             // 情報表示
             player.sendSystemMessage(
@@ -155,7 +201,7 @@ public class ChangeRoleCommand {
             player.sendSystemMessage(
                 Component.literal("    • Experience points: ")
                     .withStyle(ChatFormatting.YELLOW)
-                    .append(Component.literal(String.format("%.1f", expLost))
+                    .append(Component.literal(String.format("%.1f", Exp.getExpMayBeLostToClear(player)))
                         .withStyle(ChatFormatting.WHITE, ChatFormatting.BOLD))
             );
             player.sendSystemMessage(Component.literal(""));
@@ -191,48 +237,14 @@ public class ChangeRoleCommand {
 
     private static int changeRole(CommandContext<CommandSourceStack> context) {
         try {
-            CommandSourceStack source = context.getSource();
-
-            // プレイヤーが発行した場合のみ動作
-            if (!(source.getEntity() instanceof ServerPlayer player)) {
-                source.sendFailure(Component.literal("This command can only be used by players"));
+            // 入力検証
+            RoleChangeValidationResult validation = validateRoleChange(context);
+            if (!validation.success) {
                 return 0;
             }
 
-            String roleName = StringArgumentType.getString(context, "roleName");
-
-            // ゲームルールチェック
-            boolean roleChangingEnabled = player.level().getGameRules().getBoolean(ModGameRules.MAIN_ROLE_CHANGING);
-            if (!roleChangingEnabled) {
-                player.sendSystemMessage(getRuleRejectionMessage());
-                // 管理者権限がある場合のみ代替コマンドを提示
-                if (source.hasPermission(2)) {
-                    player.sendSystemMessage(getAlternativeCommandMessage(roleName, false));// TODO: 仮実装
-                }
-                return 0;
-            }
-
-            // ロール名の検証
-            MainRole role = MainRole.fromCommandName(roleName);
-
-            if (role == null || role == MainRole.ERROR) {
-                player.sendSystemMessage(
-                    Component.literal("Invalid role name: " + roleName + ".")
-                );
-                return 0;
-            }
-
-            // 現在のロールと同じかチェック
-            MainRole currentRole = RoleManager.getRole(player);
-            if (currentRole == role) {
-                player.sendSystemMessage(
-                    Component.literal("You are already ")
-                        .withStyle(ChatFormatting.YELLOW)
-                        .append(role.getDisplayName().copy().withStyle(ChatFormatting.WHITE, ChatFormatting.BOLD))
-                        .append(Component.literal(".").withStyle(ChatFormatting.YELLOW))
-                );
-                return 0;
-            }
+            ServerPlayer player = validation.player;
+            Role role = validation.targetRole;
 
             // ロール変更実行
             PlayerProgress.changeRole(player, role);
