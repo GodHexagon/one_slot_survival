@@ -133,10 +133,10 @@
     1. 完了✅|サブロールスロットをホットバー選択できるようにする
     1. 完了✅|ゲームルールsubRoleChanging
     1. changeroleコマンド
-    1. スロットの名前を見直し
     1. 言語ファイルの不適切なトップレベルID "role", "slot"を修正する
     1. そのほかの一般コマンド、CUI
     1. oneslot changeroleコマンドでoneslot roleコマンドの変化バージョン（ゲームルールでフィルター）を表示
+    1. 各所のスロット名表示について再検討
 1. メインロールの種類を増やす
     * Miner, Warriorのロールスロットを見直し
     * Survivor, Builderを追加
