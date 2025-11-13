@@ -17,9 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # 進捗
 
-直前の成果！: ゲームルールsubRoleChanging of サブロールを追加する
+直前の成果！: changeroleコマンド of サブロールを追加する
 
-実行中: changeroleコマンド of サブロールを追加する
+実行中: 言語ファイルの不適切なトップレベルID "role", "slot"を修正する of サブロールを追加する
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
