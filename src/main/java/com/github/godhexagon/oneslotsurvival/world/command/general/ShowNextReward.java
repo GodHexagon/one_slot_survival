@@ -66,7 +66,7 @@ public class ShowNextReward {
                 String slotOrdinal = TextFormatUtils.getOrdinal(unlockSlot.slotNumber());
 
                 // スロットの説明を翻訳キーから取得
-                String descriptionKey = "slot.oneslotsurvival." + role.getCommandName() + "." + unlockSlot.slotIndex() + ".description";
+                String descriptionKey = "oneslotsurvival.slot." + role.getCommandName() + "." + unlockSlot.slotIndex() + ".description";
 
                 // 報酬を得るまでに必要なレベルアップ回数を計算
                 int levelUpsNeeded = rewardLevelUpTimes - leveledUpTimes;

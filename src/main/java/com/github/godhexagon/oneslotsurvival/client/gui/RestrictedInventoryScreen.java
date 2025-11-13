@@ -227,13 +227,13 @@ public class RestrictedInventoryScreen extends InventoryScreen {
         }
 
         // スロット名の翻訳キー
-        String slotNameKey = "slot.oneslotsurvival." + role.getCommandName() + "." + roleSlotIndex + ".name";
+        String slotNameKey = "oneslotsurvival.slot." + role.getCommandName() + "." + roleSlotIndex + ".name";
 
         // スロット名を追加
         tooltip.add(Component.translatable(slotNameKey).withStyle(ChatFormatting.GOLD));
 
         // 説明の翻訳キー
-        String descriptionKey = "slot.oneslotsurvival." + role.getCommandName() + "." + roleSlotIndex + ".description";
+        String descriptionKey = "oneslotsurvival.slot." + role.getCommandName() + "." + roleSlotIndex + ".description";
         Component description = Component.translatable(descriptionKey);
 
         // 説明文を取得して単語単位で分割

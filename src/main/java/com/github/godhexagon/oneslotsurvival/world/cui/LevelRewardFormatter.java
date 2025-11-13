@@ -42,7 +42,7 @@ public class LevelRewardFormatter {
         String slotOrdinal = TextFormatUtils.getOrdinal(slotNumber);
 
         // スロットの説明を翻訳キーから取得
-        String descriptionKey = "slot.oneslotsurvival." + role.getCommandName() + "." + slotIndex + ".description";
+        String descriptionKey = "oneslotsurvival.slot." + role.getCommandName() + "." + slotIndex + ".description";
 
         // レベルアップメッセージ
         Component levelUpMessage = Component.literal("- " + levelOrdinal + " level up: ")
@@ -81,7 +81,7 @@ public class LevelRewardFormatter {
         String slotOrdinal = TextFormatUtils.getOrdinal(slotNumber);
 
         // スロットの説明を翻訳キーから取得
-        String descriptionKey = "slot.oneslotsurvival." + role.getCommandName() + "." + slotIndex + ".description";
+        String descriptionKey = "oneslotsurvival.slot." + role.getCommandName() + "." + slotIndex + ".description";
 
         // 報酬メッセージ
         Component rewardMessage = Component.literal("Reward: ")
@@ -165,7 +165,7 @@ public class LevelRewardFormatter {
         Component roleDisplayName = role.getDisplayName();
 
         // スロットの説明を翻訳キーから取得
-        String descriptionKey = "slot.oneslotsurvival." + role.getCommandName() + "." + slotIndex + ".description";
+        String descriptionKey = "oneslotsurvival.slot." + role.getCommandName() + "." + slotIndex + ".description";
 
         // ヘッダー
         player.sendSystemMessage(Component.literal(""));

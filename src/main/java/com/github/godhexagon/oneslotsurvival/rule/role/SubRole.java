@@ -68,7 +68,7 @@ public enum SubRole implements Role, RoleSlotProvider {
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("role.oneslotsurvival." + commandName);
+        return Component.translatable("oneslotsurvival.role." + commandName);
     }
     
     @Override
