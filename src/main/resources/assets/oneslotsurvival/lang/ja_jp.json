@@ -3,10 +3,10 @@
   "role.oneslotsurvival.main_role_unassigned": "未割り当て",
   "role.oneslotsurvival.sub_role_error": "不明なロール",
   "role.oneslotsurvival.sub_role_unassigned": "未割り当て",
-  "role.oneslotsurvival.miner": "採掘者",
+  "role.oneslotsurvival.miner": "鉱夫",
   "role.oneslotsurvival.warrior": "戦士",
   "role.oneslotsurvival.fisher": "釣り人",
-  "role.oneslotsurvival.archer": "射手",
+  "role.oneslotsurvival.archer": "弓兵",
 
   "slot.oneslotsurvival.miner.0.name": "採掘者のスロット",
   "slot.oneslotsurvival.miner.0.description": "全ての素材のつるはしを格納できます。",
