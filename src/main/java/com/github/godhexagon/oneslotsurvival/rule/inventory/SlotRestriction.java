@@ -103,8 +103,8 @@ public class SlotRestriction {
         if (InventoryDefinition.isRoleSlot(inventoryIndex)) {
             // メインロールのアイテムタグを取得
             int mainRoleSlotIndex = getMainRoleSlotIndex(inventoryIndex);
-            int levelUpTimes = RoleLeveledUpTimes.getMain(player);
-            Optional<RoleSlot> roleSlot = RoleManager.getMainRole(player).getAvailableRoleSlot(mainRoleSlotIndex, levelUpTimes);
+            int mainRoleLevelUpTimes = RoleLeveledUpTimes.getMain(player);
+            Optional<RoleSlot> roleSlot = RoleManager.getMainRole(player).getAvailableRoleSlot(mainRoleSlotIndex, mainRoleLevelUpTimes);
 
             if (roleSlot.isPresent()) {
                 // 有効なロールスロット
@@ -112,7 +112,8 @@ public class SlotRestriction {
             } else {
                 // サブロールのアイテムタグを取得
                 int subRoleSlotIndex = getSubRoleSlotIndex(inventoryIndex, player);
-                roleSlot = RoleManager.getSubRole(player).getAvailableRoleSlot(subRoleSlotIndex, levelUpTimes);
+                int subRoleLevelUpTimes = RoleLeveledUpTimes.getSub(player);
+                roleSlot = RoleManager.getSubRole(player).getAvailableRoleSlot(subRoleSlotIndex, subRoleLevelUpTimes);
 
                 if (roleSlot.isPresent()) {
                     // 有効なロールスロット
