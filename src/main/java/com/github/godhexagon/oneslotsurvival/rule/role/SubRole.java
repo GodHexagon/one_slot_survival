@@ -48,12 +48,19 @@ public enum SubRole implements Role, RoleSlotProvider {
 
     private final int attributeId;
     private final String commandName;
-    private final List<TagKey<Item>> slotItemTags;
-    
+    private final RoleSlotHelper helper;
+
     SubRole(int attribute_id, String command_name, List<TagKey<Item>> slot_item_tags) {
         this.attributeId = attribute_id;
         this.commandName = command_name;
-        this.slotItemTags = slot_item_tags;
+        
+        // ヘルパーに独自のデータを格納
+        List<RoleSlot> roleSlots = new ArrayList<>();
+        for (TagKey<Item> itemTag: slot_item_tags) {
+            // サブロールのスロットは第２回のレベルアップですべて一気に解放される。
+            roleSlots.add(new RoleSlot(itemTag, 2));
+        }
+        this.helper = new RoleSlotHelper(roleSlots);
     }
 
     @Override
@@ -73,33 +80,22 @@ public enum SubRole implements Role, RoleSlotProvider {
     
     @Override
     public List<RoleSlot> getRoleSlots() {
-        List<RoleSlot> roleSlots = new ArrayList<>();
-        for (TagKey<Item> itemTag: slotItemTags) {
-            // サブロールのスロットは第２回のレベルアップですべて一気に解放される。
-            roleSlots.add(new RoleSlot(itemTag, 2));
-        }
-        return roleSlots;
+        return helper.getRoleSlots();
     }
 
     @Override
     public List<RoleSlot> getAvailableRoleSlots(int levelUpTimesInRole) {
-        return getRoleSlots().stream()
-            .filter(slot -> slot.levelUpTimesInRole() <= levelUpTimesInRole)
-            .toList();
+        return helper.getAvailableRoleSlots(levelUpTimesInRole);
     }
     
     @Override
     public Optional<RoleSlot> getAvailableRoleSlot(int index, int levelUpTimesInRole) {
-        if (-1 < index && index < getAvailableRoleSlots(levelUpTimesInRole).size()) {
-            return Optional.of(getAvailableRoleSlots(levelUpTimesInRole).get(index));
-        } else {
-            return Optional.empty();
-        }
+        return helper.getAvailableRoleSlot(index, levelUpTimesInRole);
     }
-
+    
     @Override
     public boolean hasRoleSlots() {
-        return !slotItemTags.isEmpty();
+        return helper.hasRoleSlots();
     }
 
     /**
