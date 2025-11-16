@@ -1,9 +1,10 @@
 package com.github.godhexagon.oneslotsurvival.rule.role;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
-interface RoleSlotProvider {
+public interface RoleSlotProvider {
     /**
      * このロールで使用可能になるロールスロットを取得する
      * <p>
@@ -35,7 +36,7 @@ interface RoleSlotProvider {
      *
      * @param index ロールスロットのインデックス（0から始まる）
      * @param levelUpTimesInRole そのロールでレベルアップを経験した回数
-     * @return 許可されるアイテムタグ。ロールがスロットを持たない、またはロールが未開放の場合は空
+     * @return ロールスロット。ロールがスロットを持たない、またはロールが未開放の場合は空
      */
     public Optional<RoleSlot> getAvailableRoleSlot(int index, int levelUpTimesInRole);
     
@@ -45,4 +46,19 @@ interface RoleSlotProvider {
      * @return ロールスロットを持つ場合 true
      */
     public boolean hasRoleSlots();
+
+    /**
+     * 新たに利用可能になるスロットについて、レベルごとのMapで返す。
+     * 
+     * @return 新たに利用可能になるスロットのリスト（順不同）をレベルごとでマップしたもの
+     */
+    public Map<Integer, List<RoleSlot>> getJustUnlockedRoleSlotsMap();
+
+    /**
+     * 指定されたレベルで新たに利用可能になるスロットをすべて返す。
+     * 
+     * @param levelUpTimesInRole そのロールでレベルアップを経験した回数
+     * @return 新たに利用可能になるスロットのリスト（順不同）
+     */
+    public List<RoleSlot> getJustUnlockedRoleSlots(int levelUpTimesInRole);
 }

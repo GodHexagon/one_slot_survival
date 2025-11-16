@@ -9,6 +9,7 @@ import net.minecraft.world.item.Item;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -56,9 +57,12 @@ public enum SubRole implements Role, RoleSlotProvider {
         
         // ヘルパーに独自のデータを格納
         List<RoleSlot> roleSlots = new ArrayList<>();
+        // インデックス、アンロックされる順番、slot_item_tags引数の順番がすべて一致するようにする。ただし、サブロールはアンロックされる順番については考えなくてよい。
+        int index = 0;
         for (TagKey<Item> itemTag: slot_item_tags) {
             // サブロールのスロットは第２回のレベルアップですべて一気に解放される。
-            roleSlots.add(new RoleSlot(itemTag, 2));
+            roleSlots.add(new RoleSlot(itemTag, index, 2));
+            index++;
         }
         this.helper = new RoleSlotHelper(roleSlots);
     }
@@ -96,6 +100,16 @@ public enum SubRole implements Role, RoleSlotProvider {
     @Override
     public boolean hasRoleSlots() {
         return helper.hasRoleSlots();
+    }
+    
+    @Override
+    public Map<Integer, List<RoleSlot>> getJustUnlockedRoleSlotsMap() {
+        return helper.getJustUnlockedRoleSlotsMap();
+    }
+
+    @Override
+    public List<RoleSlot> getJustUnlockedRoleSlots(int levelUpTimesInRole) {
+        return helper.getJustUnlockedRoleSlots(levelUpTimesInRole);
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.github.godhexagon.oneslotsurvival.world.command.util;
 
 import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
+import com.github.godhexagon.oneslotsurvival.rule.role.SubRole;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
@@ -19,8 +20,15 @@ public class CommandUtils {
      * ERRORとUNASSIGNEDを除く全てのロールのコマンド名を補完候補として提供
      */
     public static final SuggestionProvider<CommandSourceStack> ROLE_SUGGESTIONS = (context, builder) -> {
+        // ERRORとUNASSIGNEDを除く全てのメインロールのコマンド名を補完候補として提供
         for (MainRole role : MainRole.values()) {
-            if (role != MainRole.ERROR && role != MainRole.UNASSIGNED) {
+            if (role.hasRoleSlots()) {
+                builder.suggest(role.getCommandName());
+            }
+        }
+        // ERRORとUNASSIGNEDを除く全てのサブロールのコマンド名を補完候補として提供
+        for (SubRole role : SubRole.values()) {
+            if (role.hasRoleSlots()) {
                 builder.suggest(role.getCommandName());
             }
         }

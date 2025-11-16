@@ -1,15 +1,13 @@
 package com.github.godhexagon.oneslotsurvival.world.util;
 
+import com.github.godhexagon.oneslotsurvival.cui.MessageSender;
 import com.github.godhexagon.oneslotsurvival.rule.level.Exp;
-import com.github.godhexagon.oneslotsurvival.rule.level.Level;
 import com.github.godhexagon.oneslotsurvival.rule.level.RoleLeveledUpTimes;
 import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
 import com.github.godhexagon.oneslotsurvival.rule.role.Role;
 import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
 import com.github.godhexagon.oneslotsurvival.rule.role.SubRole;
 
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
 public class PlayerProgress {
@@ -20,15 +18,11 @@ public class PlayerProgress {
         }
 
         if (Exp.add(player, amount)) {
-            // レベルアップ祝福
-            Component congratsMessage = Component.literal("Congratulations! ")
-                    .withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD)
-                    .append(Component.literal("You've reached Level " + Level.get(player) + "!")
-                            .withStyle(ChatFormatting.YELLOW));
-            player.sendSystemMessage(congratsMessage);
+            MessageSender.displayLevelUpRewards(player);
         }
     }
     
+
     /**
      * プレイヤーのロールを変更（経験値とレベルアップ回数をリセット）
      *

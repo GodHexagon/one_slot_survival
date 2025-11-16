@@ -1,5 +1,7 @@
 package com.github.godhexagon.oneslotsurvival.world.command.general;
 
+import com.github.godhexagon.oneslotsurvival.cui.CuiObjects;
+import com.github.godhexagon.oneslotsurvival.cui.CuiUtil;
 import com.github.godhexagon.oneslotsurvival.object.gamerule.ModGameRules;
 import com.github.godhexagon.oneslotsurvival.rule.level.Exp;
 import com.github.godhexagon.oneslotsurvival.rule.level.RoleLeveledUpTimes;
@@ -7,11 +9,11 @@ import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
 import com.github.godhexagon.oneslotsurvival.rule.role.Role;
 import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
 import com.github.godhexagon.oneslotsurvival.rule.role.SubRole;
+import com.github.godhexagon.oneslotsurvival.world.command.util.CommandUtils;
 import com.github.godhexagon.oneslotsurvival.world.util.PlayerProgress;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -27,26 +29,6 @@ import net.minecraft.server.level.ServerPlayer;
  * <p>このコマンドはゲームルール「roleChanging」がtrueの時のみ使用可能</p>
  */
 public class ChangeRoleCommand {
-
-    /**
-     * ロール名の補完候補を提供するサジェスチョンプロバイダー
-     */
-    private static final SuggestionProvider<CommandSourceStack> ROLE_SUGGESTIONS = (context, builder) -> {
-        // ERRORとUNASSIGNEDを除く全てのメインロールのコマンド名を補完候補として提供
-        for (MainRole role : MainRole.values()) {
-            if (role != MainRole.ERROR) {
-                builder.suggest(role.getCommandName());
-            }
-        }
-        // ERRORとUNASSIGNEDを除く全てのサブロールのコマンド名を補完候補として提供
-        for (SubRole role : SubRole.values()) {
-            if (role != SubRole.ERROR) {
-                builder.suggest(role.getCommandName());
-            }
-        }
-        return builder.buildFuture();
-    };
-
     /**
      * ロール変更の入力検証結果を保持する内部クラス
      */
@@ -75,14 +57,84 @@ public class ChangeRoleCommand {
     public static LiteralArgumentBuilder<CommandSourceStack> build() {
         return Commands.literal("changerole")
             .then(Commands.argument("roleName", StringArgumentType.word())
-                .suggests(ROLE_SUGGESTIONS)
+                .suggests(CommandUtils.ROLE_SUGGESTIONS)
                 .then(Commands.literal("info")
                     .executes(ChangeRoleCommand::showChangeInfo))
                 .then(Commands.literal("agree")
                     .executes(ChangeRoleCommand::changeRole))
-                .executes(ChangeRoleCommand::showChangeInfo));
+                .executes(ChangeRoleCommand::showChangeInfo))
+            .executes(ChangeRoleCommand::showList);
     }
 
+    private static int showList(CommandContext<CommandSourceStack> context) {
+        try {
+            CommandSourceStack source = context.getSource();
+
+            // プレイヤーが発行した場合のみ動作
+            if (!(source.getEntity() instanceof ServerPlayer player)) {
+                source.sendFailure(Component.literal("This command can only be used by players"));
+                return 0;
+            }
+            
+            // 表示できるロールがあるかチェック
+            boolean mainRoleChangingEnabled = player.level().getGameRules().getBoolean(ModGameRules.MAIN_ROLE_CHANGING);
+            boolean subRoleChangingEnabled = player.level().getGameRules().getBoolean(ModGameRules.SUB_ROLE_CHANGIN);
+            if (!mainRoleChangingEnabled && !subRoleChangingEnabled) {
+                //
+                player.sendSystemMessage(getRuleRejectionMessage());
+                // 管理者権限がある場合のみ代替コマンドを提示
+                if (source.hasPermission(2)) {
+                    player.sendSystemMessage(getAlternativeCommandMessage(RoleManager.getMainRole(player).getCommandName(), false));
+                    player.sendSystemMessage(getAlternativeCommandMessage(RoleManager.getSubRole(player).getCommandName(), true));
+                }
+                return 0;
+            }
+
+            // ヘッダー
+            player.sendSystemMessage(Component.literal(""));
+            player.sendSystemMessage(
+                Component.literal("Select to change")
+                    .withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD)
+            );
+            player.sendSystemMessage(Component.literal(""));
+
+            // 二つのリスト
+            if (mainRoleChangingEnabled) {
+                player.sendSystemMessage(
+                    Component.literal("Main Roles")
+                        .withStyle(ChatFormatting.YELLOW)
+                );
+                for (Component line: CuiObjects.createRoleList(false, true)) {
+                    player.sendSystemMessage(Component.literal("  ").append(line));
+                }
+                player.sendSystemMessage(Component.literal(""));
+            }
+            
+            if (subRoleChangingEnabled) {
+                player.sendSystemMessage(
+                    Component.literal("Sub Roles")
+                        .withStyle(ChatFormatting.YELLOW)
+                );
+                for (Component line: CuiObjects.createRoleList(true, true)) {
+                    player.sendSystemMessage(Component.literal("  ").append(line));
+                }
+                player.sendSystemMessage(Component.literal(""));
+            }
+
+            // フッター
+            player.sendSystemMessage(
+                Component.literal("Click on a role name to change it")
+                    .withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)
+            );
+            player.sendSystemMessage(Component.literal(""));
+
+            return 1;
+        } catch (Exception e) {
+            context.getSource().sendFailure(Component.literal("Error: " + e.getMessage()));
+            return 0;
+        }
+    }
+    
     /**
      * ロール変更の入力検証を行う共通メソッド
      * <p>検証失敗時は適切なエラーメッセージを送信し、{@code RoleChangeValidationResult.failure()}を返す。
@@ -176,8 +228,10 @@ public class ChangeRoleCommand {
             player.sendSystemMessage(
                 Component.literal("  Changing to: ")
                     .withStyle(ChatFormatting.AQUA)
-                    .append(concatRolePrefix(role).copy()
-                        .withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD))
+                    .append(CuiUtil.addRoleCommandSugguestion(
+                        concatRolePrefix(role).copy()
+                            .withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.BOLD)
+                        , role))
             );
             player.sendSystemMessage(Component.literal(""));
             player.sendSystemMessage(
@@ -189,14 +243,16 @@ public class ChangeRoleCommand {
             player.sendSystemMessage(
                 Component.literal("    • Progress of role ")
                     .withStyle(ChatFormatting.YELLOW)
-                    .append(Component.literal("")
-                        .withStyle(ChatFormatting.WHITE)
-                        .append(currentRole.getDisplayName().copy()
-                            .withStyle(ChatFormatting.BOLD))
-                        .append(" (Level up ")
-                        .append(Component.literal("" + leveledUpTimes)
-                            .withStyle(ChatFormatting.BOLD))
-                        .append(" time(s))"))
+                    .append(CuiUtil.addRoleCommandSugguestion(
+                        Component.literal("")
+                            .withStyle(ChatFormatting.WHITE)
+                            .append(currentRole.getDisplayName().copy()
+                                .withStyle(ChatFormatting.BOLD))
+                            .append(" (Level up ")
+                            .append(Component.literal("" + leveledUpTimes)
+                                .withStyle(ChatFormatting.BOLD))
+                            .append(" time(s))")
+                        , currentRole))
             );
             player.sendSystemMessage(
                 Component.literal("    • Experience points: ")

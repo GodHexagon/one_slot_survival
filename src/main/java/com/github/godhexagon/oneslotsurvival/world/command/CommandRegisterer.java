@@ -6,6 +6,8 @@ import com.github.godhexagon.oneslotsurvival.world.command.admin.RoleLeveledUpTi
 import com.github.godhexagon.oneslotsurvival.world.command.admin.ValidityCommands;
 import com.github.godhexagon.oneslotsurvival.world.command.admin.XpCommands;
 import com.github.godhexagon.oneslotsurvival.world.command.general.ChangeRoleCommand;
+import com.github.godhexagon.oneslotsurvival.world.command.general.ShowGameData;
+import com.github.godhexagon.oneslotsurvival.world.command.general.ShowNext;
 import com.github.godhexagon.oneslotsurvival.world.command.general.ShowStatus;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -23,7 +25,9 @@ public class CommandRegisterer {
         dispatcher.register(
             ShowStatus.buildAlias("oneslot")
                 .then(ShowStatus.buildAlias("status"))
+                .then(ShowNext.build())
                 .then(ChangeRoleCommand.build())
+                .then(ShowGameData.build())
                 .then(buildAdmin("admin"))
         );
         dispatcher.register(buildAdmin("osa"));
