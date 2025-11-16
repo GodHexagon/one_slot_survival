@@ -134,9 +134,22 @@
     1. 完了✅|ゲームルールsubRoleChanging
     1. 完了✅|changeroleコマンド
     1. 完了✅|言語ファイルの不適切なトップレベルID "role", "slot"を修正する
-    1. そのほかの一般コマンド、CUI
-    1. oneslot changeroleコマンドでoneslot roleコマンドの変化バージョン（ゲームルールでフィルター）を表示
-    1. 各所のスロット名表示について再検討
+    1. statusコマンドでサブロールを確認できるようにする
+    1. ツールチップの表示を見直し
+        * ロール名がわかるように
+        * スロット名はアイテム種基準に
+    1. レベルアップ報酬の表示を実装
+    1. nextコマンド実装
+        * statusと相互誘導
+    1. showコマンドを実装
+    1. oneslot changeroleコマンドでshowコマンドの変化バージョンを表示
+        * ゲームルールでフィルター
+        * コマンド補完誘導は`changerole <Role>`にする
+        * `changerole <Role>`の失敗メッセージから誘導される
+    1. `show <Role>`コマンドを実装
+        * 他コマンドから誘導される
+    1. `show <Role> slot <Slot>`コマンドを実装
+        * 他コマンドから誘導される
 1. メインロールの種類を増やす
     * Miner, Warriorのロールスロットを見直し
     * Survivor, Builderを追加
