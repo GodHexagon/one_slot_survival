@@ -6,6 +6,7 @@ import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotRestriction;
 import com.github.godhexagon.oneslotsurvival.rule.player.PlayerModValidity;
 import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
 import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
+import com.github.godhexagon.oneslotsurvival.rule.role.SubRole;
 import com.mojang.logging.LogUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -107,9 +108,9 @@ public class WorldEvent {
             // ロールが未割り当ての場合のみ設定（念のため二重設定を防ぐ）
             MainRole currentRoleId = RoleManager.getMainRole(player);
             if (currentRoleId == MainRole.UNASSIGNED) {
-                // デフォルトロールとして MINER を設定
+                // デフォルトロールとして MINER と FISHER を設定
                 RoleManager.setMainRole(player, MainRole.MINER);
-                // TODO: サブロールのデフォルトを設定必要
+                RoleManager.setSubRole(player, SubRole.FISHER);
                 // デフォルトは有効
                 PlayerModValidity.setEnabled(player, true);
                 LOGGER.info("Set default values to new player: {}", player.getName().getString());
