@@ -88,6 +88,7 @@ minecraft {
 
         server {
             property 'forge.enabledGameTestNamespaces', mod_id
+            property 'minecraft.server.onlineMode', 'false'
             args '--nogui'
         }
 
