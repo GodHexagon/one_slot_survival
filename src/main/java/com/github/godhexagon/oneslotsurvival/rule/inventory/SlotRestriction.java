@@ -2,7 +2,9 @@ package com.github.godhexagon.oneslotsurvival.rule.inventory;
 
 import java.util.Optional;
 
+import com.github.godhexagon.oneslotsurvival.object.item.DynamicBuilderTags;
 import com.github.godhexagon.oneslotsurvival.object.item.ModItems;
+import com.github.godhexagon.oneslotsurvival.object.item.ModTags;
 import com.github.godhexagon.oneslotsurvival.rule.level.RoleLeveledUpTimes;
 import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
 import com.github.godhexagon.oneslotsurvival.rule.role.RoleSlot;
@@ -108,7 +110,14 @@ public class SlotRestriction {
 
             if (roleSlot.isPresent()) {
                 // 有効なロールスロット
-                return item.isEmpty() || item.is(roleSlot.get().itemTag());
+                boolean matchesTag = item.isEmpty() || item.is(roleSlot.get().itemTag());
+
+                // Builderロールの場合、動的タグも確認
+                if (!matchesTag && DynamicBuilderTags.isInitialized()) {
+                    matchesTag = matchesBuilderDynamicTag(item, roleSlot.get().itemTag());
+                }
+
+                return matchesTag;
             } else {
                 // サブロールのアイテムタグを取得
                 int subRoleSlotIndex = getSubRoleSlotIndex(inventoryIndex, player);
@@ -117,7 +126,14 @@ public class SlotRestriction {
 
                 if (roleSlot.isPresent()) {
                     // 有効なロールスロット
-                    return item.isEmpty() || item.is(roleSlot.get().itemTag());
+                    boolean matchesTag = item.isEmpty() || item.is(roleSlot.get().itemTag());
+
+                    // Builderロールの場合、動的タグも確認
+                    if (!matchesTag && DynamicBuilderTags.isInitialized()) {
+                        matchesTag = matchesBuilderDynamicTag(item, roleSlot.get().itemTag());
+                    }
+
+                    return matchesTag;
                 } else {
                     // ロールがない、またはスロットが無効な場合、ロールスロットの場合は空のみ許可
                     return item.isEmpty();
@@ -127,5 +143,24 @@ public class SlotRestriction {
 
         // 特に制限がないスロット
         return !item.is(ModItems.SLOT_BARRIER.get());
+    }
+
+    /**
+     * Builderロールの動的タグに一致するかを判定
+     *
+     * @param item 判定するアイテム
+     * @param itemTag ロールスロットのタグ
+     * @return 動的タグに一致する場合true
+     */
+    private static boolean matchesBuilderDynamicTag(ItemStack item, net.minecraft.tags.TagKey<net.minecraft.world.item.Item> itemTag) {
+        // Builderロールの3つのタグを確認
+        if (itemTag.equals(ModTags.Items.BUILDER_SOFT_BLOCKS)) {
+            return DynamicBuilderTags.isSoftBlockItem(item.getItem());
+        } else if (itemTag.equals(ModTags.Items.BUILDER_HARD_BLOCKS)) {
+            return DynamicBuilderTags.isHardBlockItem(item.getItem());
+        } else if (itemTag.equals(ModTags.Items.BUILDER_WOOD_BLOCKS)) {
+            return DynamicBuilderTags.isWoodBlockItem(item.getItem());
+        }
+        return false;
     }
 }
