@@ -33,10 +33,11 @@ public abstract class GuiMixin {
     private Minecraft minecraft;
 
     // スプライト定数 - ほとんどはバニラを使用、ホットバー背景のみカスタム
-    @Unique
-    private static final ResourceLocation CUSTOM_HOTBAR_SPRITE = ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "hud/hotbar");
     @Unique    
     private static final ResourceLocation HOTBAR_END_SPRITE = ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "hud/hotbar_end");
+    @Shadow
+    @Final
+    private static ResourceLocation HOTBAR_SPRITE;
     @Shadow
     @Final
     private static ResourceLocation HOTBAR_SELECTION_SPRITE;
@@ -128,12 +129,8 @@ public abstract class GuiMixin {
         int bottomY = guiGraphics.guiHeight() - 22;
 
         // 解放されたスロット数をカウント
-        int slot_count = 1; // 最初のスロットはメインハンドスロットだから必ずある
-        for (int i = 1; i <= 3; i++) { // ロールスロットがレベルによって解放されているか判定
-            if (SlotRestriction.unlockedRoleSlot(i, player)) {
-                slot_count++;
-            }
-        }
+        // 最初のスロットはメインハンドスロットだから必ずある(1 +)
+        int slot_count = 1 + SlotRestriction.getTotalRoleSlotCount(player);
 
         // 背景幅を動的計算: 左右輪郭1px + スロット20px * slot_count + 右輪郭1px = 2 + 20 * slot_count
         int bgWidth = 2 + 20 * slot_count;
@@ -142,7 +139,7 @@ public abstract class GuiMixin {
         int hotbarX = centerX - bgWidth / 2;
 
         // カスタムホットバー背景を部分描画（左側のみトリミング）
-        TextureAtlasSprite sprite = this.minecraft.getGuiSprites().getSprite(CUSTOM_HOTBAR_SPRITE);
+        TextureAtlasSprite sprite = this.minecraft.getGuiSprites().getSprite(HOTBAR_SPRITE);
         float u0 = sprite.getU0();
         float u1 = sprite.getU0() + (sprite.getU1() - sprite.getU0()) * bgWidth / 182.0f; // 182pxが元の幅
         float v0 = sprite.getV0();

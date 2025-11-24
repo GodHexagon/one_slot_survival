@@ -13,60 +13,63 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * プレイヤーのメインロール定義
+ * プレイヤーのサブロール定義
  * <p>
+ * サブロールはメインロールと並行して使用できる追加のロールです。
  * 各ロールはユニークなIDを持ち、プレイヤーのAttributeとして永続化される。
  * 各ロールは使用可能なアイテムタグのリストを持ち、ロールスロットの制限を定義する。
  * </p>
  */
-public enum MainRole implements Role, RoleSlotProvider {
+public enum SubRole implements Role, RoleSlotProvider {
     /**
      * 不明な状態
      */
-    ERROR(-1, "main_role_error", Collections.emptyList()),
+    ERROR(-1, "sub_role_error", Collections.emptyList()),
 
     /**
-     * ロール未割り当て状態
+     * サブロール未割り当て状態
      */
-    UNASSIGNED(0, "main_role_unassigned", Collections.emptyList()),
+    UNASSIGNED(0, "sub_role_unassigned", Collections.emptyList()),
 
     /**
-     * 採掘特化ロール
+     * 釣り特化サブロール
+     * スロット1: 釣り竿
+     * スロット2: ボート
+     * スロット3: ボート
      */
-    MINER(1, "miner", List.of(ItemTags.PICKAXES, ItemTags.SHOVELS, ItemTags.AXES)),
+    FISHER(1, "fisher", List.of(ModTags.Items.FISHING_RODS, ItemTags.BOATS, ItemTags.BOATS)),
 
     /**
-     * 戦闘特化ロール
+     * 弓矢特化サブロール
+     * スロット1: 弓またはクロスボウ
+     * スロット2: 矢（通常、効果付き、光の矢）
+     * スロット3: 矢（通常、効果付き、光の矢）
      */
-    WARRIOR(2, "warrior", List.of(ItemTags.SWORDS, ModTags.Items.WARRIOR_DEFENSIVE, ModTags.Items.WARRIOR_SPECIAL_WEAPONS));
+    ARCHER(2, "archer", List.of(ModTags.Items.ARCHER_WEAPONS, ItemTags.ARROWS, ItemTags.ARROWS));
 
-    private final int atttributeId;
+    private final int attributeId;
     private final String commandName;
-    private final List<TagKey<Item>> slotItemTags;
     private final RoleSlotHelper helper;
 
-    MainRole(int attribute_id, String command_name, List<TagKey<Item>> slot_item_tags) {
-        this.atttributeId = attribute_id;
+    SubRole(int attribute_id, String command_name, List<TagKey<Item>> slot_item_tags) {
+        this.attributeId = attribute_id;
         this.commandName = command_name;
-        this.slotItemTags = slot_item_tags;
         
         // ヘルパーに独自のデータを格納
         List<RoleSlot> roleSlots = new ArrayList<>();
-        // インデックス、アンロックされる順番、slot_item_tags引数の順番がすべて一致するようにする。
+        // インデックス、アンロックされる順番、slot_item_tags引数の順番がすべて一致するようにする。ただし、サブロールはアンロックされる順番については考えなくてよい。
         int index = 0;
-        // メインロールのスロットは2レベルに１回解放される。
-        int levelUpTimes = 1;
         for (TagKey<Item> itemTag: slot_item_tags) {
-            roleSlots.add(new RoleSlot(itemTag, index, levelUpTimes));
+            // サブロールのスロットは第２回のレベルアップですべて一気に解放される。
+            roleSlots.add(new RoleSlot(itemTag, index, 2));
             index++;
-            levelUpTimes += 2;
         }
         this.helper = new RoleSlotHelper(roleSlots);
     }
 
     @Override
     public int getAttributeId() {
-        return atttributeId;
+        return attributeId;
     }
 
     @Override
@@ -78,12 +81,7 @@ public enum MainRole implements Role, RoleSlotProvider {
     public Component getDisplayName() {
         return Component.translatable("oneslotsurvival.role." + commandName);
     }
-
-    @Deprecated
-    public List<TagKey<Item>> getSlotItemTags() {
-        return slotItemTags;
-    }
-
+    
     @Override
     public List<RoleSlot> getRoleSlots() {
         return helper.getRoleSlots();
@@ -103,7 +101,7 @@ public enum MainRole implements Role, RoleSlotProvider {
     public boolean hasRoleSlots() {
         return helper.hasRoleSlots();
     }
-
+    
     @Override
     public Map<Integer, List<RoleSlot>> getJustUnlockedRoleSlotsMap() {
         return helper.getJustUnlockedRoleSlotsMap();
@@ -115,14 +113,14 @@ public enum MainRole implements Role, RoleSlotProvider {
     }
 
     /**
-     * IDからロールを取得
+     * IDからサブロールを取得
      *
      * @param id ロールID
-     * @return 対応するMainRole
+     * @return 対応するSubRole
      */
-    public static MainRole fromAttributeId(int id) {
-        for (MainRole role : values()) {
-            if (role.atttributeId == id) {
+    public static SubRole fromAttributeId(int id) {
+        for (SubRole role : values()) {
+            if (role.attributeId == id) {
                 return role;
             }
         }
@@ -130,13 +128,13 @@ public enum MainRole implements Role, RoleSlotProvider {
     }
 
     /**
-     * 名前からロールを取得（大文字小文字を区別しない）
+     * 名前からサブロールを取得（大文字小文字を区別しない）
      *
      * @param name ロール名
-     * @return 対応するMainRole
+     * @return 対応するSubRole
      */
-    public static MainRole fromCommandName(String name) {
-        for (MainRole role : values()) {
+    public static SubRole fromCommandName(String name) {
+        for (SubRole role : values()) {
             if (role.commandName.equalsIgnoreCase(name)) {
                 return role;
             }

@@ -1,5 +1,8 @@
 package com.github.godhexagon.oneslotsurvival.rule.inventory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.github.godhexagon.oneslotsurvival.object.item.ModItems;
 
 import net.minecraft.server.level.ServerPlayer;
@@ -26,6 +29,7 @@ public class SlotBarrierFilling {
     public static void fillUp(ServerPlayer player) {
         Inventory inventory = player.getInventory();
 
+        List<ItemStack> disposeItems = new ArrayList<>();
         for (int i = 0; i < inventory.getContainerSize(); i++) {
             ItemStack item = inventory.getItem(i);
 
@@ -33,14 +37,14 @@ public class SlotBarrierFilling {
             if (!SlotRestriction.isEligibleItemForRoledPlayer(item, i, player)) {
                 // 無効化スロットにはスロットバリアを入れるべき
                 if (InventoryDefinition.isDisableSlot(i)) {
-                    player.drop(item, false);
+                    disposeItems.add(item);
                     inventory.setItem(i, new ItemStack(ModItems.SLOT_BARRIER.get()));
                     continue;
                 }
 
                 // ロールスロットは空にすべき
                 if (InventoryDefinition.isRoleSlot(i)) {
-                    player.drop(item, false);
+                    disposeItems.add(item);
                     inventory.setItem(i, ItemStack.EMPTY);
                     continue;
                 }
@@ -50,6 +54,14 @@ public class SlotBarrierFilling {
                     inventory.setItem(i, ItemStack.EMPTY);
                 }
             }
+        }
+
+        for (ItemStack item: disposeItems) {
+            if (player.addItem(item)) {
+                continue;
+            }
+
+            player.drop(item, false);
         }
     }
 

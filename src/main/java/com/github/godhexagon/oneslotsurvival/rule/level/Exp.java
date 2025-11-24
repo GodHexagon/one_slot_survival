@@ -59,6 +59,7 @@ public class Exp {
         if (LevelAttribute.getLevel(player) <= Level.UNDEFINED_LEVEL) {
             LevelAttribute.setLevel(player, 1);
             RoleLeveledUpTimes.resetMain(player);
+            RoleLeveledUpTimes.resetSub(player);
             RemainingExpAttribute.setRemainingExp(player, ExpConfig.levelUpExp - amount);
             return false;
         }

@@ -2,10 +2,9 @@ package com.github.godhexagon.oneslotsurvival.client.gui;
 
 import com.github.godhexagon.oneslotsurvival.rule.inventory.InventoryDefinition;
 import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotRestriction;
-import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
-import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
+import com.github.godhexagon.oneslotsurvival.cui.CuiObjects;
+
 import com.google.common.collect.ImmutableList;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -19,7 +18,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
+
 import java.util.List;
 
 /**
@@ -162,17 +161,16 @@ public class RestrictedInventoryScreen extends InventoryScreen {
             
             
             // 解放されたロールスロットの背景を描画
-            int roleSlotIndex = 0;
-            for (int i = 1; i <= 3; i++) { // ロールスロットがレベルによって解放されているか判定
-                if (SlotRestriction.unlockedRoleSlot(i, this.minecraft.player)) {
-                    // ロールスロット背景を描画（18×18、間隔0px）
-                    // 起点: (25, 141)から縦に並べる
-                    int bgX = x + 25 + (roleSlotIndex * 18);
-                    int bgY = y + 141;
-                    graphics.blit(RenderPipelines.GUI_TEXTURED, ROLE_SLOT_BG,
-                            bgX, bgY, 0.0F, 0.0F, 18, 18, 18, 18);
-                    roleSlotIndex++;
-                }
+            int inventoryIndex = InventoryDefinition.ROLE_SLOT_START_INVENTORY_INDEX;
+            // ロールスロットがレベルによって解放されているか判定し、解放されたスロットが終了するまで繰り返す。
+            while (SlotRestriction.unlockedRoleSlot(inventoryIndex, this.minecraft.player)) {
+                // ロールスロット背景を描画（18×18、間隔0px）
+                // 起点: (25, 141)から縦に並べる
+                int bgX = x + 25 + (InventoryDefinition.getRoleSlotIndex(inventoryIndex) * 18);
+                int bgY = y + 141;
+                graphics.blit(RenderPipelines.GUI_TEXTURED, ROLE_SLOT_BG,
+                        bgX, bgY, 0.0F, 0.0F, 18, 18, 18, 18);
+                inventoryIndex++;
             }
         } catch (Exception e) {
             // フォールバック: バニラの背景を使用
@@ -195,7 +193,7 @@ public class RestrictedInventoryScreen extends InventoryScreen {
                 // 解放済みロールスロットかチェック
                 if (SlotRestriction.unlockedRoleSlot(inventoryIndex, this.minecraft.player)) {
                     // ツールチップを生成して表示
-                    List<Component> tooltip = createRoleSlotTooltip(inventoryIndex, this.minecraft.player);
+                    List<Component> tooltip = CuiObjects.createRoleSlotTooltip(inventoryIndex, this.minecraft.player);
                     graphics.renderComponentTooltip(this.font, tooltip, mouseX, mouseY, net.minecraft.world.item.ItemStack.EMPTY);
                     return;
                 }
@@ -204,77 +202,5 @@ public class RestrictedInventoryScreen extends InventoryScreen {
 
         // デフォルトの動作（アイテムがある場合のツールチップ）
         super.renderTooltip(graphics, mouseX, mouseY);
-    }
-
-    /**
-     * ロールスロットのツールチップを生成
-     *
-     * @param inventoryIndex インベントリインデックス
-     * @param player プレイヤー
-     * @return ツールチップの行リスト
-     */
-    private List<Component> createRoleSlotTooltip(int inventoryIndex, Player player) {
-        List<Component> tooltip = new ArrayList<>();
-
-        // ロールスロットインデックスを取得（0-based）
-        int roleSlotIndex = InventoryDefinition.getRoleSlotIndex(inventoryIndex);
-
-        // プレイヤーのロールを取得
-        MainRole role = RoleManager.getRole(player);
-
-        // スロット名の翻訳キー
-        String slotNameKey = "slot.oneslotsurvival." + role.getCommandName() + "." + roleSlotIndex + ".name";
-
-        // スロット名を追加
-        tooltip.add(Component.translatable(slotNameKey).withStyle(ChatFormatting.GOLD));
-
-        // 説明の翻訳キー
-        String descriptionKey = "slot.oneslotsurvival." + role.getCommandName() + "." + roleSlotIndex + ".description";
-        Component description = Component.translatable(descriptionKey);
-
-        // 説明文を取得して単語単位で分割
-        String descriptionText = description.getString();
-        List<String> wrappedLines = wrapText(descriptionText, 20); // 1行あたり約20文字で改行
-
-        // 分割された各行をツールチップに追加
-        for (String line : wrappedLines) {
-            tooltip.add(Component.literal(line).withStyle(ChatFormatting.GRAY));
-        }
-
-        return tooltip;
-    }
-
-    /**
-     * テキストを指定した文字数で単語単位で改行する
-     *
-     * @param text 改行対象のテキスト
-     * @param maxLength 1行あたりの最大文字数
-     * @return 改行されたテキストのリスト
-     */
-    private List<String> wrapText(String text, int maxLength) {
-        List<String> lines = new ArrayList<>();
-        String[] words = text.split(" ");
-        StringBuilder currentLine = new StringBuilder();
-
-        for (String word : words) {
-            // 現在の行に単語を追加すると最大文字数を超える場合
-            if (currentLine.length() > 0 && currentLine.length() + 1 + word.length() > maxLength) {
-                lines.add(currentLine.toString());
-                currentLine = new StringBuilder();
-            }
-
-            // 現在の行に単語を追加
-            if (currentLine.length() > 0) {
-                currentLine.append(" ");
-            }
-            currentLine.append(word);
-        }
-
-        // 最後の行を追加
-        if (currentLine.length() > 0) {
-            lines.add(currentLine.toString());
-        }
-
-        return lines;
     }
 }

@@ -83,4 +83,32 @@ public class ModAttributes {
             Double.MAX_VALUE  // 最大値（レベル上限）
         ).setSyncable(true)  // 自動的にクライアントと同期
     );
+
+    /**
+     * プレイヤーのサブロールIDを表す Attribute
+     * 値: ロールID（整数値）、-1.0 = 未割り当て
+     */
+    public static final RegistryObject<Attribute> SUB_ROLE_ID = ATTRIBUTES.register(
+        "sub_role_id",
+        () -> new RangedAttribute(
+            "attribute.oneslotsurvival.sub_role_id",
+            0,  // デフォルト: 未割り当て
+            -1.0,  // 最小値
+            Double.MAX_VALUE  // 最大値（ロールIDの上限）
+        ).setSyncable(true)  // 自動的にクライアントと同期
+    );
+
+    /**
+     * プレイヤーのサブロール開始レベルを表す Attribute
+     * 値: レベル（整数値）、デフォルト = 0
+     */
+    public static final RegistryObject<Attribute> SUB_ROLE_STARTED_LEVEL = ATTRIBUTES.register(
+        "sub_role_started_level",
+        () -> new RangedAttribute(
+            "attribute.oneslotsurvival.sub_role_started_level",
+            0,  // デフォルト
+            -Double.MAX_VALUE,  // 最小値（負の値も許可）
+            Double.MAX_VALUE  // 最大値（レベル上限）
+        ).setSyncable(true)  // 自動的にクライアントと同期
+    );
 }

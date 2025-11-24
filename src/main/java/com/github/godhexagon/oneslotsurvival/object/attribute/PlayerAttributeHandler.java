@@ -61,5 +61,23 @@ public class PlayerAttributeHandler {
                 )
             )
         );
+        event.add(
+            EntityType.PLAYER,
+            ModAttributes.SUB_ROLE_ID.getHolder().orElseThrow(
+                () -> new IllegalStateException(
+                    "SUB_ROLE_ID attribute is not registered. " +
+                    "This indicates an issue with DeferredRegister initialization."
+                )
+            )
+        );
+        event.add(
+            EntityType.PLAYER,
+            ModAttributes.SUB_ROLE_STARTED_LEVEL.getHolder().orElseThrow(
+                () -> new IllegalStateException(
+                    "SUB_ROLE_STARTED_LEVEL attribute is not registered. " +
+                    "This indicates an issue with DeferredRegister initialization."
+                )
+            )
+        );
     }
 }

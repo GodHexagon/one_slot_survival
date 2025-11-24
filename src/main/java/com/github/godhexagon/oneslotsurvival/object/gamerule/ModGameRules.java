@@ -21,14 +21,24 @@ import net.minecraft.world.level.GameRules;
 public class ModGameRules {
 
     /**
-     * プレイヤーが自分のロールを変更できるかどうかを制御するGameRule。
+     * プレイヤーが自分のメインロールを変更できるかどうかを制御するGameRule。
      *
      * <ul>
      *   <li>デフォルト値: true（変更可能）</li>
      *   <li>カテゴリ: PLAYER</li>
      * </ul>
      */
-    public static GameRules.Key<GameRules.BooleanValue> ROLE_CHANGING;
+    public static GameRules.Key<GameRules.BooleanValue> MAIN_ROLE_CHANGING;
+
+    /**
+     * プレイヤーが自分のサブロールを変更できるかどうかを制御するGameRule。
+     *
+     * <ul>
+     *   <li>デフォルト値: true（変更可能）</li>
+     *   <li>カテゴリ: PLAYER</li>
+     * </ul>
+     */
+    public static GameRules.Key<GameRules.BooleanValue> SUB_ROLE_CHANGIN;
 
     /**
      * カスタムGameRuleを登録します。
@@ -36,8 +46,13 @@ public class ModGameRules {
      * <p>このメソッドはMODの初期化時に一度だけ呼ばれる必要があります。</p>
      */
     public static void register() {
-        ROLE_CHANGING = GameRules.register(
-            "roleChanging/" + OneSlotSurvivalMod.MODID,
+        MAIN_ROLE_CHANGING = GameRules.register(
+            "mainRoleChanging/" + OneSlotSurvivalMod.MODID,
+            GameRules.Category.PLAYER,
+            GameRules.BooleanValue.create(true)
+        );
+        SUB_ROLE_CHANGIN = GameRules.register(
+            "subRoleChanging/" + OneSlotSurvivalMod.MODID,
             GameRules.Category.PLAYER,
             GameRules.BooleanValue.create(true)
         );
