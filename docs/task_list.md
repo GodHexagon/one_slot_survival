@@ -124,7 +124,7 @@
         - `slot detail <Slot> [role <Role>]`: 特定のスロットの情報
     1. 完了✅|`oneslot status`コマンドの表示を見直し
     1. 完了✅|ロールスロットツールチップを実装
-1. サブロールを追加する
+1. 完了✅|サブロールを追加する
     1. 完了✅|サブロールIDアトリビュート整合性
     1. 完了✅|`admin role clear sub`と`admin role clear main`
     1. 完了✅|そのほか管理者コマンド
@@ -146,9 +146,9 @@
         * ゲームルールでフィルター
         * コマンド補完誘導は`changerole <Role>`にする
         * `changerole <Role>`の失敗メッセージから誘導される
-    1. `show <Role>`コマンドを実装
+    1. 完了✅|`show <Role>`コマンドを実装
         * 他コマンドから誘導される
-    1. `show <Role> slot <Slot>`コマンドを実装
+    1. 完了✅|`show <Role> slot <Slot>`コマンドを実装
         * 他コマンドから誘導される
 1. メインロールの種類を増やす
     * Miner, Warriorのロールスロットを見直し

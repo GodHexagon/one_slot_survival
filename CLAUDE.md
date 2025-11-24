@@ -17,9 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # 進捗
 
-直前の成果！: oneslot changeroleコマンドでshowコマンドの変化バージョンを表示 of サブロールを追加する
+直前の成果！: サブロールを追加する
 
-実行中: `show <Role>`コマンドを実装 of サブロールを追加する
+実行中: メインロールの種類を増やす
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
