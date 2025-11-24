@@ -153,33 +153,6 @@ public class DynamicBuilderTags {
     }
 
     /**
-     * Soft Blocksのセットを取得
-     *
-     * @return シャベル/ハサミ/剣/クワで効率的に採掘できるブロックのセット
-     */
-    public static Set<Block> getSoftBlocks() {
-        return new HashSet<>(softBlocks);
-    }
-
-    /**
-     * Hard Blocksのセットを取得
-     *
-     * @return つるはしで効率的に採掘できるブロックのセット
-     */
-    public static Set<Block> getHardBlocks() {
-        return new HashSet<>(hardBlocks);
-    }
-
-    /**
-     * Wood Blocksのセットを取得
-     *
-     * @return 斧で効率的に採掘できるブロックのセット
-     */
-    public static Set<Block> getWoodBlocks() {
-        return new HashSet<>(woodBlocks);
-    }
-
-    /**
      * 初期化済みかどうかを確認
      */
     public static boolean isInitialized() {
@@ -214,5 +187,17 @@ public class DynamicBuilderTags {
      */
     public static boolean isWoodBlockItem(Item item) {
         return woodItems.contains(item);
+    }
+
+    public static Set<Item> getSoftItems() {
+        return new HashSet<>(softItems);
+    }
+
+    public static Set<Item> getHardItems() {
+        return new HashSet<>(hardItems);
+    }
+    
+    public static Set<Item> getWoodItems() {
+        return new HashSet<>(woodItems);
     }
 }
