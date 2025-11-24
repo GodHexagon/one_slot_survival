@@ -227,7 +227,7 @@ public class CuiObjects {
                 if (i > 0) {
                     itemList.append(Component.literal(", ").withStyle(ChatFormatting.GRAY));
                 }
-                itemList.append(stack.getHoverName().copy().withStyle(ChatFormatting.AQUA));
+                itemList.append(stack.getHoverName().copy().withStyle(ChatFormatting.GREEN));
             }
         }
 
