@@ -9,6 +9,11 @@
   "oneslotsurvival.role.builder": "Builder",
   "oneslotsurvival.role.fisher": "Fisher",
   "oneslotsurvival.role.archer": "Archer",
+  "oneslotsurvival.role.thrower": "Thrower",
+  "oneslotsurvival.role.pharmacist": "Pharmacist",
+  "oneslotsurvival.role.armorer": "Armorer",
+  "oneslotsurvival.role.scholar": "Scholar",
+  "oneslotsurvival.role.breeder": "Breeder",
 
   "oneslotsurvival.slot.miner.0.name": "Pickaxe Slot",
   "oneslotsurvival.slot.miner.0.description": "The slot can store pickaxes made of all types of materials.",
@@ -50,5 +55,40 @@
   "oneslotsurvival.slot.archer.1.name": "Arrow Slot",
   "oneslotsurvival.slot.archer.1.description": "The slot can store arrows (normal, tipped, and spectral).",
   "oneslotsurvival.slot.archer.2.name": "Arrow Slot",
-  "oneslotsurvival.slot.archer.2.description": "The slot can store arrows (normal, tipped, and spectral)."
+  "oneslotsurvival.slot.archer.2.description": "The slot can store arrows (normal, tipped, and spectral).",
+
+  "oneslotsurvival.slot.thrower.0.name": "Throwable Slot",
+  "oneslotsurvival.slot.thrower.0.description": "The slot can store throwable items (eggs, snowballs, ender pearls, ender eyes, splash potions, lingering potions, wind charges).",
+  "oneslotsurvival.slot.thrower.1.name": "Throwable Slot",
+  "oneslotsurvival.slot.thrower.1.description": "The slot can store throwable items (eggs, snowballs, ender pearls, ender eyes, splash potions, lingering potions, wind charges).",
+  "oneslotsurvival.slot.thrower.2.name": "Throwable Slot",
+  "oneslotsurvival.slot.thrower.2.description": "The slot can store throwable items (eggs, snowballs, ender pearls, ender eyes, splash potions, lingering potions, wind charges).",
+
+  "oneslotsurvival.slot.pharmacist.0.name": "Potion & Stew Slot",
+  "oneslotsurvival.slot.pharmacist.0.description": "The slot can store potions (normal, splash, lingering) and stews (mushroom stew, rabbit stew, beetroot soup, suspicious stew).",
+  "oneslotsurvival.slot.pharmacist.1.name": "Potion & Stew Slot",
+  "oneslotsurvival.slot.pharmacist.1.description": "The slot can store potions (normal, splash, lingering) and stews (mushroom stew, rabbit stew, beetroot soup, suspicious stew).",
+  "oneslotsurvival.slot.pharmacist.2.name": "Potion & Stew Slot",
+  "oneslotsurvival.slot.pharmacist.2.description": "The slot can store potions (normal, splash, lingering) and stews (mushroom stew, rabbit stew, beetroot soup, suspicious stew).",
+
+  "oneslotsurvival.slot.armorer.0.name": "Armorer Slot",
+  "oneslotsurvival.slot.armorer.0.description": "The slot can store armor of all types and smithing templates.",
+  "oneslotsurvival.slot.armorer.1.name": "Armorer Slot",
+  "oneslotsurvival.slot.armorer.1.description": "The slot can store armor of all types and smithing templates.",
+  "oneslotsurvival.slot.armorer.2.name": "Flint and Steel Slot",
+  "oneslotsurvival.slot.armorer.2.description": "The slot can store flint and steel.",
+
+  "oneslotsurvival.slot.scholar.0.name": "Documentation Slot",
+  "oneslotsurvival.slot.scholar.0.description": "The slot can store books, maps, banners, compasses, and clocks.",
+  "oneslotsurvival.slot.scholar.1.name": "Documentation Slot",
+  "oneslotsurvival.slot.scholar.1.description": "The slot can store books, maps, banners, compasses, and clocks.",
+  "oneslotsurvival.slot.scholar.2.name": "Instrument Slot",
+  "oneslotsurvival.slot.scholar.2.description": "The slot can store spyglasses and brushes.",
+
+  "oneslotsurvival.slot.breeder.0.name": "Breeding Equipment Slot",
+  "oneslotsurvival.slot.breeder.0.description": "The slot can store saddles, harnesses, horse armor, wolf armor, and goat horns.",
+  "oneslotsurvival.slot.breeder.1.name": "Breeding Equipment Slot",
+  "oneslotsurvival.slot.breeder.1.description": "The slot can store saddles, harnesses, horse armor, wolf armor, and goat horns.",
+  "oneslotsurvival.slot.breeder.2.name": "Shears Slot",
+  "oneslotsurvival.slot.breeder.2.description": "The slot can store shears."
 }

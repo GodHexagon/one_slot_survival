@@ -86,5 +86,54 @@ public class ModTags {
         public static final TagKey<Item> SURVIVOR_UTILITY_TOOLS =
             TagKey.create(Registries.ITEM,
                 ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "survivor_utility_tools"));
+
+        /**
+         * THROWERサブロール用：投擲物（卵、雪玉、エンパ、エンダーアイ、スプラッシュポーション、残留ポーション、ウインドチャージ）。
+         */
+        public static final TagKey<Item> THROWABLES =
+            TagKey.create(Registries.ITEM,
+                ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "throwables"));
+
+        /**
+         * PHARMACISTサブロール用：ポーションとシチュー。
+         */
+        public static final TagKey<Item> PHARMACIST_ITEMS =
+            TagKey.create(Registries.ITEM,
+                ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "pharmacist_items"));
+
+        /**
+         * ARMORERサブロール用：火打ち石と打ち金、防具、鍛冶型。
+         */
+        public static final TagKey<Item> ARMORER_ITEMS =
+            TagKey.create(Registries.ITEM,
+                ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "armorer_items"));
+
+        /**
+         * SCHOLARサブロール用：本、地図、模様、コンパス、時計。
+         */
+        public static final TagKey<Item> SCHOLAR_DOCUMENTATION =
+            TagKey.create(Registries.ITEM,
+                ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "scholar_documentation"));
+
+        /**
+         * SCHOLARサブロール用：ブラシ、望遠鏡。
+         */
+        public static final TagKey<Item> SCHOLAR_INSTRUMENTS =
+            TagKey.create(Registries.ITEM,
+                ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "scholar_instruments"));
+
+        /**
+         * BREEDERサブロール用：サドル、ハーネス、馬鎧、オオカミの鎧、ヤギの角笛。
+         */
+        public static final TagKey<Item> BREEDER_EQUIPMENT =
+            TagKey.create(Registries.ITEM,
+                ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "breeder_equipment"));
+
+        /**
+         * ARMORERサブロール用：火打ち石と打ち金。
+         */
+        public static final TagKey<Item> FLINT_AND_STEELS =
+            TagKey.create(Registries.ITEM,
+                ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "flint_and_steels"));
     }
 }

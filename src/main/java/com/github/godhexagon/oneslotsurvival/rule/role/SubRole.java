@@ -45,7 +45,47 @@ public enum SubRole implements Role, RoleSlotProvider {
      * スロット2: 矢（通常、効果付き、光の矢）
      * スロット3: 矢（通常、効果付き、光の矢）
      */
-    ARCHER(2, "archer", List.of(ModTags.Items.ARCHER_WEAPONS, ItemTags.ARROWS, ItemTags.ARROWS));
+    ARCHER(2, "archer", List.of(ModTags.Items.ARCHER_WEAPONS, ItemTags.ARROWS, ItemTags.ARROWS)),
+
+    /**
+     * 投擲物専門家サブロール
+     * スロット1: 投擲物（卵、雪玉、エンパ、エンダーアイ、スプラッシュポーション、残留ポーション、ウインドチャージ）
+     * スロット2: 投擲物
+     * スロット3: 投擲物
+     */
+    THROWER(3, "thrower", List.of(ModTags.Items.THROWABLES, ModTags.Items.THROWABLES, ModTags.Items.THROWABLES)),
+
+    /**
+     * 薬剤師サブロール
+     * スロット1: ポーションまたはシチュー
+     * スロット2: ポーションまたはシチュー
+     * スロット3: ポーションまたはシチュー
+     */
+    PHARMACIST(4, "pharmacist", List.of(ModTags.Items.PHARMACIST_ITEMS, ModTags.Items.PHARMACIST_ITEMS, ModTags.Items.PHARMACIST_ITEMS)),
+
+    /**
+     * 防具鍛冶サブロール
+     * スロット1: 防具、鍛冶型
+     * スロット2: 防具、鍛冶型
+     * スロット3: 火打ち石と打ち金
+     */
+    ARMORER(5, "armorer", List.of(ModTags.Items.ARMORER_ITEMS, ModTags.Items.ARMORER_ITEMS, ModTags.Items.FLINT_AND_STEELS)),
+
+    /**
+     * 学者サブロール
+     * スロット1: 本、地図、模様、コンパス、時計
+     * スロット2: 本、地図、模様、コンパス、時計
+     * スロット3: ブラシ、望遠鏡
+     */
+    SCHOLAR(6, "scholar", List.of(ModTags.Items.SCHOLAR_DOCUMENTATION, ModTags.Items.SCHOLAR_DOCUMENTATION, ModTags.Items.SCHOLAR_INSTRUMENTS)),
+
+    /**
+     * ブリーダーサブロール
+     * スロット1: サドル、ハーネス、馬鎧、オオカミの鎧、ヤギの角笛
+     * スロット2: サドル、ハーネス、馬鎧、オオカミの鎧、ヤギの角笛
+     * スロット3: はさみ
+     */
+    BREEDER(7, "breeder", List.of(ModTags.Items.BREEDER_EQUIPMENT, ModTags.Items.BREEDER_EQUIPMENT, ModTags.Items.SHEARS));
 
     private final int attributeId;
     private final String commandName;

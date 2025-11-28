@@ -9,6 +9,11 @@
   "oneslotsurvival.role.builder": "建築士",
   "oneslotsurvival.role.fisher": "釣り人",
   "oneslotsurvival.role.archer": "弓兵",
+  "oneslotsurvival.role.thrower": "投擲物専門家",
+  "oneslotsurvival.role.pharmacist": "薬剤師",
+  "oneslotsurvival.role.armorer": "防具鍛冶",
+  "oneslotsurvival.role.scholar": "学者",
+  "oneslotsurvival.role.breeder": "ブリーダー",
 
   "oneslotsurvival.slot.miner.0.name": "ツルハシスロット",
   "oneslotsurvival.slot.miner.0.description": "全ての素材のツルハシを格納できます。",
@@ -50,5 +55,40 @@
   "oneslotsurvival.slot.archer.1.name": "矢スロット",
   "oneslotsurvival.slot.archer.1.description": "矢（通常、効果付き、光の矢）を格納できます。",
   "oneslotsurvival.slot.archer.2.name": "矢スロット",
-  "oneslotsurvival.slot.archer.2.description": "矢（通常、効果付き、光の矢）を格納できます。"
+  "oneslotsurvival.slot.archer.2.description": "矢（通常、効果付き、光の矢）を格納できます。",
+
+  "oneslotsurvival.slot.thrower.0.name": "投擲物スロット",
+  "oneslotsurvival.slot.thrower.0.description": "投擲物（卵、雪玉、エンダーパール、エンダーアイ、スプラッシュポーション、残留ポーション、ウインドチャージ）を格納できます。",
+  "oneslotsurvival.slot.thrower.1.name": "投擲物スロット",
+  "oneslotsurvival.slot.thrower.1.description": "投擲物（卵、雪玉、エンダーパール、エンダーアイ、スプラッシュポーション、残留ポーション、ウインドチャージ）を格納できます。",
+  "oneslotsurvival.slot.thrower.2.name": "投擲物スロット",
+  "oneslotsurvival.slot.thrower.2.description": "投擲物（卵、雪玉、エンダーパール、エンダーアイ、スプラッシュポーション、残留ポーション、ウインドチャージ）を格納できます。",
+
+  "oneslotsurvival.slot.pharmacist.0.name": "ポーション・シチュースロット",
+  "oneslotsurvival.slot.pharmacist.0.description": "ポーション（通常、スプラッシュ、残留）とシチュー（キノコシチュー、ウサギシチュー、ビートルートスープ、怪しげなシチュー）を格納できます。",
+  "oneslotsurvival.slot.pharmacist.1.name": "ポーション・シチュースロット",
+  "oneslotsurvival.slot.pharmacist.1.description": "ポーション（通常、スプラッシュ、残留）とシチュー（キノコシチュー、ウサギシチュー、ビートルートスープ、怪しげなシチュー）を格納できます。",
+  "oneslotsurvival.slot.pharmacist.2.name": "ポーション・シチュースロット",
+  "oneslotsurvival.slot.pharmacist.2.description": "ポーション（通常、スプラッシュ、残留）とシチュー（キノコシチュー、ウサギシチュー、ビートルートスープ、怪しげなシチュー）を格納できます。",
+
+  "oneslotsurvival.slot.armorer.0.name": "防具鍛冶スロット",
+  "oneslotsurvival.slot.armorer.0.description": "全ての種類の防具、鍛冶型を格納できます。",
+  "oneslotsurvival.slot.armorer.1.name": "防具鍛冶スロット",
+  "oneslotsurvival.slot.armorer.1.description": "全ての種類の防具、鍛冶型を格納できます。",
+  "oneslotsurvival.slot.armorer.2.name": "火打石と打ち金スロット",
+  "oneslotsurvival.slot.armorer.2.description": "火打石と打ち金を格納できます。",
+
+  "oneslotsurvival.slot.scholar.0.name": "文書スロット",
+  "oneslotsurvival.slot.scholar.0.description": "本、地図、模様（旗）、コンパス、時計を格納できます。",
+  "oneslotsurvival.slot.scholar.1.name": "文書スロット",
+  "oneslotsurvival.slot.scholar.1.description": "本、地図、模様（旗）、コンパス、時計を格納できます。",
+  "oneslotsurvival.slot.scholar.2.name": "観測道具スロット",
+  "oneslotsurvival.slot.scholar.2.description": "望遠鏡とブラシを格納できます。",
+
+  "oneslotsurvival.slot.breeder.0.name": "飼育装備スロット",
+  "oneslotsurvival.slot.breeder.0.description": "サドル、ハーネス、馬鎧、オオカミの鎧、ヤギの角笛を格納できます。",
+  "oneslotsurvival.slot.breeder.1.name": "飼育装備スロット",
+  "oneslotsurvival.slot.breeder.1.description": "サドル、ハーネス、馬鎧、オオカミの鎧、ヤギの角笛を格納できます。",
+  "oneslotsurvival.slot.breeder.2.name": "ハサミスロット",
+  "oneslotsurvival.slot.breeder.2.description": "ハサミを格納できます。"
 }
