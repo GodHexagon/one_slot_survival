@@ -17,9 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # 進捗
 
-直前の成果！: バンドルが使用できない問題を修正する
+直前の成果！: サブロールの種類を増やす
 
-実行中: 一般プレイヤーによって自身のロールを変更できるようにする
+実行中: 初期配布バンドル・シュルカーボックスを設定できるようにする
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
@@ -27,7 +27,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 役割
 
-モダンな手法を好む若手エンジニアであり、自身の開発経験をもとに、合理的なアーキテクチャ設計ができる実力者。逆に非合理的なものは嫌いなので、その点で積極的に改善提案する。
+Javaベテラン開発者。今までの経験から、将来を見据えて適切なスケールのアーキテクチャを採用する。どちらかというと安全よりの選択を大切にしている。この作戦はアジャイル開発や漸進開発とは競合せず、両方のメリットを享受できると考えている。
 
 ## Strategy Research
 

@@ -1,16 +1,24 @@
 package com.github.godhexagon.oneslotsurvival.client.gui;
 
+import com.github.godhexagon.oneslotsurvival.rule.inventory.InventoryDefinition;
+import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotRestriction;
+import com.github.godhexagon.oneslotsurvival.cui.CuiObjects;
+
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import java.util.List;
 
 /**
@@ -65,9 +73,6 @@ import java.util.List;
  */
 @OnlyIn(Dist.CLIENT)
 public class RestrictedInventoryScreen extends InventoryScreen {
-    private static final ResourceLocation CUSTOM_INVENTORY_LOCATION =
-            ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "textures/gui/container/custom_inventory.png");
-
     // 元のスロットのバックアップ（画面を閉じるときに復元用、将来的に必要になる可能性がある）
     @Nullable
     private List<Slot> originalSlots = null;
@@ -80,22 +85,24 @@ public class RestrictedInventoryScreen extends InventoryScreen {
     protected void init() {
         super.init();
 
+        var oss = this.originalSlots;
+
         // 元のスロットをバックアップ（一度だけ）
-        if (this.originalSlots == null) {
-            this.originalSlots = ImmutableList.copyOf(this.menu.slots);
+        if (oss == null) {
+            oss = ImmutableList.copyOf(this.menu.slots);
         }
 
         // スロットリストをクリアして再構築
         this.menu.slots.clear();
 
         // 各スロットを再配置
-        for (int i = 0; i < this.originalSlots.size(); i++) {
-            Slot originalSlot = this.originalSlots.get(i);
+        for (int i = 0; i < oss.size(); i++) {
+            Slot originalSlot = oss.get(i);
             int x = originalSlot.x;
             int y = originalSlot.y;
 
-            // 制限対象のスロットを判定（menu.slots内のインデックス i を使用）
-            if (isRestrictedSlot(i)) {
+            // 制限対象のスロットを判定
+            if (originalSlot.container instanceof Inventory && isRestrictedSlot(originalSlot.getContainerSlot())) {
                 // 画面外に配置
                 x = -2000;
                 y = -2000;
@@ -106,6 +113,8 @@ public class RestrictedInventoryScreen extends InventoryScreen {
             RestrictedSlotWrapper wrapper = new RestrictedSlotWrapper(originalSlot, i, x, y);
             this.menu.slots.add(wrapper);
         }
+
+        this.originalSlots = oss;
     }
 
     @Override
@@ -119,26 +128,28 @@ public class RestrictedInventoryScreen extends InventoryScreen {
     /**
      * 制限対象のスロットかどうかを判定
      *
-     * @param index スロットインデックス
+     * @param inventoryIndex インベントリインデックス
      * @return true の場合、制限対象
      */
-    private boolean isRestrictedSlot(int index) {
-        // インベントリスロット（9-35）を制限
-        if (index >= 9 && index <= 35) {
-            return true;
+    private boolean isRestrictedSlot(int inventoryIndex) {
+        if (this.minecraft != null && this.minecraft.player != null) {
+            boolean isNotUnlockedRoleSlot = !SlotRestriction.unlockedRoleSlot(inventoryIndex, this.minecraft.player);
+            return (InventoryDefinition.isRoleSlot(inventoryIndex) && isNotUnlockedRoleSlot) || InventoryDefinition.isDisableSlot(inventoryIndex);
+        } else {
+            // フォールバックでは、ロールスロットは無条件表示。なぜなら、アイテム配置制限はInventoryMixinが行い整合性は保たれるし、
+            // ロールスロットのアイテムが表示されても、これは通常空であり、カーソルするとインジケーターが出る問題しか起こらないから。
+            return InventoryDefinition.isDisableSlot(inventoryIndex);
         }
-
-        // ホットバースロット（37-44、メインハンド36以外）を制限
-        if (index >= 40 && index <= 44) {
-            return true;
-        }
-
-        // その他のスロット（クラフト、防具、オフハンド、メインハンド）は制限しない
-        return false;
     }
 
+    private static final ResourceLocation CUSTOM_INVENTORY_LOCATION =
+            ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "textures/gui/container/custom_inventory.png");
+    private static final ResourceLocation ROLE_SLOT_BG =
+            ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "textures/gui/container/role_slot_background.png");
+
+    @SuppressWarnings("null") // INFO: this.minecraft.playerアクセスについて、これはバニラと同じ実装なのでミュート。他の部分は都度確認すること。
     @Override
-    protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
+    protected void renderBg(@Nonnull GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
         int x = this.leftPos;
         int y = this.topPos;
 
@@ -147,6 +158,20 @@ public class RestrictedInventoryScreen extends InventoryScreen {
         try {
             graphics.blit(RenderPipelines.GUI_TEXTURED, CUSTOM_INVENTORY_LOCATION,
                     x, y, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 256);
+            
+            
+            // 解放されたロールスロットの背景を描画
+            int inventoryIndex = InventoryDefinition.ROLE_SLOT_START_INVENTORY_INDEX;
+            // ロールスロットがレベルによって解放されているか判定し、解放されたスロットが終了するまで繰り返す。
+            while (SlotRestriction.unlockedRoleSlot(inventoryIndex, this.minecraft.player)) {
+                // ロールスロット背景を描画（18×18、間隔0px）
+                // 起点: (25, 141)から縦に並べる
+                int bgX = x + 25 + (InventoryDefinition.getRoleSlotIndex(inventoryIndex) * 18);
+                int bgY = y + 141;
+                graphics.blit(RenderPipelines.GUI_TEXTURED, ROLE_SLOT_BG,
+                        bgX, bgY, 0.0F, 0.0F, 18, 18, 18, 18);
+                inventoryIndex++;
+            }
         } catch (Exception e) {
             // フォールバック: バニラの背景を使用
             super.renderBg(graphics, partialTick, mouseX, mouseY);
@@ -155,5 +180,27 @@ public class RestrictedInventoryScreen extends InventoryScreen {
 
         // プレイヤーのレンダリング（バニラと同じ位置）
         renderEntityInInventoryFollowsMouse(graphics, x + 26, y + 8, x + 75, y + 78, 30, 0.0625F, mouseX, mouseY, this.minecraft.player);
+    }
+
+    @Override
+    protected void renderTooltip(@Nonnull GuiGraphics graphics, int mouseX, int mouseY) {
+        // 空の解放済みロールスロットにホバーした時のカスタムツールチップ
+        if (this.hoveredSlot != null && !this.hoveredSlot.hasItem() && this.minecraft != null && this.minecraft.player != null) {
+            // ロールスロットの場合のみ処理
+            if (this.hoveredSlot.container instanceof Inventory) {
+                int inventoryIndex = this.hoveredSlot.getContainerSlot();
+
+                // 解放済みロールスロットかチェック
+                if (SlotRestriction.unlockedRoleSlot(inventoryIndex, this.minecraft.player)) {
+                    // ツールチップを生成して表示
+                    List<Component> tooltip = CuiObjects.createRoleSlotTooltip(inventoryIndex, this.minecraft.player);
+                    graphics.renderComponentTooltip(this.font, tooltip, mouseX, mouseY, net.minecraft.world.item.ItemStack.EMPTY);
+                    return;
+                }
+            }
+        }
+
+        // デフォルトの動作（アイテムがある場合のツールチップ）
+        super.renderTooltip(graphics, mouseX, mouseY);
     }
 }

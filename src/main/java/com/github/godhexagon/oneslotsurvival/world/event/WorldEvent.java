@@ -1,12 +1,12 @@
 package com.github.godhexagon.oneslotsurvival.world.event;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
-import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotRestriction;
-import com.github.godhexagon.oneslotsurvival.world.util.inventory.SlotBarrierFilling;
-import com.github.godhexagon.oneslotsurvival.world.util.player.PlayerModValidity;
-import com.github.godhexagon.oneslotsurvival.world.util.role.MainRole;
-import com.github.godhexagon.oneslotsurvival.world.util.role.RoleManager;
-
+import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotBarrierFilling;
+import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotRestriction;
+import com.github.godhexagon.oneslotsurvival.rule.player.PlayerModValidity;
+import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
+import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
+import com.github.godhexagon.oneslotsurvival.rule.role.SubRole;
 import com.mojang.logging.LogUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -106,12 +106,13 @@ public class WorldEvent {
         // プレイ時間が非常に少ない = このワールドに初めて参加
         if (playTime < 5) {
             // ロールが未割り当ての場合のみ設定（念のため二重設定を防ぐ）
-            MainRole currentRoleId = RoleManager.getRole(player);
+            MainRole currentRoleId = RoleManager.getMainRole(player);
             if (currentRoleId == MainRole.UNASSIGNED) {
-                // デフォルトロールとして MINER を設定
-                RoleManager.setRole(player, MainRole.MINER);
+                // デフォルトロールとして MINER と FISHER を設定
+                RoleManager.setMainRole(player, MainRole.MINER);
+                RoleManager.setSubRole(player, SubRole.FISHER);
                 // デフォルトは有効
-                PlayerModValidity.setEnabled(player, true);                
+                PlayerModValidity.setEnabled(player, true);
                 LOGGER.info("Set default values to new player: {}", player.getName().getString());
             }
         }

@@ -1,6 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.world.command.admin;
 
-import com.github.godhexagon.oneslotsurvival.world.util.player.PlayerModValidity;
+import com.github.godhexagon.oneslotsurvival.rule.player.PlayerModValidity;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.commands.CommandSourceStack;
