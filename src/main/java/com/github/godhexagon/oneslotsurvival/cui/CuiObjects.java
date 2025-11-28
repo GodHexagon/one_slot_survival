@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
+import com.github.godhexagon.oneslotsurvival.object.item.DynamicBuilderTags;
+import com.github.godhexagon.oneslotsurvival.object.item.ModTags;
 import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotRestriction;
 import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
 import com.github.godhexagon.oneslotsurvival.rule.role.Role;
@@ -205,6 +207,17 @@ public class CuiObjects {
         .limit(itemCount) // 最大5個まで表示
         .toList();
 
+        if (items.isEmpty() && DynamicBuilderTags.isInitialized()) {
+            // Builderロールの3つのタグを確認
+            if (itemTag.equals(ModTags.Items.BUILDER_SOFT_BLOCKS)) {
+                items = List.copyOf(DynamicBuilderTags.getSoftItems()).subList(0, itemCount);
+            } else if (itemTag.equals(ModTags.Items.BUILDER_HARD_BLOCKS)) {
+                items = List.copyOf(DynamicBuilderTags.getHardItems()).subList(0, itemCount);
+            } else if (itemTag.equals(ModTags.Items.BUILDER_WOOD_BLOCKS)) {
+                items = List.copyOf(DynamicBuilderTags.getWoodItems()).subList(0, itemCount);
+            }
+        } 
+
         MutableComponent itemList = Component.literal("");
         if (!items.isEmpty()) {
             for (int i = 0; i < items.size(); i++) {
@@ -214,7 +227,7 @@ public class CuiObjects {
                 if (i > 0) {
                     itemList.append(Component.literal(", ").withStyle(ChatFormatting.GRAY));
                 }
-                itemList.append(stack.getHoverName().copy().withStyle(ChatFormatting.AQUA));
+                itemList.append(stack.getHoverName().copy().withStyle(ChatFormatting.GREEN));
             }
         }
 

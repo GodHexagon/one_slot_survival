@@ -33,12 +33,22 @@ public enum MainRole implements Role, RoleSlotProvider {
     /**
      * 採掘特化ロール
      */
-    MINER(1, "miner", List.of(ItemTags.PICKAXES, ItemTags.SHOVELS, ItemTags.AXES)),
+    MINER(1, "miner", List.of(ItemTags.PICKAXES, ModTags.Items.MINER_DIGGING_TOOLS, ModTags.Items.BUCKETS)),
 
     /**
      * 戦闘特化ロール
      */
-    WARRIOR(2, "warrior", List.of(ItemTags.SWORDS, ModTags.Items.WARRIOR_DEFENSIVE, ModTags.Items.WARRIOR_SPECIAL_WEAPONS));
+    WARRIOR(2, "warrior", List.of(ModTags.Items.WARRIOR_MELEE_WEAPONS, ModTags.Items.WARRIOR_DEFENSIVE, ItemTags.BEDS)),
+
+    /**
+     * サバイバル特化ロール
+     */
+    SURVIVOR(3, "survivor", List.of(ItemTags.AXES, ModTags.Items.SURVIVOR_UTILITY_TOOLS, ItemTags.BUNDLES)),
+
+    /**
+     * 建築特化ロール
+     */
+    BUILDER(4, "builder", List.of(ModTags.Items.BUILDER_SOFT_BLOCKS, ModTags.Items.BUILDER_HARD_BLOCKS, ModTags.Items.BUILDER_WOOD_BLOCKS));
 
     private final int atttributeId;
     private final String commandName;

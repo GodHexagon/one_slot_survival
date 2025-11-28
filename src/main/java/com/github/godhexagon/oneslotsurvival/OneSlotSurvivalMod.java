@@ -4,6 +4,7 @@ import com.github.godhexagon.oneslotsurvival.object.attribute.ModAttributes;
 import com.github.godhexagon.oneslotsurvival.object.attribute.PlayerAttributeHandler;
 import com.github.godhexagon.oneslotsurvival.object.config.ExpConfig;
 import com.github.godhexagon.oneslotsurvival.object.gamerule.ModGameRules;
+import com.github.godhexagon.oneslotsurvival.object.item.DynamicBuilderTags;
 import com.github.godhexagon.oneslotsurvival.object.item.ModItems;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
@@ -60,5 +61,13 @@ public final class OneSlotSurvivalMod {
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         LOGGER.info("One Slot Survival mod server starting");
+
+        // Builderロール用の動的タグを生成
+        try {
+            DynamicBuilderTags.generateBuilderTags(event.getServer().registryAccess());
+            LOGGER.info("Dynamic Builder tags generated successfully");
+        } catch (Exception e) {
+            LOGGER.error("Failed to generate dynamic Builder tags", e);
+        }
     }
 }

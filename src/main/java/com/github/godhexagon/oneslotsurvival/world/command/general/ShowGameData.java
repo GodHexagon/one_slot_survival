@@ -244,14 +244,19 @@ public class ShowGameData {
             player.sendSystemMessage(Component.literal(""));
 
             player.sendSystemMessage(
-                Component.literal("  ")
-                    .append(description.copy())
+                Component.literal("  Unlocked after leveling up ")
+                    .withStyle(ChatFormatting.AQUA)
+                    .append(Component.literal(String.valueOf(roleSlot.levelUpTimesInRole()))
+                        .withStyle(ChatFormatting.YELLOW, ChatFormatting.BOLD))
+                    .append(" times.")
             );
             
             player.sendSystemMessage(Component.literal(""));
 
             player.sendSystemMessage(
-                Component.literal("  Examples: ")
+                Component.literal("  ")
+                    .append(description.copy())
+                    .append(Component.literal(" Examples: "))
                     .append(CuiObjects.createExampleItemList(roleSlot, 20))
             );
             
