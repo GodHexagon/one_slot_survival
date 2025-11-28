@@ -122,7 +122,7 @@ public class ExpConfig {
 
             levelUpExp = builder
                 .comment("Experience points required to level up")
-                .defineInRange("level_up_exp",200.0, 1.0, 100000.0);
+                .defineInRange("level_up_exp", 120.0, 1.0, 100000.0);
 
             levelUpIncreaseMultiplier = builder
                 .comment("Multiplier for experience required per level (e.g., 1.1 = 10% increase per level)")
