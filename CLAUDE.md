@@ -19,7 +19,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 直前の成果！: サブロールの種類を増やす
 
-実行中: 初期配布バンドル・シュルカーボックスを設定できるようにする
+実行中: roleChangingの永続化方式をNBT Stor方式に置き換えすることを試みる of 初期配布バンドル・シュルカーボックスを設定できるようにする
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
