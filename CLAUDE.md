@@ -17,9 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # 進捗
 
-直前の成果！: サブロールの種類を増やす
+直前の成果！: com.github.godhexagon.oneslotsurvival.world.storage.RoleChangingSettingsでクライアント内部サーバーを用いてデータ上書き操作したときに同期ずれが起きるという実装の誤りを予防する of 初期配布バンドル・シュルカーボックスを設定できるようにする
 
-実行中: roleChangingの永続化方式をNBT Stor方式に置き換えすることを試みる of 初期配布バンドル・シュルカーボックスを設定できるようにする
+実行中: 初期配布アイテムのワールドオプションを実装 of 初期配布バンドル・シュルカーボックスを設定できるようにする
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
