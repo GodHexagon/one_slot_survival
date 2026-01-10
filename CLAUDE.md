@@ -17,9 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # 進捗
 
-直前の成果！: 初期配布バンドル・シュルカーボックスを設定できるようにする
+直前の成果！: 初期MOD有効性のワールドオプションを変更できるようにする
 
-実行中: 初期MOD有効性のワールドオプションを変更できるようにする
+実行中: 全プレイヤーロール一斉割り当ての管理者アクションを追加する
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
