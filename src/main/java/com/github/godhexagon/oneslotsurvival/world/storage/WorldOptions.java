@@ -8,38 +8,45 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.storage.CommandStorage;
 
 /**
- * ロール変更設定を管理するクラス。
+ * ワールドオプション設定を管理するクラス。
  *
  * <p>MinecraftのCommandStorage（/data modify storage）を使用して設定を永続化します。</p>
  *
  * <h2>設定方法</h2>
  * <pre>{@code
  * // メインロール変更を無効化
- * /data modify storage oneslotsurvival:settings mainRoleChanging set value 0b
+ * /data modify storage oneslotsurvival:world_options mainRoleChanging set value 0b
  *
  * // サブロール変更を無効化
- * /data modify storage oneslotsurvival:settings subRoleChanging set value 0b
+ * /data modify storage oneslotsurvival:world_options subRoleChanging set value 0b
+ *
+ * // 初期MOD有効性を無効化
+ * /data modify storage oneslotsurvival:world_options defaultModValidity set value 0b
  *
  * // 有効化する場合
- * /data modify storage oneslotsurvival:settings mainRoleChanging set value 1b
- * /data modify storage oneslotsurvival:settings subRoleChanging set value 1b
+ * /data modify storage oneslotsurvival:world_options mainRoleChanging set value 1b
+ * /data modify storage oneslotsurvival:world_options subRoleChanging set value 1b
+ * /data modify storage oneslotsurvival:world_options defaultModValidity set value 1b
  * }</pre>
  *
  * <h2>コードからのアクセス</h2>
  * <pre>{@code
  * // ServerLevelから
- * boolean canChangeMainRole = RoleChangingSettings.isMainRoleChangingEnabled(serverLevel);
- * boolean canChangeSubRole = RoleChangingSettings.isSubRoleChangingEnabled(serverLevel);
+ * boolean canChangeMainRole = WorldOptions.isMainRoleChangingEnabled(serverLevel);
+ * boolean canChangeSubRole = WorldOptions.isSubRoleChangingEnabled(serverLevel);
+ * boolean defaultModValidity = WorldOptions.isDefaultModValidityEnabled(serverLevel);
  *
  * // MinecraftServerから
- * boolean canChangeMainRole = RoleChangingSettings.isMainRoleChangingEnabled(server);
- * boolean canChangeSubRole = RoleChangingSettings.isSubRoleChangingEnabled(server);
+ * boolean canChangeMainRole = WorldOptions.isMainRoleChangingEnabled(server);
+ * boolean canChangeSubRole = WorldOptions.isSubRoleChangingEnabled(server);
+ * boolean defaultModValidity = WorldOptions.isDefaultModValidityEnabled(server);
  * }</pre>
  *
  * <h2>デフォルト値</h2>
  * <ul>
  *   <li>mainRoleChanging: true（変更可能）</li>
  *   <li>subRoleChanging: true（変更可能）</li>
+ *   <li>defaultModValidity: true（有効）</li>
  * </ul>
  */
 public class WorldOptions {
@@ -57,8 +64,14 @@ public class WorldOptions {
     /** ボーナスアイテム設定のNBTキー */
     private static final String BONUS_ITEM_KEY = "bonusItem";
 
+    /** 初期MOD有効性設定のNBTキー */
+    private static final String DEFAULT_MOD_VALIDITY_KEY = "defaultModValidity";
+
     /** デフォルト値: 変更可能 */
     private static final boolean DEFAULT_VALUE = true;
+
+    /** デフォルト値: 初期MOD有効性はtrue */
+    private static final boolean DEFAULT_MOD_VALIDITY = true;
 
     /** デフォルト値: ボーナスアイテムなし */
     private static final BonusItem DEFAULT_BONUS_ITEM = BonusItem.NONE;
@@ -166,6 +179,39 @@ public class WorldOptions {
 
         // 保存
         storage.set(STORAGE_ID, tag);
+    }
+
+    /**
+     * 初期MOD有効性設定を取得します。
+     *
+     * @param level サーバーレベル
+     * @return 初期MOD有効性がtrueの場合true
+     */
+    public static boolean isDefaultModValidityEnabled(ServerLevel level) {
+        return isDefaultModValidityEnabled(level.getServer());
+    }
+
+    /**
+     * 初期MOD有効性設定を取得します。
+     *
+     * @param server MinecraftServer
+     * @return 初期MOD有効性がtrueの場合true
+     */
+    public static boolean isDefaultModValidityEnabled(MinecraftServer server) {
+        CommandStorage storage = server.getCommandStorage();
+        CompoundTag tag = storage.get(STORAGE_ID);
+
+        return tag.getBooleanOr(DEFAULT_MOD_VALIDITY_KEY, DEFAULT_MOD_VALIDITY);
+    }
+
+    /**
+     * 初期MOD有効性設定を変更します。
+     *
+     * @param server MinecraftServer
+     * @param enabled 有効にする場合true
+     */
+    public static void setDefaultModValidityEnabled(MinecraftServer server, boolean enabled) {
+        setBooleanValue(server, DEFAULT_MOD_VALIDITY_KEY, enabled);
     }
 
     /**

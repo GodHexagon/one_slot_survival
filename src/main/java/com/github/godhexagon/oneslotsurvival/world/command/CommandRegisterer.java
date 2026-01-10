@@ -10,6 +10,7 @@ import com.github.godhexagon.oneslotsurvival.world.command.general.ShowGameData;
 import com.github.godhexagon.oneslotsurvival.world.command.general.ShowNext;
 import com.github.godhexagon.oneslotsurvival.world.command.general.ShowStatus;
 import com.github.godhexagon.oneslotsurvival.world.command.world.BonusItemCommand;
+import com.github.godhexagon.oneslotsurvival.world.command.world.DefaultModValidityCommand;
 import com.github.godhexagon.oneslotsurvival.world.command.world.RoleChanging;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -54,6 +55,7 @@ public class CommandRegisterer {
             .requires(source -> source.hasPermission(2)) // OP レベル 2 が必要
             .then(RoleChanging.buildMainRoleChanging())
             .then(RoleChanging.buildSubRoleChanging())
-            .then(BonusItemCommand.build());
+            .then(BonusItemCommand.build())
+            .then(DefaultModValidityCommand.build());
     }
 }

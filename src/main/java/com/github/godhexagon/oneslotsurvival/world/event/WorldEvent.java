@@ -111,12 +111,13 @@ public class WorldEvent {
             // ロールが未割り当ての場合のみ設定（念のため二重設定を防ぐ）
             MainRole currentRoleId = RoleManager.getMainRole(player);
             if (currentRoleId == MainRole.UNASSIGNED) {
+                // MOD有効性を設定
+                boolean defaultModValidity = WorldOptions.isDefaultModValidityEnabled(player.getServer());
+                PlayerModValidity.setEnabled(player, defaultModValidity);
+
                 // デフォルトロールとして MINER と FISHER を設定
                 RoleManager.setMainRole(player, MainRole.MINER);
                 RoleManager.setSubRole(player, SubRole.FISHER);
-
-                // MOD有効性を設定
-                PlayerModValidity.setEnabled(player, true);
 
                 // ボーナスアイテムを配布
                 BonusItem bonusItemMode = WorldOptions.getBonusItem(player.getServer());
