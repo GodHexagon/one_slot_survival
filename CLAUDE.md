@@ -17,9 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # 進捗
 
-直前の成果！: com.github.godhexagon.oneslotsurvival.world.storage.RoleChangingSettingsでクライアント内部サーバーを用いてデータ上書き操作したときに同期ずれが起きるという実装の誤りを予防する of 初期配布バンドル・シュルカーボックスを設定できるようにする
+直前の成果！: 初期配布バンドル・シュルカーボックスを設定できるようにする
 
-実行中: 初期配布アイテムのワールドオプションを実装 of 初期配布バンドル・シュルカーボックスを設定できるようにする
+実行中: 初期MOD有効性のワールドオプションを変更できるようにする
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 

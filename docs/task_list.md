@@ -154,7 +154,7 @@
     * Miner, Warriorのロールスロットを見直し
     * Survivor, Builderを追加
 1. 完了✅|サブロールの種類を増やす
-1. 初期配布バンドル・シュルカーボックスを設定できるようにする
+1. 完了✅|初期配布バンドル・シュルカーボックスを設定できるようにする
     1. 完了✅|roleChangingの永続化方式をNBT Stor方式に置き換えすることを試みる
     1. 完了✅|ワールドオプションコマンドを実装する
     1. 完了✅|com.github.godhexagon.oneslotsurvival.world.storage.RoleChangingSettingsのクラスの場所を再検討する
@@ -163,7 +163,7 @@
         - world_optionsストレージに変更した。
     1. 完了✅|com.github.godhexagon.oneslotsurvival.world.storage.RoleChangingSettingsでクライアント内部サーバーを用いてデータ上書き操作したときに同期ずれが起きるという実装の誤りを予防する
         - worldパッケージなので間違えることはない。
-    1. 初期配布アイテムのワールドオプションを実装
+    1. 完了✅|初期配布アイテムのワールドオプションを実装
 1. 初期MOD有効性のワールドオプションを変更できるようにする
 1. 全プレイヤーロール一斉割り当ての管理者アクションを追加する
 1. ワールドの初期ロール割り当て方式オプションを変更する管理者アクションを追加
