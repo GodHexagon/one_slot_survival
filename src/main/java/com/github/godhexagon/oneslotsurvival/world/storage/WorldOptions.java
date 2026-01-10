@@ -54,8 +54,14 @@ public class WorldOptions {
     /** サブロール変更設定のNBTキー */
     private static final String SUB_ROLE_CHANGING_KEY = "subRoleChanging";
 
+    /** ボーナスアイテム設定のNBTキー */
+    private static final String BONUS_ITEM_KEY = "bonusItem";
+
     /** デフォルト値: 変更可能 */
     private static final boolean DEFAULT_VALUE = true;
+
+    /** デフォルト値: ボーナスアイテムなし */
+    private static final BonusItem DEFAULT_BONUS_ITEM = BonusItem.NONE;
 
     /**
      * メインロール変更が有効かどうかを取得します。
@@ -115,6 +121,51 @@ public class WorldOptions {
      */
     public static void setSubRoleChangingEnabled(MinecraftServer server, boolean enabled) {
         setBooleanValue(server, SUB_ROLE_CHANGING_KEY, enabled);
+    }
+
+    /**
+     * ボーナスアイテム設定を取得します。
+     *
+     * @param level サーバーレベル
+     * @return ボーナスアイテム設定
+     */
+    public static BonusItem getBonusItem(ServerLevel level) {
+        return getBonusItem(level.getServer());
+    }
+
+    /**
+     * ボーナスアイテム設定を取得します。
+     *
+     * @param server MinecraftServer
+     * @return ボーナスアイテム設定
+     */
+    public static BonusItem getBonusItem(MinecraftServer server) {
+        CommandStorage storage = server.getCommandStorage();
+        CompoundTag tag = storage.get(STORAGE_ID);
+
+        // 文字列として保存されているコマンド名を取得
+        // getStringOrを使用してデフォルト値を指定
+        String commandName = tag.getStringOr(BONUS_ITEM_KEY, DEFAULT_BONUS_ITEM.getCommandName());
+
+        // コマンド名からBonusItemに変換
+        return BonusItem.fromCommandName(commandName);
+    }
+
+    /**
+     * ボーナスアイテム設定を変更します。
+     *
+     * @param server MinecraftServer
+     * @param bonusItem 設定するボーナスアイテム
+     */
+    public static void setBonusItem(MinecraftServer server, BonusItem bonusItem) {
+        CommandStorage storage = server.getCommandStorage();
+        CompoundTag tag = storage.get(STORAGE_ID);
+
+        // コマンド名を文字列として保存
+        tag.putString(BONUS_ITEM_KEY, bonusItem.getCommandName());
+
+        // 保存
+        storage.set(STORAGE_ID, tag);
     }
 
     /**

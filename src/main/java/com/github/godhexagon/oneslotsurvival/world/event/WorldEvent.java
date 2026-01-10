@@ -7,10 +7,13 @@ import com.github.godhexagon.oneslotsurvival.rule.player.PlayerModValidity;
 import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
 import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
 import com.github.godhexagon.oneslotsurvival.rule.role.SubRole;
+import com.github.godhexagon.oneslotsurvival.world.storage.BonusItem;
+import com.github.godhexagon.oneslotsurvival.world.storage.WorldOptions;
 import com.mojang.logging.LogUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingSwapItemsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -111,10 +114,46 @@ public class WorldEvent {
                 // デフォルトロールとして MINER と FISHER を設定
                 RoleManager.setMainRole(player, MainRole.MINER);
                 RoleManager.setSubRole(player, SubRole.FISHER);
-                // デフォルトは有効
+
+                // MOD有効性を設定
                 PlayerModValidity.setEnabled(player, true);
-                LOGGER.info("Set default values to new player: {}", player.getName().getString());
+
+                // ボーナスアイテムを配布
+                BonusItem bonusItemMode = WorldOptions.getBonusItem(player.getServer());
+                // バンドルを配布
+                if (bonusItemMode == BonusItem.BUNDLE || bonusItemMode == BonusItem.BUNDLE_RESPAWN) {
+                    player.addItem(new ItemStack(Items.BUNDLE));
+                } else if (bonusItemMode == BonusItem.SHULKERBOX || bonusItemMode == BonusItem.SHULKERBOX_RESPAWN) {
+                    player.addItem(new ItemStack(Items.SHULKER_BOX));
+                }
+
+                // ログ出力
+                LOGGER.info("The first login process has been applied to {}", player.getName().getString());
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
+        // サーバー側のみ処理
+        // サーバーのときだけしかServerPlayerでない仕様を利用
+        if (!(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+
+        // MOD有効なプレイヤーのみ対象
+        if (!PlayerModValidity.isEffective(player)) {
+            return;
+        }
+
+        // ボーナスアイテムを配布
+        BonusItem bonusItemMode = WorldOptions.getBonusItem(player.getServer());
+        if (bonusItemMode == BonusItem.BUNDLE_RESPAWN) {
+            // バンドルを配布
+            player.addItem(new ItemStack(Items.BUNDLE));
+        } else if (bonusItemMode == BonusItem.SHULKERBOX_RESPAWN) {
+            // シュルカーボックスを配布
+            player.addItem(new ItemStack(Items.SHULKER_BOX));
         }
     }
 }
