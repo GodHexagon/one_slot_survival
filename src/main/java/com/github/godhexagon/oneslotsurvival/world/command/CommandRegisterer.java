@@ -1,5 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.world.command;
 
+import com.github.godhexagon.oneslotsurvival.world.command.admin.DistributeRoleCommands;
 import com.github.godhexagon.oneslotsurvival.world.command.admin.LevelCommands;
 import com.github.godhexagon.oneslotsurvival.world.command.admin.RoleCommands;
 import com.github.godhexagon.oneslotsurvival.world.command.admin.RoleLeveledUpTimesCommands;
@@ -44,6 +45,7 @@ public class CommandRegisterer {
             .requires(source -> source.hasPermission(2)) // OP レベル 2 が必要
             .then(ValidityCommands.build())
             .then(RoleCommands.build())
+            .then(DistributeRoleCommands.build())
             .then(LevelCommands.build())
             .then(XpCommands.build())
             .then(RoleLeveledUpTimesCommands.build());
