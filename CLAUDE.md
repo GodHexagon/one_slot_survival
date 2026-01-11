@@ -17,9 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # 進捗
 
-直前の成果！: ワールドの初期ロール割り当て方式オプションを変更する管理者アクションを追加
+直前の成果！: IntegratedとDedicatedでワールドオプションのデフォルト値が変わるようにする
 
-実行中: IntegratedとDedicatedでワールドオプションのデフォルト値が変わるようにする
+実行中: ユーティリティの実装を検討する
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
