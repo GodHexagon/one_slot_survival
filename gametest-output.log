@@ -1,0 +1,654 @@
+
+> Configure project :
+MixinGradle did not locate the diffplug APT plugin, skipping eclipse task configuration
+Java: 22.0.2, JVM: 22.0.2+9-70 (Oracle Corporation), Arch: amd64
+
+> Task :downloadMcpConfig
+> Task :extractSrg UP-TO-DATE
+> Task :createMcpToSrg UP-TO-DATE
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :createSrgToMcp UP-TO-DATE
+> Task :downloadMCMeta UP-TO-DATE
+> Task :downloadAssets UP-TO-DATE
+> Task :extractNatives UP-TO-DATE
+> Task :makeSrcDirs
+> Task :prepareRuns
+> Task :prepareRunGameTestServer
+> Task :prepareRunGameTestServerCompile UP-TO-DATE
+
+> Task :runGameTestServer
+Ignoring duplicate module on SecureModuleFinder: org.lwjgl.freetype.natives: Jar[jar:file:///C:/Users/godhe/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-freetype/3.3.3/82028265a0a2ff33523ca75137ada7dc176e5210/lwjgl-freetype-3.3.3-natives-windows-arm64.jar!/]
+Ignoring duplicate module on SecureModuleFinder: org.lwjgl.freetype.natives: Jar[jar:file:///C:/Users/godhe/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-freetype/3.3.3/15a8c1de7f51d07a92eae7ce1222557073a0c0c3/lwjgl-freetype-3.3.3-natives-windows-x86.jar!/]
+Ignoring duplicate module on SecureModuleFinder: org.lwjgl.glfw.natives: Jar[jar:file:///C:/Users/godhe/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-glfw/3.3.3/f27018dc74f6289574502b46cce55d52817554e2/lwjgl-glfw-3.3.3-natives-windows-arm64.jar!/]
+Ignoring duplicate module on SecureModuleFinder: org.lwjgl.glfw.natives: Jar[jar:file:///C:/Users/godhe/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-glfw/3.3.3/32334f3fd5270a59bad9939a93115acb6de36dcf/lwjgl-glfw-3.3.3-natives-windows-x86.jar!/]
+Ignoring duplicate module on SecureModuleFinder: org.lwjgl.jemalloc.natives: Jar[jar:file:///C:/Users/godhe/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-jemalloc/3.3.3/ba1f3fed0ee4be0217eaa41c5bbfb4b9b1383c33/lwjgl-jemalloc-3.3.3-natives-windows-arm64.jar!/]
+Ignoring duplicate module on SecureModuleFinder: org.lwjgl.jemalloc.natives: Jar[jar:file:///C:/Users/godhe/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-jemalloc/3.3.3/f6063b6e0f23be483c5c88d84ce51b39dc69126c/lwjgl-jemalloc-3.3.3-natives-windows-x86.jar!/]
+Ignoring duplicate module on SecureModuleFinder: org.lwjgl.openal.natives: Jar[jar:file:///C:/Users/godhe/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-openal/3.3.3/8e0615235116b9e4160dfe87bec90f5f6378bf72/lwjgl-openal-3.3.3-natives-windows-arm64.jar!/]
+Ignoring duplicate module on SecureModuleFinder: org.lwjgl.openal.natives: Jar[jar:file:///C:/Users/godhe/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-openal/3.3.3/87b8d5050e3adb46bb58fe1cb2669a4a48fce10d/lwjgl-openal-3.3.3-natives-windows-x86.jar!/]
+Ignoring duplicate module on SecureModuleFinder: org.lwjgl.opengl.natives: Jar[jar:file:///C:/Users/godhe/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.3.3/65e956d3735a1abdc82eff4baec1b61174697d4b/lwjgl-opengl-3.3.3-natives-windows-arm64.jar!/]
+Ignoring duplicate module on SecureModuleFinder: org.lwjgl.opengl.natives: Jar[jar:file:///C:/Users/godhe/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.3.3/d32d833dcaa2f355a886eaf21f0408b5f03241d/lwjgl-opengl-3.3.3-natives-windows-x86.jar!/]
+Ignoring duplicate module on SecureModuleFinder: org.lwjgl.stb.natives: Jar[jar:file:///C:/Users/godhe/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-stb/3.3.3/a584ab44de569708871f0a79561f4d8c37487f2c/lwjgl-stb-3.3.3-natives-windows-arm64.jar!/]
+Ignoring duplicate module on SecureModuleFinder: org.lwjgl.stb.natives: Jar[jar:file:///C:/Users/godhe/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-stb/3.3.3/b5c874687b9aac1a936501d4ed2c49567fd1b575/lwjgl-stb-3.3.3-natives-windows-x86.jar!/]
+Ignoring duplicate module on SecureModuleFinder: org.lwjgl.tinyfd.natives: Jar[jar:file:///C:/Users/godhe/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-tinyfd/3.3.3/a88c494f3006eb91a7433b12a3a55a9a6c20788b/lwjgl-tinyfd-3.3.3-natives-windows-arm64.jar!/]
+Ignoring duplicate module on SecureModuleFinder: org.lwjgl.tinyfd.natives: Jar[jar:file:///C:/Users/godhe/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-tinyfd/3.3.3/c336c84ee88cccb495c6ffa112395509e7378e8a/lwjgl-tinyfd-3.3.3-natives-windows-x86.jar!/]
+Ignoring duplicate module on SecureModuleFinder: org.lwjgl.natives: Jar[jar:file:///C:/Users/godhe/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.3.3/e9aca8c5479b520a2a7f0d542a118140e812c5e8/lwjgl-3.3.3-natives-windows-arm64.jar!/]
+Ignoring duplicate module on SecureModuleFinder: org.lwjgl.natives: Jar[jar:file:///C:/Users/godhe/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.3.3/9e670718e050aeaeea0c2d5b907cffb142f2e58f/lwjgl-3.3.3-natives-windows-x86.jar!/]
+2026-01-10T12:39:21.642578600Z main WARN Advanced terminal features are not available in this environment
+2026-01-10T12:39:21.700071900Z main ERROR Unable to delete file C:\Users\godhe\git\one_slot_survival\run\logs\latest.log: java.nio.file.FileSystemException C:\Users\godhe\git\one_slot_survival\run\logs\latest.log: �v���Z�X�̓t�@�C���ɃA�N�Z�X�ł��܂���B�ʂ̃v���Z�X���g�p���ł��B
+2026-01-10T12:39:21.712596100Z main ERROR Unable to delete file C:\Users\godhe\git\one_slot_survival\run\logs\debug.log: java.nio.file.FileSystemException C:\Users\godhe\git\one_slot_survival\run\logs\debug.log: �v���Z�X�̓t�@�C���ɃA�N�Z�X�ł��܂���B�ʂ̃v���Z�X���g�p���ł��B
+[21:39:21] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forge_userdev_server_gametest, --gameDir, ., -mixin.config=oneslotsurvival.mixins.json, --mixin.config, oneslotsurvival.mixins.json]
+[21:39:21] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: JVM identified as Eclipse Adoptium OpenJDK 64-Bit Server VM 21.0.6+7-LTS
+[21:39:21] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: ModLauncher 10.2.4 starting: java version 21.0.6 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
+[21:39:21] [main/DEBUG] [cp.mo.mo.LaunchServiceHandler/MODLAUNCHER]: Found launch services [minecraft,forge_userdev_server_gametest,forge_dev_client,forge_userdev_data,forge_dev_server_gametest,forge_dev_client_data,forge_userdev_server,forge_client,forge_server,forge_userdev_client_data,forge_userdev_client,forge_dev_data,forge_dev,testharness,forge_userdev,forge_dev_server]
+[21:39:21] [main/DEBUG] [cp.mo.mo.NameMappingServiceHandler/MODLAUNCHER]: Found naming services : [srgtomcp]
+[21:39:21] [main/DEBUG] [cp.mo.mo.LaunchPluginHandler/MODLAUNCHER]: Found launch plugins: [mixin,slf4jfixer,object_holder_definalize,runtime_enum_extender,capability_token_subclass,accesstransformer,runtimedistcleaner]
+[21:39:21] [main/DEBUG] [cp.mo.mo.TransformationServicesHandler/MODLAUNCHER]: Discovering transformation services
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLPaths/CORE]: Path GAMEDIR is C:\Users\godhe\git\one_slot_survival\run
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLPaths/CORE]: Path MODSDIR is C:\Users\godhe\git\one_slot_survival\run\mods
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLPaths/CORE]: Path CONFIGDIR is C:\Users\godhe\git\one_slot_survival\run\config
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLPaths/CORE]: Path FMLCONFIG is C:\Users\godhe\git\one_slot_survival\run\config\fml.toml
+[21:39:21] [main/INFO] [ne.mi.fm.lo.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forge_userdev_server_gametest
+[21:39:21] [main/DEBUG] [cp.mo.mo.TransformationServicesHandler/MODLAUNCHER]: Found transformer service: fml: /
+[21:39:21] [main/DEBUG] [cp.mo.mo.TransformationServicesHandler/MODLAUNCHER]: Found transformer service: mixin: /
+[21:39:21] [main/DEBUG] [cp.mo.mo.TransformationServicesHandler/MODLAUNCHER]: Transformation services loading
+[21:39:21] [main/DEBUG] [cp.mo.mo.TransformationServiceDecorator/MODLAUNCHER]: Loading service mixin
+[21:39:21] [main/DEBUG] [cp.mo.mo.TransformationServiceDecorator/MODLAUNCHER]: Loaded service mixin
+[21:39:21] [main/DEBUG] [cp.mo.mo.TransformationServiceDecorator/MODLAUNCHER]: Loading service fml
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLLoader/CORE]: Detected version data : VersionInfo[forgeVersion=58.1.0, mcVersion=1.21.8, mcpVersion=20250717.105350, forgeGroup=net.minecraftforge]
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.LauncherVersion/CORE]: Found FMLLauncher version 58.1.0
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLLoader/CORE]: FML 58.1.0 loading
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLLoader/CORE]: Found ModLauncher version: 10.2.4
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLLoader/CORE]: Found AccessTransformer version: 8.2.2
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLLoader/CORE]: Found RuntimeDistCleaner version: 58.1.0
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLLoader/CORE]: FML found CoreMod version : 5.2.6
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLLoader/CORE]: Found ForgeSPI version: 7.1.5
+[21:39:21] [main/DEBUG] [cp.mo.mo.TransformationServiceDecorator/MODLAUNCHER]: Loaded service fml
+[21:39:21] [main/DEBUG] [cp.mo.mo.TransformationServicesHandler/MODLAUNCHER]: Configuring option handling for services
+[21:39:21] [main/DEBUG] [cp.mo.mo.TransformationServicesHandler/MODLAUNCHER]: Transformation services initializing
+[21:39:21] [main/DEBUG] [cp.mo.mo.TransformationServiceDecorator/MODLAUNCHER]: Initializing transformation service mixin
+[21:39:21] [main/DEBUG] [mixin/]: MixinService [ModLauncher] was successfully booted in SecureModuleClassLoader[SECURE-BOOTSTRAP]@22671767
+[21:39:21] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=jar:file:///C:/Users/godhe/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.7/8ab114ac385e6dbdad5efafe28aba4df8120915f/mixin-0.8.7.jar!/ Service=ModLauncher Env=SERVER
+[21:39:21] [main/DEBUG] [mixin/]: Initialising Mixin Platform Manager
+[21:39:21] [main/DEBUG] [mixin/]: Adding mixin platform agents for container ModLauncher Root Container(ModLauncher:4f56a0a2)
+[21:39:21] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentMinecraftForge for ModLauncher Root Container(ModLauncher:4f56a0a2)
+[21:39:21] [main/DEBUG] [mixin/]: MixinPlatformAgentMinecraftForge rejected container ModLauncher Root Container(ModLauncher:4f56a0a2)
+[21:39:21] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentDefault for ModLauncher Root Container(ModLauncher:4f56a0a2)
+[21:39:21] [main/DEBUG] [mixin/]: MixinPlatformAgentDefault accepted container ModLauncher Root Container(ModLauncher:4f56a0a2)
+[21:39:21] [main/DEBUG] [cp.mo.mo.TransformationServiceDecorator/MODLAUNCHER]: Initialized transformation service mixin
+[21:39:21] [main/DEBUG] [cp.mo.mo.TransformationServiceDecorator/MODLAUNCHER]: Initializing transformation service fml
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLServiceProvider/CORE]: Setting up basic FML game directories
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLPaths/CORE]: Path GAMEDIR is C:\Users\godhe\git\one_slot_survival\run
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLPaths/CORE]: Path MODSDIR is C:\Users\godhe\git\one_slot_survival\run\mods
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLPaths/CORE]: Path CONFIGDIR is C:\Users\godhe\git\one_slot_survival\run\config
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLPaths/CORE]: Path FMLCONFIG is C:\Users\godhe\git\one_slot_survival\run\config\fml.toml
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLServiceProvider/CORE]: Loading configuration
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLServiceProvider/CORE]: Preparing ModFile
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLServiceProvider/CORE]: Preparing launch handler
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLLoader/CORE]: Using forge_userdev_server_gametest as launch service
+[21:39:21] [main/DEBUG] [cp.mo.mo.TransformationServiceDecorator/MODLAUNCHER]: Initialized transformation service fml
+[21:39:21] [main/DEBUG] [cp.mo.mo.NameMappingServiceHandler/MODLAUNCHER]: Current naming domain is 'mcp'
+[21:39:21] [main/DEBUG] [cp.mo.mo.NameMappingServiceHandler/MODLAUNCHER]: Identified name mapping providers {srg=net.minecraftforge.fml.loading.MCPNamingService@19542407}
+[21:39:21] [main/DEBUG] [cp.mo.mo.TransformationServicesHandler/MODLAUNCHER]: Transformation services begin scanning
+[21:39:21] [main/DEBUG] [cp.mo.mo.TransformationServiceDecorator/MODLAUNCHER]: Beginning scan trigger - transformation service mixin
+[21:39:21] [main/DEBUG] [cp.mo.mo.TransformationServiceDecorator/MODLAUNCHER]: End scan trigger - transformation service mixin
+[21:39:21] [main/DEBUG] [cp.mo.mo.TransformationServiceDecorator/MODLAUNCHER]: Beginning scan trigger - transformation service fml
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.FMLServiceProvider/CORE]: Initiating mod scan
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.mo.ModDiscoverer/CORE]: Found Mod Locators : (mods folder:null),(minecraft:null),(classpath:null),(forge_dev_locator:null),(forge_userdev_locator:null)
+[21:39:21] [main/DEBUG] [ne.mi.fm.lo.mo.ModDiscoverer/CORE]: Found Dependency Locators : (JarInJar:null)
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.mo.ModFileInfo/LOADING]: Found valid mod file  with {minecraft} mods - versions {1.21.8}
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.mo.ModFileParser/LOADING]: Considering mod file candidate C:\Users\godhe\git\one_slot_survival\build\sourcesSets\main
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.mo.ModFileInfo/LOADING]: Found valid mod file main with {oneslotsurvival} mods - versions {2.4.0}
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.mo.ModFileParser/LOADING]: Considering mod file candidate /
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.mo.ModFileInfo/LOADING]: Found valid mod file  with {forge} mods - versions {58.1.0}
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.mo.JarInJarDependencyLocator/]: Failed to load resource META-INF\jarjar\metadata.json from , it does not contain dependency information.
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.mo.JarInJarDependencyLocator/]: Failed to load resource META-INF\jarjar\metadata.json from , it does not contain dependency information.
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.mo.JarInJarDependencyLocator/]: Failed to load resource META-INF\jarjar\metadata.json from javafmllanguage-1.21.8-58.1.0.jar, it does not contain dependency information.
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.mo.JarInJarDependencyLocator/]: Failed to load resource META-INF\jarjar\metadata.json from lowcodelanguage-1.21.8-58.1.0.jar, it does not contain dependency information.
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.mo.JarInJarDependencyLocator/]: Failed to load resource META-INF\jarjar\metadata.json from mclanguage-1.21.8-58.1.0.jar, it does not contain dependency information.
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.mo.JarInJarDependencyLocator/]: Failed to load resource META-INF\jarjar\metadata.json from fmlcore-1.21.8-58.1.0.jar, it does not contain dependency information.
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.mo.JarInJarDependencyLocator/]: Failed to load resource META-INF\jarjar\metadata.json from main, it does not contain dependency information.
+[21:39:22] [main/INFO] [ne.mi.fm.lo.mo.JarInJarDependencyLocator/]: No dependencies to load found. Skipping!
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.mo.ModFile/LOADING]: Loading mod file / with languages [LanguageSpec[languageName=minecraft, acceptedVersions=1]]
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.mo.ModFile/LOADING]: Loading mod file / with languages [LanguageSpec[languageName=javafml, acceptedVersions=[24,]]]
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.mo.ModFileParser/LOADING]: Found coremod field_to_method with Javascript path coremods/field_to_method.js
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.mo.ModFileParser/LOADING]: Found coremod method_redirector with Javascript path coremods/method_redirector.js
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.mo.ModFile/LOADING]: Found coremod /coremods/field_to_method.js
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.mo.ModFile/LOADING]: Found coremod /coremods/method_redirector.js
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.mo.ModFile/LOADING]: Loading mod file C:\Users\godhe\git\one_slot_survival\build\sourcesSets\main with languages [LanguageSpec[languageName=javafml, acceptedVersions=[58,)]]
+[21:39:22] [main/DEBUG] [cp.mo.mo.TransformationServiceDecorator/MODLAUNCHER]: End scan trigger - transformation service fml
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.LanguageLoadingProvider/CORE]: Found 3 language providers
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.LanguageLoadingProvider/CORE]: Found language provider minecraft, version 1.0
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.LanguageLoadingProvider/CORE]: Found language provider lowcodefml, version 58
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.LanguageLoadingProvider/CORE]: Found language provider javafml, version 58.1.0
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.ModSorter/]: Configured system mods: [minecraft, forge]
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.ModSorter/]: Found system mod: minecraft
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.ModSorter/]: Found system mod: forge
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.ModSorter/LOADING]: Found 2 mod requirements (2 mandatory, 0 optional)
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.ModSorter/LOADING]: Found 0 mod requirements missing (0 mandatory, 0 optional)
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.MCPNamingService/CORE]: Loaded 41402 method mappings from methods.csv
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.MCPNamingService/CORE]: Loaded 40095 field mappings from fields.csv
+[21:39:22] [main/DEBUG] [cp.mo.mo.TransformationServicesHandler/MODLAUNCHER]: Transformation services loading transformers
+[21:39:22] [main/DEBUG] [cp.mo.mo.TransformationServiceDecorator/MODLAUNCHER]: Initializing transformers for transformation service mixin
+[21:39:22] [main/DEBUG] [cp.mo.mo.TransformationServiceDecorator/MODLAUNCHER]: Initialized transformers for transformation service mixin
+[21:39:22] [main/DEBUG] [cp.mo.mo.TransformationServiceDecorator/MODLAUNCHER]: Initializing transformers for transformation service fml
+[21:39:22] [main/DEBUG] [ne.mi.fm.lo.FMLServiceProvider/CORE]: Loading coremod transformers
+[21:39:22] [main/DEBUG] [ne.mi.co.CoreModEngine/COREMOD]: Loading CoreMod from /coremods/field_to_method.js
+[21:39:23] [main/DEBUG] [ne.mi.co.CoreModEngine/COREMOD]: CoreMod loaded successfully
+[21:39:23] [main/DEBUG] [ne.mi.co.CoreModEngine/COREMOD]: Loading CoreMod from /coremods/method_redirector.js
+[21:39:23] [main/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Gathering Forge method redirector replacements
+[21:39:23] [main/DEBUG] [ne.mi.co.CoreModEngine/COREMOD]: CoreMod loaded successfully
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@7301eebe to Target : CLASS {Lnet/minecraft/world/level/biome/Biome;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@6848a051 to Target : CLASS {Lnet/minecraft/world/effect/MobEffectInstance;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@149b0577 to Target : CLASS {Lnet/minecraft/world/level/block/LiquidBlock;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@5740ff5e to Target : CLASS {Lnet/minecraft/world/item/BucketItem;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@4a901445 to Target : CLASS {Lnet/minecraft/world/level/block/FlowerPotBlock;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/level/levelgen/structure/structures/OceanMonumentPieces$OceanMonumentPiece;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/entity/animal/frog/Tadpole;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/level/levelgen/PatrolSpawner;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/server/commands/RaidCommand;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/entity/monster/ZombieVillager;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/entity/monster/Evoker$EvokerSummonSpellGoal;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/level/block/entity/trialspawner/TrialSpawner;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/entity/npc/Villager;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/level/levelgen/structure/structures/OceanRuinPieces$OceanRuinPiece;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/level/levelgen/structure/structures/SwampHutPiece;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/level/levelgen/PhantomSpawner;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/entity/npc/CatSpawner;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/level/levelgen/structure/structures/WoodlandMansionPieces$WoodlandMansionPiece;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/server/commands/SummonCommand;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/entity/ai/village/VillageSiege;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/entity/monster/Strider;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/entity/raid/Raid;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/entity/EntityType;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/entity/animal/horse/SkeletonTrapGoal;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/entity/monster/Spider;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/entity/monster/Zombie;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformStore/MODLAUNCHER]: Adding transformer net.minecraftforge.coremod.transformer.CoreModClassTransformer@67f77f6e to Target : CLASS {Lnet/minecraft/world/level/NaturalSpawner;} {} {V}
+[21:39:23] [main/DEBUG] [cp.mo.mo.TransformationServiceDecorator/MODLAUNCHER]: Initialized transformers for transformation service fml
+[21:39:23] [main/DEBUG] [mixin/]: Processing prepare() for PlatformAgent[MixinPlatformAgentDefault:ModLauncher Root Container(ModLauncher:4f56a0a2)]
+[21:39:23] [main/DEBUG] [mixin/]: Registering mixin config: oneslotsurvival.mixins.json source=null
+[21:39:23] [main/DEBUG] [mixin/]: Compatibility level JAVA_21 specified by oneslotsurvival.mixins.json is higher than the maximum level supported by this version of mixin (JAVA_13).
+[21:39:23] [main/INFO] [mixin/]: Compatibility level set to JAVA_21
+[21:39:23] [main/DEBUG] [mixin/]: Registering mixin config: oneslotsurvival.mixins.json source=null
+[21:39:23] [main/DEBUG] [mixin/]: Processing launch tasks for PlatformAgent[MixinPlatformAgentDefault:ModLauncher Root Container(ModLauncher:4f56a0a2)]
+[21:39:23] [main/DEBUG] [mixin/]: Adding mixin platform agents for container SecureJarResource(mixin.synthetic)
+[21:39:23] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentMinecraftForge for SecureJarResource(mixin.synthetic)
+[21:39:23] [main/DEBUG] [mixin/]: MixinPlatformAgentMinecraftForge rejected container SecureJarResource(mixin.synthetic)
+[21:39:23] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentDefault for SecureJarResource(mixin.synthetic)
+[21:39:23] [main/DEBUG] [mixin/]: MixinPlatformAgentDefault accepted container SecureJarResource(mixin.synthetic)
+[21:39:23] [main/DEBUG] [mixin/]: Processing prepare() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(mixin.synthetic)]
+[21:39:23] [main/DEBUG] [mixin/]: Adding mixin platform agents for container SecureJarResource(minecraft)
+[21:39:23] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentMinecraftForge for SecureJarResource(minecraft)
+[21:39:23] [main/DEBUG] [mixin/]: MixinPlatformAgentMinecraftForge rejected container SecureJarResource(minecraft)
+[21:39:23] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentDefault for SecureJarResource(minecraft)
+[21:39:23] [main/DEBUG] [mixin/]: MixinPlatformAgentDefault accepted container SecureJarResource(minecraft)
+[21:39:23] [main/DEBUG] [mixin/]: Processing prepare() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(minecraft)]
+[21:39:23] [main/DEBUG] [mixin/]: Adding mixin platform agents for container SecureJarResource(net.minecraftforge.forge)
+[21:39:23] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentMinecraftForge for SecureJarResource(net.minecraftforge.forge)
+[21:39:23] [main/DEBUG] [mixin/]: MixinPlatformAgentMinecraftForge rejected container SecureJarResource(net.minecraftforge.forge)
+[21:39:23] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentDefault for SecureJarResource(net.minecraftforge.forge)
+[21:39:23] [main/DEBUG] [mixin/]: MixinPlatformAgentDefault accepted container SecureJarResource(net.minecraftforge.forge)
+[21:39:23] [main/DEBUG] [mixin/]: Processing prepare() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(net.minecraftforge.forge)]
+[21:39:23] [main/DEBUG] [mixin/]: Adding mixin platform agents for container SecureJarResource(oneslotsurvival)
+[21:39:23] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentMinecraftForge for SecureJarResource(oneslotsurvival)
+[21:39:23] [main/DEBUG] [mixin/]: MixinPlatformAgentMinecraftForge rejected container SecureJarResource(oneslotsurvival)
+[21:39:23] [main/DEBUG] [mixin/]: Instancing new MixinPlatformAgentDefault for SecureJarResource(oneslotsurvival)
+[21:39:23] [main/DEBUG] [mixin/]: MixinPlatformAgentDefault accepted container SecureJarResource(oneslotsurvival)
+[21:39:23] [main/DEBUG] [mixin/]: Processing prepare() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(oneslotsurvival)]
+[21:39:23] [main/DEBUG] [mixin/]: inject() running with 5 agents
+[21:39:23] [main/DEBUG] [mixin/]: Processing inject() for PlatformAgent[MixinPlatformAgentDefault:ModLauncher Root Container(ModLauncher:4f56a0a2)]
+[21:39:23] [main/DEBUG] [mixin/]: Processing inject() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(mixin.synthetic)]
+[21:39:23] [main/DEBUG] [mixin/]: Processing inject() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(minecraft)]
+[21:39:23] [main/DEBUG] [mixin/]: Processing inject() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(net.minecraftforge.forge)]
+[21:39:23] [main/DEBUG] [mixin/]: Processing inject() for PlatformAgent[MixinPlatformAgentDefault:SecureJarResource(oneslotsurvival)]
+[21:39:23] [main/INFO] [cp.mo.mo.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forge_userdev_server_gametest' with arguments [--gameDir, .]
+[21:39:23] [main/DEBUG] [mixin/]: Preparing mixins for MixinEnvironment[DEFAULT]
+[21:39:23] [main/DEBUG] [mixin/]: Selecting config oneslotsurvival.mixins.json
+[21:39:23] [main/WARN] [mixin/]: Reference map 'oneslotsurvival.refmap.json' for oneslotsurvival.mixins.json could not be read. If this is a development environment you can ignore this message
+[21:39:23] [main/DEBUG] [mixin/]: Preparing oneslotsurvival.mixins.json (7)
+[21:39:23] [main/DEBUG] [mixin/]: Registering new injector for @Inject with org.spongepowered.asm.mixin.injection.struct.CallbackInjectionInfo
+[21:39:23] [main/DEBUG] [mixin/]: Registering new injector for @ModifyArg with org.spongepowered.asm.mixin.injection.struct.ModifyArgInjectionInfo
+[21:39:23] [main/DEBUG] [mixin/]: Registering new injector for @ModifyArgs with org.spongepowered.asm.mixin.injection.struct.ModifyArgsInjectionInfo
+[21:39:23] [main/DEBUG] [mixin/]: Registering new injector for @Redirect with org.spongepowered.asm.mixin.injection.struct.RedirectInjectionInfo
+[21:39:23] [main/DEBUG] [mixin/]: Registering new injector for @ModifyVariable with org.spongepowered.asm.mixin.injection.struct.ModifyVariableInjectionInfo
+[21:39:23] [main/DEBUG] [mixin/]: Registering new injector for @ModifyConstant with org.spongepowered.asm.mixin.injection.struct.ModifyConstantInjectionInfo
+[21:39:23] [main/DEBUG] [io.ne.ut.in.lo.InternalLoggerFactory/]: Using SLF4J as the default logging framework
+[21:39:23] [main/DEBUG] [io.ne.ut.ResourceLeakDetector/]: -Dio.netty.leakDetection.level: simple
+[21:39:23] [main/DEBUG] [io.ne.ut.ResourceLeakDetector/]: -Dio.netty.leakDetection.targetRecords: 4
+[21:39:23] [main/INFO] [minecraft/GameTestMainUtil]: Running GameTestMain with cwd 'C:\Users\godhe\git\one_slot_survival\run', universe path 'gametestserver'
+[21:39:23] [main/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/EntityType
+[21:39:23] [main/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/entity/EntityType.create
+[21:39:24] [main/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/block/FlowerPotBlock
+[21:39:24] [main/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/block/LiquidBlock
+[21:39:24] [main/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/effect/MobEffectInstance
+[21:39:24] [main/DEBUG] [mixin/]: Mixing world.ItemStackMixin from oneslotsurvival.mixins.json into net.minecraft.world.item.ItemStack
+[21:39:24] [main/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/biome/Biome
+[21:39:25] [main/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/animal/frog/Tadpole
+[21:39:25] [main/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/entity/animal/frog/Tadpole.lambda$ageUp$1
+[21:39:25] [main/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/item/BucketItem
+[21:39:25] [main/DEBUG] [mixin/]: Mixing world.ServerPlayerMixin from oneslotsurvival.mixins.json into net.minecraft.server.level.ServerPlayer
+[21:39:26] [main/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/monster/Spider
+[21:39:26] [main/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/entity/monster/Spider.finalizeSpawn
+[21:39:26] [main/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/monster/Zombie
+[21:39:26] [main/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/entity/monster/Zombie.hurtServer
+[21:39:26] [main/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/entity/monster/Zombie.finalizeSpawn
+[21:39:26] [main/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/entity/monster/Zombie.lambda$convertVillagerToZombieVillager$4
+[21:39:26] [main/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/monster/ZombieVillager
+[21:39:26] [main/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/entity/monster/ZombieVillager.lambda$finishConversion$2
+[21:39:26] [main/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/npc/Villager
+[21:39:26] [main/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/entity/npc/Villager.getBreedOffspring
+[21:39:26] [main/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/entity/npc/Villager.lambda$thunderHit$8
+[21:39:26] [main/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/monster/Evoker$EvokerSummonSpellGoal
+[21:39:26] [main/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/entity/monster/Evoker$EvokerSummonSpellGoal.performSpellCasting
+[21:39:26] [main/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/animal/horse/SkeletonTrapGoal
+[21:39:26] [main/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/entity/animal/horse/SkeletonTrapGoal.createHorse
+[21:39:26] [main/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/entity/animal/horse/SkeletonTrapGoal.createSkeleton
+[21:39:26] [main/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/monster/Strider
+[21:39:26] [main/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/entity/monster/Strider.spawnJockey
+[21:39:27] [main/DEBUG] [mixin/]: Mixing world.InventoryMixin from oneslotsurvival.mixins.json into net.minecraft.world.entity.player.Inventory
+[21:39:27] [main/DEBUG] [mixin/]: Renaming synthetic method lambda$one_slot_survival$roledPlayerAdd$2(Lnet/minecraft/world/item/ItemStack;)Ljava/lang/String; to md79999d$lambda$one_slot_survival$roledPlayerAdd$2$0 in oneslotsurvival.mixins.json:world.InventoryMixin
+[21:39:27] [main/DEBUG] [mixin/]: Renaming synthetic method lambda$one_slot_survival$roledPlayerAdd$1(Lnet/minecraft/world/item/ItemStack;)Ljava/lang/String; to md79999d$lambda$one_slot_survival$roledPlayerAdd$1$1 in oneslotsurvival.mixins.json:world.InventoryMixin
+[21:39:27] [main/DEBUG] [mixin/]: Renaming synthetic method lambda$one_slot_survival$roledPlayerAdd$0(Lnet/minecraft/world/item/ItemStack;)Ljava/lang/String; to md79999d$lambda$one_slot_survival$roledPlayerAdd$0$2 in oneslotsurvival.mixins.json:world.InventoryMixin
+[21:39:27] [main/DEBUG] [mixin/]: Mixing world.SlotMixin from oneslotsurvival.mixins.json into net.minecraft.world.inventory.Slot
+[21:39:27] [main/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/levelgen/structure/structures/OceanRuinPieces$OceanRuinPiece
+[21:39:27] [main/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/level/levelgen/structure/structures/OceanRuinPieces$OceanRuinPiece.handleDataMarker
+[21:39:27] [main/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/levelgen/structure/structures/SwampHutPiece
+[21:39:27] [main/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/level/levelgen/structure/structures/SwampHutPiece.postProcess
+[21:39:27] [main/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/level/levelgen/structure/structures/SwampHutPiece.spawnCat
+[21:39:27] [main/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/levelgen/structure/structures/OceanMonumentPieces$OceanMonumentPiece
+[21:39:27] [main/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/level/levelgen/structure/structures/OceanMonumentPieces$OceanMonumentPiece.spawnElder
+[21:39:27] [main/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/levelgen/structure/structures/WoodlandMansionPieces$WoodlandMansionPiece
+[21:39:27] [main/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/level/levelgen/structure/structures/WoodlandMansionPieces$WoodlandMansionPiece.handleDataMarker
+[21:39:27] [main/DEBUG] [ne.mi.co.ForgeI18n/CORE]: Loading I18N data entries: 7605
+[21:39:27] [main/DEBUG] [ne.mi.fm.ModWorkManager/LOADING]: Using 12 threads for parallel mod-loading
+[21:39:27] [main/DEBUG] [ne.mi.fm.ja.FMLJavaModLanguageProvider/LOADING]: Loading FMLModContainer from classloader TransformingClassLoader[TRANSFORMER]@1177206467 - got SecureModuleClassLoader[LAYER PLUGIN]@173197870
+[21:39:27] [main/DEBUG] [ne.mi.fm.ja.FMLModContainer/LOADING]: Creating FMLModContainer instance for net.minecraftforge.common.ForgeMod
+[21:39:27] [main/DEBUG] [ne.mi.fm.ja.FMLModContainer/LOADING]: Loaded modclass net.minecraftforge.forge/net.minecraftforge.common.ForgeMod with TransformingClassLoader[TRANSFORMER]@1177206467
+[21:39:27] [main/DEBUG] [ne.mi.fm.ja.FMLJavaModLanguageProvider/LOADING]: Loading FMLModContainer from classloader TransformingClassLoader[TRANSFORMER]@1177206467 - got SecureModuleClassLoader[LAYER PLUGIN]@173197870
+[21:39:27] [main/DEBUG] [ne.mi.fm.ja.FMLModContainer/LOADING]: Creating FMLModContainer instance for com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod
+[21:39:27] [main/DEBUG] [ne.mi.fm.ja.FMLModContainer/LOADING]: Loaded modclass oneslotsurvival/com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod with TransformingClassLoader[TRANSFORMER]@1177206467
+[21:39:27] [modloading-worker-0/DEBUG] [ne.mi.ve.fo.ForgeVersion/CORE]: Forge Version package package net.minecraftforge.versions.forge, Forge, version 58.1 from TransformingClassLoader[TRANSFORMER]@1177206467
+[21:39:27] [modloading-worker-0/DEBUG] [ne.mi.ve.fo.ForgeVersion/CORE]: Found Forge version 58.1.0
+[21:39:27] [modloading-worker-0/DEBUG] [ne.mi.ve.fo.ForgeVersion/CORE]: Found Forge spec 58.1
+[21:39:27] [modloading-worker-0/DEBUG] [ne.mi.ve.fo.ForgeVersion/CORE]: Found Forge group net.minecraftforge
+[21:39:27] [modloading-worker-0/DEBUG] [ne.mi.ve.mc.MCPVersion/CORE]: MCP Version package package net.minecraftforge.versions.mcp, Minecraft, version 1.21.8 from TransformingClassLoader[TRANSFORMER]@1177206467
+[21:39:27] [modloading-worker-0/DEBUG] [ne.mi.ve.mc.MCPVersion/CORE]: Found MC version information 1.21.8
+[21:39:27] [modloading-worker-0/DEBUG] [ne.mi.ve.mc.MCPVersion/CORE]: Found MCP version information 20250717.105350
+[21:39:27] [modloading-worker-0/INFO] [ne.mi.co.ForgeMod/FORGEMOD]: Forge mod loading, version 58.1.0, for MC 1.21.8 with MCP 20250717.105350
+[21:39:27] [modloading-worker-0/INFO] [ne.mi.co.MinecraftForge/FORGE]: MinecraftForge v58.1.0 Initialized
+[21:39:27] [modloading-worker-0/INFO] [ne.mi.co.ForgeMod/FORGEMOD]: Opening jdk.naming.dns/com.sun.jndi.dns to java.naming
+[21:39:27] [modloading-worker-0/DEBUG] [ne.mi.fm.co.ConfigTracker/CONFIG]: Config file oneslotsurvival-server.toml for oneslotsurvival tracking
+[21:39:27] [modloading-worker-0/DEBUG] [ne.mi.fm.ja.AutomaticEventSubscriber/LOADING]: Attempting to inject @EventBusSubscriber classes into the eventbus for oneslotsurvival
+[21:39:27] [modloading-worker-0/DEBUG] [ne.mi.fm.ja.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.github.godhexagon.oneslotsurvival.world.command.CommandEvent to FORGE
+[21:39:27] [modloading-worker-0/DEBUG] [ne.mi.fm.ja.AutomaticEventSubscriber/LOADING]: Auto-subscribing com.github.godhexagon.oneslotsurvival.world.event.WorldEvent to FORGE
+[21:39:27] [modloading-worker-0/DEBUG] [io.ne.ut.in.PlatformDependent0/]: -Dio.netty.noUnsafe: false
+[21:39:27] [modloading-worker-0/DEBUG] [io.ne.ut.in.PlatformDependent0/]: Java version: 21
+[21:39:27] [modloading-worker-0/DEBUG] [io.ne.ut.in.PlatformDependent0/]: sun.misc.Unsafe.theUnsafe: available
+[21:39:27] [modloading-worker-0/DEBUG] [io.ne.ut.in.PlatformDependent0/]: sun.misc.Unsafe base methods: all available
+[21:39:27] [modloading-worker-0/DEBUG] [io.ne.ut.in.PlatformDependent0/]: sun.misc.Unsafe.storeFence: available
+[21:39:27] [modloading-worker-0/DEBUG] [io.ne.ut.in.PlatformDependent0/]: java.nio.Buffer.address: available
+[21:39:27] [modloading-worker-0/DEBUG] [io.ne.ut.in.PlatformDependent0/]: direct buffer constructor: unavailable
+java.lang.UnsupportedOperationException: Reflective setAccessible(true) disabled
+	at SECURE-BOOTSTRAP/io.netty.common@4.1.118.Final/io.netty.util.internal.ReflectionUtil.trySetAccessible(ReflectionUtil.java:31) ~[netty-common-4.1.118.Final.jar:4.1.118.Final]
+	at SECURE-BOOTSTRAP/io.netty.common@4.1.118.Final/io.netty.util.internal.PlatformDependent0$5.run(PlatformDependent0.java:332) ~[netty-common-4.1.118.Final.jar:4.1.118.Final]
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:319) ~[?:?]
+	at SECURE-BOOTSTRAP/io.netty.common@4.1.118.Final/io.netty.util.internal.PlatformDependent0.<clinit>(PlatformDependent0.java:325) ~[netty-common-4.1.118.Final.jar:4.1.118.Final]
+	at SECURE-BOOTSTRAP/io.netty.common@4.1.118.Final/io.netty.util.internal.PlatformDependent.isAndroid(PlatformDependent.java:334) ~[netty-common-4.1.118.Final.jar:4.1.118.Final]
+	at SECURE-BOOTSTRAP/io.netty.common@4.1.118.Final/io.netty.util.internal.PlatformDependent.<clinit>(PlatformDependent.java:90) ~[netty-common-4.1.118.Final.jar:4.1.118.Final]
+	at SECURE-BOOTSTRAP/io.netty.common@4.1.118.Final/io.netty.util.ConstantPool.<init>(ConstantPool.java:34) ~[netty-common-4.1.118.Final.jar:4.1.118.Final]
+	at SECURE-BOOTSTRAP/io.netty.common@4.1.118.Final/io.netty.util.AttributeKey$1.<init>(AttributeKey.java:27) ~[netty-common-4.1.118.Final.jar:4.1.118.Final]
+	at SECURE-BOOTSTRAP/io.netty.common@4.1.118.Final/io.netty.util.AttributeKey.<clinit>(AttributeKey.java:27) ~[netty-common-4.1.118.Final.jar:4.1.118.Final]
+	at TRANSFORMER/net.minecraftforge.forge@58.1.0/net.minecraftforge.network.NetworkInitialization.<clinit>(NetworkInitialization.java:27) ~[forge-1.21.8-58.1.0_mapped_official_1.21.8-recomp.jar:?]
+	at TRANSFORMER/net.minecraftforge.forge@58.1.0/net.minecraftforge.common.ForgeMod.<init>(ForgeMod.java:381) ~[forge-1.21.8-58.1.0_mapped_official_1.21.8-recomp.jar:?]
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[?:?]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502) ~[?:?]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486) ~[?:?]
+	at LAYER PLUGIN/net.minecraftforge.javafmlmod@1.21.8-58.1.0/net.minecraftforge.fml.javafmlmod.FMLModContainer.constructMod(FMLModContainer.java:137) ~[javafmllanguage-1.21.8-58.1.0.jar!/:58.1.0]
+	at LAYER PLUGIN/net.minecraftforge.fmlcore@1.21.8-58.1.0/net.minecraftforge.fml.ModStateTransitionHelper.lambda$addCompletableFutureTaskForModDispatch$4(ModStateTransitionHelper.java:120) ~[fmlcore-1.21.8-58.1.0.jar!/:1.0]
+	at java.base/java.util.concurrent.CompletableFuture$UniRun.tryFire(CompletableFuture.java:787) [?:?]
+	at java.base/java.util.concurrent.CompletableFuture$Completion.exec(CompletableFuture.java:483) [?:?]
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387) [?:?]
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312) [?:?]
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843) [?:?]
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808) [?:?]
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188) [?:?]
+Transformer Audit:
+  net.minecraftforge.common.ForgeMod
+    REASON: classloading
+  net.minecraftforge.network.NetworkInitialization
+    REASON: classloading
+[21:39:27] [modloading-worker-0/DEBUG] [io.ne.ut.in.PlatformDependent0/]: java.nio.Bits.unaligned: available, true
+[21:39:27] [modloading-worker-0/DEBUG] [io.ne.ut.in.PlatformDependent0/]: jdk.internal.misc.Unsafe.allocateUninitializedArray(int): unavailable
+java.lang.IllegalAccessException: class io.netty.util.internal.PlatformDependent0$7 (in module io.netty.common) cannot access class jdk.internal.misc.Unsafe (in module java.base) because module java.base does not export jdk.internal.misc to module io.netty.common
+	at java.base/jdk.internal.reflect.Reflection.newIllegalAccessException(Reflection.java:394) ~[?:?]
+	at java.base/java.lang.reflect.AccessibleObject.checkAccess(AccessibleObject.java:714) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:571) ~[?:?]
+	at SECURE-BOOTSTRAP/io.netty.common@4.1.118.Final/io.netty.util.internal.PlatformDependent0$7.run(PlatformDependent0.java:468) ~[netty-common-4.1.118.Final.jar:4.1.118.Final]
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:319) ~[?:?]
+	at SECURE-BOOTSTRAP/io.netty.common@4.1.118.Final/io.netty.util.internal.PlatformDependent0.<clinit>(PlatformDependent0.java:459) ~[netty-common-4.1.118.Final.jar:4.1.118.Final]
+	at SECURE-BOOTSTRAP/io.netty.common@4.1.118.Final/io.netty.util.internal.PlatformDependent.isAndroid(PlatformDependent.java:334) ~[netty-common-4.1.118.Final.jar:4.1.118.Final]
+	at SECURE-BOOTSTRAP/io.netty.common@4.1.118.Final/io.netty.util.internal.PlatformDependent.<clinit>(PlatformDependent.java:90) ~[netty-common-4.1.118.Final.jar:4.1.118.Final]
+	at SECURE-BOOTSTRAP/io.netty.common@4.1.118.Final/io.netty.util.ConstantPool.<init>(ConstantPool.java:34) ~[netty-common-4.1.118.Final.jar:4.1.118.Final]
+	at SECURE-BOOTSTRAP/io.netty.common@4.1.118.Final/io.netty.util.AttributeKey$1.<init>(AttributeKey.java:27) ~[netty-common-4.1.118.Final.jar:4.1.118.Final]
+	at SECURE-BOOTSTRAP/io.netty.common@4.1.118.Final/io.netty.util.AttributeKey.<clinit>(AttributeKey.java:27) ~[netty-common-4.1.118.Final.jar:4.1.118.Final]
+	at TRANSFORMER/net.minecraftforge.forge@58.1.0/net.minecraftforge.network.NetworkInitialization.<clinit>(NetworkInitialization.java:27) ~[forge-1.21.8-58.1.0_mapped_official_1.21.8-recomp.jar:?]
+	at TRANSFORMER/net.minecraftforge.forge@58.1.0/net.minecraftforge.common.ForgeMod.<init>(ForgeMod.java:381) ~[forge-1.21.8-58.1.0_mapped_official_1.21.8-recomp.jar:?]
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[?:?]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502) ~[?:?]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486) ~[?:?]
+	at LAYER PLUGIN/net.minecraftforge.javafmlmod@1.21.8-58.1.0/net.minecraftforge.fml.javafmlmod.FMLModContainer.constructMod(FMLModContainer.java:137) ~[javafmllanguage-1.21.8-58.1.0.jar!/:58.1.0]
+	at LAYER PLUGIN/net.minecraftforge.fmlcore@1.21.8-58.1.0/net.minecraftforge.fml.ModStateTransitionHelper.lambda$addCompletableFutureTaskForModDispatch$4(ModStateTransitionHelper.java:120) ~[fmlcore-1.21.8-58.1.0.jar!/:1.0]
+	at java.base/java.util.concurrent.CompletableFuture$UniRun.tryFire(CompletableFuture.java:787) [?:?]
+	at java.base/java.util.concurrent.CompletableFuture$Completion.exec(CompletableFuture.java:483) [?:?]
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387) [?:?]
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312) [?:?]
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843) [?:?]
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808) [?:?]
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188) [?:?]
+Transformer Audit:
+  net.minecraftforge.common.ForgeMod
+    REASON: classloading
+  net.minecraftforge.network.NetworkInitialization
+    REASON: classloading
+[21:39:27] [modloading-worker-0/DEBUG] [io.ne.ut.in.PlatformDependent0/]: java.nio.DirectByteBuffer.<init>(long, {int,long}): unavailable
+[21:39:27] [modloading-worker-0/DEBUG] [io.ne.ut.in.PlatformDependent/]: sun.misc.Unsafe: available
+[21:39:27] [modloading-worker-0/DEBUG] [io.ne.ut.in.PlatformDependent/]: -Dio.netty.tmpdir: C:\Users\godhe\AppData\Local\Temp (java.io.tmpdir)
+[21:39:27] [modloading-worker-0/DEBUG] [io.ne.ut.in.PlatformDependent/]: -Dio.netty.bitMode: 64 (sun.arch.data.model)
+[21:39:27] [modloading-worker-0/DEBUG] [io.ne.ut.in.PlatformDependent/]: Platform: Windows
+[21:39:27] [modloading-worker-0/DEBUG] [io.ne.ut.in.PlatformDependent/]: -Dio.netty.maxDirectMemory: -1 bytes
+[21:39:27] [modloading-worker-0/DEBUG] [io.ne.ut.in.PlatformDependent/]: -Dio.netty.uninitializedArrayAllocationThreshold: -1
+[21:39:27] [modloading-worker-0/DEBUG] [io.ne.ut.in.CleanerJava9/]: java.nio.ByteBuffer.cleaner(): available
+[21:39:27] [modloading-worker-0/DEBUG] [io.ne.ut.in.PlatformDependent/]: -Dio.netty.noPreferDirect: false
+[21:39:27] [modloading-worker-0/DEBUG] [ne.mi.ne.NetworkInitialization/FORGE_NETWORK]: Registering Network forge:login v0
+[21:39:27] [modloading-worker-0/DEBUG] [ne.mi.ne.NetworkInitialization/FORGE_NETWORK]: Registering Network forge:handshake v0
+[21:39:27] [modloading-worker-0/DEBUG] [ne.mi.ne.NetworkInitialization/FORGE_NETWORK]: Registering Network forge:handshake v0
+[21:39:27] [modloading-worker-0/DEBUG] [ne.mi.ne.NetworkInitialization/FORGE_NETWORK]: Registering Network forge:channel_registration v0
+[21:39:27] [modloading-worker-0/DEBUG] [ne.mi.fm.co.ConfigTracker/CONFIG]: Config file forge-client.toml for forge tracking
+[21:39:27] [modloading-worker-0/DEBUG] [ne.mi.fm.co.ConfigTracker/CONFIG]: Config file forge-server.toml for forge tracking
+[21:39:27] [modloading-worker-0/DEBUG] [ne.mi.fm.co.ConfigTracker/CONFIG]: Config file forge-common.toml for forge tracking
+[21:39:27] [modloading-worker-0/DEBUG] [ne.mi.fm.ja.AutomaticEventSubscriber/LOADING]: Attempting to inject @EventBusSubscriber classes into the eventbus for forge
+[21:39:27] [main/DEBUG] [ne.mi.co.ca.CapabilityManager/CAPABILITIES]: Attempting to automatically register: Lnet/minecraftforge/energy/IEnergyStorage;
+[21:39:27] [main/DEBUG] [ne.mi.co.ca.CapabilityManager/CAPABILITIES]: Attempting to automatically register: Lnet/minecraftforge/fluids/capability/IFluidHandler;
+[21:39:27] [main/DEBUG] [ne.mi.co.ca.CapabilityManager/CAPABILITIES]: Attempting to automatically register: Lnet/minecraftforge/fluids/capability/IFluidHandlerItem;
+[21:39:27] [main/DEBUG] [ne.mi.co.ca.CapabilityManager/CAPABILITIES]: Attempting to automatically register: Lnet/minecraftforge/items/IItemHandler;
+[21:39:27] [main/DEBUG] [ne.mi.fm.co.ConfigTracker/CONFIG]: Loading configs type COMMON
+[21:39:27] [main/DEBUG] [ne.mi.fm.co.ConfigFileTypeHandler/CONFIG]: Built TOML config for C:\Users\godhe\git\one_slot_survival\run\config\forge-common.toml
+[21:39:27] [main/DEBUG] [ne.mi.fm.co.ConfigFileTypeHandler/CONFIG]: Loaded TOML config file C:\Users\godhe\git\one_slot_survival\run\config\forge-common.toml
+[21:39:27] [main/DEBUG] [ne.mi.fm.co.ConfigFileTypeHandler/CONFIG]: Starting watcher for handler: ConfigFileTypeHandler[COMMON]
+[21:39:27] [main/DEBUG] [ne.mi.fm.co.ConfigFileTypeHandler/CONFIG]: Watching TOML config file C:\Users\godhe\git\one_slot_survival\run\config\forge-common.toml for changes
+[21:39:27] [main/DEBUG] [ne.mi.co.ForgeConfig/FORGEMOD]: Loaded forge config file forge-common.toml
+[21:39:27] [modloading-worker-0/INFO] [co.gi.go.on.OneSlotSurvivalMod/]: One Slot Survival mod is loading...
+[21:39:28] [Forge Version Check/INFO] [ne.mi.fm.VersionChecker/]: [forge] Starting version check at https://files.minecraftforge.net/net/minecraftforge/forge/promotions_slim.json
+[21:39:28] [pool-3-thread-1/DEBUG] [ne.mi.fm.co.ConfigFileTypeHandler/CONFIG]: Config file forge-common.toml changed, sending notifies
+[21:39:28] [pool-3-thread-1/DEBUG] [ne.mi.co.ForgeConfig/FORGEMOD]: Forge config just got changed on the file system!
+[21:39:28] [main/WARN] [minecraft/VanillaPackResourcesBuilder]: Assets URL 'union:/C:/Users/godhe/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.21.8-58.1.0_mapped_official_1.21.8/forge-1.21.8-58.1.0_mapped_official_1.21.8-recomp.jar%230!/assets/.mcassetsroot' uses unexpected schema
+[21:39:28] [main/WARN] [minecraft/VanillaPackResourcesBuilder]: Assets URL 'union:/C:/Users/godhe/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.21.8-58.1.0_mapped_official_1.21.8/forge-1.21.8-58.1.0_mapped_official_1.21.8-recomp.jar%230!/data/.mcassetsroot' uses unexpected schema
+[21:39:28] [main/DEBUG] [ne.mi.re.ResourcePackLoader/CORE]: Generating PackInfo named mod:forge for mod file /
+[21:39:28] [main/DEBUG] [ne.mi.re.ResourcePackLoader/CORE]: Generating PackInfo named mod:oneslotsurvival for mod file C:\Users\godhe\git\one_slot_survival\build\sourcesSets\main
+[21:39:28] [Forge Version Check/DEBUG] [ne.mi.fm.VersionChecker/]: [forge] Received version check data:
+{
+  "homepage": "https://files.minecraftforge.net/net/minecraftforge/forge/",
+  "promos": {
+    "1.1-latest": "1.3.4.29",
+    "1.2.3-latest": "1.4.1.64",
+    "1.2.4-latest": "2.0.0.68",
+    "1.2.5-latest": "3.4.9.171",
+    "1.3.2-latest": "4.3.5.318",
+    "1.4.0-latest": "5.0.0.326",
+    "1.4.1-latest": "6.0.0.329",
+    "1.4.2-latest": "6.0.1.355",
+    "1.4.3-latest": "6.2.1.358",
+    "1.4.4-latest": "6.3.0.378",
+    "1.4.5-latest": "6.4.2.448",
+    "1.4.6-latest": "6.5.0.489",
+    "1.4.7-latest": "6.6.2.534",
+    "1.5-latest": "7.7.0.598",
+    "1.5.1-latest": "7.7.2.682",
+    "1.5.2-latest": "7.8.1.738",
+    "1.5.2-recommended": "7.8.1.738",
+    "1.6.1-latest": "8.9.0.775",
+    "1.6.2-latest": "9.10.1.871",
+    "1.6.2-recommended": "9.10.1.871",
+    "1.6.3-latest": "9.11.0.878",
+    "1.6.4-latest": "9.11.1.1345",
+    "1.6.4-recommended": "9.11.1.1345",
+    "1.7.2-latest": "10.12.2.1161",
+    "1.7.2-recommended": "10.12.2.1161",
+    "1.7.10-latest": "10.13.4.1614",
+    "1.7.10-recommended": "10.13.4.1614",
+    "1.8-latest": "11.14.4.1577",
+    "1.8-recommended": "11.14.4.1563",
+    "1.8.8-latest": "11.15.0.1655",
+    "1.8.9-latest": "11.15.1.2318",
+    "1.8.9-recommended": "11.15.1.2318",
+    "1.9-latest": "12.16.1.1938",
+    "1.9-recommended": "12.16.1.1887",
+    "1.9.4-latest": "12.17.0.2317",
+    "1.9.4-recommended": "12.17.0.2317",
+    "1.10-latest": "12.18.0.2000",
+    "1.10.2-latest": "12.18.3.2511",
+    "1.10.2-recommended": "12.18.3.2511",
+    "1.11-latest": "13.19.1.2199",
+    "1.11-recommended": "13.19.1.2189",
+    "1.11.2-latest": "13.20.1.2588",
+    "1.11.2-recommended": "13.20.1.2588",
+    "1.12-latest": "14.21.1.2443",
+    "1.12-recommended": "14.21.1.2387",
+    "1.12.1-latest": "14.22.1.2485",
+    "1.12.1-recommended": "14.22.1.2478",
+    "1.12.2-latest": "14.23.5.2864",
+    "1.12.2-recommended": "14.23.5.2859",
+    "1.13.2-latest": "25.0.223",
+    "1.14.2-latest": "26.0.63",
+    "1.14.3-latest": "27.0.60",
+    "1.14.4-latest": "28.2.28",
+    "1.14.4-recommended": "28.2.26",
+    "1.15-latest": "29.0.4",
+    "1.15.1-latest": "30.0.51",
+    "1.15.2-latest": "31.2.60",
+    "1.15.2-recommended": "31.2.57",
+    "1.16.1-latest": "32.0.108",
+    "1.16.2-latest": "33.0.61",
+    "1.16.3-latest": "34.1.42",
+    "1.16.3-recommended": "34.1.0",
+    "1.16.4-latest": "35.1.37",
+    "1.16.4-recommended": "35.1.4",
+    "1.16.5-latest": "36.2.42",
+    "1.16.5-recommended": "36.2.34",
+    "1.17.1-latest": "37.1.1",
+    "1.17.1-recommended": "37.1.1",
+    "1.18-latest": "38.0.17",
+    "1.18.1-latest": "39.1.2",
+    "1.18.1-recommended": "39.1.0",
+    "1.18.2-recommended": "40.3.0",
+    "1.18.2-latest": "40.3.12",
+    "1.19-latest": "41.1.0",
+    "1.19-recommended": "41.1.0",
+    "1.19.1-latest": "42.0.9",
+    "1.19.2-recommended": "43.5.0",
+    "1.19.2-latest": "43.5.2",
+    "1.19.3-latest": "44.1.23",
+    "1.19.3-recommended": "44.1.0",
+    "1.19.4-recommended": "45.4.0",
+    "1.19.4-latest": "45.4.3",
+    "1.20-latest": "46.0.14",
+    "1.20.1-recommended": "47.4.10",
+    "1.20.1-latest": "47.4.13",
+    "1.20.2-latest": "48.1.0",
+    "1.20.2-recommended": "48.1.0",
+    "1.20.3-latest": "49.0.2",
+    "1.20.4-latest": "49.2.4",
+    "1.20.4-recommended": "49.2.0",
+    "1.20.6-latest": "50.2.4",
+    "1.20.6-recommended": "50.2.0",
+    "1.21-latest": "51.0.33",
+    "1.21.1-latest": "52.1.8",
+    "1.21.1-recommended": "52.1.0",
+    "1.21.3-latest": "53.1.6",
+    "1.21.3-recommended": "53.1.0",
+    "1.21.4-latest": "54.1.11",
+    "1.21.4-recommended": "54.1.0",
+    "1.21.5-latest": "55.1.4",
+    "1.21.5-recommended": "55.1.0",
+    "1.21.6-latest": "56.0.9",
+    "1.21.7-latest": "57.0.3",
+    "1.21.8-latest": "58.1.11",
+    "1.21.8-recommended": "58.1.0",
+    "1.21.9-latest": "59.0.5",
+    "1.21.10-latest": "60.1.5",
+    "1.21.10-recommended": "60.1.0",
+    "1.21.11-latest": "61.0.5"
+  }
+}
+[21:39:28] [Forge Version Check/INFO] [ne.mi.fm.VersionChecker/]: [forge] Found status: UP_TO_DATE Current: 58.1.0 Target: null
+[21:39:29] [Worker-Main-3/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/server/commands/SummonCommand
+[21:39:29] [Worker-Main-3/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/server/commands/SummonCommand.createEntity
+[21:39:29] [Worker-Main-3/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/server/commands/RaidCommand
+[21:39:29] [Worker-Main-3/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/server/commands/RaidCommand.spawnLeader
+[21:39:29] [main/INFO] [minecraft/RecipeManager]: Loaded 1407 recipes
+[21:39:29] [main/INFO] [minecraft/AdvancementTree]: Loaded 1520 advancements
+[21:39:29] [Server thread/DEBUG] [ne.mi.fm.co.ConfigTracker/CONFIG]: Loading configs type SERVER
+[21:39:29] [Server thread/DEBUG] [ne.mi.fm.co.ConfigFileTypeHandler/CONFIG]: Built TOML config for gametestserver\gametestworld\serverconfig\oneslotsurvival-server.toml
+[21:39:29] [Server thread/DEBUG] [ne.mi.fm.co.ConfigFileTypeHandler/CONFIG]: Loaded TOML config file gametestserver\gametestworld\serverconfig\oneslotsurvival-server.toml
+[21:39:29] [Server thread/DEBUG] [ne.mi.fm.co.ConfigFileTypeHandler/CONFIG]: Starting watcher for handler: ConfigFileTypeHandler[SERVER]
+[21:39:29] [Server thread/DEBUG] [ne.mi.fm.co.ConfigFileTypeHandler/CONFIG]: Watching TOML config file gametestserver\gametestworld\serverconfig\oneslotsurvival-server.toml for changes
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Configuration file gametestserver\gametestworld\serverconfig\oneslotsurvival-server.toml is not correct. Correcting
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience was corrected from null to its default, SynchronizedConfig{DataHolder:{}}. 
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.level_up_exp was corrected from null to its default, 120.0. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.level_up_exp does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.level_up_increase_multiplier was corrected from null to its default, 1.0. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.level_up_increase_multiplier does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.stats was corrected from null to its default, SynchronizedConfig{DataHolder:{}}. 
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.stats.walk_one_cm was corrected from null to its default, 1.0E-4. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.stats.walk_one_cm does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.stats.sprint_one_cm was corrected from null to its default, 1.0E-4. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.stats.sprint_one_cm does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.stats.crouch_one_cm was corrected from null to its default, 2.0E-4. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.stats.crouch_one_cm does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.stats.fly_one_cm was corrected from null to its default, 1.0E-4. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.stats.fly_one_cm does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.stats.damage_dealt was corrected from null to its default, 0.002. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.stats.damage_dealt does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.stats.damage_taken was corrected from null to its default, 0.02. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.stats.damage_taken does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.stats.damage_blocked_by_shield was corrected from null to its default, 0.05. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.stats.damage_blocked_by_shield does not match the spec. This may create a backup.
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.stats does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.item_durability was corrected from null to its default, SynchronizedConfig{DataHolder:{}}. 
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.item_durability.swords was corrected from null to its default, 0.5. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.item_durability.swords does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.item_durability.pickaxes was corrected from null to its default, 0.5. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.item_durability.pickaxes does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.item_durability.axes was corrected from null to its default, 0.5. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.item_durability.axes does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.item_durability.shovels was corrected from null to its default, 0.1. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.item_durability.shovels does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.item_durability.hoes was corrected from null to its default, 0.1. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.item_durability.hoes does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.item_durability.armor was corrected from null to its default, 0.2. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.item_durability.armor does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.item_durability.shields was corrected from null to its default, 0.0. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.item_durability.shields does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.item_durability.other was corrected from null to its default, 0.1. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.item_durability.other does not match the spec. This may create a backup.
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.item_durability does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.other was corrected from null to its default, SynchronizedConfig{DataHolder:{}}. 
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key experience.other.vanilla_exp_points was corrected from null to its default, 1.0. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.other.vanilla_exp_points does not match the spec. This may create a backup.
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience.other does not match the spec. This may create a backup.
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key experience does not match the spec. This may create a backup.
+[21:39:29] [Server thread/DEBUG] [ne.mi.fm.co.ConfigFileTypeHandler/CONFIG]: Built TOML config for gametestserver\gametestworld\serverconfig\forge-server.toml
+[21:39:29] [Server thread/DEBUG] [ne.mi.fm.co.ConfigFileTypeHandler/CONFIG]: Loaded TOML config file gametestserver\gametestworld\serverconfig\forge-server.toml
+[21:39:29] [Server thread/DEBUG] [ne.mi.fm.co.ConfigFileTypeHandler/CONFIG]: Watching TOML config file gametestserver\gametestworld\serverconfig\forge-server.toml for changes
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Configuration file gametestserver\gametestworld\serverconfig\forge-server.toml is not correct. Correcting
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key server was corrected from null to its default, SynchronizedConfig{DataHolder:{}}. 
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key server.removeErroringBlockEntities was corrected from null to its default, false. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key server.removeErroringBlockEntities does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key server.removeErroringEntities was corrected from null to its default, false. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key server.removeErroringEntities does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key server.fullBoundingBoxLadders was corrected from null to its default, false. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key server.fullBoundingBoxLadders does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key server.permissionHandler was corrected from null to its default, forge:default_handler. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key server.permissionHandler does not match the spec. This may create a backup.
+[21:39:29] [Server thread/WARN] [ne.mi.co.ForgeConfigSpec/CORE]: Incorrect key server.advertiseDedicatedServerToLan was corrected from null to its default, true. 
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key server.advertiseDedicatedServerToLan does not match the spec. This may create a backup.
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfigSpec/CORE]: The comment on key server does not match the spec. This may create a backup.
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.ForgeConfig/FORGEMOD]: Loaded forge config file forge-server.toml
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/levelgen/PhantomSpawner
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/level/levelgen/PhantomSpawner.tick
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/levelgen/PatrolSpawner
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/level/levelgen/PatrolSpawner.spawnPatrolMember
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/npc/CatSpawner
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/entity/npc/CatSpawner.spawnCat
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/ai/village/VillageSiege
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/entity/ai/village/VillageSiege.trySpawn
+[21:39:29] [Server thread/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/entity/raid/Raid
+[21:39:30] [Server thread/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/entity/raid/Raid.joinRaid
+[21:39:30] [Server thread/INFO] [minecraft/MinecraftServer]: Preparing start region for dimension minecraft:overworld
+[21:39:30] [Worker-Main-1/INFO] [minecraft/LoggerChunkProgressListener]: Preparing spawn area: 2%
+[21:39:30] [pool-4-thread-1/DEBUG] [ne.mi.fm.co.ConfigFileTypeHandler/CONFIG]: Config file oneslotsurvival-server.toml changed, sending notifies
+[21:39:30] [pool-4-thread-1/DEBUG] [ne.mi.fm.co.ConfigFileTypeHandler/CONFIG]: Config file forge-server.toml changed, sending notifies
+[21:39:30] [pool-4-thread-1/DEBUG] [ne.mi.co.ForgeConfig/FORGEMOD]: Forge config just got changed on the file system!
+[21:39:30] [Server thread/INFO] [minecraft/LoggerChunkProgressListener]: Time elapsed: 155 ms
+[21:39:30] [Server thread/INFO] [minecraft/GameTestServer]: Started game test server
+[21:39:30] [Server thread/DEBUG] [io.ne.bu.AbstractByteBuf/]: -Dio.netty.buffer.checkAccessible: true
+[21:39:30] [Server thread/DEBUG] [io.ne.bu.AbstractByteBuf/]: -Dio.netty.buffer.checkBounds: true
+[21:39:30] [Server thread/DEBUG] [io.ne.ut.ResourceLeakDetectorFactory/]: Loaded default ResourceLeakDetector: io.netty.util.ResourceLeakDetector@f891bc5
+[21:39:30] [Server thread/DEBUG] [io.ne.ut.in.InternalThreadLocalMap/]: -Dio.netty.threadLocalMap.stringBuilder.initialSize: 1024
+[21:39:30] [Server thread/DEBUG] [io.ne.ut.in.InternalThreadLocalMap/]: -Dio.netty.threadLocalMap.stringBuilder.maxSize: 4096
+[21:39:30] [Server thread/DEBUG] [io.ne.bu.PooledByteBufAllocator/]: -Dio.netty.allocator.numHeapArenas: 24
+[21:39:30] [Server thread/DEBUG] [io.ne.bu.PooledByteBufAllocator/]: -Dio.netty.allocator.numDirectArenas: 24
+[21:39:30] [Server thread/DEBUG] [io.ne.bu.PooledByteBufAllocator/]: -Dio.netty.allocator.pageSize: 8192
+[21:39:30] [Server thread/DEBUG] [io.ne.bu.PooledByteBufAllocator/]: -Dio.netty.allocator.maxOrder: 9
+[21:39:30] [Server thread/DEBUG] [io.ne.bu.PooledByteBufAllocator/]: -Dio.netty.allocator.chunkSize: 4194304
+[21:39:30] [Server thread/DEBUG] [io.ne.bu.PooledByteBufAllocator/]: -Dio.netty.allocator.smallCacheSize: 256
+[21:39:30] [Server thread/DEBUG] [io.ne.bu.PooledByteBufAllocator/]: -Dio.netty.allocator.normalCacheSize: 64
+[21:39:30] [Server thread/DEBUG] [io.ne.bu.PooledByteBufAllocator/]: -Dio.netty.allocator.maxCachedBufferCapacity: 32768
+[21:39:30] [Server thread/DEBUG] [io.ne.bu.PooledByteBufAllocator/]: -Dio.netty.allocator.cacheTrimInterval: 8192
+[21:39:30] [Server thread/DEBUG] [io.ne.bu.PooledByteBufAllocator/]: -Dio.netty.allocator.cacheTrimIntervalMillis: 0
+[21:39:30] [Server thread/DEBUG] [io.ne.bu.PooledByteBufAllocator/]: -Dio.netty.allocator.useCacheForAllThreads: false
+[21:39:30] [Server thread/DEBUG] [io.ne.bu.PooledByteBufAllocator/]: -Dio.netty.allocator.maxCachedByteBuffersPerChunk: 1023
+[21:39:30] [Server thread/DEBUG] [io.ne.bu.PooledByteBufAllocator/]: -Dio.netty.allocator.disableCacheFinalizersForFastThreadLocalThreads: false
+[21:39:30] [Server thread/DEBUG] [io.ne.bu.ByteBufUtil/]: -Dio.netty.allocator.type: pooled
+[21:39:30] [Server thread/DEBUG] [io.ne.bu.ByteBufUtil/]: -Dio.netty.threadLocalDirectBufferSize: 0
+[21:39:30] [Server thread/DEBUG] [io.ne.bu.ByteBufUtil/]: -Dio.netty.maxThreadLocalCharBufferSize: 16384
+[21:39:30] [Server thread/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/NaturalSpawner
+[21:39:30] [Server thread/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/level/NaturalSpawner.spawnCategoryForPosition
+[21:39:30] [Server thread/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/level/NaturalSpawner.spawnMobsForChunkGeneration
+[21:39:30] [Server thread/INFO] [minecraft/GameTestServer]: 1 tests are now running at position -13928825, -59, 2631981!
+[21:39:30] [Server thread/DEBUG] [ne.mi.co.tr.CoreModBaseTransformer/COREMOD]: Transforming net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate
+[21:39:30] [Server thread/DEBUG] [ne.mi.co.Co.forge/COREMODLOG]: Redirecting method call finalizeSpawn(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; to onFinalizeSpawn(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/EntitySpawnReason;Lnet/minecraft/world/entity/SpawnGroupData;)Lnet/minecraft/world/entity/SpawnGroupData; inside of net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate.lambda$placeEntities$5
+[21:39:30] [Server thread/INFO] [minecraft/GameTestRunner]: Running test environment 'minecraft:default' batch 0 (1 tests)...
+[21:39:30] [Server thread/INFO] [minecraft/GameTestServer]: [+]
+[21:39:30] [Server thread/INFO] [minecraft/GameTestServer]: ========= 1 GAME TESTS COMPLETE IN 204.7 ms ======================
+[21:39:30] [Server thread/INFO] [minecraft/GameTestServer]: All 1 required tests passed :)
+[21:39:30] [Server thread/INFO] [minecraft/GameTestServer]: ====================================================
+[21:39:30] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server
+[21:39:30] [Server thread/INFO] [minecraft/MinecraftServer]: Saving players
+[21:39:30] [Server thread/INFO] [minecraft/MinecraftServer]: Saving worlds
+[21:39:31] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:overworld
+[21:39:31] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_end
+[21:39:31] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_nether
+[21:39:31] [Server thread/DEBUG] [ne.mi.co.ForgeHooks/WP]: Gathering id map for writing to world save Test Level
+[21:39:31] [Server thread/DEBUG] [ne.mi.co.ForgeHooks/WP]: ID Map collection complete Test Level
+[21:39:31] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (gametestworld): All chunks are saved
+[21:39:31] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[21:39:31] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[21:39:31] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage: All dimensions are saved
+[21:39:32] [Server thread/DEBUG] [ne.mi.fm.co.ConfigTracker/CONFIG]: Unloading configs type SERVER
+[21:39:32] [Server thread/DEBUG] [ne.mi.fm.co.ConfigFileTypeHandler/CONFIG]: Stopping watcher for hander: ConfigFileTypeHandler[SERVER]
+[21:39:32] [Server thread/INFO] [minecraft/GameTestServer]: Game test server shutting down
+
+[Incubating] Problems report is available at: file:///C:/Users/godhe/git/one_slot_survival/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.12.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 15s
+11 actionable tasks: 3 executed, 8 up-to-date
