@@ -48,12 +48,39 @@ import net.minecraft.world.level.storage.CommandStorage;
  * }</pre>
  *
  * <h2>デフォルト値</h2>
- * <ul>
- *   <li>mainRoleChanging: true（変更可能）</li>
- *   <li>subRoleChanging: true（変更可能）</li>
- *   <li>defaultModValidity: true（有効）</li>
- *   <li>defaultRole: UNASSIGN（未割り当て）</li>
- * </ul>
+ * <p>デフォルト値はIntegrated Server（シングルプレイ）とDedicated Server（マルチプレイ）で異なります。</p>
+ * <table border="1">
+ *   <tr>
+ *     <th>設定項目</th>
+ *     <th>Integrated</th>
+ *     <th>Dedicated</th>
+ *   </tr>
+ *   <tr>
+ *     <td>mainRoleChanging</td>
+ *     <td>true（変更可能）</td>
+ *     <td>false（変更不可）</td>
+ *   </tr>
+ *   <tr>
+ *     <td>subRoleChanging</td>
+ *     <td>true（変更可能）</td>
+ *     <td>false（変更不可）</td>
+ *   </tr>
+ *   <tr>
+ *     <td>defaultModValidity</td>
+ *     <td>true（有効）</td>
+ *     <td>true（有効）</td>
+ *   </tr>
+ *   <tr>
+ *     <td>bonusItem</td>
+ *     <td>NONE</td>
+ *     <td>NONE</td>
+ *   </tr>
+ *   <tr>
+ *     <td>defaultRole</td>
+ *     <td>RANDOM</td>
+ *     <td>RANDOM</td>
+ *   </tr>
+ * </table>
  */
 public class WorldOptions {
 
@@ -76,17 +103,55 @@ public class WorldOptions {
     /** 初期ロール割り当て方式設定のNBTキー */
     private static final String DEFAULT_ROLE_KEY = "defaultRole";
 
-    /** デフォルト値: 変更可能 */
-    private static final boolean DEFAULT_VALUE = true;
+    /**
+     * メインロール変更のデフォルト値を取得します。
+     *
+     * @param server MinecraftServer
+     * @return Integratedの場合true、Dedicatedの場合false
+     */
+    private static boolean getDefaultMainRoleChanging(MinecraftServer server) {
+        return !server.isDedicatedServer(); // Integrated: true, Dedicated: false
+    }
 
-    /** デフォルト値: 初期MOD有効性はtrue */
-    private static final boolean DEFAULT_MOD_VALIDITY = true;
+    /**
+     * サブロール変更のデフォルト値を取得します。
+     *
+     * @param server MinecraftServer
+     * @return Integratedの場合true、Dedicatedの場合false
+     */
+    private static boolean getDefaultSubRoleChanging(MinecraftServer server) {
+        return !server.isDedicatedServer(); // Integrated: true, Dedicated: false
+    }
 
-    /** デフォルト値: ボーナスアイテムなし */
-    private static final BonusItem DEFAULT_BONUS_ITEM = BonusItem.NONE;
+    /**
+     * 初期MOD有効性のデフォルト値を取得します。
+     *
+     * @param server MinecraftServer
+     * @return 常にtrue
+     */
+    private static boolean getDefaultModValidity(MinecraftServer server) {
+        return true; // 両方とも true
+    }
 
-    /** デフォルト値: 初期ロール割り当て方式は未割り当て */
-    private static final DefaultRole DEFAULT_ROLE = DefaultRole.RANDOM;
+    /**
+     * ボーナスアイテムのデフォルト値を取得します。
+     *
+     * @param server MinecraftServer
+     * @return 常にNONE
+     */
+    private static BonusItem getDefaultBonusItem(MinecraftServer server) {
+        return BonusItem.NONE; // 両方とも NONE
+    }
+
+    /**
+     * 初期ロール割り当て方式のデフォルト値を取得します。
+     *
+     * @param server MinecraftServer
+     * @return 常にRANDOM
+     */
+    private static DefaultRole getDefaultRoleValue(MinecraftServer server) {
+        return server.isDedicatedServer()? DefaultRole.DEFINED_LIST:DefaultRole.RANDOM; // Integrated: Random, Dedicated: Defined List
+    }
 
     /**
      * メインロール変更が有効かどうかを取得します。
@@ -105,7 +170,7 @@ public class WorldOptions {
      * @return メインロール変更が有効な場合true
      */
     public static boolean isMainRoleChangingEnabled(MinecraftServer server) {
-        return getBooleanValue(server, MAIN_ROLE_CHANGING_KEY);
+        return getBooleanValue(server, MAIN_ROLE_CHANGING_KEY, getDefaultMainRoleChanging(server));
     }
 
     /**
@@ -125,7 +190,7 @@ public class WorldOptions {
      * @return サブロール変更が有効な場合true
      */
     public static boolean isSubRoleChangingEnabled(MinecraftServer server) {
-        return getBooleanValue(server, SUB_ROLE_CHANGING_KEY);
+        return getBooleanValue(server, SUB_ROLE_CHANGING_KEY, getDefaultSubRoleChanging(server));
     }
 
     /**
@@ -170,7 +235,7 @@ public class WorldOptions {
 
         // 文字列として保存されているコマンド名を取得
         // getStringOrを使用してデフォルト値を指定
-        String commandName = tag.getStringOr(BONUS_ITEM_KEY, DEFAULT_BONUS_ITEM.getCommandName());
+        String commandName = tag.getStringOr(BONUS_ITEM_KEY, getDefaultBonusItem(server).getCommandName());
 
         // コマンド名からBonusItemに変換
         return BonusItem.fromCommandName(commandName);
@@ -213,7 +278,7 @@ public class WorldOptions {
         CommandStorage storage = server.getCommandStorage();
         CompoundTag tag = storage.get(STORAGE_ID);
 
-        return tag.getBooleanOr(DEFAULT_MOD_VALIDITY_KEY, DEFAULT_MOD_VALIDITY);
+        return tag.getBooleanOr(DEFAULT_MOD_VALIDITY_KEY, getDefaultModValidity(server));
     }
 
     /**
@@ -247,7 +312,7 @@ public class WorldOptions {
         CompoundTag tag = storage.get(STORAGE_ID);
 
         // 文字列として保存されているコマンド名を取得
-        String commandName = tag.getStringOr(DEFAULT_ROLE_KEY, DEFAULT_ROLE.getCommandName());
+        String commandName = tag.getStringOr(DEFAULT_ROLE_KEY, getDefaultRoleValue(server).getCommandName());
 
         // コマンド名からDefaultRoleに変換
         return DefaultRole.fromCommandName(commandName);
@@ -275,15 +340,16 @@ public class WorldOptions {
      *
      * @param server MinecraftServer
      * @param key NBTキー
+     * @param defaultValue デフォルト値
      * @return 設定値（見つからない場合はデフォルト値）
      */
-    private static boolean getBooleanValue(MinecraftServer server, String key) {
+    private static boolean getBooleanValue(MinecraftServer server, String key, boolean defaultValue) {
         CommandStorage storage = server.getCommandStorage();
         CompoundTag tag = storage.get(STORAGE_ID);
 
         // byte値として保存されている（1b = true, 0b = false）
         // getBooleanOr()を使用してデフォルト値を指定
-        return tag.getBooleanOr(key, DEFAULT_VALUE);
+        return tag.getBooleanOr(key, defaultValue);
     }
 
     /**
