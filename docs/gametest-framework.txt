@@ -1,0 +1,41 @@
+調査結果の要約
+GameTestフレームワークとは
+提供元:
+
+Minecraft (Mojang): 基盤となるGameTestフレームワークを提供(net.minecraft.gametest.frameworkパッケージ)
+Forge: Mod開発者向けに簡易化されたアノテーションとフックを提供(net.minecraftforge.gametestパッケージ)
+主要コンポーネント
+@GameTest (Forgeアノテーション)
+
+テストメソッドにマーク
+プロパティ: name, structure, maxTicks, required, 等
+@GameTestNamespace
+
+クラスレベルのアノテーション
+テストのネームスペース(通常はModID)を指定
+GameTestHelper
+
+テストで使用する主要クラス
+アサーションメソッド: assertBlockPresent(), assertEntityPresent(), 等
+ブロック操作: setBlock(), getBlockState(), 等
+成功/失敗: succeed(), fail(), 等
+現在の状況
+実行ログから判明したこと:
+
+runGameTestServerタスクは正常に動作している
+MinecraftのBuiltinTestFunctionsのalways_passテストが実行されている(「1 tests are now running」)
+プロジェクト内にはまだカスタムテストが存在していない
+次のステップ
+実現可能性を確認するため、以下を提案します:
+
+サンプルテストクラスを作成 - 基本的なテストケースを記述
+runGameTestServerで実行 - カスタムテストが認識・実行されるか確認
+結果を検証 - テストログで成功/失敗を確認
+サンプルテストクラスを作成してよろしいですか？それとも、まず他の調査項目がありますか?
+
+Sources:
+
+How to use the Game Test Framework on Forge · GitHub
+GameTest – Minecraft Wiki
+Game Tests - Forge Documentation
+Game Tests - Forge Community Wiki

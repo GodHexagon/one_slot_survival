@@ -1,5 +1,6 @@
 package com.github.godhexagon.oneslotsurvival;
 
+import com.github.godhexagon.oneslotsurvival.gametest.ModGameTestLoader;
 import com.github.godhexagon.oneslotsurvival.object.attribute.ModAttributes;
 import com.github.godhexagon.oneslotsurvival.object.attribute.PlayerAttributeHandler;
 import com.github.godhexagon.oneslotsurvival.object.config.ExpConfig;
@@ -29,6 +30,10 @@ public final class OneSlotSurvivalMod {
 
         // Attribute を登録
         ModAttributes.ATTRIBUTES.register(modBusGroup);
+
+        // GameTest functions を登録
+        ModGameTestLoader.TEST_FUNCTIONS.register(modBusGroup);
+        LOGGER.info("GameTest functions registered");
 
         // Attribute ハンドラを登録（EntityAttributeModificationEvent は mod bus で発火）
         net.minecraftforge.event.entity.EntityAttributeModificationEvent.getBus(modBusGroup)
