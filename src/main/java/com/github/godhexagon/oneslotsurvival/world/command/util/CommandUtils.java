@@ -3,6 +3,7 @@ package com.github.godhexagon.oneslotsurvival.world.command.util;
 import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
 import com.github.godhexagon.oneslotsurvival.rule.role.SubRole;
 import com.github.godhexagon.oneslotsurvival.world.storage.BonusItem;
+import com.github.godhexagon.oneslotsurvival.world.storage.DefaultRole;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
@@ -43,6 +44,17 @@ public class CommandUtils {
     public static final SuggestionProvider<CommandSourceStack> BONUS_ITEM_SUGGESTIONS = (context, builder) -> {
         for (BonusItem item : BonusItem.values()) {
             builder.suggest(item.getCommandName());
+        }
+        return builder.buildFuture();
+    };
+
+    /**
+     * 初期ロール割り当て方式の補完候補を提供するサジェスチョンプロバイダー
+     * 全てのDefaultRole列挙値のコマンド名を補完候補として提供
+     */
+    public static final SuggestionProvider<CommandSourceStack> DEFAULT_ROLE_SUGGESTIONS = (context, builder) -> {
+        for (DefaultRole role : DefaultRole.values()) {
+            builder.suggest(role.getCommandName());
         }
         return builder.buildFuture();
     };

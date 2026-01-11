@@ -1,17 +1,21 @@
 package com.github.godhexagon.oneslotsurvival.world.event;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
+import com.github.godhexagon.oneslotsurvival.rule.attribute.Initialized;
 import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotBarrierFilling;
 import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotRestriction;
 import com.github.godhexagon.oneslotsurvival.rule.player.PlayerModValidity;
 import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
+import com.github.godhexagon.oneslotsurvival.rule.role.RoleDistribution;
 import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
 import com.github.godhexagon.oneslotsurvival.rule.role.SubRole;
 import com.github.godhexagon.oneslotsurvival.world.storage.BonusItem;
+import com.github.godhexagon.oneslotsurvival.world.storage.DefaultRole;
 import com.github.godhexagon.oneslotsurvival.world.storage.WorldOptions;
 import com.mojang.logging.LogUtils;
+
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.event.TickEvent;
@@ -103,34 +107,41 @@ public class WorldEvent {
             return;
         }
 
-        // PLAY_TIME統計を取得（ティック単位）
-        int playTime = player.getStats().getValue(Stats.CUSTOM.get(Stats.PLAY_TIME));
+        // このワールドに初めて参加したときの処理
+        boolean initialized = Initialized.getInitialized(player);
+        if (!initialized) {
+            // 処理をしたことがあるフラグを追加
+            Initialized.updateInitialized(player, true);
 
-        // プレイ時間が非常に少ない = このワールドに初めて参加
-        if (playTime < 5) {
-            // ロールが未割り当ての場合のみ設定（念のため二重設定を防ぐ）
-            MainRole currentRoleId = RoleManager.getMainRole(player);
-            if (currentRoleId == MainRole.UNASSIGNED) {
-                // MOD有効性を設定
-                boolean defaultModValidity = WorldOptions.isDefaultModValidityEnabled(player.getServer());
-                PlayerModValidity.setEnabled(player, defaultModValidity);
+            MinecraftServer server = player.getServer();
 
-                // デフォルトロールとして MINER と FISHER を設定
-                RoleManager.setMainRole(player, MainRole.MINER);
-                RoleManager.setSubRole(player, SubRole.FISHER);
+            // MOD有効性を設定
+            boolean defaultModValidity = WorldOptions.isDefaultModValidityEnabled(server);
+            PlayerModValidity.setEnabled(player, defaultModValidity);
 
-                // ボーナスアイテムを配布
-                BonusItem bonusItemMode = WorldOptions.getBonusItem(player.getServer());
-                // バンドルを配布
-                if (bonusItemMode == BonusItem.BUNDLE || bonusItemMode == BonusItem.BUNDLE_RESPAWN) {
-                    player.addItem(new ItemStack(Items.BUNDLE));
-                } else if (bonusItemMode == BonusItem.SHULKERBOX || bonusItemMode == BonusItem.SHULKERBOX_RESPAWN) {
-                    player.addItem(new ItemStack(Items.SHULKER_BOX));
-                }
-
-                // ログ出力
-                LOGGER.info("The first login process has been applied to {}", player.getName().getString());
+            // デフォルトロールを設定
+            DefaultRole defaultRole = WorldOptions.getDefaultRole(server);
+            if (defaultRole == DefaultRole.UNASSIGN) {
+                RoleManager.setMainRole(player, MainRole.UNASSIGNED);
+                RoleManager.setSubRole(player, SubRole.UNASSIGNED);
+            } else if (defaultRole == DefaultRole.RANDOM) {
+                RoleDistribution.setRandom(player);
+            } else if (defaultRole == DefaultRole.DEFINED_LIST) {
+                // リスト利用状況が永続化される機能を利用
+                RoleDistribution.setDefinedListWithCounting(player);
             }
+
+            // ボーナスアイテムを配布
+            BonusItem bonusItemMode = WorldOptions.getBonusItem(server);
+            // バンドルを配布
+            if (bonusItemMode == BonusItem.BUNDLE || bonusItemMode == BonusItem.BUNDLE_RESPAWN) {
+                player.addItem(new ItemStack(Items.BUNDLE));
+            } else if (bonusItemMode == BonusItem.SHULKERBOX || bonusItemMode == BonusItem.SHULKERBOX_RESPAWN) {
+                player.addItem(new ItemStack(Items.SHULKER_BOX));
+            }
+
+            // ログ出力
+            LOGGER.info("The first login process has been applied to {}", player.getName().getString());
         }
     }
 

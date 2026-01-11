@@ -12,6 +12,7 @@ import com.github.godhexagon.oneslotsurvival.world.command.general.ShowNext;
 import com.github.godhexagon.oneslotsurvival.world.command.general.ShowStatus;
 import com.github.godhexagon.oneslotsurvival.world.command.world.BonusItemCommand;
 import com.github.godhexagon.oneslotsurvival.world.command.world.DefaultModValidityCommand;
+import com.github.godhexagon.oneslotsurvival.world.command.world.DefaultRoleCommand;
 import com.github.godhexagon.oneslotsurvival.world.command.world.RoleChanging;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -58,6 +59,7 @@ public class CommandRegisterer {
             .then(RoleChanging.buildMainRoleChanging())
             .then(RoleChanging.buildSubRoleChanging())
             .then(BonusItemCommand.build())
-            .then(DefaultModValidityCommand.build());
+            .then(DefaultModValidityCommand.build())
+            .then(DefaultRoleCommand.build());
     }
 }

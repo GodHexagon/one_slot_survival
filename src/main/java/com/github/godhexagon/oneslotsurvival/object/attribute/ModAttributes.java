@@ -29,6 +29,20 @@ public class ModAttributes {
     );
 
     /**
+     * プレイヤーが初期化済みかどうかを表す Attribute
+     * 値: 0.0 = 未初期化, 1.0 = 初期化済み
+     */
+    public static final RegistryObject<Attribute> INITIALIZED = ATTRIBUTES.register(
+        "initialized",
+        () -> new RangedAttribute(
+            "attribute.oneslotsurvival.initialized",
+            0,  // デフォルトは未初期化
+            0.0,  // 最小値
+            1.0   // 最大値
+        ).setSyncable(true)  // 自動的にクライアントと同期
+    );
+
+    /**
      * プレイヤーのメインロールIDを表す Attribute
      * 値: ロールID（整数値）、-1.0 = 未割り当て
      */

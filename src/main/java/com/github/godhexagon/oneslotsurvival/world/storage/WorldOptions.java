@@ -23,6 +23,9 @@ import net.minecraft.world.level.storage.CommandStorage;
  * // 初期MOD有効性を無効化
  * /data modify storage oneslotsurvival:world_options defaultModValidity set value 0b
  *
+ * // 初期ロール割り当て方式を設定
+ * /data modify storage oneslotsurvival:world_options defaultRole set value "random"
+ *
  * // 有効化する場合
  * /data modify storage oneslotsurvival:world_options mainRoleChanging set value 1b
  * /data modify storage oneslotsurvival:world_options subRoleChanging set value 1b
@@ -35,11 +38,13 @@ import net.minecraft.world.level.storage.CommandStorage;
  * boolean canChangeMainRole = WorldOptions.isMainRoleChangingEnabled(serverLevel);
  * boolean canChangeSubRole = WorldOptions.isSubRoleChangingEnabled(serverLevel);
  * boolean defaultModValidity = WorldOptions.isDefaultModValidityEnabled(serverLevel);
+ * DefaultRole defaultRole = WorldOptions.getDefaultRole(serverLevel);
  *
  * // MinecraftServerから
  * boolean canChangeMainRole = WorldOptions.isMainRoleChangingEnabled(server);
  * boolean canChangeSubRole = WorldOptions.isSubRoleChangingEnabled(server);
  * boolean defaultModValidity = WorldOptions.isDefaultModValidityEnabled(server);
+ * DefaultRole defaultRole = WorldOptions.getDefaultRole(server);
  * }</pre>
  *
  * <h2>デフォルト値</h2>
@@ -47,6 +52,7 @@ import net.minecraft.world.level.storage.CommandStorage;
  *   <li>mainRoleChanging: true（変更可能）</li>
  *   <li>subRoleChanging: true（変更可能）</li>
  *   <li>defaultModValidity: true（有効）</li>
+ *   <li>defaultRole: UNASSIGN（未割り当て）</li>
  * </ul>
  */
 public class WorldOptions {
@@ -67,6 +73,9 @@ public class WorldOptions {
     /** 初期MOD有効性設定のNBTキー */
     private static final String DEFAULT_MOD_VALIDITY_KEY = "defaultModValidity";
 
+    /** 初期ロール割り当て方式設定のNBTキー */
+    private static final String DEFAULT_ROLE_KEY = "defaultRole";
+
     /** デフォルト値: 変更可能 */
     private static final boolean DEFAULT_VALUE = true;
 
@@ -75,6 +84,9 @@ public class WorldOptions {
 
     /** デフォルト値: ボーナスアイテムなし */
     private static final BonusItem DEFAULT_BONUS_ITEM = BonusItem.NONE;
+
+    /** デフォルト値: 初期ロール割り当て方式は未割り当て */
+    private static final DefaultRole DEFAULT_ROLE = DefaultRole.RANDOM;
 
     /**
      * メインロール変更が有効かどうかを取得します。
@@ -212,6 +224,50 @@ public class WorldOptions {
      */
     public static void setDefaultModValidityEnabled(MinecraftServer server, boolean enabled) {
         setBooleanValue(server, DEFAULT_MOD_VALIDITY_KEY, enabled);
+    }
+
+    /**
+     * 初期ロール割り当て方式設定を取得します。
+     *
+     * @param level サーバーレベル
+     * @return 初期ロール割り当て方式
+     */
+    public static DefaultRole getDefaultRole(ServerLevel level) {
+        return getDefaultRole(level.getServer());
+    }
+
+    /**
+     * 初期ロール割り当て方式設定を取得します。
+     *
+     * @param server MinecraftServer
+     * @return 初期ロール割り当て方式
+     */
+    public static DefaultRole getDefaultRole(MinecraftServer server) {
+        CommandStorage storage = server.getCommandStorage();
+        CompoundTag tag = storage.get(STORAGE_ID);
+
+        // 文字列として保存されているコマンド名を取得
+        String commandName = tag.getStringOr(DEFAULT_ROLE_KEY, DEFAULT_ROLE.getCommandName());
+
+        // コマンド名からDefaultRoleに変換
+        return DefaultRole.fromCommandName(commandName);
+    }
+
+    /**
+     * 初期ロール割り当て方式設定を変更します。
+     *
+     * @param server MinecraftServer
+     * @param defaultRole 設定する初期ロール割り当て方式
+     */
+    public static void setDefaultRole(MinecraftServer server, DefaultRole defaultRole) {
+        CommandStorage storage = server.getCommandStorage();
+        CompoundTag tag = storage.get(STORAGE_ID);
+
+        // コマンド名を文字列として保存
+        tag.putString(DEFAULT_ROLE_KEY, defaultRole.getCommandName());
+
+        // 保存
+        storage.set(STORAGE_ID, tag);
     }
 
     /**

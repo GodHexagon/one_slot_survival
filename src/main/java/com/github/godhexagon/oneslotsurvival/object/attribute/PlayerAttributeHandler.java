@@ -27,6 +27,15 @@ public class PlayerAttributeHandler {
         );
         event.add(
             EntityType.PLAYER,
+            ModAttributes.INITIALIZED.getHolder().orElseThrow(
+                () -> new IllegalStateException(
+                    "INITIALIZED attribute is not registered. " +
+                    "This indicates an issue with DeferredRegister initialization."
+                )
+            )
+        );
+        event.add(
+            EntityType.PLAYER,
             ModAttributes.MAIN_ROLE_ID.getHolder().orElseThrow(
                 () -> new IllegalStateException(
                     "MAIN_ROLE_ID attribute is not registered. " +
