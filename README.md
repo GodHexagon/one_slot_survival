@@ -1,16 +1,8 @@
 # One Slot Survival
 
-極限の縛りプレイで協力プレイを促進する上級者向けMinecraft Forge MOD。シングルプレイでも楽しめます。
+インベントリの制限という縛りプレイを楽しむ上級者向けMinecraft Forge MOD。
 
-## 主な特徴
-
-- **１スロット縛り**: インベントリが基本1スロット（メインハンド）+ オフハンド + 装備スロットのみに。マイルストーン（ダイヤモンド、ネザーゲート、エンドラ討伐など）の難易度を上げてMinecraftを楽しみ直せます。
-- **協力プレイ促進**: 4つのメインロールと7つのセカンダリロールを、プレイヤーは各一つずつ選択可能。それぞれの能力を最大限生かして、でワールドの発展を加速させることができます。
-- **成長要素**: プレイ行動でスコアを獲得し、レベルアップでロールごとの報酬を獲得していきます。
-
-### 注意事項
-
-当MODは縛りプレイOnlyです。レベルが上がると少し便利になりますがバニラの状態より強化されることはありません。
+※マルチプレイサーバー対応。必ずサーバーとクライアント両方に、当MODをForge MODとして導入してください。
 
 ## 動作環境
 
@@ -18,147 +10,106 @@
 - Minecraft Java Edition 1.21.8
 - Forge 58.1.0
 
-## ゲームルール
+## 主な特徴
 
-### メインロール
+- **１スロット縛り**: インベントリが基本1スロット（メインハンド）+ オフハンド + 装備スロットのみに。マイルストーン（ダイヤモンド、ネザーゲート、エンドラ討伐など）の難易度を上げてMinecraftを楽しみ直せます。
+- **協力プレイ促進**: 4つのメインロールと7つのセカンダリロールを、プレイヤーは各一つずつ選択可能。それぞれの能力を活かす立ち回りを目指しましょう。
+- **成長要素**: プレイ行動でレベルアップします。これにより、インベントリスロットを獲得していきます。インベントリスロットには種類があり、ロールによって異なる種類を獲得します。
 
-**Miner（鉱夫）**
-- スロット1: つるはし
-- スロット2: つるはし、シャベル
-- スロット3: バケツ
-- 心得: つるはし
+### 注意事項
 
-**Warrior（戦士）**
-- スロット1: 剣、トライデント、メイス
-- スロット2: 盾、火打ち石と打ち金
-- スロット3: ベッド
-- 心得: 剣
+当MODは縛りプレイOnlyです。レベルが上がると少し便利になりますがバニラの状態より強化されることはありません。
 
-**Survivor（サバイバー）**
-- スロット1: 斧
-- スロット2: 斧、はさみ、クワ
-- スロット3: バンドル
-- 心得: 斧
+## 遊び方
 
-**Builder（建築士）**
-- スロット1: 適性ツールがシャベル・ハサミ・剣・クワのブロック
-- スロット2: 適性ツールがつるはしのブロック
-- スロット3: 適性ツールが斧のブロック
-- 心得: 樽（設置不可能）
+ゲームを開始すると、すぐにインベントリが１スロットのみに制限されるはずです。
 
-### セカンダリロール
+通常、プレイヤーは以下のコマンドを利用可能です。
 
-- Thrower（投擲物専門家）: 投擲物×3
-- Pharmacist（薬剤師）: ポーション＆シチュー×3
-- Armorer（防具鍛冶）: 火打ち石と打ち金＆防具＆鍛冶型×3
-- Scholar（学者）: 本＆地図＆模様＆コンパス＆時計＆望遠鏡×2＋ブラシ
-- Fisher（釣り人）: 釣り竿＋ボート×2
-- Breeder（ブリーダー）: サドル＆ハーネス＆馬鎧＆オオカミの鎧＆ヤギの角笛×2＋はさみ
-- Archer（弓兵）: 弓＆クロスボウ＋矢×2
+- `/oneslot`: 自身のロールとレベルアップ状態を確認。
+- `/oneslot changerole`, `/oneslot changerole <ロール名>`: 自身に割り当てられたロールの変更を試みる。これにより、レベルアップで獲得できるスロットの種類を変えることができます。
 
-### レベルアップ報酬
-
-- レベル1: スロット1解放
-- レベル2: セカンダリロールスロット解放
-- レベル3: スロット2解放
-- レベル5: スロット3解放
-- レベル7: 心得ポイント
-- その後レベル2ごとに心得ポイント
-
-### 心得システム
-
-心得アイテム種 + ラピスラズリ + 心得ポイント1で心得を作成可能。心得を心得習得スロットに入れると、心得スロットが利用可能になります。心得はアイテムとして譲渡可能です。
+管理者向けコマンドもあります。すべてのコマンドの一覧は、「[コマンド](#コマンド)」の項を参照してください。
 
 ## コマンド
 
 ### 一般プレイヤー向け
-- 自身の状態表示
-- ロール変更
-- 全ロールとそれらに付属するスロットの詳細表示
+- `/oneslot` - 自身のメインロール・サブロール、レベル、次のレベルまでの必要経験値を表示
+- `/oneslot status` - `/oneslot` のエイリアス
+- `/oneslot next` - 次のレベルアップで獲得できる報酬を表示
+- `/oneslot changerole` - 選択可能なロール一覧を表示
+- `/oneslot changerole <ロール名>` - 指定ロールへの変更内容を確認（例: `/oneslot changerole warrior`）
+- `/oneslot changerole <ロール名> agree` - ロール変更を実行
+- `/oneslot data` - 全ロールの一覧を表示
+- `/oneslot data <ロール名>` - 指定ロールの詳細を表示
+- `/oneslot data <ロール名> slot <スロット番号>` - 指定ロールの特定スロットの詳細を表示
 
-### サーバー管理者向け（チートコマンド）
-- プレイヤーごとのMOD有効化/無効化
-- ロール手動割り当て
-- 経験値・レベル操作
-- スロット解放状況操作
-- ワールドオプション設定
+### サーバー管理者向け - プレイヤー個別コマンド（OP権限必要）
 
-## 現在の実装状況
+**OP権限レベル2が必要。コマンドエイリアス: `/osa` または `/oneslot admin`**
 
-### 完了済みの機能
+#### MOD有効性管理
+- `/osa validity get [プレイヤー]` - MOD有効状態を確認
+- `/osa validity enable [プレイヤー]` - MODを有効化
+- `/osa validity disable [プレイヤー]` - MODを無効化
+- `/osa validity toggle [プレイヤー]` - MOD有効状態を切り替え
 
-#### コア機能
-- **プレイヤーごとのMOD有効化/無効化**: Attributeシステムによる永続化・自動同期
-- **1スロット縛りシステム**: ホットバー表示のカスタマイズ、スロット制限、バリアアイテムによる禁止スロット管理
-- **メインロールシステム**:
-  - Miner（鉱夫）とWarrior（戦士）の2種類を実装
-  - ロールスロットの種類別アイテム制限（つるはし・斧・シャベル / 剣・盾・トライデント・メイス等）
-- **レベルシステム**:
-  - アイテム耐久消費による経験値獲得
-  - レベルアップ機能（高レベルほど必要経験値が増加）
-  - レベルに応じたロールスロット解放
-  - レベルアップ時のメッセージ表示
-- **新規プレイヤー対応**: ワールド初回ログイン時のデフォルト設定自動割り当て
+#### ロール管理
+- `/osa role get [プレイヤー]` - ロールを確認
+- `/osa role set <ロール名> [プレイヤー]` - ロールを設定（進捗リセット）
+- `/osa role setNoClear <ロール名> [プレイヤー]` - ロールを設定（進捗保持）
+- `/osa role clear [プレイヤー]` - 全ロールをクリア
+- `/osa role clear main [プレイヤー]` - メインロールをクリア
+- `/osa role clear sub [プレイヤー]` - サブロールをクリア
 
-#### UI/UX
-- **インベントリ画面カスタマイズ**: ロール・レベルに応じた動的な表示変更
-- **ホットバー表示**: レベル・ロールに応じた選択可能スロット数の視覚化
-- **バンドル対応**: バンドルのスクロール選択機能の正常動作
+#### レベル管理
+- `/osa level get [プレイヤー]` - レベルを確認
+- `/osa level set <レベル> [プレイヤー]` - レベルを設定（経験値リセット）
+- `/osa level setNoClear <レベル> [プレイヤー]` - レベルを設定（経験値保持）
+- `/osa level clear [プレイヤー]` - レベルをリセット
 
-#### コマンド
-- **管理者コマンド**:
-  - プレイヤーのMOD有効性制御 (`/oneslot <players> enable|disable|toggle|status`)
-  - ロール手動割り当て
-  - 経験値・レベル操作（レベル変化に応じた経験値自動調整対応）
-  - スロット解放状況操作
-- **一般プレイヤーコマンド**:
-  - 状態表示 (`/oneslot` または `/oneslot status`)
-  - 経験値・レベル確認
-  - 直近の経験値獲得ログ表示
+#### 経験値管理
+- `/osa xp getRemaining [プレイヤー]` - 次のレベルまでの必要経験値を確認
+- `/osa xp add <量> [プレイヤー]` - 経験値を付与
+- `/osa xp clear [プレイヤー]` - 経験値をクリア
 
-#### 技術実装
-- **Mixin統合**: Inventory、AbstractContainerMenu、GUI要素への深いカスタマイズ
-- **アトリビュートシステム**: プレイヤーデータの永続化・クライアント同期
-- **デバッグ実行最適化**: Gradle Daemon、JVMメモリ最適化
+#### ロールレベルアップ回数管理
+- `/osa roleLeveledUpTimes get [プレイヤー]` - ロールレベルアップ回数を確認
+- `/osa roleLeveledUpTimes setMain <回数> [プレイヤー]` - メインロールレベルアップ回数を設定
+- `/osa roleLeveledUpTimes setSub <回数> [プレイヤー]` - サブロールレベルアップ回数を設定
+- `/osa roleLeveledUpTimes clear main [プレイヤー]` - メインロールレベルアップ回数をリセット
+- `/osa roleLeveledUpTimes clear sub [プレイヤー]` - サブロールレベルアップ回数をリセット
+- `/osa roleLeveledUpTimes clear both [プレイヤー]` - 両方のロールレベルアップ回数をリセット
 
-### 今後の予定
-- 一般プレイヤーによるロール変更システム
-- サブロールシステムの追加
-- メインロールの種類拡張（Survivor、Builder等）
-- 心得システムの実装
-- 初期配布アイテム設定
-- ロール別経験値倍率調整
-- GUI操作による管理者アクション
-- 全インベントリ画面のカスタマイズ拡張
+#### ロール一括配布
+- `/osa distributeRole unassign` - 全オンラインプレイヤーのロールを未割り当てに
+- `/osa distributeRole random` - 全オンラインプレイヤーにランダムにロールを割り当て
+- `/osa distributeRole definedList` - 定義済みリストに基づいてロールを順番に割り当て
 
-## 開発環境のセットアップ
+**定義済みリスト**=
+- メインロール: Miner, Warrior, Survivor, Builder
+- サブロール: Armorer, Archer, Fisher, Breeder | Scholar, Pharmacist, Thrower
 
-### IntelliJ IDEA
-1. プロジェクトをインポート
-2. build.gradleを選択
-3. `./gradlew genIntellijRuns`を実行
-4. 必要に応じてGradleプロジェクトをリフレッシュ
+### サーバー管理者向け - ワールド設定コマンド（OP権限必要）
 
-### Eclipse
-1. `./gradlew genEclipseRuns`を実行
-2. Eclipse で Import > Existing Gradle Project > フォルダを選択
+**OP権限レベル2が必要。コマンドエイリアス: `/osw` または `/oneslot world`**
 
-### トラブルシューティング
-- ライブラリが見つからない: `gradlew --refresh-dependencies`
-- リセット: `gradlew clean`
+- `/osw mainRoleChanging [true|false]` - メインロール変更の可否を設定・照会
+- `/osw subRoleChanging [true|false]` - サブロール変更の可否を設定・照会
+- `/osw bonusItem [none|bundle|shulkerbox|bundle_respawn|shulkerbox_respawn]` - ボーナスアイテムを設定・照会
+- `/osw defaultModValidity [true|false]` - 新規プレイヤーのMOD初期有効状態を設定・照会
+- `/osw defaultRole [unassign|random|definedList]` - 新規プレイヤーのロール初期割り当て方式を設定・照会　※definedListについては、「[ロール一括配布](#ロール一括配布)」と同様
 
-## 技術情報
+**注**: `[プレイヤー]` は省略可能。省略時はコマンド実行者自身が対象になります。
 
-このMODはspongepoweredのMixinを使用して、Minecraftの内部動作を深くカスタマイズしています。
+## 開発について
 
-## ライセンス
+**リポジトリ**: https://github.com/GodHexagon/one_slot_survival
 
-Copyright (c) 2025 GodHexagon (とおる) All rights reserved.
+**過去と未来の計画**: [リポジトリにあるタスクリスト](https://github.com/GodHexagon/one_slot_survival/blob/develop/docs/task_list.md)をご覧ください。
 
-詳細は [LICENSE](LICENSE.txt) ファイルを参照してください。
+**問題報告**: [CurseForgeのコメント機能](https://www.curseforge.com/minecraft/mc-mods/one-slot-survival/comments)にてお寄せください。
 
-## リソース
+**ライセンス**: Copyright (c) 2025 GodHexagon (とおる) All rights reserved. 
 
-- Community Documentation: https://docs.minecraftforge.net/en/latest/gettingstarted/
-- Forge Forums: https://forums.minecraftforge.net/
-- Forge Discord: https://discord.minecraftforge.net/
+詳細は [LICENSE](https://github.com/GodHexagon/one_slot_survival/blob/develop/LICENSE.txt) ファイルを参照してください。

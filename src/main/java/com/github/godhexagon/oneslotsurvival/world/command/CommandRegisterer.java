@@ -1,5 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.world.command;
 
+import com.github.godhexagon.oneslotsurvival.world.command.admin.DistributeRoleCommands;
 import com.github.godhexagon.oneslotsurvival.world.command.admin.LevelCommands;
 import com.github.godhexagon.oneslotsurvival.world.command.admin.RoleCommands;
 import com.github.godhexagon.oneslotsurvival.world.command.admin.RoleLeveledUpTimesCommands;
@@ -9,6 +10,10 @@ import com.github.godhexagon.oneslotsurvival.world.command.general.ChangeRoleCom
 import com.github.godhexagon.oneslotsurvival.world.command.general.ShowGameData;
 import com.github.godhexagon.oneslotsurvival.world.command.general.ShowNext;
 import com.github.godhexagon.oneslotsurvival.world.command.general.ShowStatus;
+import com.github.godhexagon.oneslotsurvival.world.command.world.BonusItemCommand;
+import com.github.godhexagon.oneslotsurvival.world.command.world.DefaultModValidityCommand;
+import com.github.godhexagon.oneslotsurvival.world.command.world.DefaultRoleCommand;
+import com.github.godhexagon.oneslotsurvival.world.command.world.RoleChanging;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
@@ -29,8 +34,10 @@ public class CommandRegisterer {
                 .then(ChangeRoleCommand.build())
                 .then(ShowGameData.build())
                 .then(buildAdmin("admin"))
+                .then(buildWorld("world"))
         );
         dispatcher.register(buildAdmin("osa"));
+        dispatcher.register(buildWorld("osw"));
     }
     
     private static LiteralArgumentBuilder<CommandSourceStack> buildAdmin(String aliasName) {
@@ -39,8 +46,20 @@ public class CommandRegisterer {
             .requires(source -> source.hasPermission(2)) // OP レベル 2 が必要
             .then(ValidityCommands.build())
             .then(RoleCommands.build())
+            .then(DistributeRoleCommands.build())
             .then(LevelCommands.build())
             .then(XpCommands.build())
             .then(RoleLeveledUpTimesCommands.build());
+    }
+
+    private static LiteralArgumentBuilder<CommandSourceStack> buildWorld(String aliasName) {
+        return Commands.literal(aliasName)
+            // 管理者向けコマンド（OP権限必要）
+            .requires(source -> source.hasPermission(2)) // OP レベル 2 が必要
+            .then(RoleChanging.buildMainRoleChanging())
+            .then(RoleChanging.buildSubRoleChanging())
+            .then(BonusItemCommand.build())
+            .then(DefaultModValidityCommand.build())
+            .then(DefaultRoleCommand.build());
     }
 }

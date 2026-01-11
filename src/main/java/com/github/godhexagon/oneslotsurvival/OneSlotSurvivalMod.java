@@ -3,7 +3,6 @@ package com.github.godhexagon.oneslotsurvival;
 import com.github.godhexagon.oneslotsurvival.object.attribute.ModAttributes;
 import com.github.godhexagon.oneslotsurvival.object.attribute.PlayerAttributeHandler;
 import com.github.godhexagon.oneslotsurvival.object.config.ExpConfig;
-import com.github.godhexagon.oneslotsurvival.object.gamerule.ModGameRules;
 import com.github.godhexagon.oneslotsurvival.object.item.DynamicBuilderTags;
 import com.github.godhexagon.oneslotsurvival.object.item.ModItems;
 import com.mojang.logging.LogUtils;
@@ -52,10 +51,6 @@ public final class OneSlotSurvivalMod {
     @SubscribeEvent
     private void commonSetup(final FMLCommonSetupEvent event) {
         LOGGER.info("One Slot Survival mod is loading...");
-
-        // カスタムGameRuleを登録
-        ModGameRules.register();
-        LOGGER.info("Custom game rules registered");
     }
 
     @SubscribeEvent

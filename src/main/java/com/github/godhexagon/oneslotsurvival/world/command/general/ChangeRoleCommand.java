@@ -2,7 +2,7 @@ package com.github.godhexagon.oneslotsurvival.world.command.general;
 
 import com.github.godhexagon.oneslotsurvival.cui.CuiObjects;
 import com.github.godhexagon.oneslotsurvival.cui.CuiUtil;
-import com.github.godhexagon.oneslotsurvival.object.gamerule.ModGameRules;
+import com.github.godhexagon.oneslotsurvival.world.storage.WorldOptions;
 import com.github.godhexagon.oneslotsurvival.rule.level.Exp;
 import com.github.godhexagon.oneslotsurvival.rule.level.RoleLeveledUpTimes;
 import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
@@ -77,8 +77,8 @@ public class ChangeRoleCommand {
             }
             
             // 表示できるロールがあるかチェック
-            boolean mainRoleChangingEnabled = player.level().getGameRules().getBoolean(ModGameRules.MAIN_ROLE_CHANGING);
-            boolean subRoleChangingEnabled = player.level().getGameRules().getBoolean(ModGameRules.SUB_ROLE_CHANGIN);
+            boolean mainRoleChangingEnabled = WorldOptions.isMainRoleChangingEnabled(player.level());
+            boolean subRoleChangingEnabled = WorldOptions.isSubRoleChangingEnabled(player.level());
             if (!mainRoleChangingEnabled && !subRoleChangingEnabled) {
                 //
                 player.sendSystemMessage(getRuleRejectionMessage());
@@ -159,7 +159,7 @@ public class ChangeRoleCommand {
         Role currentRole = null;
         MainRole foundMainRole = MainRole.fromCommandName(roleName);
         if (foundMainRole != MainRole.ERROR) {
-            boolean mainRoleChangingEnabled = player.level().getGameRules().getBoolean(ModGameRules.MAIN_ROLE_CHANGING);
+            boolean mainRoleChangingEnabled = WorldOptions.isMainRoleChangingEnabled(player.level());
             if (!mainRoleChangingEnabled) {
                 showRuleRejectionMessages(player, source, roleName, false);
                 return RoleChangeValidationResult.failure();
@@ -169,7 +169,7 @@ public class ChangeRoleCommand {
         } else {
             SubRole foundSubRole = SubRole.fromCommandName(roleName);
             if (foundSubRole != SubRole.ERROR) {
-                boolean subRoleChangingEnabled = player.level().getGameRules().getBoolean(ModGameRules.SUB_ROLE_CHANGIN);
+                boolean subRoleChangingEnabled = WorldOptions.isSubRoleChangingEnabled(player.level());
                 if (!subRoleChangingEnabled) {
                     showRuleRejectionMessages(player, source, roleName, true);
                     return RoleChangeValidationResult.failure();
@@ -349,9 +349,11 @@ public class ChangeRoleCommand {
                     Component.literal("Click to auto-fill command").withStyle(ChatFormatting.YELLOW)))
             );
 
-        // クリック可能なgameruleコマンドリンク
-        String commandLiteral = subRole? "/gamerule subRoleChanging/oneslotsurvival true" : "/gamerule roleChanging/oneslotsurvival true";
-        Component gameruleCommand = Component.literal(commandLiteral)
+        // クリック可能なdata storageコマンドリンク
+        String commandLiteral = subRole?
+            "/data modify storage oneslotsurvival:settings subRoleChanging set value 1b" :
+            "/data modify storage oneslotsurvival:settings mainRoleChanging set value 1b";
+        Component storageCommand = Component.literal(commandLiteral)
             .withStyle(style -> style
                 .withColor(ChatFormatting.GREEN)
                 .withClickEvent(new ClickEvent.SuggestCommand(commandLiteral))
@@ -361,7 +363,7 @@ public class ChangeRoleCommand {
 
         return Component.literal("You can proceed with administrator privileges by using command ")
             .append(adminCommand)
-            .append(". Alternatively, you can change the game rules to allow all players to change their roles: ")
-            .append(gameruleCommand);
+            .append(". Alternatively, you can change the settings to allow all players to change their roles: ")
+            .append(storageCommand);
     }
 }
