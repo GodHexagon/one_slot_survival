@@ -17,9 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # 進捗
 
-直前の成果！: 初期MOD有効性のワールドオプションを変更できるようにする
+直前の成果！: 全プレイヤーロール一斉割り当ての管理者アクションを追加する
 
-実行中: 全プレイヤーロール一斉割り当ての管理者アクションを追加する
+実行中: ワールドの初期ロール割り当て方式オプションを変更する管理者アクションを追加
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
