@@ -7,8 +7,8 @@
 ## 動作環境
 
 - Java 21
-- Minecraft Java Edition 1.21.9
-- Forge 59.0.5
+- Minecraft Java Edition 1.21.10
+- Forge 60.1.0
 
 ## 主な特徴
 
