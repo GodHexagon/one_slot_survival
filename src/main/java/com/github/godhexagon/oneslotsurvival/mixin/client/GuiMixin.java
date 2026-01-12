@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
@@ -137,18 +138,26 @@ public abstract class GuiMixin {
         // 中央揃え: 背景の中心が画面中央に来るように配置
         int hotbarX = centerX - bgWidth / 2;
 
-        // カスタムホットバー背景を部分描画（左側のみトリミング）
-        // テクスチャの幅182px、高さ22pxを基準に、必要な幅だけを描画
-        // GUI_TEXTUREDパイプラインを使用してホットバーテクスチャを描画
-        float u0 = 0.0f;
-        float u1 = bgWidth / 256.0f; // テクスチャアトラスの幅256pxを想定
-        float v0 = 0.0f;
-        float v1 = 22.0f / 256.0f; // テクスチャアトラスの高さ256pxを想定
+        // GuiGraphicsMixinを通じてスプライト情報を取得（リフレクション経由）
+        TextureAtlasSprite sprite;
+        try {
+            java.lang.reflect.Method getSpriteMethod = GuiGraphics.class.getMethod("one_slot_survival$getSprite", ResourceLocation.class);
+            sprite = (TextureAtlasSprite) getSpriteMethod.invoke(guiGraphics, HOTBAR_SPRITE);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to get sprite from GuiGraphicsMixin", e);
+        }
+
+        // スプライトから正確なUV座標を取得
+        // ホットバーの元の幅は182px、必要な幅だけ部分描画
+        float u0 = sprite.getU0();
+        float u1 = sprite.getU0() + (sprite.getU1() - sprite.getU0()) * bgWidth / 182.0f;
+        float v0 = sprite.getV0();
+        float v1 = sprite.getV1();
 
         // innerBlitを使って部分描画
         this.one_slot_survival$innerBlit(
             guiGraphics,
-            ResourceLocation.withDefaultNamespace("hud/hotbar"),
+            sprite.atlasLocation(),
             hotbarX, hotbarX + bgWidth,
             bottomY, bottomY + 22,
             u0, u1, v0, v1
