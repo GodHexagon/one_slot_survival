@@ -17,7 +17,7 @@ public class SlotBarrier extends Item {
     @Override
     public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
         // 何らかの理由でアイテムエンティティになったバリアアイテムを削除
-        if (!entity.level().isClientSide) {
+        if (!entity.level().isClientSide()) {
             entity.discard();
         }
         return true; // 以降の更新を防ぐ
