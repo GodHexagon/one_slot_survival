@@ -37,16 +37,16 @@ public abstract class GuiMixin {
     private static final Identifier HOTBAR_END_SPRITE = Identifier.fromNamespaceAndPath("oneslotsurvival", "hud/hotbar_end");
     @Shadow
     @Final
-    private static final Identifier HOTBAR_SPRITE = null;
+    private static Identifier HOTBAR_SPRITE;
     @Shadow
     @Final
-    private static final Identifier HOTBAR_SELECTION_SPRITE = null;
+    private static Identifier HOTBAR_SELECTION_SPRITE;
     @Shadow
     @Final
-    private static final Identifier HOTBAR_OFFHAND_LEFT_SPRITE = null;
+    private static Identifier HOTBAR_OFFHAND_LEFT_SPRITE;
     @Shadow
     @Final
-    private static final Identifier HOTBAR_OFFHAND_RIGHT_SPRITE = null;
+    private static Identifier HOTBAR_OFFHAND_RIGHT_SPRITE;
 
     @Shadow
     public abstract void renderSlot(GuiGraphics p_283283_, int p_283213_, int p_281301_, DeltaTracker p_344149_, Player p_283644_, ItemStack p_283317_, int p_283261_);
