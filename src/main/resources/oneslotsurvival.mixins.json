@@ -12,6 +12,7 @@
   ],
   "client": [
     "client.GuiMixin",
+    "client.GuiGraphicsMixin",
     "client.AbstractContainerScreenMixin",
     "client.ScrollWheelHandlerMixin"
   ],

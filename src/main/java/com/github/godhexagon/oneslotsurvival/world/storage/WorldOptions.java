@@ -2,7 +2,7 @@ package com.github.godhexagon.oneslotsurvival.world.storage;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.storage.CommandStorage;
@@ -84,9 +84,9 @@ import net.minecraft.world.level.storage.CommandStorage;
  */
 public class WorldOptions {
 
-    /** ストレージのResourceLocation */
-    private static final ResourceLocation STORAGE_ID =
-        ResourceLocation.fromNamespaceAndPath(OneSlotSurvivalMod.MODID, "world_options");
+    /** ストレージのIdentifier */
+    private static final Identifier STORAGE_ID =
+        Identifier.fromNamespaceAndPath(OneSlotSurvivalMod.MODID, "world_options");
 
     /** メインロール変更設定のNBTキー */
     private static final String MAIN_ROLE_CHANGING_KEY = "mainRoleChanging";

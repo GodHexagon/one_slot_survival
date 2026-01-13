@@ -37,9 +37,9 @@ public class WorldEvent {
      * @param event *Forge API
      */
     @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+    public static void onPlayerTick(TickEvent.PlayerTickEvent.Post event) {
         // サーバーのときだけしかServerPlayerでない仕様を利用
-        if (!(event.player instanceof ServerPlayer serverPlayer)) {
+        if (!(event.player() instanceof ServerPlayer serverPlayer)) {
             return;
         }
 
@@ -113,7 +113,7 @@ public class WorldEvent {
             // 処理をしたことがあるフラグを追加
             Initialized.updateInitialized(player, true);
 
-            MinecraftServer server = player.getServer();
+            MinecraftServer server = player.level().getServer();
 
             // MOD有効性を設定
             boolean defaultModValidity = WorldOptions.isDefaultModValidityEnabled(server);
@@ -159,7 +159,7 @@ public class WorldEvent {
         }
 
         // ボーナスアイテムを配布
-        BonusItem bonusItemMode = WorldOptions.getBonusItem(player.getServer());
+        BonusItem bonusItemMode = WorldOptions.getBonusItem(player.level().getServer());
         if (bonusItemMode == BonusItem.BUNDLE_RESPAWN) {
             // バンドルを配布
             player.addItem(new ItemStack(Items.BUNDLE));

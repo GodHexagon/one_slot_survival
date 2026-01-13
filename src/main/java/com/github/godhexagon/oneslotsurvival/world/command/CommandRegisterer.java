@@ -19,6 +19,8 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.server.permissions.Permission;
+import net.minecraft.server.permissions.PermissionLevel;
 
 /**
  * One Slot Survival mod のコマンド処理
@@ -43,7 +45,7 @@ public class CommandRegisterer {
     private static LiteralArgumentBuilder<CommandSourceStack> buildAdmin(String aliasName) {
         return Commands.literal(aliasName)
             // 管理者向けコマンド（OP権限必要）
-            .requires(source -> source.hasPermission(2)) // OP レベル 2 が必要
+            .requires(source -> source.permissions().hasPermission(new Permission.HasCommandLevel(PermissionLevel.MODERATORS))) // OP レベル 2 が必要
             .then(ValidityCommands.build())
             .then(RoleCommands.build())
             .then(DistributeRoleCommands.build())
@@ -55,7 +57,7 @@ public class CommandRegisterer {
     private static LiteralArgumentBuilder<CommandSourceStack> buildWorld(String aliasName) {
         return Commands.literal(aliasName)
             // 管理者向けコマンド（OP権限必要）
-            .requires(source -> source.hasPermission(2)) // OP レベル 2 が必要
+            .requires(source -> source.permissions().hasPermission(new Permission.HasCommandLevel(PermissionLevel.MODERATORS))) // OP レベル 2 が必要
             .then(RoleChanging.buildMainRoleChanging())
             .then(RoleChanging.buildSubRoleChanging())
             .then(BonusItemCommand.build())

@@ -3,7 +3,7 @@ package com.github.godhexagon.oneslotsurvival.object.item;
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -15,7 +15,7 @@ public class ModItems {
     // スロットブロック用のバリアアイテム
     public static final RegistryObject<Item> SLOT_BARRIER = ITEMS.register("slot_barrier",
             () -> new SlotBarrier(new Item.Properties()
-                    .setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(OneSlotSurvivalMod.MODID, "slot_barrier")))
+                    .setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(OneSlotSurvivalMod.MODID, "slot_barrier")))
                     .stacksTo(1)
                     .fireResistant()));
 }

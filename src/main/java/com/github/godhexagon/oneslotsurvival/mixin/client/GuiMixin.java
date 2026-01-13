@@ -6,7 +6,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -33,20 +33,20 @@ public abstract class GuiMixin {
     private Minecraft minecraft;
 
     // スプライト定数 - ほとんどはバニラを使用、ホットバー背景のみカスタム
-    @Unique    
-    private static final ResourceLocation HOTBAR_END_SPRITE = ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "hud/hotbar_end");
+    @Unique
+    private static final Identifier HOTBAR_END_SPRITE = Identifier.fromNamespaceAndPath("oneslotsurvival", "hud/hotbar_end");
     @Shadow
     @Final
-    private static ResourceLocation HOTBAR_SPRITE;
+    private static Identifier HOTBAR_SPRITE;
     @Shadow
     @Final
-    private static ResourceLocation HOTBAR_SELECTION_SPRITE;
+    private static Identifier HOTBAR_SELECTION_SPRITE;
     @Shadow
     @Final
-    private static ResourceLocation HOTBAR_OFFHAND_LEFT_SPRITE;
+    private static Identifier HOTBAR_OFFHAND_LEFT_SPRITE;
     @Shadow
     @Final
-    private static ResourceLocation HOTBAR_OFFHAND_RIGHT_SPRITE;
+    private static Identifier HOTBAR_OFFHAND_RIGHT_SPRITE;
 
     @Shadow
     public abstract void renderSlot(GuiGraphics p_283283_, int p_283213_, int p_281301_, DeltaTracker p_344149_, Player p_283644_, ItemStack p_283317_, int p_283261_);
@@ -62,7 +62,7 @@ public abstract class GuiMixin {
     @Unique
     private void one_slot_survival$innerBlit(
         GuiGraphics guiGraphics,
-        ResourceLocation texture,
+        Identifier texture,
         int x0, int x1,
         int y0, int y1,
         float u0, float u1,
@@ -73,7 +73,7 @@ public abstract class GuiMixin {
             java.lang.reflect.Method method = GuiGraphics.class.getDeclaredMethod(
                 "innerBlit",
                 com.mojang.blaze3d.pipeline.RenderPipeline.class,
-                ResourceLocation.class,
+                Identifier.class,
                 int.class, int.class, int.class, int.class,
                 float.class, float.class, float.class, float.class,
                 int.class
@@ -138,10 +138,19 @@ public abstract class GuiMixin {
         // 中央揃え: 背景の中心が画面中央に来るように配置
         int hotbarX = centerX - bgWidth / 2;
 
-        // カスタムホットバー背景を部分描画（左側のみトリミング）
-        TextureAtlasSprite sprite = this.minecraft.getGuiSprites().getSprite(HOTBAR_SPRITE);
+        // GuiGraphicsMixinを通じてスプライト情報を取得（リフレクション経由）
+        TextureAtlasSprite sprite;
+        try {
+            java.lang.reflect.Method getSpriteMethod = GuiGraphics.class.getMethod("one_slot_survival$getSprite", Identifier.class);
+            sprite = (TextureAtlasSprite) getSpriteMethod.invoke(guiGraphics, HOTBAR_SPRITE);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to get sprite from GuiGraphicsMixin", e);
+        }
+
+        // スプライトから正確なUV座標を取得
+        // ホットバーの元の幅は182px、必要な幅だけ部分描画
         float u0 = sprite.getU0();
-        float u1 = sprite.getU0() + (sprite.getU1() - sprite.getU0()) * bgWidth / 182.0f; // 182pxが元の幅
+        float u1 = sprite.getU0() + (sprite.getU1() - sprite.getU0()) * bgWidth / 182.0f;
         float v0 = sprite.getV0();
         float v1 = sprite.getV1();
 

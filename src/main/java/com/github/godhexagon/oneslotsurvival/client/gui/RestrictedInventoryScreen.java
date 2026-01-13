@@ -9,7 +9,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
@@ -142,10 +142,10 @@ public class RestrictedInventoryScreen extends InventoryScreen {
         }
     }
 
-    private static final ResourceLocation CUSTOM_INVENTORY_LOCATION =
-            ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "textures/gui/container/custom_inventory.png");
-    private static final ResourceLocation ROLE_SLOT_BG =
-            ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "textures/gui/container/role_slot_background.png");
+    private static final Identifier CUSTOM_INVENTORY_LOCATION =
+            Identifier.fromNamespaceAndPath("oneslotsurvival", "textures/gui/container/custom_inventory.png");
+    private static final Identifier ROLE_SLOT_BG =
+            Identifier.fromNamespaceAndPath("oneslotsurvival", "textures/gui/container/role_slot_background.png");
 
     @SuppressWarnings("null") // INFO: this.minecraft.playerアクセスについて、これはバニラと同じ実装なのでミュート。他の部分は都度確認すること。
     @Override

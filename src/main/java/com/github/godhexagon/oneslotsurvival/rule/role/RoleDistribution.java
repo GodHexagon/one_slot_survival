@@ -87,12 +87,12 @@ public class RoleDistribution {
      */
     public static void setDefinedListWithCounting(ServerPlayer player) {
         // 現在のカウンタを取得
-        int callCount = GameData.getDefinedListCallCount(player.getServer());
+        int callCount = GameData.getDefinedListCallCount(player.level().getServer());
 
         setDefinedList(player, callCount);
 
         // カウンタをインクリメント
-        GameData.incrementDefinedListCallCount(player.getServer());
+        GameData.incrementDefinedListCallCount(player.level().getServer());
     }
     
     /**

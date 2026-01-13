@@ -1,6 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.client.gui;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -118,7 +118,7 @@ public class RestrictedSlotWrapper extends Slot {
 
     @Nullable
     @Override
-    public ResourceLocation getNoItemIcon() {
+    public Identifier getNoItemIcon() {
         return target.getNoItemIcon();
     }
 
@@ -138,7 +138,7 @@ public class RestrictedSlotWrapper extends Slot {
     }
 
     @Override
-    public Slot setBackground(ResourceLocation sprite) {
+    public Slot setBackground(Identifier sprite) {
         target.setBackground(sprite);
         return this;
     }
