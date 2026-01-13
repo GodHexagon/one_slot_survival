@@ -2,7 +2,7 @@ package com.github.godhexagon.oneslotsurvival.mixin.client;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
@@ -25,11 +25,11 @@ public abstract class GuiGraphicsMixin {
      * スプライトを直接取得するヘルパーメソッド。
      * 完全にリフレクションベースで、GuiSpriteManager型への参照を避ける。
      *
-     * @param spriteLocation スプライトのResourceLocation
+     * @param spriteLocation スプライトのIdentifier
      * @return TextureAtlasSprite
      */
     @Unique
-    public TextureAtlasSprite one_slot_survival$getSprite(ResourceLocation spriteLocation) {
+    public TextureAtlasSprite one_slot_survival$getSprite(Identifier spriteLocation) {
         try {
             // guiSprites フィールドにアクセス（1.21.9で "sprites" から "guiSprites" に名前変更、型も TextureAtlas に変更）
             if (one_slot_survival$spritesField == null) {
@@ -49,10 +49,10 @@ public abstract class GuiGraphicsMixin {
             }
             Object spriteAtlas = one_slot_survival$spritesField.get(this);
 
-            // TextureAtlas.getSprite(ResourceLocation) メソッドを取得
+            // TextureAtlas.getSprite(Identifier) メソッドを取得
             if (one_slot_survival$getSpriteMethod == null) {
                 Class<?> atlasClass = spriteAtlas.getClass();
-                one_slot_survival$getSpriteMethod = atlasClass.getMethod("getSprite", ResourceLocation.class);
+                one_slot_survival$getSpriteMethod = atlasClass.getMethod("getSprite", Identifier.class);
             }
 
             // スプライトを取得

@@ -17,6 +17,8 @@ import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.server.permissions.Permission;
+import net.minecraft.server.permissions.PermissionLevel;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
@@ -83,7 +85,7 @@ public class ChangeRoleCommand {
                 //
                 player.sendSystemMessage(getRuleRejectionMessage());
                 // 管理者権限がある場合のみ代替コマンドを提示
-                if (source.hasPermission(2)) {
+                if (source.permissions().hasPermission(new Permission.HasCommandLevel(PermissionLevel.MODERATORS))) {
                     player.sendSystemMessage(getAlternativeCommandMessage(RoleManager.getMainRole(player).getCommandName(), false));
                     player.sendSystemMessage(getAlternativeCommandMessage(RoleManager.getSubRole(player).getCommandName(), true));
                 }
@@ -329,7 +331,7 @@ public class ChangeRoleCommand {
     private static void showRuleRejectionMessages(ServerPlayer player, CommandSourceStack source, String roleName, boolean subRole) {
         player.sendSystemMessage(getRuleRejectionMessage());
         // 管理者権限がある場合のみ代替コマンドを提示
-        if (source.hasPermission(2)) {
+        if (source.permissions().hasPermission(new Permission.HasCommandLevel(PermissionLevel.MODERATORS))) {
             player.sendSystemMessage(getAlternativeCommandMessage(roleName, subRole));
         }
     }

@@ -6,7 +6,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -33,20 +33,20 @@ public abstract class GuiMixin {
     private Minecraft minecraft;
 
     // スプライト定数 - ほとんどはバニラを使用、ホットバー背景のみカスタム
-    @Unique    
-    private static final ResourceLocation HOTBAR_END_SPRITE = ResourceLocation.fromNamespaceAndPath("oneslotsurvival", "hud/hotbar_end");
+    @Unique
+    private static final Identifier HOTBAR_END_SPRITE = Identifier.fromNamespaceAndPath("oneslotsurvival", "hud/hotbar_end");
     @Shadow
     @Final
-    private static ResourceLocation HOTBAR_SPRITE;
+    private static final Identifier HOTBAR_SPRITE = null;
     @Shadow
     @Final
-    private static ResourceLocation HOTBAR_SELECTION_SPRITE;
+    private static final Identifier HOTBAR_SELECTION_SPRITE = null;
     @Shadow
     @Final
-    private static ResourceLocation HOTBAR_OFFHAND_LEFT_SPRITE;
+    private static final Identifier HOTBAR_OFFHAND_LEFT_SPRITE = null;
     @Shadow
     @Final
-    private static ResourceLocation HOTBAR_OFFHAND_RIGHT_SPRITE;
+    private static final Identifier HOTBAR_OFFHAND_RIGHT_SPRITE = null;
 
     @Shadow
     public abstract void renderSlot(GuiGraphics p_283283_, int p_283213_, int p_281301_, DeltaTracker p_344149_, Player p_283644_, ItemStack p_283317_, int p_283261_);
@@ -62,7 +62,7 @@ public abstract class GuiMixin {
     @Unique
     private void one_slot_survival$innerBlit(
         GuiGraphics guiGraphics,
-        ResourceLocation texture,
+        Identifier texture,
         int x0, int x1,
         int y0, int y1,
         float u0, float u1,
@@ -73,7 +73,7 @@ public abstract class GuiMixin {
             java.lang.reflect.Method method = GuiGraphics.class.getDeclaredMethod(
                 "innerBlit",
                 com.mojang.blaze3d.pipeline.RenderPipeline.class,
-                ResourceLocation.class,
+                Identifier.class,
                 int.class, int.class, int.class, int.class,
                 float.class, float.class, float.class, float.class,
                 int.class
@@ -141,7 +141,7 @@ public abstract class GuiMixin {
         // GuiGraphicsMixinを通じてスプライト情報を取得（リフレクション経由）
         TextureAtlasSprite sprite;
         try {
-            java.lang.reflect.Method getSpriteMethod = GuiGraphics.class.getMethod("one_slot_survival$getSprite", ResourceLocation.class);
+            java.lang.reflect.Method getSpriteMethod = GuiGraphics.class.getMethod("one_slot_survival$getSprite", Identifier.class);
             sprite = (TextureAtlasSprite) getSpriteMethod.invoke(guiGraphics, HOTBAR_SPRITE);
         } catch (Exception e) {
             throw new RuntimeException("Failed to get sprite from GuiGraphicsMixin", e);

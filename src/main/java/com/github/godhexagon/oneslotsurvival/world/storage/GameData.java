@@ -2,7 +2,7 @@ package com.github.godhexagon.oneslotsurvival.world.storage;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.storage.CommandStorage;
@@ -36,9 +36,9 @@ import net.minecraft.world.level.storage.CommandStorage;
  */
 public class GameData {
 
-    /** ストレージのResourceLocation */
-    private static final ResourceLocation STORAGE_ID =
-        ResourceLocation.fromNamespaceAndPath(OneSlotSurvivalMod.MODID, "gamedata");
+    /** ストレージのIdentifier */
+    private static final Identifier STORAGE_ID =
+        Identifier.fromNamespaceAndPath(OneSlotSurvivalMod.MODID, "gamedata");
 
     /** definedList呼び出しカウンタのNBTキー */
     private static final String DEFINED_LIST_CALL_COUNT_KEY = "definedListCallCount";
