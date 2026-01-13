@@ -34,7 +34,7 @@
 ロールとレベルアップの機能を停止し、完全に１スロットのインベントリで遊ぶ場合、管理者権限で以下のコマンドをすべて実行してください。これにより、そのワールドにログインしているプレイヤーと、未来に新規参加するプレイヤーに対して、１スロットのインベントリのルールが適応されます。
 
 ```
-/osa role clear @a
+/osa role clear both @a
 /osw mainRoleChanging false
 /osw subRoleChanging false
 /osw defaultRole unassign
