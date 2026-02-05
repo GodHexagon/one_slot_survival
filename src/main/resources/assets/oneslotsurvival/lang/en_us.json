@@ -64,11 +64,11 @@
   "oneslotsurvival.slot.thrower.2.name": "Throwable Slot",
   "oneslotsurvival.slot.thrower.2.description": "The slot can store throwable items (eggs, snowballs, ender pearls, ender eyes, splash potions, lingering potions, wind charges).",
 
-  "oneslotsurvival.slot.pharmacist.0.name": "Potion & Stew Slot",
+  "oneslotsurvival.slot.pharmacist.0.name": "Pharmacist Slot",
   "oneslotsurvival.slot.pharmacist.0.description": "The slot can store potions (normal, splash, lingering) and stews (mushroom stew, rabbit stew, beetroot soup, suspicious stew).",
-  "oneslotsurvival.slot.pharmacist.1.name": "Potion & Stew Slot",
+  "oneslotsurvival.slot.pharmacist.1.name": "Pharmacist Slot",
   "oneslotsurvival.slot.pharmacist.1.description": "The slot can store potions (normal, splash, lingering) and stews (mushroom stew, rabbit stew, beetroot soup, suspicious stew).",
-  "oneslotsurvival.slot.pharmacist.2.name": "Potion & Stew Slot",
+  "oneslotsurvival.slot.pharmacist.2.name": "Pharmacist Slot",
   "oneslotsurvival.slot.pharmacist.2.description": "The slot can store potions (normal, splash, lingering) and stews (mushroom stew, rabbit stew, beetroot soup, suspicious stew).",
 
   "oneslotsurvival.slot.armorer.0.name": "Armorer Slot",
