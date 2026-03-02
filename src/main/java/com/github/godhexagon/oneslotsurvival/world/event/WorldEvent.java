@@ -11,9 +11,9 @@ import com.github.godhexagon.oneslotsurvival.rule.level.Exp;
 import com.github.godhexagon.oneslotsurvival.rule.level.RoleLeveledUpTimes;
 import com.github.godhexagon.oneslotsurvival.rule.player.PlayerModValidity;
 import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
-import com.github.godhexagon.oneslotsurvival.rule.role.RoleDistribution;
 import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
 import com.github.godhexagon.oneslotsurvival.rule.role.SubRole;
+import com.github.godhexagon.oneslotsurvival.world.util.RoleDistribution;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.server.MinecraftServer;

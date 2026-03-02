@@ -1,7 +1,9 @@
-package com.github.godhexagon.oneslotsurvival.rule.role;
+package com.github.godhexagon.oneslotsurvival.world.util;
 
 import com.github.godhexagon.oneslotsurvival.object.storage.GameData;
-import com.github.godhexagon.oneslotsurvival.world.util.PlayerProgress;
+import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
+import com.github.godhexagon.oneslotsurvival.rule.role.SubRole;
+
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.List;

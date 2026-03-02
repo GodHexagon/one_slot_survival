@@ -1,7 +1,7 @@
 package com.github.godhexagon.oneslotsurvival.world.command.admin;
 
-import com.github.godhexagon.oneslotsurvival.rule.role.RoleDistribution;
 import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
+import com.github.godhexagon.oneslotsurvival.world.util.RoleDistribution;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.commands.CommandSourceStack;
