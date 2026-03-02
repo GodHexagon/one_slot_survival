@@ -19,7 +19,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 直前の成果！: ロールスロットに格納できるアイテムの種類を修正する
 
-実行中: ユーティリティの実装を検討する
+実行中: keepRoleProgressオプションを追加する
 
 すべての進捗: [タスクリスト](./docs/task_list.md)
 
