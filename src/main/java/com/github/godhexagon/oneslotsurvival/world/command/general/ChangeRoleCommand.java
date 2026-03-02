@@ -2,7 +2,7 @@ package com.github.godhexagon.oneslotsurvival.world.command.general;
 
 import com.github.godhexagon.oneslotsurvival.cui.CuiObjects;
 import com.github.godhexagon.oneslotsurvival.cui.CuiUtil;
-import com.github.godhexagon.oneslotsurvival.world.storage.WorldOptions;
+import com.github.godhexagon.oneslotsurvival.object.storage.WorldOptions;
 import com.github.godhexagon.oneslotsurvival.rule.level.Exp;
 import com.github.godhexagon.oneslotsurvival.rule.level.RoleLeveledUpTimes;
 import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;

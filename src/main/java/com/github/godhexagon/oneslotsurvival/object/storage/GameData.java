@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.world.storage;
+package com.github.godhexagon.oneslotsurvival.object.storage;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
 import net.minecraft.nbt.CompoundTag;

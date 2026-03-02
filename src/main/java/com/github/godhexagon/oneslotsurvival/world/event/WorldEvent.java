@@ -1,6 +1,9 @@
 package com.github.godhexagon.oneslotsurvival.world.event;
 
 import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
+import com.github.godhexagon.oneslotsurvival.object.storage.BonusItem;
+import com.github.godhexagon.oneslotsurvival.object.storage.DefaultRole;
+import com.github.godhexagon.oneslotsurvival.object.storage.WorldOptions;
 import com.github.godhexagon.oneslotsurvival.rule.attribute.Initialized;
 import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotBarrierFilling;
 import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotRestriction;
@@ -11,9 +14,6 @@ import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
 import com.github.godhexagon.oneslotsurvival.rule.role.RoleDistribution;
 import com.github.godhexagon.oneslotsurvival.rule.role.RoleManager;
 import com.github.godhexagon.oneslotsurvival.rule.role.SubRole;
-import com.github.godhexagon.oneslotsurvival.world.storage.BonusItem;
-import com.github.godhexagon.oneslotsurvival.world.storage.DefaultRole;
-import com.github.godhexagon.oneslotsurvival.world.storage.WorldOptions;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.server.MinecraftServer;

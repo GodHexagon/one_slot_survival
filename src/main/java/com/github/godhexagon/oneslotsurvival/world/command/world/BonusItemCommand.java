@@ -1,8 +1,8 @@
 package com.github.godhexagon.oneslotsurvival.world.command.world;
 
+import com.github.godhexagon.oneslotsurvival.object.storage.BonusItem;
+import com.github.godhexagon.oneslotsurvival.object.storage.WorldOptions;
 import com.github.godhexagon.oneslotsurvival.world.command.util.CommandUtils;
-import com.github.godhexagon.oneslotsurvival.world.storage.BonusItem;
-import com.github.godhexagon.oneslotsurvival.world.storage.WorldOptions;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;

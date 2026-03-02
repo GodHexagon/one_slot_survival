@@ -1,9 +1,9 @@
 package com.github.godhexagon.oneslotsurvival.world.command.util;
 
+import com.github.godhexagon.oneslotsurvival.object.storage.BonusItem;
+import com.github.godhexagon.oneslotsurvival.object.storage.DefaultRole;
 import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
 import com.github.godhexagon.oneslotsurvival.rule.role.SubRole;
-import com.github.godhexagon.oneslotsurvival.world.storage.BonusItem;
-import com.github.godhexagon.oneslotsurvival.world.storage.DefaultRole;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;

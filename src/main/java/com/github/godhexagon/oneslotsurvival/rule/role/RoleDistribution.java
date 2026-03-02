@@ -1,6 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.rule.role;
 
-import com.github.godhexagon.oneslotsurvival.world.storage.GameData;
+import com.github.godhexagon.oneslotsurvival.object.storage.GameData;
 import com.github.godhexagon.oneslotsurvival.world.util.PlayerProgress;
 import net.minecraft.server.level.ServerPlayer;
 

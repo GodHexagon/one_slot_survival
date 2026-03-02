@@ -1,6 +1,6 @@
 package com.github.godhexagon.oneslotsurvival.world.command.world;
 
-import com.github.godhexagon.oneslotsurvival.world.storage.WorldOptions;
+import com.github.godhexagon.oneslotsurvival.object.storage.WorldOptions;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;

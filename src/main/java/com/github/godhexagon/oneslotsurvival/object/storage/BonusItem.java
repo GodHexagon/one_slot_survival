@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.world.storage;
+package com.github.godhexagon.oneslotsurvival.object.storage;
 
 /**
  * プレイヤーに配布されるボーナスアイテムの種類を表す列挙型。

@@ -1,4 +1,4 @@
-package com.github.godhexagon.oneslotsurvival.world.storage;
+package com.github.godhexagon.oneslotsurvival.object.storage;
 
 /**
  * プレイヤーの初期ロール割り当て方式を表す列挙型。
