@@ -80,6 +80,11 @@ import net.minecraft.world.level.storage.CommandStorage;
  *     <td>RANDOM</td>
  *     <td>RANDOM</td>
  *   </tr>
+ *   <tr>
+ *     <td>keepRoleProgress</td>
+ *     <td>true（保持）</td>
+ *     <td>false（リセット）</td>
+ *   </tr>
  * </table>
  */
 public class WorldOptions {
@@ -102,6 +107,9 @@ public class WorldOptions {
 
     /** 初期ロール割り当て方式設定のNBTキー */
     private static final String DEFAULT_ROLE_KEY = "defaultRole";
+
+    /** ロール変更時に進捗を保持するかのNBTキー */
+    private static final String KEEP_ROLE_PROGRESS_KEY = "keepRoleProgress";
 
     /**
      * メインロール変更のデフォルト値を取得します。
@@ -151,6 +159,16 @@ public class WorldOptions {
      */
     private static DefaultRole getDefaultRoleValue(MinecraftServer server) {
         return server.isDedicatedServer()? DefaultRole.DEFINED_LIST:DefaultRole.RANDOM; // Integrated: Random, Dedicated: Defined List
+    }
+
+    /**
+     * ロール変更時に進捗を保持するかのデフォルト値を取得します。
+     *
+     * @param server MinecraftServer
+     * @return Integratedの場合true、Dedicatedの場合false
+     */
+    private static boolean getDefaultKeepRoleProgress(MinecraftServer server) {
+        return !server.isDedicatedServer(); // Integrated: true, Dedicated: false
     }
 
     /**
@@ -333,6 +351,36 @@ public class WorldOptions {
 
         // 保存
         storage.set(STORAGE_ID, tag);
+    }
+
+    /**
+     * ロール変更時に進捗を保持するかを取得します。
+     *
+     * @param level サーバーレベル
+     * @return 進捗を保持する場合true
+     */
+    public static boolean isKeepRoleProgressEnabled(ServerLevel level) {
+        return isKeepRoleProgressEnabled(level.getServer());
+    }
+
+    /**
+     * ロール変更時に進捗を保持するかを取得します。
+     *
+     * @param server MinecraftServer
+     * @return 進捗を保持する場合true
+     */
+    public static boolean isKeepRoleProgressEnabled(MinecraftServer server) {
+        return getBooleanValue(server, KEEP_ROLE_PROGRESS_KEY, getDefaultKeepRoleProgress(server));
+    }
+
+    /**
+     * ロール変更時に進捗を保持するかを設定します。
+     *
+     * @param server MinecraftServer
+     * @param enabled 保持する場合true
+     */
+    public static void setKeepRoleProgressEnabled(MinecraftServer server, boolean enabled) {
+        setBooleanValue(server, KEEP_ROLE_PROGRESS_KEY, enabled);
     }
 
     /**
