@@ -4,6 +4,8 @@ import com.github.godhexagon.oneslotsurvival.OneSlotSurvivalMod;
 import com.github.godhexagon.oneslotsurvival.rule.attribute.Initialized;
 import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotBarrierFilling;
 import com.github.godhexagon.oneslotsurvival.rule.inventory.SlotRestriction;
+import com.github.godhexagon.oneslotsurvival.rule.level.Exp;
+import com.github.godhexagon.oneslotsurvival.rule.level.RoleLeveledUpTimes;
 import com.github.godhexagon.oneslotsurvival.rule.player.PlayerModValidity;
 import com.github.godhexagon.oneslotsurvival.rule.role.MainRole;
 import com.github.godhexagon.oneslotsurvival.rule.role.RoleDistribution;
@@ -156,6 +158,14 @@ public class WorldEvent {
         // MOD有効なプレイヤーのみ対象
         if (!PlayerModValidity.isEffective(player)) {
             return;
+        }
+
+        // keepRoleProgressがfalseの場合、レベルと経験値をリセット
+        MinecraftServer server = player.getServer();
+        if (!WorldOptions.isKeepRoleProgressEnabled(server)) {
+            Exp.clear(player);
+            RoleLeveledUpTimes.resetMain(player);
+            RoleLeveledUpTimes.resetSub(player);
         }
 
         // ボーナスアイテムを配布

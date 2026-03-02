@@ -82,8 +82,8 @@ import net.minecraft.world.level.storage.CommandStorage;
  *   </tr>
  *   <tr>
  *     <td>keepRoleProgress</td>
- *     <td>true（保持）</td>
- *     <td>false（リセット）</td>
+ *     <td>true（死亡時に保持）</td>
+ *     <td>true（死亡時に保持）</td>
  *   </tr>
  * </table>
  */
@@ -162,13 +162,13 @@ public class WorldOptions {
     }
 
     /**
-     * ロール変更時に進捗を保持するかのデフォルト値を取得します。
+     * 死亡時に進捗を保持するかのデフォルト値を取得します。
      *
      * @param server MinecraftServer
-     * @return Integratedの場合true、Dedicatedの場合false
+     * @return 常にtrue（保持）
      */
     private static boolean getDefaultKeepRoleProgress(MinecraftServer server) {
-        return !server.isDedicatedServer(); // Integrated: true, Dedicated: false
+        return true; // 両方とも true
     }
 
     /**
@@ -354,30 +354,30 @@ public class WorldOptions {
     }
 
     /**
-     * ロール変更時に進捗を保持するかを取得します。
+     * 死亡時に進捗を保持するかを取得します。
      *
      * @param level サーバーレベル
-     * @return 進捗を保持する場合true
+     * @return 進捗を保持する場合true、リセットする場合false
      */
     public static boolean isKeepRoleProgressEnabled(ServerLevel level) {
         return isKeepRoleProgressEnabled(level.getServer());
     }
 
     /**
-     * ロール変更時に進捗を保持するかを取得します。
+     * 死亡時に進捗を保持するかを取得します。
      *
      * @param server MinecraftServer
-     * @return 進捗を保持する場合true
+     * @return 進捗を保持する場合true、リセットする場合false
      */
     public static boolean isKeepRoleProgressEnabled(MinecraftServer server) {
         return getBooleanValue(server, KEEP_ROLE_PROGRESS_KEY, getDefaultKeepRoleProgress(server));
     }
 
     /**
-     * ロール変更時に進捗を保持するかを設定します。
+     * 死亡時に進捗を保持するかを設定します。
      *
      * @param server MinecraftServer
-     * @param enabled 保持する場合true
+     * @param enabled 保持する場合true、リセットする場合false
      */
     public static void setKeepRoleProgressEnabled(MinecraftServer server, boolean enabled) {
         setBooleanValue(server, KEEP_ROLE_PROGRESS_KEY, enabled);

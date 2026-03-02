@@ -11,7 +11,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 
 /**
- * ロール変更時に進捗（レベル・経験値）を保持するかの設定を管理するコマンドクラス。
+ * プレイヤー死亡時に進捗（レベル・経験値）を保持するかの設定を管理するコマンドクラス。
  * <p>/osw keepRoleProgress <true|false></p>
  * <p>/osw keepRoleProgress (照会)</p>
  */
@@ -28,7 +28,7 @@ public class KeepRoleProgressCommand {
     }
 
     /**
-     * ロール変更時に進捗を保持するかの設定を変更する
+     * 死亡時に進捗を保持するかの設定を変更する
      */
     private static int setKeepRoleProgress(CommandContext<CommandSourceStack> context) {
         try {
@@ -42,9 +42,9 @@ public class KeepRoleProgressCommand {
 
             // 成功メッセージ
             source.sendSuccess(
-                () -> Component.literal("Keep role progress has been set to ")
+                () -> Component.literal("Keep role progress on death has been set to ")
                     .withStyle(ChatFormatting.GREEN)
-                    .append(Component.literal(enabled ? "enabled" : "disabled")
+                    .append(Component.literal(enabled ? "enabled (keep progress)" : "disabled (reset on death)")
                         .withStyle(enabled ? ChatFormatting.AQUA : ChatFormatting.RED, ChatFormatting.BOLD)),
                 true
             );
@@ -57,7 +57,7 @@ public class KeepRoleProgressCommand {
     }
 
     /**
-     * ロール変更時に進捗を保持するかの設定を照会する
+     * 死亡時に進捗を保持するかの設定を照会する
      */
     private static int queryKeepRoleProgress(CommandContext<CommandSourceStack> context) {
         try {
@@ -68,9 +68,9 @@ public class KeepRoleProgressCommand {
             boolean enabled = WorldOptions.isKeepRoleProgressEnabled(server);
 
             source.sendSuccess(
-                () -> Component.literal("Keep role progress is currently ")
+                () -> Component.literal("Keep role progress on death is currently ")
                     .withStyle(ChatFormatting.YELLOW)
-                    .append(Component.literal(enabled ? "enabled" : "disabled")
+                    .append(Component.literal(enabled ? "enabled (keep progress)" : "disabled (reset on death)")
                         .withStyle(enabled ? ChatFormatting.GREEN : ChatFormatting.RED, ChatFormatting.BOLD)),
                 false
             );
